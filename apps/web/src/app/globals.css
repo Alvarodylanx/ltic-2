@@ -3,41 +3,51 @@
 @tailwind utilities;
 
 /* ════════════════════════════════════════════════════════════════════
-   LTIC SARL — Blue + White Design System
-   Swiss Modernism 2.0 / B2B Corporate Logistics
-   Palette: pure blue↔white spectrum, 8 named nuances, no other hues
+   LTIC SARL — Brand Color System (exact logo match)
+
+   Logo extracts:
+     Dark indigo  (globe top + upward arrow)  → HSL 240 53% 44% ≈ #3535AD
+     Sky cyan     (globe bottom + down arrow) → HSL 198 92% 53% ≈ #1AAFEE
+     Deep dark    (text beneath logo)         → HSL 240 65% 12% ≈ #0A0A59
+     White        (land masses, ships, plane) → #FFFFFF
+
+   Design rule: indigo is the base, sky cyan is the accent,
+   white is used only for contrast on dark/indigo surfaces.
    ════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* ── Semantic tokens (used everywhere via hsl(var(--token))) ─────── */
+  /* ── Main surfaces ───────────────────────────────────────────────── */
 
-  /* Surfaces */
-  --background: 210 40% 98%;         /* #F8FAFC — near-white, subtle blue tint */
-  --foreground: 222 47% 11%;         /* #0F172A — deep navy (body text + dark sections) */
+  /* Page background — clear indigo tint so the site reads as BLUE */
+  --background: 240 55% 92%;         /* #DFDFF6 — visible indigo-blue tint */
 
-  --card: 0 0% 100%;                 /* #FFFFFF — pure white cards */
-  --card-foreground: 222 47% 11%;
+  /* Body text — deep dark indigo, also used for dark section bg */
+  --foreground: 240 65% 12%;         /* #0A0A59 — logo dark indigo */
 
-  /* Interactive */
-  --border: 214 32% 91%;             /* #E2E8F0 — soft blue-grey borders */
-  --input: 214 32% 91%;
-  --ring: 201 96% 32%;               /* #0369A1 — brand blue focus ring */
+  /* Cards — pure white so they POP against indigo background */
+  --card: 0 0% 100%;                 /* #FFFFFF */
+  --card-foreground: 240 65% 12%;    /* #0A0A59 */
 
-  /* Primary = Corporate Blue (CTAs, active indicators, icon accents) */
-  --primary: 201 96% 32%;           /* #0369A1 — deep trust blue */
-  --primary-foreground: 0 0% 100%;  /* white on blue */
+  /* ── Borders & inputs ────────────────────────────────────────────── */
+  --border: 240 40% 82%;             /* #BFBFE4 — visible indigo border */
+  --input: 240 40% 82%;
+  --ring: 198 92% 53%;               /* #1AAFEE — sky cyan focus ring */
 
-  /* Secondary = clear light-blue surface (info chips, badges) */
-  --secondary: 213 80% 94%;         /* #DBE9FE — visible light blue */
-  --secondary-foreground: 222 47% 11%;
+  /* ── PRIMARY = Logo Indigo (buttons, active nav, headings accent) ── */
+  --primary: 240 53% 44%;            /* #3535AD — exact logo indigo blue */
+  --primary-foreground: 0 0% 100%;   /* white text on indigo */
 
-  /* Muted = very light blue-grey (hover fills, section tints) */
-  --muted: 214 22% 93%;             /* #E8ECF1 */
-  --muted-foreground: 215 16% 47%;  /* #64748B — readable blue-grey */
+  /* ── SECONDARY = light indigo surface ───────────────────────────── */
+  --secondary: 240 50% 90%;          /* #D9D9F2 — light indigo surface */
+  --secondary-foreground: 240 65% 12%;
 
-  /* Accent = deep navy (icon boxes on light bg, dark callouts) */
-  --accent: 222 47% 11%;            /* #0F172A */
-  --accent-foreground: 214 32% 88%; /* #CBD5E1 — light blue on navy */
+  /* ── MUTED = soft indigo-grey (hover fills, alt section bg) ─────── */
+  --muted: 240 45% 87%;              /* #CFCFED — soft indigo-tinted muted */
+  --muted-foreground: 240 20% 38%;   /* #535384 — readable indigo-grey */
+
+  /* ── ACCENT = Logo Sky Cyan (highlights, callout icons on light) ── */
+  --accent: 198 92% 53%;             /* #1AAFEE — exact logo sky cyan */
+  --accent-foreground: 0 0% 100%;    /* white on sky cyan */
 
   /* Destructive */
   --destructive: 0 84% 60%;
@@ -45,27 +55,30 @@
 
   --radius: 0.375rem;
 
-  /* Sidebar / Footer — deep navy section */
-  --sidebar: 222 47% 11%;           /* #0F172A */
-  --sidebar-foreground: 214 32% 88%; /* #CBD5E1 — light blue-grey text */
-  --sidebar-border: 215 28% 18%;    /* #1E293B — dark navy border */
-  --sidebar-primary: 199 95% 62%;   /* #38BDF8 — sky blue accent on dark bg */
-  --sidebar-primary-foreground: 222 47% 11%;
-  --sidebar-accent: 215 28% 18%;
-  --sidebar-accent-foreground: 214 32% 88%;
+  /* ── Sidebar / Hero / Footer — Deep Dark Indigo ──────────────────── */
+  /* Matches the dark indigo globe from the logo */
+  --sidebar: 240 65% 12%;            /* #0A0A59 — logo deep dark indigo */
+  --sidebar-foreground: 240 35% 82%; /* #B8B8DA — readable on dark */
+  --sidebar-border: 240 55% 20%;     /* #141480 — dark indigo border */
 
-  /* ── Full blue scale — for nuanced usage across the site ─────────── */
-  --blue-50:  210 100% 97%;          /* #EFF6FF — almost white */
-  --blue-100: 213 80% 94%;           /* #DBE9FE — pale blue */
-  --blue-200: 213 97% 87%;           /* #BFDBFE — light blue */
-  --blue-300: 212 96% 78%;           /* #93C5FD — sky */
-  --blue-400: 213 94% 68%;           /* #60A5FA — medium */
-  --blue-500: 217 91% 60%;           /* #3B82F6 — vivid blue */
-  --blue-600: 221 83% 53%;           /* #2563EB — strong blue */
-  --blue-700: 201 96% 32%;           /* #0369A1 — brand (= primary) */
-  --blue-800: 224 76% 27%;           /* #163079 — dark blue */
-  --blue-900: 222 47% 18%;           /* #1E2D5A — near-navy */
-  --blue-950: 222 47% 11%;           /* #0F172A — deep navy (= foreground) */
+  /* Sky cyan accent used on dark indigo backgrounds (logo sky blue) */
+  --sidebar-primary: 198 92% 62%;    /* #45C2F7 — logo sky blue on dark */
+  --sidebar-primary-foreground: 240 65% 12%;
+  --sidebar-accent: 240 55% 20%;
+  --sidebar-accent-foreground: 240 35% 82%;
+
+  /* ── Indigo scale — deep dark to near-white ──────────────────────── */
+  --blue-50:  240 50% 97%;           /* #F5F5FE — near white indigo */
+  --blue-100: 240 50% 94%;           /* #EAEAFB */
+  --blue-200: 240 55% 92%;           /* #DFDFF6 — = background */
+  --blue-300: 240 50% 84%;           /* #C4C4EE */
+  --blue-400: 240 50% 72%;           /* #9898DE */
+  --blue-500: 240 52% 58%;           /* #6B6BC9 */
+  --blue-600: 240 53% 50%;           /* #4D4DBF */
+  --blue-700: 240 53% 44%;           /* #3535AD — = primary */
+  --blue-800: 240 60% 30%;           /* #1E1E80 */
+  --blue-900: 240 65% 20%;           /* #121278 */
+  --blue-950: 240 65% 12%;           /* #0A0A59 — = sidebar */
 }
 
 /* ── Base styles ─────────────────────────────────────────────────── */
@@ -93,7 +106,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
 }
 
-/* ── Signature decorative accent rule ───────────────────────────── */
+/* ── Brand accent rule (indigo bar) ─────────────────────────────── */
 .amber-rule {
   display: block;
   width: 3rem;
@@ -129,7 +142,7 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 2px;
 }
 
-/* ── Touch target baseline ──────────────────────────────────────── */
+/* ── Touch tap highlight ────────────────────────────────────────── */
 button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
 }

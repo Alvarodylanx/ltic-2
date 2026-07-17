@@ -1,7 +1,23 @@
 {
-  "version": "1.32.0",
+  "version": "1.33.0",
   "releaseDate": "2026-07-17",
   "changelog": [
+    {
+      "version": "1.33.0",
+      "date": "2026-07-17",
+      "type": "minor",
+      "summary": "Exact logo color system: deep indigo (#3535AD) + sky cyan (#1AAFEE) — background changed from near-white to visible indigo-tinted (#DFDFF6), all sections now feel brand-blue",
+      "changes": [
+        "globals.css: complete rebrand to exact LTIC SARL logo colors — indigo HSL(240,53%,44%) for primary/buttons, sky cyan HSL(198,92%,53%) for accents on dark, deep dark indigo HSL(240,65%,12%) for hero/footer/dark sections",
+        "--background: 240 55% 92% (#DFDFF6) — clear indigo-blue page background replacing near-white, every bg-background section now looks unmistakably indigo-blue",
+        "--muted: 240 45% 87% (#CFCFED) — indigo-tinted muted surfaces, all bg-muted/40 sections feel indigo",
+        "--sidebar: 240 65% 12% (#0A0A59) — deep dark indigo matching the logo's globe top hemisphere",
+        "--sidebar-primary: 198 92% 62% (#45C2F7) — logo sky cyan for icon highlights on dark indigo backgrounds",
+        "--border: 240 40% 82% (#BFBFE4) — visible indigo border on all cards/inputs",
+        "Homepage services section: changed from bg-card (white) to bg-background (indigo-tinted) — eliminates the lone white section between blue sections",
+        "Full indigo scale (blue-50 through blue-950) now H=240 indigo-family instead of H=210-213 ocean blue family"
+      ]
+    },
     {
       "version": "1.32.0",
       "date": "2026-07-17",

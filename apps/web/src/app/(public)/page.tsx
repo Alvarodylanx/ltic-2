@@ -270,7 +270,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Services ── */}
-      <section className="bg-card py-16 sm:py-20 lg:py-28 border-y border-border">
+      <section className="bg-background py-16 sm:py-20 lg:py-28 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={fadeInUp}
