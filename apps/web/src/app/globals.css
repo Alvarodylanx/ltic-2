@@ -2,55 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ════════════════════════════════════════════════════════════════════
+   LTIC SARL — Multi-shade Blue Design System
+   Skill: Enterprise Gateway / Logistics-Delivery palette
+   Base: original first-version blues, applied with depth and nuance
+
+   Blue scale in use:
+     blue-50  #EFF6FF — page background (clearly light blue, not white)
+     blue-100 #DBEAFE — muted surfaces / hover fills
+     blue-200 #BFDBFE — borders / dividers
+     blue-500 #3B82F6 — accent / secondary CTA
+     blue-600 #2563EB — PRIMARY (original first-version blue)
+     navy     #0F172A — hero / footer / dark sections (original)
+     sky-500  #0EA5E9 — highlight on dark sections
+   ════════════════════════════════════════════════════════════════════ */
+
 :root {
-  /* Base */
-  --background: 214 30% 96%;          /* #EFF3F9 — very light blue-grey */
-  --foreground: 218 55% 10%;          /* #0C1829 — deep blue-black */
+  /* Page background — blue-50: clearly light blue, NOT white */
+  --background: 214 100% 97%;        /* #EFF6FF */
 
-  /* Cards & surfaces */
-  --card: 0 0% 100%;
-  --card-foreground: 218 55% 10%;
+  /* Body text — original deep navy */
+  --foreground: 222 47% 11%;         /* #0F172A */
 
-  /* Borders & inputs */
-  --border: 214 25% 87%;              /* #CDD6E8 */
-  --input: 214 25% 87%;
-  --ring: 214 82% 38%;                /* corporate blue focus ring */
+  /* Cards — pure white, pops against blue-50 background */
+  --card: 0 0% 100%;                 /* #FFFFFF */
+  --card-foreground: 222 47% 11%;
 
-  /* Primary = Corporate Blue (CTA buttons, active states, accents) */
-  --primary: 214 82% 38%;            /* #116AC8 — deep corporate blue */
-  --primary-foreground: 0 0% 100%;   /* white text on blue */
+  /* blue-200 borders — clearly visible on both white cards & blue bg */
+  --border: 213 97% 87%;             /* #BFDBFE */
+  --input: 213 97% 87%;
+  --ring: 221 83% 53%;               /* #2563EB — blue-600 focus ring */
 
-  /* Secondary = light blue-grey */
-  --secondary: 214 22% 92%;
-  --secondary-foreground: 218 55% 10%;
+  /* PRIMARY — blue-600, the original first-version blue */
+  --primary: 221 83% 53%;            /* #2563EB */
+  --primary-foreground: 0 0% 100%;
 
-  /* Muted */
-  --muted: 214 22% 92%;
-  --muted-foreground: 214 20% 46%;   /* #5D6F8A */
+  /* SECONDARY — blue-100, light surface for chips, tags, badges */
+  --secondary: 214 94% 93%;          /* #DBEAFE */
+  --secondary-foreground: 222 47% 11%;
 
-  /* Accent = deep navy-blue (for dark callout elements) */
-  --accent: 218 60% 12%;             /* #0C1F40 */
-  --accent-foreground: 214 15% 90%;
+  /* MUTED — blue-100, hover fills and alternate section surfaces */
+  --muted: 214 94% 93%;              /* #DBEAFE */
+  --muted-foreground: 215 16% 47%;   /* #64748B — slate-500 */
 
-  /* Destructive */
-  --destructive: 4 72% 47%;          /* #CE3B22 */
+  /* ACCENT — blue-500, secondary interactive elements */
+  --accent: 217 91% 60%;             /* #3B82F6 */
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  /* Border radius */
   --radius: 0.375rem;
 
-  /* Sidebar / Footer — deep navy-blue */
-  --sidebar: 218 60% 12%;            /* #0C1F40 */
-  --sidebar-foreground: 214 20% 88%; /* #D2D9E8 */
-  --sidebar-border: 218 45% 20%;     /* #182F55 */
-  --sidebar-primary: 214 82% 55%;    /* lighter blue in dark sidebar */
-  --sidebar-primary-foreground: 218 60% 10%;
-  --sidebar-accent: 218 45% 20%;
-  --sidebar-accent-foreground: 214 20% 88%;
+  /* DARK SECTIONS — original navy for hero, stats, footer, CTA */
+  --sidebar: 222 47% 11%;            /* #0F172A */
+  --sidebar-foreground: 214 32% 91%; /* #CBD5E1 */
+  --sidebar-border: 215 28% 17%;     /* #1E293B */
+
+  /* sky-500 on dark — vivid blue highlight, high contrast on navy */
+  --sidebar-primary: 199 89% 48%;    /* #0EA5E9 */
+  --sidebar-primary-foreground: 222 47% 11%;
+  --sidebar-accent: 215 28% 17%;
+  --sidebar-accent-foreground: 214 32% 91%;
 }
 
-* {
-  box-sizing: border-box;
+/* ── Base ────────────────────────────────────────────────────────── */
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -59,32 +81,58 @@ body {
   color: hsl(var(--foreground));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display), sans-serif;
+  line-height: 1.1;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-/* Blue accent rule — the signature decorative element */
+/* Blue accent rule */
 .amber-rule {
   display: block;
   width: 3rem;
   height: 2px;
   background-color: hsl(var(--primary));
+  flex-shrink: 0;
 }
 
-/* Marquee keyframes */
-@keyframes marquee-left  { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+/* Fluid typography */
+.text-hero {
+  font-size: clamp(2.25rem, 5vw + 0.75rem, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.text-section {
+  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+/* Marquee */
+@keyframes marquee-left  { from { transform: translateX(0) }    to { transform: translateX(-50%) } }
 @keyframes marquee-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
 .marquee-left  { animation: marquee-left  40s linear infinite; }
 .marquee-right { animation: marquee-right 40s linear infinite; }
 .marquee-wrap:hover .marquee-left,
 .marquee-wrap:hover .marquee-right { animation-play-state: paused; }
 
+/* Accessibility */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-left, .marquee-right { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
