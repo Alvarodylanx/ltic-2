@@ -44,18 +44,7 @@ const config: Config = {
           accent: 'hsl(var(--sidebar-accent))',
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
         },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
-      fontFamily: {
-        sans: ['var(--font-body)', 'sans-serif'],
-        display: ['var(--font-display)', 'sans-serif'],
-      },
-      /* Named blue shades — map to CSS custom properties */
-      colors: {
+        /* Indigo scale matching LTIC SARL logo — merged here (no duplicate key) */
         blue: {
           50:  'hsl(var(--blue-50))',
           100: 'hsl(var(--blue-100))',
@@ -70,17 +59,22 @@ const config: Config = {
           950: 'hsl(var(--blue-950))',
         },
       },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      fontFamily: {
+        sans: ['var(--font-body)', 'sans-serif'],
+        display: ['var(--font-display)', 'sans-serif'],
+      },
       spacing: {
         '4.5': '1.125rem',
         '13': '3.25rem',
         '18': '4.5rem',
       },
-      minHeight: {
-        touch: '44px',
-      },
-      minWidth: {
-        touch: '44px',
-      },
+      minHeight: { touch: '44px' },
+      minWidth:  { touch: '44px' },
     },
   },
   plugins: [require('@tailwindcss/typography')],
