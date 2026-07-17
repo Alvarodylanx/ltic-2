@@ -40,43 +40,42 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        'sticky top-0 z-50 flex items-center transition-all duration-300',
+        'sticky top-0 z-50 h-16 flex items-center transition-all duration-300',
         scrolled
           ? 'bg-white/98 backdrop-blur-md border-b border-border shadow-sm'
           : 'bg-white border-b border-border',
       )}
-      style={{ height: '64px' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 flex-shrink-0" aria-label="LTIC SARL — Home">
-          <div className="w-9 h-9 bg-foreground rounded-sm flex items-center justify-center flex-shrink-0">
+        <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="LTIC SARL — Home">
+          <div className="w-8 h-8 bg-foreground rounded-sm flex items-center justify-center flex-shrink-0">
             <span className="text-primary font-display font-bold text-xs tracking-tight leading-none">LT</span>
           </div>
-          <span className="font-display font-bold text-lg tracking-tight leading-none">
+          <span className="font-display font-bold text-lg tracking-tight">
             LTIC <span className="text-primary">SARL</span>
           </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                'relative px-3.5 py-2 text-sm font-medium transition-colors duration-200 rounded-sm min-h-[44px] flex items-center',
+                'relative px-3.5 py-2 text-sm font-medium transition-colors duration-200 rounded-sm',
                 isActive(link.href)
                   ? 'text-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/60',
+                  : 'text-muted-foreground hover:text-foreground',
               )}
             >
               {L(link)}
               {isActive(link.href) && (
                 <motion.span
                   layoutId="nav-underline"
-                  className="absolute bottom-1.5 left-3.5 right-3.5 h-0.5 bg-primary rounded-full"
+                  className="absolute bottom-1 left-3.5 right-3.5 h-0.5 bg-primary rounded-full"
                 />
               )}
             </Link>
@@ -88,19 +87,19 @@ export function Navbar() {
           <button
             onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
             aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-            className="flex items-center gap-1.5 px-3 py-2 min-h-[36px] rounded-sm border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:border-primary/30 hover:bg-muted/40 transition-all duration-200 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
           >
             <Globe className="h-3.5 w-3.5" />
             {language.toUpperCase()}
           </button>
-          <Button asChild size="sm" className="font-semibold text-xs px-5 rounded-sm">
+          <Button asChild size="sm" className="font-semibold text-xs px-4 rounded-sm">
             <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
           </Button>
         </div>
 
-        {/* Mobile hamburger — 44×44px touch target */}
+        {/* Mobile hamburger */}
         <button
-          className="lg:hidden w-11 h-11 flex items-center justify-center rounded-sm hover:bg-muted transition-colors cursor-pointer"
+          className="lg:hidden p-2 rounded-sm hover:bg-muted transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
@@ -131,13 +130,13 @@ export function Navbar() {
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="lg:hidden absolute top-16 left-0 right-0 bg-white border-b border-border shadow-lg z-50"
           >
-            <div className="px-4 pt-3 pb-4 flex flex-col gap-1">
+            <div className="px-4 py-4 flex flex-col gap-0.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'px-4 py-3 min-h-[44px] flex items-center rounded-sm text-sm font-medium transition-colors',
+                    'px-4 py-3 rounded-sm text-sm font-medium transition-colors',
                     isActive(link.href)
                       ? 'text-foreground bg-muted border-l-2 border-primary'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted',
@@ -146,16 +145,16 @@ export function Navbar() {
                   {L(link)}
                 </Link>
               ))}
-              <div className="flex items-center gap-2 pt-3 mt-1 border-t border-border">
+              <div className="flex items-center gap-2 pt-3 mt-2 border-t border-border">
                 <button
                   onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
                   aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-                  className="flex items-center gap-1.5 px-3 py-2.5 min-h-[44px] rounded-sm border border-border text-xs font-medium hover:bg-muted hover:border-primary/30 transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-sm border border-border text-xs font-medium hover:bg-muted transition-colors"
                 >
                   <Globe className="h-3.5 w-3.5" />
                   {language.toUpperCase()}
                 </button>
-                <Button asChild size="default" className="flex-1 font-semibold text-sm rounded-sm">
+                <Button asChild size="sm" className="font-semibold text-xs rounded-sm">
                   <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
                 </Button>
               </div>

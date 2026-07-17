@@ -2,94 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ════════════════════════════════════════════════════════════════════
-   LTIC SARL — Brand Color System (exact logo match)
-
-   Logo extracts:
-     Dark indigo  (globe top + upward arrow)  → HSL 240 53% 44% ≈ #3535AD
-     Sky cyan     (globe bottom + down arrow) → HSL 198 92% 53% ≈ #1AAFEE
-     Deep dark    (text beneath logo)         → HSL 240 65% 12% ≈ #0A0A59
-     White        (land masses, ships, plane) → #FFFFFF
-
-   Design rule: indigo is the base, sky cyan is the accent,
-   white is used only for contrast on dark/indigo surfaces.
-   ════════════════════════════════════════════════════════════════════ */
-
 :root {
-  /* ── Main surfaces ───────────────────────────────────────────────── */
+  /* Base */
+  --background: 214 30% 96%;          /* #EFF3F9 — very light blue-grey */
+  --foreground: 218 55% 10%;          /* #0C1829 — deep blue-black */
 
-  /* Page background — clear indigo tint so the site reads as BLUE */
-  --background: 240 55% 92%;         /* #DFDFF6 — visible indigo-blue tint */
+  /* Cards & surfaces */
+  --card: 0 0% 100%;
+  --card-foreground: 218 55% 10%;
 
-  /* Body text — deep dark indigo, also used for dark section bg */
-  --foreground: 240 65% 12%;         /* #0A0A59 — logo dark indigo */
+  /* Borders & inputs */
+  --border: 214 25% 87%;              /* #CDD6E8 */
+  --input: 214 25% 87%;
+  --ring: 214 82% 38%;                /* corporate blue focus ring */
 
-  /* Cards — pure white so they POP against indigo background */
-  --card: 0 0% 100%;                 /* #FFFFFF */
-  --card-foreground: 240 65% 12%;    /* #0A0A59 */
+  /* Primary = Corporate Blue (CTA buttons, active states, accents) */
+  --primary: 214 82% 38%;            /* #116AC8 — deep corporate blue */
+  --primary-foreground: 0 0% 100%;   /* white text on blue */
 
-  /* ── Borders & inputs ────────────────────────────────────────────── */
-  --border: 240 40% 82%;             /* #BFBFE4 — visible indigo border */
-  --input: 240 40% 82%;
-  --ring: 198 92% 53%;               /* #1AAFEE — sky cyan focus ring */
+  /* Secondary = light blue-grey */
+  --secondary: 214 22% 92%;
+  --secondary-foreground: 218 55% 10%;
 
-  /* ── PRIMARY = Logo Indigo (buttons, active nav, headings accent) ── */
-  --primary: 240 53% 44%;            /* #3535AD — exact logo indigo blue */
-  --primary-foreground: 0 0% 100%;   /* white text on indigo */
+  /* Muted */
+  --muted: 214 22% 92%;
+  --muted-foreground: 214 20% 46%;   /* #5D6F8A */
 
-  /* ── SECONDARY = light indigo surface ───────────────────────────── */
-  --secondary: 240 50% 90%;          /* #D9D9F2 — light indigo surface */
-  --secondary-foreground: 240 65% 12%;
-
-  /* ── MUTED = soft indigo-grey (hover fills, alt section bg) ─────── */
-  --muted: 240 45% 87%;              /* #CFCFED — soft indigo-tinted muted */
-  --muted-foreground: 240 20% 38%;   /* #535384 — readable indigo-grey */
-
-  /* ── ACCENT = Logo Sky Cyan (highlights, callout icons on light) ── */
-  --accent: 198 92% 53%;             /* #1AAFEE — exact logo sky cyan */
-  --accent-foreground: 0 0% 100%;    /* white on sky cyan */
+  /* Accent = deep navy-blue (for dark callout elements) */
+  --accent: 218 60% 12%;             /* #0C1F40 */
+  --accent-foreground: 214 15% 90%;
 
   /* Destructive */
-  --destructive: 0 84% 60%;
+  --destructive: 4 72% 47%;          /* #CE3B22 */
   --destructive-foreground: 0 0% 100%;
 
+  /* Border radius */
   --radius: 0.375rem;
 
-  /* ── Sidebar / Hero / Footer — Deep Dark Indigo ──────────────────── */
-  /* Matches the dark indigo globe from the logo */
-  --sidebar: 240 65% 12%;            /* #0A0A59 — logo deep dark indigo */
-  --sidebar-foreground: 240 35% 82%; /* #B8B8DA — readable on dark */
-  --sidebar-border: 240 55% 20%;     /* #141480 — dark indigo border */
-
-  /* Sky cyan accent used on dark indigo backgrounds (logo sky blue) */
-  --sidebar-primary: 198 92% 62%;    /* #45C2F7 — logo sky blue on dark */
-  --sidebar-primary-foreground: 240 65% 12%;
-  --sidebar-accent: 240 55% 20%;
-  --sidebar-accent-foreground: 240 35% 82%;
-
-  /* ── Indigo scale — deep dark to near-white ──────────────────────── */
-  --blue-50:  240 50% 97%;           /* #F5F5FE — near white indigo */
-  --blue-100: 240 50% 94%;           /* #EAEAFB */
-  --blue-200: 240 55% 92%;           /* #DFDFF6 — = background */
-  --blue-300: 240 50% 84%;           /* #C4C4EE */
-  --blue-400: 240 50% 72%;           /* #9898DE */
-  --blue-500: 240 52% 58%;           /* #6B6BC9 */
-  --blue-600: 240 53% 50%;           /* #4D4DBF */
-  --blue-700: 240 53% 44%;           /* #3535AD — = primary */
-  --blue-800: 240 60% 30%;           /* #1E1E80 */
-  --blue-900: 240 65% 20%;           /* #121278 */
-  --blue-950: 240 65% 12%;           /* #0A0A59 — = sidebar */
+  /* Sidebar / Footer — deep navy-blue */
+  --sidebar: 218 60% 12%;            /* #0C1F40 */
+  --sidebar-foreground: 214 20% 88%; /* #D2D9E8 */
+  --sidebar-border: 218 45% 20%;     /* #182F55 */
+  --sidebar-primary: 214 82% 55%;    /* lighter blue in dark sidebar */
+  --sidebar-primary-foreground: 218 60% 10%;
+  --sidebar-accent: 218 45% 20%;
+  --sidebar-accent-foreground: 214 20% 88%;
 }
-
-/* ── Base styles ─────────────────────────────────────────────────── */
 
 * {
   box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -98,37 +59,25 @@ body {
   color: hsl(var(--foreground));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display), sans-serif;
-  line-height: 1.1;
 }
 
-/* ── Brand accent rule (indigo bar) ─────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Blue accent rule — the signature decorative element */
 .amber-rule {
   display: block;
   width: 3rem;
   height: 2px;
   background-color: hsl(var(--primary));
-  flex-shrink: 0;
 }
 
-/* ── Fluid hero typography ──────────────────────────────────────── */
-.text-hero {
-  font-size: clamp(2.25rem, 5vw + 0.75rem, 4.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-
-.text-section {
-  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.5rem);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-}
-
-/* ── Marquee animations ─────────────────────────────────────────── */
+/* Marquee keyframes */
 @keyframes marquee-left  { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 @keyframes marquee-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
 .marquee-left  { animation: marquee-left  40s linear infinite; }
@@ -136,22 +85,6 @@ h1, h2, h3, h4, h5, h6 {
 .marquee-wrap:hover .marquee-left,
 .marquee-wrap:hover .marquee-right { animation-play-state: paused; }
 
-/* ── Focus accessibility ────────────────────────────────────────── */
-:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
-/* ── Touch tap highlight ────────────────────────────────────────── */
-button, a, [role="button"] {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ── Reduced motion ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .marquee-left, .marquee-right { animation: none; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
 }

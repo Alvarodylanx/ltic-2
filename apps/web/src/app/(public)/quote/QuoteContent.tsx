@@ -59,81 +59,81 @@ function QuoteForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="companyName" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+          <Label htmlFor="companyName" className="text-xs font-display font-semibold uppercase tracking-wide">
             {L({ en: "Company Name", fr: "Nom de l'Entreprise" })} *
           </Label>
-          <Input id="companyName" {...register('companyName')} className="rounded-sm h-11" />
+          <Input id="companyName" {...register('companyName')} className="mt-1.5 rounded-sm" />
           {errors.companyName && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
         </div>
         <div>
-          <Label htmlFor="contactName" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+          <Label htmlFor="contactName" className="text-xs font-display font-semibold uppercase tracking-wide">
             {L({ en: 'Contact Name', fr: 'Nom du Contact' })} *
           </Label>
-          <Input id="contactName" {...register('contactName')} className="rounded-sm h-11" />
+          <Input id="contactName" {...register('contactName')} className="mt-1.5 rounded-sm" />
           {errors.contactName && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
         </div>
       </div>
 
       <div>
-        <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+        <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Email Address', fr: 'Adresse Email' })} *
         </Label>
         <Controller name="email" control={control}
           render={({ field }) => (
-            <EmailInput id="email" placeholder="you@company.com" className="rounded-sm h-11" {...field} />
+            <EmailInput id="email" placeholder="you@company.com" className="mt-1.5 rounded-sm" {...field} />
           )} />
         {errors.email && <p className="text-destructive text-xs mt-1">{L({ en: 'Valid email required', fr: 'Email valide requis' })}</p>}
       </div>
 
       <div>
-        <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+        <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Country', fr: 'Pays' })}
         </Label>
         <Controller name="country" control={control}
           render={({ field }) => (
-            <CountrySelect id="country" className="" value={field.value ?? ''} onChange={field.onChange}
+            <CountrySelect id="country" className="mt-1.5" value={field.value ?? ''} onChange={field.onChange}
               lang={language} placeholderEn="Select your country…" placeholderFr="Sélectionnez votre pays…" />
           )} />
       </div>
 
       <div>
-        <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+        <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
         </Label>
         <Controller name="phone" control={control}
           render={({ field }) => (
             <PhoneInput id="phone" value={field.value} onChange={field.onChange}
-              syncCountry={selectedCountry} className="" />
+              syncCountry={selectedCountry} className="mt-1.5" />
           )} />
       </div>
 
       <div>
-        <Label htmlFor="productInterest" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+        <Label htmlFor="productInterest" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: "Product / Service of Interest", fr: "Produit / Service d'Intérêt" })} *
         </Label>
-        <Input id="productInterest" {...register('productInterest')} className="rounded-sm h-11" />
+        <Input id="productInterest" {...register('productInterest')} className="mt-1.5 rounded-sm" />
         {errors.productInterest && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
       </div>
 
       <div>
-        <Label htmlFor="quantity" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+        <Label htmlFor="quantity" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Quantity / Volume', fr: 'Quantité / Volume' })}
         </Label>
-        <Input id="quantity" {...register('quantity')} className="rounded-sm h-11" />
+        <Input id="quantity" {...register('quantity')} className="mt-1.5 rounded-sm" />
       </div>
 
       <div>
-        <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
+        <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Additional Information', fr: 'Informations Supplémentaires' })}
         </Label>
-        <Textarea id="message" {...register('message')} rows={4} className="rounded-sm" />
+        <Textarea id="message" {...register('message')} rows={4} className="mt-1.5 rounded-sm" />
       </div>
 
       <Button type="submit" size="lg" disabled={isSubmitting}
-        className="w-full font-display font-semibold rounded-sm mt-2">
+        className="w-full font-display font-semibold text-sm rounded-sm">
         {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
         {L({ en: 'Submit Quote Request', fr: 'Envoyer la Demande de Devis' })}
       </Button>
@@ -154,7 +154,7 @@ export default function QuotePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative bg-sidebar py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <section className="relative bg-sidebar py-24 sm:py-32 overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&auto=format&fit=crop&q=50"
@@ -163,11 +163,11 @@ export default function QuotePage() {
         </div>
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pl-12">
-          <motion.p variants={fadeInUp} className="text-sidebar-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
+          <motion.p variants={fadeInUp} className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
             {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
           </motion.p>
           <motion.h1 variants={fadeInUp}
-            className="text-hero font-display font-bold text-sidebar-foreground tracking-tight mb-6 max-w-2xl">
+            className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-sidebar-foreground tracking-tight mb-6 max-w-2xl">
             {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
           </motion.h1>
           <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
@@ -177,18 +177,18 @@ export default function QuotePage() {
       </section>
 
       {/* ── Quote body ── */}
-      <section className="bg-background py-16 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
             {/* Sidebar info */}
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce} className="space-y-4">
               {highlights.map(({ icon: Icon, en, fr }, i) => (
                 <motion.div key={en} variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
                   transition={{ delay: i * 0.07 }}
-                  className="bg-card border border-border rounded-sm p-5 flex items-start gap-4 hover:border-primary/30 transition-colors duration-200">
+                  className="bg-card border border-border rounded-sm p-5 flex items-start gap-4">
                   <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
-                    <Icon className="h-4 w-4 text-sidebar-primary" />
+                    <Icon className="h-4 w-4 text-primary" />
                   </div>
                   <p className="font-display font-medium text-sm leading-relaxed pt-1">{L({ en, fr })}</p>
                 </motion.div>
@@ -205,11 +205,11 @@ export default function QuotePage() {
                     { icon: FileText,     en: 'Submit this form — takes less than 2 minutes.', fr: 'Soumettez ce formulaire — moins de 2 minutes.' },
                     { icon: Clock,        en: 'Our team prepares a custom offer within 24–48 hours.', fr: 'Notre équipe prépare une offre sous 24–48h.' },
                     { icon: CheckCircle2, en: 'You receive a detailed quote with pricing and delivery timeline.', fr: 'Vous recevez un devis détaillé avec prix et délai.' },
-                    { icon: Truck,        en: 'Confirm the offer — we handle customs, freight, and logistics.', fr: "Confirmez l'offre — nous gérons les douanes, le fret et la logistique." },
+                    { icon: Truck,        en: 'Confirm the offer — we handle customs, freight, and logistics.', fr: 'Confirmez l\'offre — nous gérons les douanes, le fret et la logistique.' },
                   ].map(({ icon: Icon, en, fr }, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <div className="w-7 h-7 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Icon className="h-3 w-3 text-sidebar-primary" />
+                        <Icon className="h-3 w-3 text-primary" />
                       </div>
                       <p className="text-xs text-muted-foreground leading-relaxed">{L({ en, fr })}</p>
                     </li>
@@ -220,7 +220,7 @@ export default function QuotePage() {
 
             {/* Form */}
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8 lg:p-10">
+              className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8">
               <span className="amber-rule mb-4" />
               <h2 className="font-display font-bold text-xl mb-6">
                 {L({ en: 'Your Quote Details', fr: 'Détails de Votre Devis' })}

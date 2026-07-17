@@ -42,7 +42,7 @@ export default function AboutPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative bg-sidebar py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <section className="relative bg-sidebar py-24 sm:py-32 overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
         <div className="absolute inset-0">
           <Image
@@ -53,11 +53,11 @@ export default function AboutPage() {
         </div>
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pl-12">
-          <motion.p variants={fadeInUp} className="text-sidebar-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
+          <motion.p variants={fadeInUp} className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
             {L({ en: 'About Us', fr: 'À Propos' })}
           </motion.p>
           <motion.h1 variants={fadeInUp}
-            className="text-hero font-display font-bold text-sidebar-foreground tracking-tight mb-6 max-w-3xl">
+            className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-sidebar-foreground leading-tight tracking-tight mb-6 max-w-3xl">
             {L({ en: 'Who We Are', fr: 'Qui Nous Sommes' })}
           </motion.h1>
           <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-xl leading-relaxed">
@@ -67,21 +67,21 @@ export default function AboutPage() {
       </section>
 
       {/* ── Company Overview ── */}
-      <section className="bg-background py-16 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
               <span className="amber-rule mb-4" />
               <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
                 {L({ en: 'Our Story', fr: 'Notre Histoire' })}
               </p>
-              <h2 className="font-display font-bold text-section tracking-tight mb-5 sm:mb-6">
+              <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight mb-6">
                 {L({ en: 'Built for the Demands of Global Commerce', fr: 'Conçu pour les Exigences du Commerce Mondial' })}
               </h2>
               <p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
                 {L({ en: "LTIC — Logistics and Transit International Company — was incorporated in Douala, Cameroon as a SARL to serve a critical need: a reliable, comprehensive partner for logistics, transit, industrial supply, commercial representation, and international trade in Cameroon and abroad.", fr: "LTIC — Logistics and Transit International Company — a été constituée à Douala, Cameroun en SARL pour répondre à un besoin essentiel : un partenaire fiable et complet en logistique, transit, fourniture industrielle, représentation commerciale et commerce international." })}
               </p>
-              <p className="text-muted-foreground mb-7 sm:mb-8 leading-relaxed text-sm sm:text-base">
+              <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
                 {L({ en: 'From our registered headquarters in Douala, we operate across Africa, Europe, the Middle East, and Canada — delivering logistics, industrial supply, import/export facilitation, phytosanitary treatment, and strategic trade solutions with precision and reliability.', fr: "Depuis notre siège social à Douala, nous opérons en Afrique, Europe, Moyen-Orient et Canada — en livrant des solutions logistiques, de fourniture industrielle, de facilitation import/export, de traitement phytosanitaire et de commerce stratégique avec précision." })}
               </p>
               <ul className="space-y-3">
@@ -101,7 +101,7 @@ export default function AboutPage() {
             </motion.div>
 
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="relative h-72 sm:h-80 lg:h-full lg:min-h-[420px] rounded-sm overflow-hidden">
+              className="relative h-80 lg:h-full min-h-[400px] rounded-sm overflow-hidden">
               <Image src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=70"
                 alt="LTIC SARL operations" fill className="object-cover transition-transform duration-700 hover:scale-105" />
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary" />
@@ -111,26 +111,26 @@ export default function AboutPage() {
       </section>
 
       {/* ── Mission, Vision, Values ── */}
-      <section className="bg-muted/40 py-16 sm:py-20 lg:py-28 border-y border-border">
+      <section className="bg-muted/50 py-20 lg:py-28 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-10 sm:mb-14">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-14">
             <span className="amber-rule mb-4" />
-            <h2 className="font-display font-bold text-section tracking-tight">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
               {L({ en: 'Mission, Vision & Values', fr: 'Mission, Vision & Valeurs' })}
             </h2>
           </motion.div>
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-px sm:bg-border">
+            className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
             {[
-              { icon: Target,      title: { en: 'Mission', fr: 'Mission' }, desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables, efficaces et complètes qui permettent à nos clients de réussir sur les marchés mondiaux." } },
-              { icon: Globe2,      title: { en: 'Vision',  fr: 'Vision'  }, desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company — trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue à l'échelle mondiale — de confiance pour les entreprises en Afrique, Europe, Moyen-Orient, Canada et au-delà." } },
-              { icon: ShieldCheck, title: { en: 'Values',  fr: 'Valeurs' }, desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration, Efficiency', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle, Innovation, Collaboration Mondiale, Efficacité' } },
+              { icon: Target,     title: { en: 'Mission', fr: 'Mission' }, desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables, efficaces et complètes qui permettent à nos clients de réussir sur les marchés mondiaux." } },
+              { icon: Globe2,     title: { en: 'Vision',  fr: 'Vision'  }, desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company — trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue à l'échelle mondiale — de confiance pour les entreprises en Afrique, Europe, Moyen-Orient, Canada et au-delà." } },
+              { icon: ShieldCheck,title: { en: 'Values',  fr: 'Valeurs' }, desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration, Efficiency', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle, Innovation, Collaboration Mondiale, Efficacité' } },
             ].map(({ icon: Icon, title, desc }) => (
               <motion.div key={title.en} variants={fadeInUp}
-                className="group bg-card p-7 sm:p-8 hover:bg-background transition-colors duration-200 relative border border-border sm:border-0">
+                className="group bg-card p-8 hover:bg-background transition-colors duration-200 relative">
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="w-12 h-12 rounded-sm bg-foreground flex items-center justify-center mb-6">
-                  <Icon className="h-5 w-5 text-sidebar-primary" />
+                  <Icon className="h-5 w-5 text-primary" />
                 </div>
                 <h3 className="font-display font-bold text-lg mb-4">{L(title)}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{L(desc)}</p>
@@ -141,24 +141,24 @@ export default function AboutPage() {
       </section>
 
       {/* ── Core Values Grid ── */}
-      <section className="bg-background py-16 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-10 sm:mb-14">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-14">
             <span className="amber-rule mb-4" />
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
               {L({ en: 'What Drives Us', fr: 'Ce Qui Nous Anime' })}
             </p>
-            <h2 className="font-display font-bold text-section tracking-tight">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
               {L({ en: 'Our Core Values', fr: 'Nos Valeurs Fondamentales' })}
             </h2>
           </motion.div>
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {values.map(({ icon: Icon, ...val }) => (
               <motion.div key={val.en} variants={scaleIn}
-                className="group bg-card border border-border rounded-sm p-6 hover:border-primary/50 hover:shadow-sm transition-all duration-200">
+                className="group bg-card border border-border rounded-sm p-6 hover:border-primary/50 transition-colors duration-200">
                 <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center mb-5">
-                  <Icon className="h-4 w-4 text-sidebar-primary" />
+                  <Icon className="h-4 w-4 text-primary" />
                 </div>
                 <h3 className="font-display font-bold text-sm mb-2">{L({ en: val.en, fr: val.fr })}</h3>
                 <p className="text-muted-foreground text-xs leading-relaxed">{L({ en: val.descEn, fr: val.descFr })}</p>
@@ -169,14 +169,14 @@ export default function AboutPage() {
       </section>
 
       {/* ── Stats ── */}
-      <section className="bg-foreground py-12 sm:py-14">
+      <section className="bg-foreground py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((stat, i) => (
               <motion.div key={i} variants={scaleIn} className="flex flex-col items-center">
-                <span className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-sidebar-primary leading-none mb-2">{stat.value}</span>
-                <span className="text-sidebar-foreground/60 text-xs uppercase tracking-widest font-medium mt-1">{L(stat)}</span>
+                <span className="font-display font-bold text-4xl sm:text-5xl text-primary leading-none mb-2">{stat.value}</span>
+                <span className="text-sidebar-foreground/60 text-xs uppercase tracking-widest font-medium">{L(stat)}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -184,14 +184,14 @@ export default function AboutPage() {
       </section>
 
       {/* ── Team ── */}
-      <section className="bg-background py-16 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-10 sm:mb-14">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-14">
             <span className="amber-rule mb-4" />
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
               {L({ en: 'Our Team', fr: 'Notre Équipe' })}
             </p>
-            <h2 className="font-display font-bold text-section tracking-tight mb-4">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight mb-4">
               {L({ en: 'Professional Expertise at Every Level', fr: 'Expertise Professionnelle à Chaque Niveau' })}
             </h2>
             <p className="text-muted-foreground max-w-xl text-sm leading-relaxed">
@@ -199,16 +199,16 @@ export default function AboutPage() {
             </p>
           </motion.div>
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { role: { en: 'Operations Director', fr: 'Directeur des Opérations' }, desc: { en: 'Experienced in managing international freight, customs operations, and multi-modal logistics across Africa, Europe, and the Middle East.', fr: "Expérimenté dans la gestion du fret international, des opérations douanières et de la logistique multimodale en Afrique, Europe et Moyen-Orient." } },
               { role: { en: 'Trade Manager',        fr: 'Responsable Commercial'   }, desc: { en: 'Specialist in global sourcing, import/export compliance, and building strategic trade partnerships across 30+ markets.', fr: "Spécialiste en approvisionnement mondial, conformité import/export, et développement de partenariats commerciaux stratégiques dans 30+ marchés." } },
               { role: { en: 'Supply Chain Consultant', fr: 'Consultant en Chaîne Logistique' }, desc: { en: 'Expert in supply chain design, procurement optimization, and industrial supply solutions for complex operational environments.', fr: "Expert en conception de chaîne logistique, optimisation des achats et solutions de fournitures industrielles pour environnements complexes." } },
             ].map((member, i) => (
               <motion.div key={i} variants={scaleIn}
-                className="bg-card border border-border rounded-sm p-6 text-center hover:border-primary/40 hover:shadow-sm transition-all duration-200">
+                className="bg-card border border-border rounded-sm p-6 text-center hover:border-primary/40 transition-colors duration-200">
                 <div className="w-14 h-14 rounded-sm bg-foreground flex items-center justify-center mx-auto mb-5">
-                  <User className="h-6 w-6 text-sidebar-primary" />
+                  <User className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="font-display font-bold text-sm mb-3">{L(member.role)}</h3>
                 <p className="text-muted-foreground text-xs leading-relaxed">{L(member.desc)}</p>
@@ -219,9 +219,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-foreground py-14 sm:py-16 relative overflow-hidden">
+      <section className="bg-foreground py-16 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
               {L({ en: 'Ready to Partner with LTIC SARL?', fr: 'Prêt à Collaborer avec LTIC SARL ?' })}
@@ -230,8 +230,8 @@ export default function AboutPage() {
               {L({ en: 'Let us show you how our global network transforms your operations.', fr: "Laissez-nous vous montrer comment notre réseau mondial transforme vos opérations." })}
             </p>
           </motion.div>
-          <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce} className="flex-shrink-0 w-full sm:w-auto">
-            <Button asChild size="lg" className="font-display font-semibold rounded-sm w-full sm:w-auto">
+          <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce} className="flex-shrink-0">
+            <Button asChild size="lg" className="font-display font-semibold text-sm rounded-sm">
               <Link href="/contact">
                 {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                 <ArrowRight className="h-4 w-4 ml-2" />
