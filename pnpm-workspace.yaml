@@ -1,3 +1,8 @@
-﻿packages:
+packages:
   - 'apps/*'
   - 'packages/*'
+allowBuilds:
+  '@nestjs/core': true
+  es5-ext: true
+  esbuild: true
+  unrs-resolver: true

@@ -1,7 +1,26 @@
 {
-  "version": "1.30.6",
-  "releaseDate": "2026-05-29",
+  "version": "1.31.0",
+  "releaseDate": "2026-07-17",
   "changelog": [
+    {
+      "version": "1.31.0",
+      "date": "2026-07-17",
+      "type": "minor",
+      "summary": "Full UI/UX redesign: Syne + DM Sans fonts, amber-gold design system, editorial layout, redesigned Navbar, Footer, Homepage, About, Services, Contact, Quote pages",
+      "changes": [
+        "Replace Inter with Syne (display) + DM Sans (body) — distinctive, characterful typography",
+        "New color system: cool grey base + amber gold (#D4A820) primary + deep navy dark sections",
+        "Amber route-line signature element on featured cards and section dividers",
+        "Navbar: minimal editorial style with animated amber underline on active links",
+        "Footer: amber top accent rule, clean navy layout with amber headings",
+        "Homepage: industrial hero with amber vertical accent, navy stats band with amber numbers, service grid with amber hover top-border",
+        "About, Services, Contact, Quote pages: unified editorial hero pattern with amber left accent",
+        "Services: alternating layout with amber bottom-border on images",
+        "Contact + Quote: form layout with display-font labels and amber amber-rule dividers",
+        "Consistent rounded-sm corners throughout (cargo manifest aesthetic)",
+        "Dark navy icon boxes with amber icons replacing light primary/10 approach"
+      ]
+    },
     {
       "version": "1.30.6",
       "date": "2026-05-29",

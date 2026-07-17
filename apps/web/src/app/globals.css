@@ -2,35 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 :root {
-  --background: 210 20% 98%;
-  --foreground: 222 47% 11%;
-  --border: 214 32% 91%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221 83% 53%;
+  /* Base */
+  --background: 220 22% 96%;          /* #F1F4F9 — cool grey paper */
+  --foreground: 222 45% 10%;          /* #0D1629 — deep navy-black */
+
+  /* Cards & surfaces */
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --primary: 221 83% 53%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --sidebar: 222 47% 11%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 215 27.9% 16.9%;
-  --sidebar-primary: 221 83% 53%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 215 27.9% 16.9%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --radius: 0.25rem;
-  --app-font-sans: 'Inter', sans-serif;
+  --card-foreground: 222 45% 10%;
+
+  /* Borders & inputs */
+  --border: 220 22% 87%;              /* #D3DAE8 */
+  --input: 220 22% 87%;
+  --ring: 42 78% 50%;                 /* amber focus ring */
+
+  /* Primary = Amber Gold (CTA buttons, active states) */
+  --primary: 42 78% 50%;             /* #D4A820 */
+  --primary-foreground: 222 45% 10%; /* dark navy text on amber */
+
+  /* Secondary = light grey */
+  --secondary: 220 18% 92%;
+  --secondary-foreground: 222 45% 10%;
+
+  /* Muted */
+  --muted: 220 18% 92%;
+  --muted-foreground: 220 22% 46%;   /* #5E6D8C */
+
+  /* Accent = deep navy (for dark callout elements) */
+  --accent: 222 45% 12%;             /* #0F1D35 */
+  --accent-foreground: 220 12% 90%;
+
+  /* Destructive */
+  --destructive: 4 72% 47%;          /* #CE3B22 */
+  --destructive-foreground: 0 0% 100%;
+
+  /* Border radius */
+  --radius: 0.375rem;
+
+  /* Sidebar / Footer — deep navy */
+  --sidebar: 222 45% 10%;            /* #0D1629 */
+  --sidebar-foreground: 220 15% 88%; /* #D6DCE8 */
+  --sidebar-border: 222 38% 18%;     /* #1A2B45 */
+  --sidebar-primary: 42 78% 50%;     /* amber in sidebar */
+  --sidebar-primary-foreground: 222 45% 10%;
+  --sidebar-accent: 222 38% 18%;
+  --sidebar-accent-foreground: 220 15% 88%;
 }
 
 * {
@@ -38,12 +54,37 @@
 }
 
 body {
-  font-family: var(--app-font-sans), sans-serif;
+  font-family: var(--font-body), sans-serif;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Amber route-line — the signature decorative element */
+.amber-rule {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background-color: hsl(var(--primary));
+}
+
+/* Marquee keyframes */
+@keyframes marquee-left  { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+@keyframes marquee-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
+.marquee-left  { animation: marquee-left  40s linear infinite; }
+.marquee-right { animation: marquee-right 40s linear infinite; }
+.marquee-wrap:hover .marquee-left,
+.marquee-wrap:hover .marquee-right { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-left, .marquee-right { animation: none; }
 }

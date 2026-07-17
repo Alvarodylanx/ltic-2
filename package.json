@@ -9,6 +9,9 @@
     "db:push": "pnpm --filter @ltic/db push",
     "db:seed": "pnpm --filter @ltic/db seed"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@nestjs/core", "es5-ext", "esbuild", "unrs-resolver"]
+  },
   "devDependencies": {
     "concurrently": "^10.0.0",
     "playwright": "^1.60.0",

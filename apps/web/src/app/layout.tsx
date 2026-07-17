@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Syne, DM_Sans } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 
-const inter = Inter({ subsets: ['latin'], variable: '--app-font-sans' });
+const syne = Syne({ subsets: ['latin'], variable: '--font-display', weight: ['400', '500', '600', '700', '800'] });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-body', weight: ['300', '400', '500', '600', '700'] });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lticsarl.com';
 
@@ -58,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className={inter.variable}>
+      <body className={`${syne.variable} ${dmSans.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>
