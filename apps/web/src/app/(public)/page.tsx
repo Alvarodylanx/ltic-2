@@ -113,7 +113,7 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative min-h-[88vh] bg-sidebar flex items-center overflow-hidden">
+      <section className="relative min-h-[90vh] sm:min-h-[88vh] bg-sidebar flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1800&auto=format&fit=crop&q=70"
@@ -122,39 +122,35 @@ export default function HomePage() {
             className="object-cover opacity-15"
             priority
           />
-          {/* Gradient: solid left → transparent right */}
           <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/50" />
         </div>
 
-        {/* Amber vertical accent line */}
+        {/* Blue vertical accent line — desktop only */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary hidden lg:block" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:pl-12">
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32 lg:pl-12">
           <motion.div variants={stagger} initial="hidden" animate="show" className="max-w-3xl">
 
-            {/* Eyebrow */}
             <motion.p
               variants={fadeInUp}
-              className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-6"
+              className="text-sidebar-primary font-display font-semibold text-xs uppercase tracking-[0.22em] mb-5"
             >
               {L({ en: 'Multinational Business Solutions', fr: "Solutions d'Affaires Multinationales" })}
             </motion.p>
 
-            {/* Headline */}
             <motion.h1
               variants={fadeInUp}
-              className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-sidebar-foreground leading-[1.05] tracking-tight mb-8"
+              className="text-hero font-display font-bold text-sidebar-foreground tracking-tight mb-6 sm:mb-8"
             >
               {L({ en: 'Global Logistics & Industrial Trade', fr: 'Logistique Mondiale & Commerce Industriel' })}
-              <span className="block text-primary mt-2">
-                {L({ en: 'Built for Africa.', fr: 'Conçu pour l\'Afrique.' })}
+              <span className="block text-sidebar-primary mt-2 sm:mt-3">
+                {L({ en: 'Built for Africa.', fr: "Conçu pour l'Afrique." })}
               </span>
             </motion.h1>
 
-            {/* Body */}
             <motion.p
               variants={fadeInUp}
-              className="text-sidebar-foreground/70 text-base sm:text-lg leading-relaxed mb-10 max-w-xl"
+              className="text-sidebar-foreground/70 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-xl"
             >
               {L({
                 en: 'Reliable logistics, transit, industrial supply, and international trade services — connecting 30+ countries with precision and accountability.',
@@ -162,19 +158,22 @@ export default function HomePage() {
               })}
             </motion.p>
 
-            {/* CTAs */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
-              <Button asChild size="lg" className="font-display font-semibold text-sm px-8 rounded-sm shadow-none">
+            <motion.div variants={fadeInUp} className="flex flex-col xs:flex-row flex-wrap gap-3 sm:gap-4">
+              <Button
+                asChild
+                size="lg"
+                className="font-display font-semibold px-8 rounded-sm shadow-none w-full xs:w-auto"
+              >
                 <Link href="/quote">
                   {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <ArrowRight className="h-4 w-4 ml-1" />
                 </Link>
               </Button>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="font-display font-semibold text-sm px-8 rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50"
+                className="font-display font-semibold px-8 rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50 w-full xs:w-auto"
               >
                 <Link href="/services">{L({ en: 'Our Services', fr: 'Nos Services' })}</Link>
               </Button>
@@ -184,21 +183,21 @@ export default function HomePage() {
       </section>
 
       {/* ── Stats ── */}
-      <section className="bg-foreground py-14">
+      <section className="bg-foreground py-12 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={staggerFast}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center"
           >
             {stats.map((stat, i) => (
               <motion.div key={i} variants={scaleIn} className="flex flex-col items-center">
-                <span className="font-display font-bold text-4xl sm:text-5xl text-primary leading-none mb-2">
+                <span className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-sidebar-primary leading-none mb-2">
                   {stat.value}
                 </span>
-                <span className="text-sidebar-foreground/60 text-xs uppercase tracking-widest font-medium">
+                <span className="text-sidebar-foreground/60 text-xs uppercase tracking-widest font-medium mt-1">
                   {L(stat)}
                 </span>
               </motion.div>
@@ -208,19 +207,19 @@ export default function HomePage() {
       </section>
 
       {/* ── Partners marquee ── */}
-      <section className="relative bg-background py-16 overflow-hidden">
+      <section className="relative bg-background py-12 sm:py-16 overflow-hidden">
         <motion.div
           variants={fadeInUp}
           initial="hidden"
           whileInView="show"
           viewport={viewportOnce}
-          className="text-center mb-10 px-4"
+          className="text-center mb-8 sm:mb-10 px-4"
         >
           <span className="amber-rule mx-auto mb-4" />
           <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-2">
             {L({ en: 'Trusted Partners & Brands', fr: 'Partenaires & Marques de Confiance' })}
           </p>
-          <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-tight">
+          <h2 className="font-display font-bold text-section tracking-tight">
             {L({ en: 'Brands We Work With', fr: 'Marques Avec Lesquelles Nous Travaillons' })}
           </h2>
         </motion.div>
@@ -266,25 +265,25 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-background to-transparent z-10" />
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-16 sm:w-20 bg-gradient-to-r from-background to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-16 sm:w-20 bg-gradient-to-l from-background to-transparent z-10" />
       </section>
 
       {/* ── Services ── */}
-      <section className="bg-card py-24 border-y border-border">
+      <section className="bg-card py-16 sm:py-20 lg:py-28 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={fadeInUp}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="mb-16"
+            className="mb-12 sm:mb-16"
           >
             <span className="amber-rule mb-4" />
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
               {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
             </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-foreground mb-4">
+            <h2 className="font-display font-bold text-section tracking-tight text-foreground mb-4">
               {L({ en: 'Comprehensive Business Solutions', fr: "Solutions d'Affaires Complètes" })}
             </h2>
             <p className="text-muted-foreground max-w-xl leading-relaxed text-sm sm:text-base">
@@ -295,23 +294,23 @@ export default function HomePage() {
             </p>
           </motion.div>
 
+          {/* Seamless grid — gap-px on md+, spaced on mobile */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-px sm:bg-border"
           >
             {services.map(({ icon: Icon, ...svc }) => (
               <motion.div
                 key={svc.en}
                 variants={fadeInUp}
-                className="group bg-card p-6 sm:p-8 hover:bg-muted/40 transition-colors duration-300 cursor-default relative"
+                className="group bg-card p-6 sm:p-7 lg:p-8 hover:bg-muted/40 transition-colors duration-300 cursor-default relative border border-border sm:border-0"
               >
-                {/* Amber top rule — the signature */}
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="w-12 h-12 rounded-sm bg-foreground flex items-center justify-center mb-6">
-                  <Icon className="h-5 w-5 text-primary" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-sm bg-foreground flex items-center justify-center mb-5 sm:mb-6">
+                  <Icon className="h-5 w-5 text-sidebar-primary" />
                 </div>
                 <h3 className="font-display font-bold text-base mb-3">{L({ en: svc.en, fr: svc.fr })}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{L({ en: svc.descEn, fr: svc.descFr })}</p>
@@ -324,9 +323,9 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="mt-10"
+            className="mt-8 sm:mt-10"
           >
-            <Button asChild variant="outline" className="rounded-sm font-display font-semibold text-sm">
+            <Button asChild variant="outline" className="rounded-sm font-display font-semibold text-sm w-full sm:w-auto">
               <Link href="/services">
                 {L({ en: 'View All Services', fr: 'Voir Tous les Services' })}
                 <ArrowRight className="h-4 w-4 ml-2" />
@@ -337,19 +336,19 @@ export default function HomePage() {
       </section>
 
       {/* ── Why Choose Us ── */}
-      <section className="bg-background py-24">
+      <section className="bg-background py-16 sm:py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
               <span className="amber-rule mb-4" />
               <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
                 {L({ en: 'Why LTIC SARL', fr: 'Pourquoi LTIC SARL' })}
               </p>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight mb-6">
+              <h2 className="font-display font-bold text-section tracking-tight mb-5 sm:mb-6">
                 {L({ en: 'Your Strategic Partner for Global Operations', fr: 'Votre Partenaire Stratégique pour les Opérations Mondiales' })}
               </h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
+              <p className="text-muted-foreground mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base">
                 {L({
                   en: 'LTIC SARL is more than a logistics company — we are a multinational business solutions provider with the networks, expertise, and operational capacity to handle your most complex international requirements.',
                   fr: "LTIC SARL est plus qu'une société de logistique — nous sommes un fournisseur de solutions d'affaires multinationales avec les réseaux, l'expertise et la capacité opérationnelle nécessaires.",
@@ -385,21 +384,21 @@ export default function HomePage() {
               initial="hidden"
               whileInView="show"
               viewport={viewportOnce}
-              className="grid grid-cols-2 gap-4"
+              className="grid grid-cols-2 gap-3 sm:gap-4"
             >
               {[
-                { icon: Shield,    en: 'Reliability',    fr: 'Fiabilité',     descEn: 'On-time delivery backed by structured documentation and tracking.',                  descFr: 'Livraison à temps avec documentation structurée et suivi.' },
-                { icon: Globe2,    en: 'Global Network', fr: 'Réseau Mondial', descEn: 'Established connections across 30+ countries and key trade corridors.',               descFr: 'Connexions établies dans 30+ pays et corridors commerciaux clés.' },
-                { icon: Zap,       en: 'Efficiency',     fr: 'Efficacité',    descEn: 'Optimized supply chains reducing cost and transit time.',                              descFr: "Chaînes d'approvisionnement optimisées réduisant coûts et délais." },
-                { icon: TrendingUp,en: 'Growth',         fr: 'Croissance',    descEn: 'Strategic partnerships that open new markets and opportunities.',                       descFr: "Partenariats stratégiques ouvrant de nouveaux marchés et opportunités." },
+                { icon: Shield,     en: 'Reliability',    fr: 'Fiabilité',     descEn: 'On-time delivery backed by structured documentation and tracking.',                  descFr: 'Livraison à temps avec documentation structurée et suivi.' },
+                { icon: Globe2,     en: 'Global Network', fr: 'Réseau Mondial', descEn: 'Established connections across 30+ countries and key trade corridors.',               descFr: 'Connexions établies dans 30+ pays et corridors commerciaux clés.' },
+                { icon: Zap,        en: 'Efficiency',     fr: 'Efficacité',    descEn: 'Optimized supply chains reducing cost and transit time.',                              descFr: "Chaînes d'approvisionnement optimisées réduisant coûts et délais." },
+                { icon: TrendingUp, en: 'Growth',         fr: 'Croissance',    descEn: 'Strategic partnerships that open new markets and opportunities.',                       descFr: "Partenariats stratégiques ouvrant de nouveaux marchés et opportunités." },
               ].map(({ icon: Icon, ...card }) => (
                 <motion.div
                   key={card.en}
                   variants={scaleIn}
-                  className="bg-card border border-border rounded-sm p-5 sm:p-6 hover:border-primary/40 transition-colors duration-200"
+                  className="bg-card border border-border rounded-sm p-5 sm:p-6 hover:border-primary/40 hover:shadow-sm transition-all duration-200"
                 >
                   <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center mb-4">
-                    <Icon className="h-4 w-4 text-primary" />
+                    <Icon className="h-4 w-4 text-sidebar-primary" />
                   </div>
                   <h4 className="font-display font-bold text-sm mb-1.5">{L({ en: card.en, fr: card.fr })}</h4>
                   <p className="text-muted-foreground text-xs leading-relaxed">{L({ en: card.descEn, fr: card.descFr })}</p>
@@ -411,20 +410,20 @@ export default function HomePage() {
       </section>
 
       {/* ── Featured Products ── */}
-      <section className="bg-muted/50 py-24 border-y border-border">
+      <section className="bg-muted/40 py-16 sm:py-20 lg:py-28 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={fadeInUp}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="mb-16"
+            className="mb-12 sm:mb-16"
           >
             <span className="amber-rule mb-4" />
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
               {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
             </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
+            <h2 className="font-display font-bold text-section tracking-tight">
               {L({ en: 'Featured Products', fr: 'Produits en Vedette' })}
             </h2>
           </motion.div>
@@ -434,7 +433,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10"
+            className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 sm:mb-10"
           >
             {isLoading
               ? Array(8).fill(0).map((_, i) => (
@@ -450,7 +449,7 @@ export default function HomePage() {
                   <motion.div key={product.id} variants={fadeInUp}>
                     <Link
                       href={`/products/${product.slug}`}
-                      className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 transition-all duration-300 block"
+                      className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 hover:shadow-sm transition-all duration-300 block"
                     >
                       <div className="aspect-[4/3] relative bg-muted overflow-hidden">
                         {product.imageUrl && (
@@ -465,7 +464,7 @@ export default function HomePage() {
                       </div>
                       <div className="p-4">
                         {product.categoryName && (
-                          <span className="inline-block bg-primary/15 text-primary text-xs rounded-sm px-2 py-0.5 mb-2 font-medium">
+                          <span className="inline-block bg-secondary text-primary text-xs rounded-sm px-2 py-0.5 mb-2 font-medium font-display">
                             {product.categoryName}
                           </span>
                         )}
@@ -479,7 +478,7 @@ export default function HomePage() {
           </motion.div>
 
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
-            <Button asChild variant="outline" className="rounded-sm font-display font-semibold text-sm">
+            <Button asChild variant="outline" className="rounded-sm font-display font-semibold text-sm w-full sm:w-auto">
               <Link href="/products">
                 {L({ en: 'Browse Full Catalog', fr: 'Parcourir le Catalogue' })}
                 <ArrowRight className="h-4 w-4 ml-2" />
@@ -490,17 +489,17 @@ export default function HomePage() {
       </section>
 
       {/* ── Industries ── */}
-      <section className="bg-background py-24">
+      <section className="bg-background py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={fadeInUp}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="mb-12 text-center"
+            className="mb-10 sm:mb-12 text-center"
           >
             <span className="amber-rule mx-auto mb-4" />
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
+            <h2 className="font-display font-bold text-section tracking-tight">
               {L({ en: 'Industries We Serve', fr: 'Secteurs que Nous Servons' })}
             </h2>
           </motion.div>
@@ -509,13 +508,13 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="flex flex-wrap justify-center gap-3"
+            className="flex flex-wrap justify-center gap-2 sm:gap-3"
           >
             {industries.map((ind) => (
               <motion.span
                 key={ind.en}
                 variants={scaleIn}
-                className="bg-card border border-border text-foreground rounded-sm px-5 py-2.5 text-sm font-display font-medium cursor-default hover:border-primary/50 hover:text-primary transition-colors duration-200"
+                className="bg-card border border-border text-foreground rounded-sm px-4 sm:px-5 py-2.5 text-sm font-display font-medium cursor-default hover:border-primary/50 hover:text-primary hover:bg-secondary/40 transition-colors duration-200"
               >
                 {L(ind)}
               </motion.span>
@@ -525,20 +524,20 @@ export default function HomePage() {
       </section>
 
       {/* ── How to Order ── */}
-      <section className="bg-muted/50 py-24 border-y border-border">
+      <section className="bg-muted/40 py-16 sm:py-20 lg:py-28 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={fadeInUp}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="mb-16"
+            className="mb-12 sm:mb-16"
           >
             <span className="amber-rule mb-4" />
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
               {L({ en: 'Simple Process', fr: 'Processus Simple' })}
             </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight mb-4">
+            <h2 className="font-display font-bold text-section tracking-tight mb-4">
               {L({ en: 'How to Place an Order', fr: 'Comment Passer une Commande' })}
             </h2>
             <p className="text-muted-foreground max-w-md text-sm sm:text-base">
@@ -551,27 +550,27 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative"
           >
             {orderSteps.map((step, i) => (
               <motion.div key={i} variants={fadeInUp} className="relative">
-                {/* Connector */}
+                {/* Connector line — desktop only */}
                 {i < orderSteps.length - 1 && (
                   <div className="hidden lg:block absolute top-6 left-[calc(100%-0.5rem)] w-full h-px bg-border z-0" />
                 )}
-                <div className="relative z-10 bg-card border border-border rounded-sm p-6 h-full hover:border-primary/40 transition-colors duration-200">
+                <div className="relative z-10 bg-card border border-border rounded-sm p-5 sm:p-6 h-full hover:border-primary/40 hover:shadow-sm transition-all duration-200">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
-                      <step.icon className="h-4 w-4 text-primary" />
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
+                      <step.icon className="h-4 w-4 text-sidebar-primary" />
                     </div>
-                    <span className="font-display font-bold text-2xl text-primary/30 leading-none">0{i + 1}</span>
+                    <span className="font-display font-bold text-2xl text-primary/25 leading-none">0{i + 1}</span>
                   </div>
                   <h3 className="font-display font-bold text-sm mb-2">{L(step.title)}</h3>
                   <p className="text-muted-foreground text-xs leading-relaxed mb-4">{L(step.desc)}</p>
                   {step.href && step.action && (
                     <Link
                       href={step.href}
-                      className="inline-flex items-center gap-1.5 text-primary text-xs font-display font-semibold hover:gap-2.5 transition-all duration-200"
+                      className="inline-flex items-center gap-1.5 text-primary text-xs font-display font-semibold hover:gap-2.5 transition-all duration-200 min-h-[24px]"
                     >
                       {L(step.action)} <ArrowRight className="h-3 w-3" />
                     </Link>
@@ -584,18 +583,17 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="bg-foreground py-20 relative overflow-hidden">
-        {/* Amber accent rule at top */}
+      <section className="bg-foreground py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-4">
+              <p className="text-sidebar-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-4">
                 {L({ en: 'Ready to Start?', fr: 'Prêt à Commencer ?' })}
               </p>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-sidebar-foreground tracking-tight leading-tight">
-                {L({ en: 'Optimize Your Global Operations Today.', fr: 'Optimisez Vos Opérations Mondiales Aujourd\'hui.' })}
+              <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-sidebar-foreground tracking-tight leading-tight">
+                {L({ en: 'Optimize Your Global Operations Today.', fr: "Optimisez Vos Opérations Mondiales Aujourd'hui." })}
               </h2>
             </motion.div>
 
@@ -604,23 +602,23 @@ export default function HomePage() {
               initial="hidden"
               whileInView="show"
               viewport={viewportOnce}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               <Button
                 asChild
                 size="lg"
-                className="font-display font-semibold text-sm px-8 rounded-sm"
+                className="font-display font-semibold px-8 rounded-sm w-full sm:w-auto"
               >
                 <Link href="/contact">
                   {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <ArrowRight className="h-4 w-4 ml-1" />
                 </Link>
               </Button>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="font-display font-semibold text-sm px-8 rounded-sm bg-transparent border-sidebar-foreground/25 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:border-sidebar-foreground/40 hover:text-sidebar-foreground"
+                className="font-display font-semibold px-8 rounded-sm bg-transparent border-sidebar-foreground/25 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:border-sidebar-foreground/40 hover:text-sidebar-foreground w-full sm:w-auto"
               >
                 <Link href="/quote">{L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}</Link>
               </Button>

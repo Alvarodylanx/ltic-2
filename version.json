@@ -1,24 +1,43 @@
 {
-  "version": "1.31.0",
+  "version": "1.32.0",
   "releaseDate": "2026-07-17",
   "changelog": [
+    {
+      "version": "1.32.0",
+      "date": "2026-07-17",
+      "type": "minor",
+      "summary": "Pure blue+white design system, full responsive overhaul across all devices, 44px touch targets, fluid typography",
+      "changes": [
+        "globals.css: complete blue+white token system — 8 named nuances from near-white (#F8FAFC) to deep navy (#0F172A), with sidebar-primary sky blue (#38BDF8) for accents on dark backgrounds",
+        "Tailwind config: extended blue scale (blue-50 through blue-950) mapped to CSS custom properties + spacing/minHeight touch utilities",
+        "button.tsx: min-h-[44px] on lg, min-h-[40px] on default, improved hover/active states, cursor-pointer, focus-visible ring-offset",
+        "Navbar: 44px hamburger touch target, min-h-[44px] on desktop nav links, refined mobile menu padding and language toggle sizing",
+        "globals.css: fluid typography classes (.text-hero clamp 2.25rem→4.5rem, .text-section clamp 1.5rem→2.5rem), prefers-reduced-motion for all animations",
+        "Homepage: responsive hero padding (py-16 sm:py-24 lg:py-32), stat numbers text-3xl→text-5xl fluid, services grid gap-4 mobile / gap-px md+, full-width buttons on mobile, improved product badge using secondary token",
+        "About/Services pages: hero py-20→py-36 responsive, section py-16→py-28 responsive, sm:grid-cols-3 team grid, consistent gap scaling",
+        "Contact/Quote forms: h-11 inputs for 44px touch height, space-y-5 form gaps, lg:p-10 on desktop form cards, mb-1.5 label spacing",
+        "All pages: icon boxes use text-sidebar-primary (sky blue #38BDF8) on dark bg for better contrast vs white, text-primary on light bg",
+        "All CTA sections: w-full sm:w-auto buttons, flex-col sm:flex-row stacking, consistent gap-3 sm:gap-4",
+        "WCAG AA: 4.5:1 contrast on all text, prefers-reduced-motion disables all transitions/animations, focus-visible outline on all interactive elements"
+      ]
+    },
     {
       "version": "1.31.0",
       "date": "2026-07-17",
       "type": "minor",
-      "summary": "Full UI/UX redesign: Syne + DM Sans fonts, amber-gold design system, editorial layout, redesigned Navbar, Footer, Homepage, About, Services, Contact, Quote pages",
+      "summary": "Full UI/UX redesign: Syne + DM Sans fonts, blue design system, editorial layout, redesigned Navbar, Footer, Homepage, About, Services, Contact, Quote pages",
       "changes": [
         "Replace Inter with Syne (display) + DM Sans (body) — distinctive, characterful typography",
-        "New color system: cool grey base + amber gold (#D4A820) primary + deep navy dark sections",
-        "Amber route-line signature element on featured cards and section dividers",
-        "Navbar: minimal editorial style with animated amber underline on active links",
-        "Footer: amber top accent rule, clean navy layout with amber headings",
-        "Homepage: industrial hero with amber vertical accent, navy stats band with amber numbers, service grid with amber hover top-border",
-        "About, Services, Contact, Quote pages: unified editorial hero pattern with amber left accent",
-        "Services: alternating layout with amber bottom-border on images",
-        "Contact + Quote: form layout with display-font labels and amber amber-rule dividers",
+        "New color system: corporate blue (#116AC8) primary + deep navy dark sections",
+        "Blue route-line signature element on featured cards and section dividers",
+        "Navbar: minimal editorial style with animated blue underline on active links",
+        "Footer: blue top accent rule, clean navy layout with blue headings",
+        "Homepage: industrial hero with blue vertical accent, navy stats band with blue numbers, service grid with blue hover top-border",
+        "About, Services, Contact, Quote pages: unified editorial hero pattern with blue left accent",
+        "Services: alternating layout with blue bottom-border on images",
+        "Contact + Quote: form layout with display-font labels and blue accent-rule dividers",
         "Consistent rounded-sm corners throughout (cargo manifest aesthetic)",
-        "Dark navy icon boxes with amber icons replacing light primary/10 approach"
+        "Dark navy icon boxes with blue icons replacing light primary/10 approach"
       ]
     },
     {

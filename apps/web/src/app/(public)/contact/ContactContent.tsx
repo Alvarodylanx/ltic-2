@@ -70,7 +70,7 @@ export default function ContactPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative bg-sidebar py-24 sm:py-32 overflow-hidden">
+      <section className="relative bg-sidebar py-20 sm:py-28 lg:py-36 overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&auto=format&fit=crop&q=50"
@@ -79,11 +79,11 @@ export default function ContactPage() {
         </div>
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pl-12">
-          <motion.p variants={fadeInUp} className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
+          <motion.p variants={fadeInUp} className="text-sidebar-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
             {L({ en: 'Get In Touch', fr: 'Prendre Contact' })}
           </motion.p>
           <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-sidebar-foreground tracking-tight mb-6 max-w-2xl">
+            className="text-hero font-display font-bold text-sidebar-foreground tracking-tight mb-6 max-w-2xl">
             {L({ en: 'Contact Our Team', fr: 'Contactez Notre Équipe' })}
           </motion.h1>
           <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
@@ -93,14 +93,14 @@ export default function ContactPage() {
       </section>
 
       {/* ── Contact body ── */}
-      <section className="bg-background py-20 lg:py-28">
+      <section className="bg-background py-16 sm:py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
 
-            {/* Contact info */}
+            {/* Contact info sidebar */}
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
               <span className="amber-rule mb-4" />
-              <h2 className="font-display font-bold text-xl mb-8">
+              <h2 className="font-display font-bold text-xl mb-7 sm:mb-8">
                 {L({ en: 'Contact Information', fr: 'Informations de Contact' })}
               </h2>
               <div className="space-y-5">
@@ -109,13 +109,13 @@ export default function ContactPage() {
                     transition={{ delay: i * 0.07 }}
                     className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
-                      <Icon className="h-4 w-4 text-primary" />
+                      <Icon className="h-4 w-4 text-sidebar-primary" />
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground uppercase tracking-widest mb-0.5 font-display font-semibold">
                         {L(label)}
                       </p>
-                      <p className="text-sm font-medium">{value}</p>
+                      <p className="text-sm font-medium leading-snug">{value}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -124,84 +124,84 @@ export default function ContactPage() {
 
             {/* Form */}
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8">
+              className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8 lg:p-10">
               <span className="amber-rule mb-4" />
               <h2 className="font-display font-bold text-xl mb-6">
                 {L({ en: 'Send Us a Message', fr: 'Envoyez-Nous un Message' })}
               </h2>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                   <div>
-                    <Label htmlFor="name" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    <Label htmlFor="name" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
                       {L({ en: 'Your Name', fr: 'Votre Nom' })} *
                     </Label>
-                    <Input id="name" {...register('name')} className="mt-1.5 rounded-sm"
+                    <Input id="name" {...register('name')} className="rounded-sm h-11"
                       placeholder={L({ en: 'John Doe', fr: 'Jean Dupont' })} />
                     {errors.name && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 2 characters', fr: '2 caractères minimum' })}</p>}
                   </div>
                   <div>
-                    <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
                       {L({ en: 'Email Address', fr: 'Adresse Email' })} *
                     </Label>
                     <Controller name="email" control={control}
                       render={({ field }) => (
-                        <EmailInput id="email" placeholder="you@company.com" className="mt-1.5 rounded-sm" {...field} />
+                        <EmailInput id="email" placeholder="you@company.com" className="rounded-sm h-11" {...field} />
                       )} />
                     {errors.email && <p className="text-destructive text-xs mt-1">{L({ en: 'Valid email required', fr: 'Email valide requis' })}</p>}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                   <div>
-                    <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
                       {L({ en: 'Country', fr: 'Pays' })}
                     </Label>
                     <Controller name="country" control={control}
                       render={({ field }) => (
-                        <CountrySelect id="country" className="mt-1.5" value={field.value ?? ''} onChange={field.onChange}
+                        <CountrySelect id="country" className="" value={field.value ?? ''} onChange={field.onChange}
                           lang={language} placeholderEn="Select country…" placeholderFr="Sélectionnez votre pays…" />
                       )} />
                   </div>
                   <div>
-                    <Label htmlFor="company" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    <Label htmlFor="company" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
                       {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })}
                     </Label>
-                    <Input id="company" {...register('company')} className="mt-1.5 rounded-sm"
+                    <Input id="company" {...register('company')} className="rounded-sm h-11"
                       placeholder={L({ en: 'Your Company Ltd.', fr: 'Votre Société S.A.' })} />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
                     {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
                   </Label>
                   <Controller name="phone" control={control}
                     render={({ field }) => (
                       <PhoneInput id="phone" value={field.value} onChange={field.onChange}
-                        syncCountry={selectedCountry} className="mt-1.5" />
+                        syncCountry={selectedCountry} className="" />
                     )} />
                 </div>
 
                 <div>
-                  <Label htmlFor="subject" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  <Label htmlFor="subject" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
                     {L({ en: 'Subject', fr: 'Sujet' })} *
                   </Label>
-                  <Input id="subject" {...register('subject')} className="mt-1.5 rounded-sm"
+                  <Input id="subject" {...register('subject')} className="rounded-sm h-11"
                     placeholder={L({ en: 'How can we help?', fr: 'Comment pouvons-nous vous aider ?' })} />
                   {errors.subject && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
                 </div>
 
                 <div>
-                  <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide mb-1.5 block">
                     {L({ en: 'Your Message', fr: 'Votre Message' })} *
                   </Label>
-                  <Textarea id="message" {...register('message')} rows={5} className="mt-1.5 rounded-sm"
+                  <Textarea id="message" {...register('message')} rows={5} className="rounded-sm"
                     placeholder={L({ en: 'Tell us about your logistics or supply requirements…', fr: 'Parlez-nous de vos besoins en logistique ou fournitures…' })} />
                   {errors.message && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 10 characters', fr: '10 caractères minimum' })}</p>}
                 </div>
 
                 <Button type="submit" size="lg" disabled={isSubmitting}
-                  className="w-full font-display font-semibold text-sm rounded-sm">
+                  className="w-full font-display font-semibold rounded-sm mt-2">
                   {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
                   {L({ en: 'Send Message', fr: 'Envoyer le Message' })}
                 </Button>

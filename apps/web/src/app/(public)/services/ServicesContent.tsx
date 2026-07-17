@@ -80,7 +80,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative bg-sidebar py-24 sm:py-32 overflow-hidden">
+      <section className="relative bg-sidebar py-20 sm:py-28 lg:py-36 overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1600&auto=format&fit=crop&q=50"
@@ -89,11 +89,11 @@ export default function ServicesPage() {
         </div>
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pl-12">
-          <motion.p variants={fadeInUp} className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
+          <motion.p variants={fadeInUp} className="text-sidebar-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-4">
             {L({ en: 'Our Services', fr: 'Nos Services' })}
           </motion.p>
           <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-sidebar-foreground tracking-tight mb-6 max-w-3xl">
+            className="text-hero font-display font-bold text-sidebar-foreground tracking-tight mb-6 max-w-3xl">
             {L({ en: 'Full-Spectrum Business Solutions', fr: "Solutions d'Affaires à Spectre Complet" })}
           </motion.h1>
           <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-xl leading-relaxed">
@@ -106,14 +106,14 @@ export default function ServicesPage() {
       {services.map((svc, index) => {
         const isEven = index % 2 === 0;
         return (
-          <section key={svc.en} className={`py-20 lg:py-28 ${isEven ? 'bg-background' : 'bg-muted/50'} border-b border-border`}>
+          <section key={svc.en} className={`py-16 sm:py-20 lg:py-28 ${isEven ? 'bg-background' : 'bg-muted/40'} border-b border-border`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
                 <motion.div variants={isEven ? fadeInLeft : fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
                   className={isEven ? '' : 'lg:order-2'}>
                   <div className="w-12 h-12 rounded-sm bg-foreground flex items-center justify-center mb-6">
-                    <svc.icon className="h-5 w-5 text-primary" />
+                    <svc.icon className="h-5 w-5 text-sidebar-primary" />
                   </div>
                   <span className="amber-rule mb-4" />
                   <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
@@ -136,7 +136,7 @@ export default function ServicesPage() {
                 </motion.div>
 
                 <motion.div variants={isEven ? fadeInRight : fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
-                  className={`relative h-72 lg:h-[420px] rounded-sm overflow-hidden ${isEven ? '' : 'lg:order-1'}`}>
+                  className={`relative h-64 sm:h-72 lg:h-[420px] rounded-sm overflow-hidden ${isEven ? '' : 'lg:order-1'}`}>
                   <Image src={svc.image} alt={L({ en: svc.en, fr: svc.fr })} fill
                     className="object-cover transition-transform duration-700 hover:scale-105" />
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
@@ -148,9 +148,9 @@ export default function ServicesPage() {
       })}
 
       {/* ── CTA ── */}
-      <section className="bg-foreground py-16 relative overflow-hidden">
+      <section className="bg-foreground py-14 sm:py-16 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
               {L({ en: 'Ready to Get Started?', fr: 'Prêt à Commencer ?' })}
@@ -159,8 +159,8 @@ export default function ServicesPage() {
               {L({ en: 'Discuss your requirements and get a tailored proposal.', fr: 'Discutez de vos besoins et obtenez une proposition personnalisée.' })}
             </p>
           </motion.div>
-          <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce} className="flex-shrink-0">
-            <Button asChild size="lg" className="font-display font-semibold text-sm rounded-sm">
+          <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce} className="flex-shrink-0 w-full sm:w-auto">
+            <Button asChild size="lg" className="font-display font-semibold rounded-sm w-full sm:w-auto">
               <Link href="/contact">
                 {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                 <ArrowRight className="h-4 w-4 ml-2" />

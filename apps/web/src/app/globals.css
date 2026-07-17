@@ -2,55 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ════════════════════════════════════════════════════════════════════
+   LTIC SARL — Blue + White Design System
+   Swiss Modernism 2.0 / B2B Corporate Logistics
+   Palette: pure blue↔white spectrum, 8 named nuances, no other hues
+   ════════════════════════════════════════════════════════════════════ */
+
 :root {
-  /* Base */
-  --background: 214 30% 96%;          /* #EFF3F9 — very light blue-grey */
-  --foreground: 218 55% 10%;          /* #0C1829 — deep blue-black */
+  /* ── Semantic tokens (used everywhere via hsl(var(--token))) ─────── */
 
-  /* Cards & surfaces */
-  --card: 0 0% 100%;
-  --card-foreground: 218 55% 10%;
+  /* Surfaces */
+  --background: 210 40% 98%;         /* #F8FAFC — near-white, subtle blue tint */
+  --foreground: 222 47% 11%;         /* #0F172A — deep navy (body text + dark sections) */
 
-  /* Borders & inputs */
-  --border: 214 25% 87%;              /* #CDD6E8 */
-  --input: 214 25% 87%;
-  --ring: 214 82% 38%;                /* corporate blue focus ring */
+  --card: 0 0% 100%;                 /* #FFFFFF — pure white cards */
+  --card-foreground: 222 47% 11%;
 
-  /* Primary = Corporate Blue (CTA buttons, active states, accents) */
-  --primary: 214 82% 38%;            /* #116AC8 — deep corporate blue */
-  --primary-foreground: 0 0% 100%;   /* white text on blue */
+  /* Interactive */
+  --border: 214 32% 91%;             /* #E2E8F0 — soft blue-grey borders */
+  --input: 214 32% 91%;
+  --ring: 201 96% 32%;               /* #0369A1 — brand blue focus ring */
 
-  /* Secondary = light blue-grey */
-  --secondary: 214 22% 92%;
-  --secondary-foreground: 218 55% 10%;
+  /* Primary = Corporate Blue (CTAs, active indicators, icon accents) */
+  --primary: 201 96% 32%;           /* #0369A1 — deep trust blue */
+  --primary-foreground: 0 0% 100%;  /* white on blue */
 
-  /* Muted */
-  --muted: 214 22% 92%;
-  --muted-foreground: 214 20% 46%;   /* #5D6F8A */
+  /* Secondary = clear light-blue surface (info chips, badges) */
+  --secondary: 213 80% 94%;         /* #DBE9FE — visible light blue */
+  --secondary-foreground: 222 47% 11%;
 
-  /* Accent = deep navy-blue (for dark callout elements) */
-  --accent: 218 60% 12%;             /* #0C1F40 */
-  --accent-foreground: 214 15% 90%;
+  /* Muted = very light blue-grey (hover fills, section tints) */
+  --muted: 214 22% 93%;             /* #E8ECF1 */
+  --muted-foreground: 215 16% 47%;  /* #64748B — readable blue-grey */
+
+  /* Accent = deep navy (icon boxes on light bg, dark callouts) */
+  --accent: 222 47% 11%;            /* #0F172A */
+  --accent-foreground: 214 32% 88%; /* #CBD5E1 — light blue on navy */
 
   /* Destructive */
-  --destructive: 4 72% 47%;          /* #CE3B22 */
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  /* Border radius */
   --radius: 0.375rem;
 
-  /* Sidebar / Footer — deep navy-blue */
-  --sidebar: 218 60% 12%;            /* #0C1F40 */
-  --sidebar-foreground: 214 20% 88%; /* #D2D9E8 */
-  --sidebar-border: 218 45% 20%;     /* #182F55 */
-  --sidebar-primary: 214 82% 55%;    /* lighter blue in dark sidebar */
-  --sidebar-primary-foreground: 218 60% 10%;
-  --sidebar-accent: 218 45% 20%;
-  --sidebar-accent-foreground: 214 20% 88%;
+  /* Sidebar / Footer — deep navy section */
+  --sidebar: 222 47% 11%;           /* #0F172A */
+  --sidebar-foreground: 214 32% 88%; /* #CBD5E1 — light blue-grey text */
+  --sidebar-border: 215 28% 18%;    /* #1E293B — dark navy border */
+  --sidebar-primary: 199 95% 62%;   /* #38BDF8 — sky blue accent on dark bg */
+  --sidebar-primary-foreground: 222 47% 11%;
+  --sidebar-accent: 215 28% 18%;
+  --sidebar-accent-foreground: 214 32% 88%;
+
+  /* ── Full blue scale — for nuanced usage across the site ─────────── */
+  --blue-50:  210 100% 97%;          /* #EFF6FF — almost white */
+  --blue-100: 213 80% 94%;           /* #DBE9FE — pale blue */
+  --blue-200: 213 97% 87%;           /* #BFDBFE — light blue */
+  --blue-300: 212 96% 78%;           /* #93C5FD — sky */
+  --blue-400: 213 94% 68%;           /* #60A5FA — medium */
+  --blue-500: 217 91% 60%;           /* #3B82F6 — vivid blue */
+  --blue-600: 221 83% 53%;           /* #2563EB — strong blue */
+  --blue-700: 201 96% 32%;           /* #0369A1 — brand (= primary) */
+  --blue-800: 224 76% 27%;           /* #163079 — dark blue */
+  --blue-900: 222 47% 18%;           /* #1E2D5A — near-navy */
+  --blue-950: 222 47% 11%;           /* #0F172A — deep navy (= foreground) */
 }
+
+/* ── Base styles ─────────────────────────────────────────────────── */
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -59,25 +85,37 @@ body {
   color: hsl(var(--foreground));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display), sans-serif;
+  line-height: 1.1;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-/* Blue accent rule — the signature decorative element */
+/* ── Signature decorative accent rule ───────────────────────────── */
 .amber-rule {
   display: block;
   width: 3rem;
   height: 2px;
   background-color: hsl(var(--primary));
+  flex-shrink: 0;
 }
 
-/* Marquee keyframes */
+/* ── Fluid hero typography ──────────────────────────────────────── */
+.text-hero {
+  font-size: clamp(2.25rem, 5vw + 0.75rem, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.text-section {
+  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+/* ── Marquee animations ─────────────────────────────────────────── */
 @keyframes marquee-left  { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 @keyframes marquee-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
 .marquee-left  { animation: marquee-left  40s linear infinite; }
@@ -85,6 +123,22 @@ html {
 .marquee-wrap:hover .marquee-left,
 .marquee-wrap:hover .marquee-right { animation-play-state: paused; }
 
+/* ── Focus accessibility ────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* ── Touch target baseline ──────────────────────────────────────── */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .marquee-left, .marquee-right { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

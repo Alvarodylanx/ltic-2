@@ -54,6 +54,33 @@ const config: Config = {
         sans: ['var(--font-body)', 'sans-serif'],
         display: ['var(--font-display)', 'sans-serif'],
       },
+      /* Named blue shades — map to CSS custom properties */
+      colors: {
+        blue: {
+          50:  'hsl(var(--blue-50))',
+          100: 'hsl(var(--blue-100))',
+          200: 'hsl(var(--blue-200))',
+          300: 'hsl(var(--blue-300))',
+          400: 'hsl(var(--blue-400))',
+          500: 'hsl(var(--blue-500))',
+          600: 'hsl(var(--blue-600))',
+          700: 'hsl(var(--blue-700))',
+          800: 'hsl(var(--blue-800))',
+          900: 'hsl(var(--blue-900))',
+          950: 'hsl(var(--blue-950))',
+        },
+      },
+      spacing: {
+        '4.5': '1.125rem',
+        '13': '3.25rem',
+        '18': '4.5rem',
+      },
+      minHeight: {
+        touch: '44px',
+      },
+      minWidth: {
+        touch: '44px',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],
