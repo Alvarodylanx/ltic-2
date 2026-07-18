@@ -50,10 +50,10 @@ export function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="LTIC SARL — Home">
-          <div className="w-8 h-8 bg-foreground rounded-sm flex items-center justify-center flex-shrink-0">
-            <span className="text-primary font-display font-bold text-xs tracking-tight leading-none">LT</span>
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+            <span className="text-white font-bold text-sm">LT</span>
           </div>
-          <span className="font-display font-bold text-lg tracking-tight">
+          <span className="font-bold text-lg">
             LTIC <span className="text-primary">SARL</span>
           </span>
         </Link>

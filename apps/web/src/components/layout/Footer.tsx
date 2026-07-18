@@ -37,10 +37,10 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2.5 mb-6 group" aria-label="LTIC SARL — Home">
-              <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center flex-shrink-0">
-                <span className="text-sidebar font-display font-bold text-xs">LT</span>
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-white font-bold text-sm">LT</span>
               </div>
-              <span className="font-display font-bold text-lg tracking-tight">
+              <span className="font-bold text-lg">
                 LTIC <span className="text-primary">SARL</span>
               </span>
             </Link>
