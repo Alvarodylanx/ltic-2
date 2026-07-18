@@ -50,8 +50,8 @@ export default function ProductsPage() {
       <section className="relative bg-sidebar py-24 overflow-hidden">
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&auto=format&fit=crop&q=50"
-            alt="Products" fill className="object-cover opacity-10" priority />
-          <div className="absolute inset-0 bg-gradient-to-b from-sidebar/70 to-sidebar/80" />
+            alt="Products" fill className="object-cover opacity-25" priority />
+          <div className="absolute inset-0 bg-gradient-to-b from-sidebar/60 to-sidebar/50" />
         </div>
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

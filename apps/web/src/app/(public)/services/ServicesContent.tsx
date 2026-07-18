@@ -84,8 +84,8 @@ export default function ServicesPage() {
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1600&auto=format&fit=crop&q=50"
-            alt="LTIC SARL Services" fill className="object-cover opacity-10" priority />
-          <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/60" />
+            alt="LTIC SARL Services" fill className="object-cover opacity-25" priority />
+          <div className="absolute inset-0 bg-gradient-to-r from-sidebar/90 via-sidebar/70 to-sidebar/30" />
         </div>
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pl-12">

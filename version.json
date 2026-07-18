@@ -1,7 +1,17 @@
 {
-  "version": "1.35.0",
+  "version": "1.36.0",
   "releaseDate": "2026-07-17",
   "changelog": [
+    {
+      "version": "1.36.0",
+      "date": "2026-07-17",
+      "type": "patch",
+      "summary": "Hero images slightly more visible on About, Services, Products, Contact pages",
+      "changes": [
+        "About, Services, Contact: image opacity 10% → 25%; gradient via-sidebar/95 → via-sidebar/70, to-sidebar/60 → to-sidebar/30",
+        "Products: image opacity 10% → 25%; gradient from-sidebar/70 to-sidebar/80 → from-sidebar/60 to-sidebar/50"
+      ]
+    },
     {
       "version": "1.35.0",
       "date": "2026-07-17",
