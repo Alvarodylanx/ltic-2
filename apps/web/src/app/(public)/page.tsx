@@ -308,12 +308,16 @@ function HeroCarousel() {
 }
 
 // ── StatCounter ───────────────────────────────────────────────────────────────
-// Counts 0 → target with easeOutCubic when scrolled into view.
+// Initializes with the correct suffix (e.g. "0+" not bare "0"), then counts
+// 0 → target with easeOutCubic when the element scrolls into view.
 function StatCounter({ value }: { value: string }) {
   const shouldReduce = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
-  const [display, setDisplay] = useState('0');
+  const [display, setDisplay] = useState(() => {
+    const m = value.match(/^(\d+)(.*)/);
+    return m ? `0${m[2]}` : value;
+  });
 
   useEffect(() => {
     if (!inView) return;
@@ -384,22 +388,52 @@ export default function HomePage() {
       {/* ── Hero Carousel ── */}
       <HeroCarousel />
 
-      {/* ── Stats ── */}
-      <section className="bg-foreground py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── Stats ──────────────────────────────────────────────────────────────
+           Light background creates instant contrast after the dark hero.
+           Blue top-border is the visual bridge between the two sections.
+           Vertical dividers separate each stat on md+ screens.
+      ──────────────────────────────────────────────────────────────────────── */}
+      <section className="bg-background border-b border-border">
+        {/* Blue accent bridge */}
+        <div className="h-1 bg-primary w-full" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+          {/* Section label */}
+          <motion.p
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewportOnce}
+            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-10 text-center"
+          >
+            {L({ en: 'LTIC SARL by the Numbers', fr: 'LTIC SARL en Chiffres' })}
+          </motion.p>
+
           <motion.div
             variants={staggerFast}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border"
           >
             {stats.map((stat, i) => (
-              <motion.div key={i} variants={scaleIn} className="flex flex-col items-center">
-                <span className="font-display font-bold text-5xl sm:text-6xl text-primary leading-none mb-3 tabular-nums">
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className="flex flex-col items-center text-center px-6 py-8 sm:py-10 group"
+              >
+                {/* Number */}
+                <span className="font-display font-bold tabular-nums leading-none mb-3
+                                 text-5xl sm:text-6xl lg:text-7xl text-foreground
+                                 group-hover:text-primary transition-colors duration-300">
                   <StatCounter value={stat.value} />
                 </span>
-                <span className="text-sidebar-foreground/60 text-sm uppercase tracking-widest font-medium">
+
+                {/* Divider dot */}
+                <span className="w-1.5 h-1.5 rounded-full bg-primary mb-3 flex-shrink-0" />
+
+                {/* Label */}
+                <span className="text-muted-foreground text-sm sm:text-base uppercase tracking-widest font-medium leading-tight max-w-[10rem]">
                   {L(stat)}
                 </span>
               </motion.div>
