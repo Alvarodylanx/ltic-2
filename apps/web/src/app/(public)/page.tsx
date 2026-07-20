@@ -440,97 +440,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 4. Partners ── */}
-      <section className="bg-background border-y border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-          {/* Header row — label left, partner count right */}
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={viewportOnce}
-            className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-8 border-b border-border"
-          >
-            <motion.div variants={fadeInLeft} className="flex items-center gap-4">
-              <span className="w-8 h-px bg-primary flex-shrink-0" />
-              <div>
-                <p className="font-display font-bold text-lg sm:text-xl tracking-tight leading-tight">
-                  {L({ en: 'Trusted by Leading Brands', fr: 'La Confiance des Grandes Marques' })}
-                </p>
-                <p className="text-muted-foreground text-xs mt-0.5">
-                  {L({ en: 'Official distributors & certified supply partners', fr: 'Distributeurs officiels & partenaires certifiés' })}
-                </p>
+      {/* ── 4. Trust bar — partners marquee (no redundant heading) ── */}
+      <section className="bg-muted/40 border-y border-border py-10 overflow-hidden relative">
+        <p className="text-center text-muted-foreground text-xs uppercase tracking-[0.2em] font-medium mb-8">
+          {L({ en: 'Trusted by leading brands worldwide', fr: 'Reconnu par les grandes marques mondiales' })}
+        </p>
+        <div className="marquee-wrap space-y-2.5 select-none">
+          <div className="flex w-max marquee-left">
+            {[...brandsRow1, ...brandsRow1].map((b, i) => (
+              <div key={i} className="flex items-center gap-2.5 mx-2.5 px-4 py-2.5 bg-card border border-border rounded-sm hover:border-primary/40 transition-colors duration-200 cursor-default flex-shrink-0">
+                <div className="w-8 h-8 rounded-sm bg-muted border border-border flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  {b.logoUrl
+                    ? <img src={b.logoUrl} alt={b.name} className="w-full h-full object-contain p-0.5" />
+                    : <span className="text-xs font-display font-bold text-primary">{b.name.charAt(0)}</span>}
+                </div>
+                <span className="font-display font-semibold text-sm text-foreground whitespace-nowrap">{b.name}</span>
               </div>
-            </motion.div>
-            <motion.div variants={fadeInRight} className="flex items-center gap-2 flex-shrink-0">
-              <span className="font-display font-bold text-2xl text-primary tabular-nums">
-                {partners.length > 0 ? `${partners.length}+` : '12+'}
-              </span>
-              <span className="text-muted-foreground text-xs uppercase tracking-widest font-medium leading-tight max-w-[5rem]">
-                {L({ en: 'Global Partners', fr: 'Partenaires Mondiaux' })}
-              </span>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Marquee rows */}
-        <div className="relative overflow-hidden py-6">
-          <div className="marquee-wrap space-y-3 select-none">
-
-            {/* Row 1 — scrolls left */}
-            <div className="flex w-max marquee-left">
-              {[...brandsRow1, ...brandsRow1].map((b, i) => (
-                <div key={i}
-                  className="flex items-center gap-3 mx-2 px-4 py-3 bg-card border border-border rounded-sm
-                             hover:border-primary/50 hover:shadow-sm transition-all duration-200 cursor-default flex-shrink-0 group">
-                  {/* Logo */}
-                  <div className="w-10 h-10 rounded-sm bg-muted border border-border flex items-center justify-center flex-shrink-0 overflow-hidden">
-                    {b.logoUrl
-                      ? <img src={b.logoUrl} alt={b.name} className="w-full h-full object-contain p-1" />
-                      : <span className="text-sm font-display font-bold text-primary">{b.name.charAt(0)}</span>}
-                  </div>
-                  {/* Name + sector */}
-                  <div className="min-w-0">
-                    <p className="font-display font-bold text-sm text-foreground leading-none whitespace-nowrap group-hover:text-primary transition-colors duration-150">
-                      {b.name}
-                    </p>
-                    <p className="text-muted-foreground text-xs mt-0.5 whitespace-nowrap">
-                      {L({ en: b.sectorEn, fr: b.sectorFr })}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Row 2 — scrolls right */}
-            <div className="flex w-max marquee-right">
-              {[...brandsRow2, ...brandsRow2].map((b, i) => (
-                <div key={i}
-                  className="flex items-center gap-3 mx-2 px-4 py-3 bg-card border border-border rounded-sm
-                             hover:border-primary/50 hover:shadow-sm transition-all duration-200 cursor-default flex-shrink-0 group">
-                  <div className="w-10 h-10 rounded-sm bg-muted border border-border flex items-center justify-center flex-shrink-0 overflow-hidden">
-                    {b.logoUrl
-                      ? <img src={b.logoUrl} alt={b.name} className="w-full h-full object-contain p-1" />
-                      : <span className="text-sm font-display font-bold text-primary">{b.name.charAt(0)}</span>}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="font-display font-bold text-sm text-foreground leading-none whitespace-nowrap group-hover:text-primary transition-colors duration-150">
-                      {b.name}
-                    </p>
-                    <p className="text-muted-foreground text-xs mt-0.5 whitespace-nowrap">
-                      {L({ en: b.sectorEn, fr: b.sectorFr })}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
-
-          {/* Edge fades */}
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10" />
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10" />
+          <div className="flex w-max marquee-right">
+            {[...brandsRow2, ...brandsRow2].map((b, i) => (
+              <div key={i} className="flex items-center gap-2.5 mx-2.5 px-4 py-2.5 bg-card border border-border rounded-sm hover:border-primary/40 transition-colors duration-200 cursor-default flex-shrink-0">
+                <div className="w-8 h-8 rounded-sm bg-muted border border-border flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  {b.logoUrl
+                    ? <img src={b.logoUrl} alt={b.name} className="w-full h-full object-contain p-0.5" />
+                    : <span className="text-xs font-display font-bold text-primary">{b.name.charAt(0)}</span>}
+                </div>
+                <span className="font-display font-semibold text-sm text-foreground whitespace-nowrap">{b.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-muted/40 to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-muted/40 to-transparent z-10" />
       </section>
 
       {/* ── 5. Global reach + Featured products — asymmetric two-col ── */}
