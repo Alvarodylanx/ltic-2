@@ -153,8 +153,8 @@ export default function HomePage() {
             {/* Left: Editorial headline */}
             <motion.div variants={stagger} initial="hidden" animate="show" className="min-w-0">
               <motion.p variants={fadeInUp}
-                className="flex items-center gap-2.5 font-display font-semibold text-xs uppercase tracking-[0.2em] mb-5 text-sidebar-foreground/75">
-                <span className="w-6 h-px bg-primary flex-shrink-0" />
+                className="flex items-center gap-2.5 font-display font-semibold text-xs uppercase tracking-[0.2em] mb-5 text-blue-400">
+                <span className="w-6 h-px bg-blue-400 flex-shrink-0" />
                 {L({ en: 'Multinational Business Solutions', fr: "Solutions d'Affaires Multinationales" })}
               </motion.p>
 
