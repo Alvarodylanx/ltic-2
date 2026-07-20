@@ -147,54 +147,52 @@ export default function HomePage() {
         {/* Left blue accent bar */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary hidden lg:block" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 lg:pl-12 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-12 lg:gap-16 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 lg:pl-12 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-10 lg:gap-16 items-center">
 
             {/* Left: Editorial headline */}
             <motion.div variants={stagger} initial="hidden" animate="show" className="min-w-0">
+
+              {/* Eyebrow — 10px on mobile prevents "Solutions d'Affaires Multinationales" overflow */}
               <motion.p variants={fadeInUp}
-                className="flex items-center gap-2.5 font-display font-semibold text-xs uppercase tracking-[0.2em] mb-5 text-blue-500">
-                <span className="w-6 h-px bg-blue-500 flex-shrink-0" />
+                className="flex items-center gap-1.5 sm:gap-2.5 font-display font-semibold
+                           text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.2em]
+                           mb-4 sm:mb-5 text-blue-500">
+                <span className="w-4 sm:w-6 h-px bg-blue-500 flex-shrink-0" />
                 {L({ en: 'Multinational Business Solutions', fr: "Solutions d'Affaires Multinationales" })}
               </motion.p>
 
-              {/* H1 — font scales DOWN at lg (two-column) to prevent FR overflow, back up at xl */}
+              {/* H1 — single unwrapped string + natural text-wrap:balance.
+                  Scale: 2xl(24px) → 3xl(30px) → 4xl(36px) at md → back 3xl at lg → 4xl xl → 5xl 2xl.
+                  Every breakpoint verified to keep both EN (35 chars) and FR (44 chars)
+                  within the available column width without inner-line overflow. */}
               <motion.h1 variants={fadeInUp}
-                className="font-display font-bold text-sidebar-foreground tracking-tight mb-6 leading-[1.08]
-                           text-[2.5rem] sm:text-5xl
-                           lg:text-[2.25rem] xl:text-[2.9rem] 2xl:text-5xl
+                className="font-display font-bold text-sidebar-foreground tracking-tight mb-5 sm:mb-6 leading-[1.1]
+                           text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl
                            [text-wrap:balance]">
-                {/* Line 1 — main phrase */}
-                <span className="block">
-                  {L({ en: 'Global Logistics &', fr: 'Logistique Mondiale &' })}
-                </span>
-                {/* Line 2 — continuation */}
-                <span className="block">
-                  {L({ en: 'Industrial Trade', fr: 'Commerce Industriel' })}
-                </span>
-                {/* Line 3 — accent */}
+                {L({ en: 'Global Logistics & Industrial Trade', fr: 'Logistique Mondiale & Commerce Industriel' })}
                 <span className="block text-primary mt-2">
                   {L({ en: 'Built for Africa.', fr: "Conçu pour l'Afrique." })}
                 </span>
               </motion.h1>
 
               <motion.p variants={fadeInUp}
-                className="text-sidebar-foreground/65 text-sm sm:text-base lg:text-sm xl:text-base leading-relaxed mb-8 max-w-lg">
+                className="text-sidebar-foreground/65 text-sm sm:text-base leading-relaxed mb-7 sm:mb-8 max-w-sm sm:max-w-lg">
                 {L({
                   en: 'Reliable logistics, transit, industrial supply, and international trade services — connecting 30+ countries with precision and accountability.',
                   fr: 'Services fiables de logistique, transit, fourniture industrielle et commerce international — connectant 30+ pays avec précision.',
                 })}
               </motion.p>
 
-              <motion.div variants={fadeInUp} className="flex flex-wrap gap-3">
-                <Button asChild size="lg" className="font-display font-semibold text-sm px-7 rounded-sm shadow-none">
+              <motion.div variants={fadeInUp} className="flex flex-wrap gap-2 sm:gap-3">
+                <Button asChild size="lg" className="font-display font-semibold text-sm px-6 sm:px-7 rounded-sm shadow-none">
                   <Link href="/quote">
                     {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline"
-                  className="font-display font-semibold text-sm px-7 rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
+                  className="font-display font-semibold text-sm px-6 sm:px-7 rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
                   <Link href="/services">{L({ en: 'Our Services', fr: 'Nos Services' })}</Link>
                 </Button>
               </motion.div>
