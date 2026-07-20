@@ -44,7 +44,7 @@ export function Navbar() {
         'sticky top-0 z-50 h-16 flex items-center transition-all duration-300',
         scrolled
           ? 'bg-white/98 backdrop-blur-md border-b border-border shadow-sm'
-          : 'bg-transparent border-b border-transparent',
+          : 'bg-sidebar border-b border-sidebar-border/30',
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
