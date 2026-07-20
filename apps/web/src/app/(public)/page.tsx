@@ -1,8 +1,9 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, Globe2, Ship, Factory, BarChart3, Handshake, TreePine,
@@ -13,6 +14,78 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
 import { fadeInUp, fadeInLeft, fadeInRight, fadeIn, scaleIn, stagger, staggerFast, viewportOnce } from '@/components/motion/variants';
+
+// ─── Word-by-word curtain reveal (desktop signature animation) ───────────────
+// Each word is wrapped in overflow:hidden so it clips as it slides up from y:110%.
+// prefers-reduced-motion: skips the transform, shows words immediately.
+function WordReveal({
+  text,
+  className,
+  delay = 0,
+}: {
+  text: string;
+  className?: string;
+  delay?: number;
+}) {
+  const shouldReduce = useReducedMotion();
+  const words = text.split(' ');
+  return (
+    <span className={className} aria-label={text}>
+      {words.map((word, i) => (
+        <span
+          key={i}
+          className="inline-block overflow-hidden"
+          style={{ verticalAlign: 'bottom' }}
+        >
+          <motion.span
+            className="inline-block"
+            initial={shouldReduce ? false : { y: '110%' }}
+            animate={{ y: '0%' }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+              delay: delay + i * 0.06,
+            }}
+          >
+            {word}{i < words.length - 1 ? ' ' : ''}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+// ─── Counting stat number (desktop "live operations" panel) ──────────────────
+// Parses "30+", "500+", "10K+" etc., counts numeric part from 0 → target.
+// Starts 600ms after mount so the panel fade-in completes first.
+function StatCounter({ value }: { value: string }) {
+  const shouldReduce = useReducedMotion();
+  const [display, setDisplay] = useState(value);
+
+  useEffect(() => {
+    if (shouldReduce) return;
+    const match = value.match(/^(\d+)(.*)/);
+    if (!match) return;
+    const target = parseInt(match[1], 10);
+    const suffix = match[2];
+    const duration = 1400;
+    let raf = 0;
+    let start = 0;
+
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      setDisplay(`${Math.round(eased * target)}${suffix}`);
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+
+    const timer = setTimeout(() => { raf = requestAnimationFrame(step); }, 600);
+    return () => { clearTimeout(timer); cancelAnimationFrame(raf); };
+  }, [value, shouldReduce]);
+
+  return <>{display}</>;
+}
 
 interface Partner {
   id: number;
@@ -101,6 +174,12 @@ const whyCards = [
 export default function HomePage() {
   const { L } = useLanguage();
 
+  // Pre-compute headline strings so WordReveal and accentDelay can reference them
+  const headlineMain   = L({ en: 'Global Logistics & Industrial Trade', fr: 'Logistique Mondiale & Commerce Industriel' });
+  const headlineAccent = L({ en: 'Built for Africa.', fr: "Conçu pour l'Afrique." });
+  // Accent animation begins after every word in the main line has started + brief pause
+  const accentDelay    = 0.15 + (headlineMain.split(' ').length - 1) * 0.06 + 0.18;
+
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
@@ -127,8 +206,10 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ── HERO — Two-panel: editorial headline + live stats panel ── */}
-      <section className="relative min-h-[90vh] bg-sidebar flex items-center overflow-hidden">
+      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
+      {/* Mobile: min-h-[65vh] keeps it compact. Desktop: min-h-[90vh] is full-impact. */}
+      <section className="relative min-h-[65vh] sm:min-h-[75vh] lg:min-h-[90vh] bg-sidebar flex items-center overflow-hidden">
+
         {/* Background photo */}
         <div className="absolute inset-0">
           <Image
@@ -137,23 +218,32 @@ export default function HomePage() {
             fill
             className="object-cover opacity-35"
             priority
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-sidebar/97 via-sidebar/85 to-sidebar/55" />
         </div>
 
-        {/* Dot grid texture */}
+        {/* Dot-grid texture */}
         <div className="absolute inset-0 dot-grid opacity-50 pointer-events-none" />
 
-        {/* Left blue accent bar */}
+        {/* Left blue accent bar — desktop only */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary hidden lg:block" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 lg:pl-12 w-full">
+        {/* Desktop scan-line — sweeps once from top to bottom, then disappears */}
+        <motion.div
+          className="absolute left-0 right-0 h-px bg-blue-400/30 pointer-events-none hidden lg:block z-10"
+          initial={{ y: 0, opacity: 0.9 }}
+          animate={{ y: '90vh', opacity: 0 }}
+          transition={{ duration: 1.5, ease: [0.1, 0, 0.35, 1], delay: 0.1 }}
+        />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-28 lg:pl-12 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-10 lg:gap-16 items-center">
 
-            {/* Left: Editorial headline */}
+            {/* ── Left: Editorial headline ──────────────────────────────── */}
             <motion.div variants={stagger} initial="hidden" animate="show" className="min-w-0">
 
-              {/* Eyebrow — 10px on mobile prevents "Solutions d'Affaires Multinationales" overflow */}
+              {/* Eyebrow — 10px on mobile prevents FR overflow at 375px viewport */}
               <motion.p variants={fadeInUp}
                 className="flex items-center gap-1.5 sm:gap-2.5 font-display font-semibold
                            text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.2em]
@@ -162,20 +252,45 @@ export default function HomePage() {
                 {L({ en: 'Multinational Business Solutions', fr: "Solutions d'Affaires Multinationales" })}
               </motion.p>
 
-              {/* H1 — single unwrapped string + natural text-wrap:balance.
-                  Scale: 2xl(24px) → 3xl(30px) → 4xl(36px) at md → back 3xl at lg → 4xl xl → 5xl 2xl.
-                  Every breakpoint verified to keep both EN (35 chars) and FR (44 chars)
-                  within the available column width without inner-line overflow. */}
-              <motion.h1 variants={fadeInUp}
-                className="font-display font-bold text-sidebar-foreground tracking-tight mb-5 sm:mb-6 leading-[1.1]
-                           text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl
-                           [text-wrap:balance]">
-                {L({ en: 'Global Logistics & Industrial Trade', fr: 'Logistique Mondiale & Commerce Industriel' })}
-                <span className="block text-primary mt-2">
-                  {L({ en: 'Built for Africa.', fr: "Conçu pour l'Afrique." })}
-                </span>
+              {/* ── H1 ───────────────────────────────────────────────────
+                  Desktop (lg+): word-by-word curtain reveal via WordReveal.
+                  Mobile/tablet: larger text, parent stagger handles fade-up.
+                  Font scale (verified EN 35 chars + FR 44 chars at each bp):
+                    mobile  text-[1.75rem] 28px — both languages in ≤3 lines
+                    sm      text-3xl       30px — both in ≤2 lines at 592px
+                    md      text-4xl       36px — both in 2 lines at 720px
+                    lg      text-3xl       30px — two-column left ~500px, fits 2 lines
+                    xl      text-4xl       36px — left ~730px, fits 2 lines
+                    2xl     text-5xl       48px — left ~900px, fits 2 lines
+              ──────────────────────────────────────────────────────────── */}
+
+              {/* DESKTOP headline with word-reveal */}
+              <h1
+                aria-label={`${headlineMain} — ${headlineAccent}`}
+                className="font-display font-bold text-sidebar-foreground tracking-tight mb-5 sm:mb-6 leading-[1.12]
+                           hidden lg:block
+                           lg:text-3xl xl:text-4xl 2xl:text-5xl"
+              >
+                <WordReveal text={headlineMain} delay={0.15} />
+                <WordReveal
+                  text={headlineAccent}
+                  className="block text-primary mt-2"
+                  delay={accentDelay}
+                />
+              </h1>
+
+              {/* MOBILE/TABLET headline — larger text, fade-up via parent stagger */}
+              <motion.h1
+                variants={fadeInUp}
+                className="font-display font-bold text-sidebar-foreground tracking-tight mb-5 sm:mb-6 leading-[1.12]
+                           lg:hidden [text-wrap:balance]
+                           text-[1.75rem] sm:text-3xl md:text-4xl"
+              >
+                {headlineMain}
+                <span className="block text-primary mt-2">{headlineAccent}</span>
               </motion.h1>
 
+              {/* Subtitle */}
               <motion.p variants={fadeInUp}
                 className="text-sidebar-foreground/65 text-sm sm:text-base leading-relaxed mb-7 sm:mb-8 max-w-sm sm:max-w-lg">
                 {L({
@@ -184,36 +299,40 @@ export default function HomePage() {
                 })}
               </motion.p>
 
+              {/* CTAs */}
               <motion.div variants={fadeInUp} className="flex flex-wrap gap-2 sm:gap-3">
-                <Button asChild size="lg" className="font-display font-semibold text-sm px-6 sm:px-7 rounded-sm shadow-none">
+                <Button asChild size="lg"
+                  className="font-display font-semibold text-sm px-6 sm:px-7 rounded-sm shadow-none">
                   <Link href="/quote">
                     {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline"
-                  className="font-display font-semibold text-sm px-6 sm:px-7 rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
+                  className="font-display font-semibold text-sm px-6 sm:px-7 rounded-sm bg-transparent
+                             border-sidebar-foreground/30 text-sidebar-foreground
+                             hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
                   <Link href="/services">{L({ en: 'Our Services', fr: 'Nos Services' })}</Link>
                 </Button>
               </motion.div>
             </motion.div>
 
-            {/* Right: Stats command panel */}
+            {/* ── Right: Live stats command panel — desktop only ──────── */}
             <motion.div variants={fadeInRight} initial="hidden" animate="show" className="hidden lg:block">
               <div className="border border-primary/25 overflow-hidden">
-                {/* Header bar */}
+                {/* Header */}
                 <div className="px-4 py-2.5 border-b border-primary/20 bg-primary/10 flex items-center gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-primary animate-pulse flex-shrink-0" />
                   <span className="text-primary text-xs font-display font-semibold uppercase tracking-widest">
                     {L({ en: 'Live Operations', fr: 'Opérations en Direct' })}
                   </span>
                 </div>
-                {/* Stats 2×2 */}
+                {/* Stats 2×2 — numbers count up on mount */}
                 <div className="grid grid-cols-2 gap-px bg-primary/12">
                   {stats.map((stat, i) => (
                     <div key={i} className="bg-sidebar/90 p-6 hover:bg-primary/5 transition-colors duration-200">
                       <span className="stat-num font-display font-bold text-3xl xl:text-4xl text-primary block mb-2">
-                        {stat.value}
+                        <StatCounter value={stat.value} />
                       </span>
                       <span className="text-sidebar-foreground/50 text-xs uppercase tracking-wider font-medium">
                         {L(stat)}
