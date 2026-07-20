@@ -26,6 +26,7 @@ export function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -43,17 +44,20 @@ export function Navbar() {
         'sticky top-0 z-50 h-16 flex items-center transition-all duration-300',
         scrolled
           ? 'bg-white/98 backdrop-blur-md border-b border-border shadow-sm'
-          : 'bg-white border-b border-border',
+          : 'bg-transparent border-b border-transparent',
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="LTIC SARL — Home">
+        <Link href="/" className="flex items-center gap-2.5 flex-shrink-0" aria-label="LTIC SARL — Home">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
             <span className="text-white font-bold text-sm">LT</span>
           </div>
-          <span className="font-bold text-lg">
+          <span className={cn(
+            'font-bold text-lg transition-colors duration-300',
+            scrolled ? 'text-foreground' : 'text-sidebar-foreground',
+          )}>
             LTIC <span className="text-primary">SARL</span>
           </span>
         </Link>
@@ -66,9 +70,13 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 'relative px-3.5 py-2 text-sm font-medium transition-colors duration-200 rounded-sm',
-                isActive(link.href)
-                  ? 'text-foreground'
-                  : 'text-muted-foreground hover:text-foreground',
+                scrolled
+                  ? isActive(link.href)
+                    ? 'text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                  : isActive(link.href)
+                  ? 'text-sidebar-foreground'
+                  : 'text-sidebar-foreground/70 hover:text-sidebar-foreground',
               )}
             >
               {L(link)}
@@ -87,7 +95,12 @@ export function Navbar() {
           <button
             onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
             aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+            className={cn(
+              'flex items-center gap-1.5 px-3 py-1.5 rounded-sm border text-xs font-medium transition-colors',
+              scrolled
+                ? 'border-border text-muted-foreground hover:text-foreground hover:border-foreground/30'
+                : 'border-sidebar-foreground/30 text-sidebar-foreground/70 hover:text-sidebar-foreground hover:border-sidebar-foreground/60',
+            )}
           >
             <Globe className="h-3.5 w-3.5" />
             {language.toUpperCase()}
@@ -99,7 +112,12 @@ export function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden p-2 rounded-sm hover:bg-muted transition-colors"
+          className={cn(
+            'lg:hidden p-2 rounded-sm transition-colors',
+            scrolled
+              ? 'text-foreground hover:bg-muted'
+              : 'text-sidebar-foreground hover:bg-sidebar-foreground/10',
+          )}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
@@ -119,7 +137,7 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — always opaque white */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div

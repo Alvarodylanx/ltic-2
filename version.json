@@ -1,7 +1,23 @@
 {
-  "version": "1.36.0",
-  "releaseDate": "2026-07-17",
+  "version": "2.0.0",
+  "releaseDate": "2026-07-20",
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "2026-07-20",
+      "type": "major",
+      "summary": "V2 Redesign — complete visual overhaul: bento grid, split sections, route-line process, transparent nav",
+      "changes": [
+        "Navbar: transparent over hero (white text on navy) → white blur on scroll — hero-aware across all pages",
+        "Hero: two-panel layout — editorial headline left + live stats command panel right, dot-grid navy texture",
+        "Services: true bento grid — large featured Logistics card with freight image BG + 5 smaller service cards",
+        "Why LTIC: full-width 50/50 split — navy left panel (dot-grid) with bullet list + white right panel with 4 feature cards + mini stats",
+        "Process: vertical route-line timeline (signature element) — dashed blue line + numbered waypoint circles, industries panel on right",
+        "CTA: centered, dramatic — dot-grid navy with soft blue corner glow",
+        "Footer: sector strip with blue pill labels, boxed social icons, header underline separators, dot bullet links",
+        "globals.css: added dot-grid, card-elevated, route-line-dashed, bento-card, stat-num utility classes"
+      ]
+    },
     {
       "version": "1.36.0",
       "date": "2026-07-17",

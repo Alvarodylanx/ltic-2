@@ -100,3 +100,49 @@ button, a, [role="button"] {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── V2 Design Utilities ─────────────────────────────────── */
+
+/* Dot grid — subtle texture for dark navy sections */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(37,99,235,0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Card with blue-tinted shadow — replaces glassmorphism */
+.card-elevated {
+  box-shadow: 0 2px 16px rgba(37,99,235,0.09), 0 1px 4px rgba(15,23,42,0.07);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.card-elevated:hover {
+  box-shadow: 0 8px 32px rgba(37,99,235,0.15), 0 2px 8px rgba(15,23,42,0.09);
+  transform: translateY(-2px);
+}
+
+/* Route-line — dashed vertical blue line (process signature) */
+.route-line-dashed {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    hsl(var(--primary)) 0px,
+    hsl(var(--primary)) 8px,
+    transparent 8px,
+    transparent 20px
+  );
+  width: 2px;
+}
+
+/* Bento card — border-left accent on hover */
+.bento-card {
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.bento-card:hover {
+  border-left-color: hsl(var(--primary));
+}
+
+/* Large display counter numbers */
+.stat-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  line-height: 1;
+}
