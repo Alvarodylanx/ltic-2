@@ -97,6 +97,15 @@ const orderSteps = [
 ];
 
 // ─── HeroCarousel ─────────────────────────────────────────────────────────────
+// Repeat arr until we have ≥ minItems, keeping count even so the CSS
+// translateX(-50%) loop resets seamlessly with no visible gap.
+function fillMarquee<T>(arr: T[], minItems = 12): T[] {
+  if (!arr.length) return [];
+  const times = Math.max(2, Math.ceil(minItems / arr.length));
+  const even  = times % 2 === 0 ? times : times + 1;
+  return Array.from({ length: even }, () => arr).flat();
+}
+
 function HeroCarousel() {
   const { L } = useLanguage();
   const shouldReduce = useReducedMotion();
@@ -447,7 +456,7 @@ export default function HomePage() {
         </p>
         <div className="marquee-wrap space-y-2.5 select-none">
           <div className="flex w-max marquee-left">
-            {[...brandsRow1, ...brandsRow1].map((b, i) => (
+            {fillMarquee(brandsRow1).map((b, i) => (
               <div key={i} className="flex items-center gap-2.5 mx-2.5 px-4 py-2.5 bg-card border border-border rounded-sm hover:border-primary/40 transition-colors duration-200 cursor-default flex-shrink-0">
                 <div className="w-8 h-8 rounded-sm bg-muted border border-border flex items-center justify-center flex-shrink-0 overflow-hidden">
                   {b.logoUrl
@@ -459,7 +468,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="flex w-max marquee-right">
-            {[...brandsRow2, ...brandsRow2].map((b, i) => (
+            {fillMarquee(brandsRow2).map((b, i) => (
               <div key={i} className="flex items-center gap-2.5 mx-2.5 px-4 py-2.5 bg-card border border-border rounded-sm hover:border-primary/40 transition-colors duration-200 cursor-default flex-shrink-0">
                 <div className="w-8 h-8 rounded-sm bg-muted border border-border flex items-center justify-center flex-shrink-0 overflow-hidden">
                   {b.logoUrl
