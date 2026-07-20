@@ -67,9 +67,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── Company Overview ── */}
-      <section className="bg-background py-14 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
               <span className="amber-rule mb-4" />
               <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
@@ -111,9 +111,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── Mission, Vision, Values ── */}
-      <section className="bg-muted/50 py-14 sm:py-20 lg:py-28 border-y border-border">
+      <section className="bg-muted/50 py-20 lg:py-28 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-8 sm:mb-12 lg:mb-14">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-14">
             <span className="amber-rule mb-4" />
             <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
               {L({ en: 'Mission, Vision & Values', fr: 'Mission, Vision & Valeurs' })}
@@ -141,9 +141,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── Core Values Grid ── */}
-      <section className="bg-background py-14 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-8 sm:mb-12 lg:mb-14">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-14">
             <span className="amber-rule mb-4" />
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
               {L({ en: 'What Drives Us', fr: 'Ce Qui Nous Anime' })}
@@ -169,14 +169,14 @@ export default function AboutPage() {
       </section>
 
       {/* ── Stats ── */}
-      <section className="bg-foreground py-10 sm:py-14">
+      <section className="bg-foreground py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((stat, i) => (
               <motion.div key={i} variants={scaleIn} className="flex flex-col items-center">
-                <span className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-primary leading-none mb-2">{stat.value}</span>
-                <span className="text-sidebar-foreground/60 text-[10px] sm:text-xs uppercase tracking-widest font-medium">{L(stat)}</span>
+                <span className="font-display font-bold text-4xl sm:text-5xl text-primary leading-none mb-2">{stat.value}</span>
+                <span className="text-sidebar-foreground/60 text-xs uppercase tracking-widest font-medium">{L(stat)}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -184,9 +184,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── Team ── */}
-      <section className="bg-background py-14 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-8 sm:mb-12 lg:mb-14">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-14">
             <span className="amber-rule mb-4" />
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.18em] mb-3">
               {L({ en: 'Our Team', fr: 'Notre Équipe' })}
@@ -219,9 +219,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-foreground py-12 sm:py-16 relative overflow-hidden">
+      <section className="bg-foreground py-16 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
               {L({ en: 'Ready to Partner with LTIC SARL?', fr: 'Prêt à Collaborer avec LTIC SARL ?' })}

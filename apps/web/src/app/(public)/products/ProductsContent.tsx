@@ -47,7 +47,7 @@ export default function ProductsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
+      <section className="relative bg-sidebar py-24 overflow-hidden">
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&auto=format&fit=crop&q=50"
             alt="Products" fill className="object-cover opacity-25" priority />
@@ -67,7 +67,7 @@ export default function ProductsPage() {
       <div className="sticky top-16 z-40 bg-muted/40 border-b py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           {/* Search input */}
-          <div className="relative max-w-full sm:max-w-sm">
+          <div className="relative max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               value={searchInput}
@@ -106,11 +106,11 @@ export default function ProductsPage() {
       <section className="bg-background py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {Array(8).fill(0).map((_, i) => (
                 <div key={i} className="border rounded-xl overflow-hidden">
                   <Skeleton className="aspect-[4/3] w-full" />
-                  <div className="p-3 sm:p-4 space-y-2">
+                  <div className="p-4 space-y-2">
                     <Skeleton className="h-3 w-16" /><Skeleton className="h-4 w-full" /><Skeleton className="h-9 w-full mt-2" />
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export default function ProductsPage() {
             <AnimatePresence mode="wait">
               <motion.div key={`${selectedCategory ?? 'all'}-${debouncedSearch}`}
                 variants={stagger} initial="hidden" animate="show"
-                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {products.map((product) => (
                   <motion.div key={product.id} variants={scaleIn}
                     whileHover={{ y: -6 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
@@ -160,13 +160,13 @@ export default function ProductsPage() {
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
-                      <div className="p-3 sm:p-4 flex flex-col flex-1">
+                      <div className="p-4 flex flex-col flex-1">
                         {product.categoryName && (
-                          <span className="inline-block bg-primary/10 text-primary text-[10px] sm:text-xs rounded-full px-2 py-0.5 mb-2 w-fit">
+                          <span className="inline-block bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 mb-2 w-fit">
                             {product.categoryName}
                           </span>
                         )}
-                        <h3 className="font-bold text-xs sm:text-sm leading-tight mb-2 sm:mb-3 group-hover:text-primary transition-colors flex-1">
+                        <h3 className="font-bold text-sm leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
                           {L({ en: product.nameEn, fr: product.nameFr })}
                         </h3>
                         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>

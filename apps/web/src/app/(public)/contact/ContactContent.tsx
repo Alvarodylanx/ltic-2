@@ -93,9 +93,9 @@ export default function ContactPage() {
       </section>
 
       {/* ── Contact body ── */}
-      <section className="bg-background py-14 sm:py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
             {/* Contact info */}
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>

@@ -106,9 +106,9 @@ export default function ServicesPage() {
       {services.map((svc, index) => {
         const isEven = index % 2 === 0;
         return (
-          <section key={svc.en} className={`py-14 sm:py-20 lg:py-28 ${isEven ? 'bg-background' : 'bg-muted/50'} border-b border-border`}>
+          <section key={svc.en} className={`py-20 lg:py-28 ${isEven ? 'bg-background' : 'bg-muted/50'} border-b border-border`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                 <motion.div variants={isEven ? fadeInLeft : fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
                   className={isEven ? '' : 'lg:order-2'}>
@@ -148,9 +148,9 @@ export default function ServicesPage() {
       })}
 
       {/* ── CTA ── */}
-      <section className="bg-foreground py-12 sm:py-16 relative overflow-hidden">
+      <section className="bg-foreground py-16 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
               {L({ en: 'Ready to Get Started?', fr: 'Prêt à Commencer ?' })}
