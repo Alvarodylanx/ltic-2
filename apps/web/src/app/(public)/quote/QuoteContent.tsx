@@ -158,7 +158,7 @@ export default function QuotePage() {
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&auto=format&fit=crop&q=50"
-            alt="Request a Quote" fill className="object-cover opacity-10" priority />
+            alt="Request a Quote" fill className="object-cover opacity-35" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/60" />
         </div>
         <motion.div variants={stagger} initial="hidden" animate="show"
@@ -177,9 +177,9 @@ export default function QuotePage() {
       </section>
 
       {/* ── Quote body ── */}
-      <section className="bg-background py-20 lg:py-28">
+      <section className="bg-background py-14 sm:py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
 
             {/* Sidebar info */}
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce} className="space-y-4">
