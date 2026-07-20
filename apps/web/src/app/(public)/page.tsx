@@ -151,34 +151,49 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-12 lg:gap-16 items-center">
 
             {/* Left: Editorial headline */}
-            <motion.div variants={stagger} initial="hidden" animate="show">
+            <motion.div variants={stagger} initial="hidden" animate="show" className="min-w-0">
               <motion.p variants={fadeInUp}
-                className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-6">
+                className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-5">
                 {L({ en: 'Multinational Business Solutions', fr: "Solutions d'Affaires Multinationales" })}
               </motion.p>
+
+              {/* H1 — font scales DOWN at lg (two-column) to prevent FR overflow, back up at xl */}
               <motion.h1 variants={fadeInUp}
-                className="text-hero font-display font-bold text-sidebar-foreground tracking-tight mb-7">
-                {L({ en: 'Global Logistics & Industrial Trade', fr: 'Logistique Mondiale & Commerce Industriel' })}
+                className="font-display font-bold text-sidebar-foreground tracking-tight mb-6 leading-[1.08]
+                           text-[2.5rem] sm:text-5xl
+                           lg:text-[2.25rem] xl:text-[2.9rem] 2xl:text-5xl
+                           [text-wrap:balance]">
+                {/* Line 1 — main phrase */}
+                <span className="block">
+                  {L({ en: 'Global Logistics &', fr: 'Logistique Mondiale &' })}
+                </span>
+                {/* Line 2 — continuation */}
+                <span className="block">
+                  {L({ en: 'Industrial Trade', fr: 'Commerce Industriel' })}
+                </span>
+                {/* Line 3 — accent */}
                 <span className="block text-primary mt-2">
                   {L({ en: 'Built for Africa.', fr: "Conçu pour l'Afrique." })}
                 </span>
               </motion.h1>
+
               <motion.p variants={fadeInUp}
-                className="text-sidebar-foreground/65 text-base sm:text-lg leading-relaxed mb-10 max-w-xl">
+                className="text-sidebar-foreground/65 text-sm sm:text-base lg:text-sm xl:text-base leading-relaxed mb-8 max-w-lg">
                 {L({
                   en: 'Reliable logistics, transit, industrial supply, and international trade services — connecting 30+ countries with precision and accountability.',
-                  fr: 'Services fiables de logistique, transit, fourniture industrielle et commerce international — connectant 30+ pays avec précision et responsabilité.',
+                  fr: 'Services fiables de logistique, transit, fourniture industrielle et commerce international — connectant 30+ pays avec précision.',
                 })}
               </motion.p>
-              <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
-                <Button asChild size="lg" className="font-display font-semibold text-sm px-8 rounded-sm shadow-none">
+
+              <motion.div variants={fadeInUp} className="flex flex-wrap gap-3">
+                <Button asChild size="lg" className="font-display font-semibold text-sm px-7 rounded-sm shadow-none">
                   <Link href="/quote">
                     {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline"
-                  className="font-display font-semibold text-sm px-8 rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
+                  className="font-display font-semibold text-sm px-7 rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
                   <Link href="/services">{L({ en: 'Our Services', fr: 'Nos Services' })}</Link>
                 </Button>
               </motion.div>
