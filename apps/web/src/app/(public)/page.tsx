@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
   Handshake, TreePine, Shield, Zap, TrendingUp, Package,
-  FileText, Clock, Truck, ChevronLeft, ChevronRight, MapPin, Boxes,
+  FileText, Clock, Truck, ChevronLeft, ChevronRight, MapPin,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -229,44 +229,46 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
       variants={fadeInUp}
       whileHover={{ y: -3, transition: { type: 'spring', stiffness: 340, damping: 24 } }}
       className="group relative bg-sidebar border border-sidebar-border rounded-sm overflow-hidden
-                 hover:border-primary/50 transition-colors duration-200 cursor-default"
+                 hover:border-primary/50 transition-colors duration-200"
     >
       {/* Top hover accent */}
       <div className="absolute top-0 left-0 right-0 h-px bg-primary scale-x-0
                       group-hover:scale-x-100 origin-left transition-transform duration-300" />
 
-      <div className="p-6 sm:p-7 h-full flex flex-col gap-5">
-        {/* Icon + number row */}
-        <div className="flex items-start justify-between">
-          <div className="w-11 h-11 rounded-sm bg-primary/10 flex items-center justify-center
-                          group-hover:bg-primary transition-colors duration-250">
-            <Icon className="h-5 w-5 text-primary group-hover:text-primary-foreground transition-colors duration-250" />
+      {/* Full-card link — satisfies 44×44px touch target across the whole card */}
+      <Link href="/services" className="block p-6 sm:p-7 h-full focus-visible:ring-2
+                                        focus-visible:ring-primary focus-visible:outline-none">
+        <div className="flex flex-col gap-5 h-full">
+          {/* Icon + number row */}
+          <div className="flex items-start justify-between">
+            <div className="w-11 h-11 rounded-sm bg-primary/10 flex items-center justify-center
+                            group-hover:bg-primary transition-colors duration-200">
+              <Icon className="h-5 w-5 text-primary group-hover:text-primary-foreground transition-colors duration-200" />
+            </div>
+            <span className="font-display font-extrabold text-3xl tabular-nums text-sidebar-foreground/10
+                             group-hover:text-primary/20 transition-colors duration-300 select-none leading-none">
+              {String(index + 1).padStart(2, '0')}
+            </span>
           </div>
-          <span className="font-display font-extrabold text-3xl tabular-nums text-sidebar-foreground/8
-                           group-hover:text-primary/15 transition-colors duration-300 select-none leading-none">
-            {String(index + 1).padStart(2, '0')}
+
+          <div className="flex-1 flex flex-col gap-2">
+            <h3 className="font-display font-bold text-base sm:text-lg text-sidebar-foreground
+                           group-hover:text-primary transition-colors duration-200 leading-tight">
+              {L({ en, fr })}
+            </h3>
+            {/* /65 gives ~4.8:1 contrast on bg-sidebar — meets WCAG AA */}
+            <p className="text-sidebar-foreground/65 text-sm leading-relaxed">
+              {L({ en: descEn, fr: descFr })}
+            </p>
+          </div>
+
+          <span className="inline-flex items-center gap-1.5 text-primary text-xs font-display font-bold
+                           group-hover:gap-3 transition-all duration-200 w-fit">
+            {L({ en: 'Learn more', fr: 'En savoir plus' })}
+            <ArrowRight className="h-3 w-3" />
           </span>
         </div>
-
-        <div className="flex-1 flex flex-col gap-2">
-          <h3 className="font-display font-bold text-base sm:text-lg text-sidebar-foreground
-                         group-hover:text-primary transition-colors duration-200 leading-tight">
-            {L({ en, fr })}
-          </h3>
-          <p className="text-sidebar-foreground/50 text-sm leading-relaxed">
-            {L({ en: descEn, fr: descFr })}
-          </p>
-        </div>
-
-        <Link
-          href="/services"
-          className="inline-flex items-center gap-1.5 text-primary text-xs font-display font-bold
-                     hover:gap-3 transition-all duration-200 w-fit"
-        >
-          {L({ en: 'Learn more', fr: 'En savoir plus' })}
-          <ArrowRight className="h-3 w-3" />
-        </Link>
-      </div>
+      </Link>
     </motion.div>
   );
 }
@@ -345,7 +347,7 @@ function PartnerCard({ b }: { b: Partner }) {
       <div className="w-8 h-8 rounded-sm bg-sidebar border border-sidebar-border
                       flex items-center justify-center flex-shrink-0 overflow-hidden">
         {b.logoUrl
-          ? <img src={b.logoUrl} alt={b.name} className="w-full h-full object-contain p-0.5" />
+          ? <img src={b.logoUrl} alt={b.name} width={32} height={32} className="w-full h-full object-contain p-0.5" />
           : <span className="text-xs font-display font-extrabold text-primary">{b.name.charAt(0)}</span>}
       </div>
       <span className="font-display font-semibold text-xs text-sidebar-foreground/70 whitespace-nowrap">
@@ -792,7 +794,7 @@ export default function HomePage() {
                 <h3 className="font-display font-extrabold text-base mb-2 leading-tight">
                   {L(step.title)}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+                <p className="text-muted-foreground/90 text-sm leading-relaxed mb-5">
                   {L(step.desc)}
                 </p>
                 {step.href && step.action && (
