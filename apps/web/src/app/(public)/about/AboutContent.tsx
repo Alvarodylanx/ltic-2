@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -60,38 +60,7 @@ const values = [
 export default function AboutPage() {
   const { L } = useLanguage();
   const [activeMVV, setActiveMVV] = useState<number | null>(null);
-  const [activeValue, setActiveValue] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const DURATION = 3500;
-  const TICK = 40;
-
-  useEffect(() => {
-    if (paused) return;
-    setProgress(0);
-    progressRef.current = setInterval(() => {
-      setProgress((p) => Math.min(p + (TICK / DURATION) * 100, 100));
-    }, TICK);
-    intervalRef.current = setInterval(() => {
-      setProgress(0);
-      setActiveValue((v) => (v + 1) % values.length);
-    }, DURATION);
-    return () => {
-      clearInterval(intervalRef.current!);
-      clearInterval(progressRef.current!);
-    };
-  }, [activeValue, paused]);
-
-  const goTo = (i: number) => {
-    clearInterval(intervalRef.current!);
-    clearInterval(progressRef.current!);
-    setProgress(0);
-    setActiveValue(i);
-    setPaused(false);
-  };
+  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
 
   const { data: siteSettings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -291,8 +260,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── CORE VALUES — Style 2: Rotating Spotlight ───────────────────────── */}
+      {/* ── CORE VALUES — Style 3: Stacked Marquee ──────────────────────────── */}
       <section className="bg-background border-t border-border py-16">
+        <style>{`
+          @keyframes mq-left  { from { transform: translateX(0); }     to { transform: translateX(-50%); } }
+          @keyframes mq-right { from { transform: translateX(-50%); }  to { transform: translateX(0); } }
+        `}</style>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
@@ -306,77 +279,98 @@ export default function AboutPage() {
               </h2>
             </div>
             <div className="hidden sm:block h-px flex-1 bg-border mx-8" />
-            <span className="hidden sm:block text-muted-foreground/40 font-display font-bold text-xs uppercase tracking-[0.3em] whitespace-nowrap tabular-nums">
-              {String(activeValue + 1).padStart(2, '0')} / {String(values.length).padStart(2, '0')}
+            <span className="hidden sm:block text-muted-foreground/40 font-display font-bold text-xs uppercase tracking-[0.3em] whitespace-nowrap">
+              {L({ en: 'Hover to explore', fr: 'Survolez pour explorer' })}
             </span>
           </motion.div>
 
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="border border-border rounded-sm overflow-hidden"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}>
+            className="border border-border rounded-sm overflow-hidden">
 
-            {/* Progress bar */}
-            <div className="h-0.5 bg-border relative">
-              <motion.div
-                className="absolute inset-y-0 left-0 bg-primary"
-                style={{ width: `${progress}%` }}
-                transition={{ duration: 0 }}
-              />
+            {/* Row 1 — scrolls left */}
+            <div className="overflow-hidden border-b border-border py-5">
+              <div
+                className="flex w-max"
+                style={{
+                  animation: 'mq-left 28s linear infinite',
+                  animationPlayState: hoveredValue !== null ? 'paused' : 'running',
+                }}>
+                {[...values, ...values].map(({ en, fr }, i) => {
+                  const idx = i % values.length;
+                  const isHot = hoveredValue === idx;
+                  return (
+                    <span key={i}
+                      className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tighter
+                        px-6 cursor-default select-none transition-colors duration-150"
+                      style={{ color: hoveredValue === null ? undefined : isHot ? 'hsl(var(--primary))' : 'hsl(var(--foreground) / 0.14)' }}
+                      onMouseEnter={() => setHoveredValue(idx)}
+                      onMouseLeave={() => setHoveredValue(null)}>
+                      {L({ en, fr })}
+                      <span className="opacity-30 mx-3">/</span>
+                    </span>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-0">
+            {/* Row 2 — scrolls right */}
+            <div className="overflow-hidden py-5">
+              <div
+                className="flex w-max"
+                style={{
+                  animation: 'mq-right 22s linear infinite',
+                  animationPlayState: hoveredValue !== null ? 'paused' : 'running',
+                }}>
+                {[...values, ...values].map(({ en, fr }, i) => {
+                  const idx = i % values.length;
+                  const isHot = hoveredValue === idx;
+                  return (
+                    <span key={i}
+                      className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tighter
+                        px-6 cursor-default select-none transition-colors duration-150"
+                      style={{ color: hoveredValue === null ? 'hsl(var(--foreground) / 0.35)' : isHot ? 'hsl(var(--primary))' : 'hsl(var(--foreground) / 0.1)' }}
+                      onMouseEnter={() => setHoveredValue(idx)}
+                      onMouseLeave={() => setHoveredValue(null)}>
+                      {L({ en, fr })}
+                      <span className="opacity-20 mx-3">/</span>
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
 
-              {/* Main content */}
-              <div className="relative overflow-hidden min-h-[220px] flex items-center">
-                <AnimatePresence mode="wait">
-                  {(() => {
-                    const v = values[activeValue];
-                    const Icon = v.icon;
-                    return (
-                      <motion.div
-                        key={activeValue}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                        className="w-full p-8 lg:p-12">
-                        <div className="flex items-center gap-4 mb-5">
-                          <div className="w-11 h-11 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
-                            <Icon className="h-5 w-5 text-primary" />
-                          </div>
-                          <h3 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl tracking-tight">
-                            {L({ en: v.en, fr: v.fr })}
-                          </h3>
-                        </div>
-                        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-xl">
+            {/* Detail card — slides in when hovering */}
+            <AnimatePresence>
+              {hoveredValue !== null && (() => {
+                const v = values[hoveredValue];
+                const Icon = v.icon;
+                return (
+                  <motion.div
+                    key={hoveredValue}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden border-t border-border">
+                    <div className="flex items-start gap-5 p-6 bg-muted/20">
+                      <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
+                        <Icon className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-display font-bold text-lg tracking-tight mb-1">
+                          {L({ en: v.en, fr: v.fr })}
+                        </h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
                           {L({ en: v.descEn, fr: v.descFr })}
                         </p>
-                      </motion.div>
-                    );
-                  })()}
-                </AnimatePresence>
-              </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })()}
+            </AnimatePresence>
 
-              {/* Nav dots — right column on desktop, bottom on mobile */}
-              <div className="flex lg:flex-col items-center justify-center gap-3 px-6 py-5 border-t lg:border-t-0 lg:border-l border-border bg-muted/20">
-                {values.map((v, i) => (
-                  <button
-                    key={v.en}
-                    onClick={() => goTo(i)}
-                    title={L({ en: v.en, fr: v.fr })}
-                    className={`transition-all duration-200 rounded-sm flex items-center justify-center ${
-                      activeValue === i
-                        ? 'w-8 h-8 bg-primary text-primary-foreground'
-                        : 'w-7 h-7 bg-muted hover:bg-muted-foreground/20 text-muted-foreground'
-                    }`}>
-                    {(() => { const Icon = v.icon; return <Icon className="h-3.5 w-3.5" />; })()}
-                  </button>
-                ))}
-              </div>
-            </div>
           </motion.div>
-
         </div>
       </section>
 
