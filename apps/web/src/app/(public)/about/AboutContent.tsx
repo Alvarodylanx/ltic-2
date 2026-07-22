@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   CheckCircle2, Target, Globe2, ShieldCheck, Lightbulb,
@@ -60,7 +60,6 @@ const values = [
 export default function AboutPage() {
   const { L } = useLanguage();
   const [activeMVV, setActiveMVV] = useState<number | null>(null);
-  const [activeValue, setActiveValue] = useState<number>(0);
 
   const { data: siteSettings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -260,88 +259,84 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── CORE VALUES — keyword list with sliding detail panel ─────────────── */}
-      <section className="bg-background py-20 lg:py-28">
+      {/* ── CORE VALUES — word wall with floating tooltip ────────────────────── */}
+      <section className="bg-background border-t border-border py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="mb-12">
-            <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
-              {L({ en: 'What Drives Us', fr: 'Ce Qui Nous Anime' })}
-            </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
-              {L({ en: 'Core Values', fr: 'Valeurs Fondamentales' })}
-            </h2>
+            className="flex items-center justify-between mb-10">
+            <div>
+              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-2">
+                {L({ en: 'What Drives Us', fr: 'Ce Qui Nous Anime' })}
+              </p>
+              <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
+                {L({ en: 'Core Values', fr: 'Valeurs Fondamentales' })}
+              </h2>
+            </div>
+            <div className="hidden sm:block h-px flex-1 bg-border mx-8" />
+            <span className="hidden sm:block text-muted-foreground/40 font-display font-bold text-xs uppercase tracking-[0.3em] whitespace-nowrap">
+              {L({ en: 'Hover to explore', fr: 'Survolez pour explorer' })}
+            </span>
           </motion.div>
 
+          {/* Desktop: word wall */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 lg:grid-cols-2 border border-border rounded-sm overflow-hidden">
+            className="hidden md:flex flex-wrap gap-x-6 gap-y-4 group/wall pb-4">
+            {values.map(({ icon: Icon, en, fr, descEn, descFr }, i) => (
+              <div key={en} className="relative group/item">
+                <span
+                  className="block font-display font-extrabold text-4xl lg:text-5xl xl:text-6xl uppercase
+                    tracking-tighter text-foreground cursor-default select-none
+                    transition-opacity duration-300 ease-out
+                    group-hover/wall:opacity-[0.15] group-hover/item:!opacity-100">
+                  {L({ en, fr })}
+                </span>
 
-            {/* Left: keyword list */}
-            <div className="divide-y divide-border">
-              {values.map(({ icon: Icon, ...val }, i) => {
-                const isActive = activeValue === i;
-                return (
-                  <motion.button
-                    key={val.en}
-                    className={`w-full text-left py-5 px-8 flex items-center justify-between transition-all duration-200 group ${
-                      isActive
-                        ? 'bg-foreground'
-                        : 'hover:bg-muted/40'
-                    }`}
-                    onMouseEnter={() => setActiveValue(i)}
-                    onClick={() => setActiveValue(i)}>
-                    <div className="flex items-center gap-4">
-                      <motion.div
-                        className={`w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0 transition-colors duration-200 ${
-                          isActive ? 'bg-primary/20' : 'bg-muted'
-                        }`}
-                        animate={{ rotate: isActive ? 0 : 0 }}>
-                        <Icon className={`h-3.5 w-3.5 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
-                      </motion.div>
-                      <span className={`font-display font-bold text-lg sm:text-xl transition-colors duration-200 ${
-                        isActive ? 'text-sidebar-foreground' : 'text-foreground group-hover:text-foreground'
-                      }`}>
-                        {L({ en: val.en, fr: val.fr })}
+                {/* Floating tooltip — appears above the word */}
+                <div className="pointer-events-none absolute bottom-[calc(100%+14px)] left-1/2 -translate-x-1/2
+                  w-56 opacity-0 translate-y-2
+                  group-hover/item:opacity-100 group-hover/item:translate-y-0
+                  transition-all duration-200 ease-out z-30">
+                  <div className="bg-foreground border border-white/10 rounded-sm p-4 shadow-2xl">
+                    <div className="h-px w-8 bg-primary mb-3" />
+                    <div className="flex items-center gap-2 mb-2.5">
+                      <div className="w-6 h-6 rounded-sm bg-primary/15 flex items-center justify-center flex-shrink-0">
+                        <Icon className="h-3 w-3 text-primary" />
+                      </div>
+                      <span className="text-sidebar-foreground font-display font-bold text-xs uppercase tracking-wide">
+                        {L({ en, fr })}
                       </span>
                     </div>
-                    <motion.div animate={{ x: isActive ? 3 : 0 }} transition={{ duration: 0.2 }}>
-                      <ArrowRight className={`h-4 w-4 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
-                    </motion.div>
-                  </motion.button>
-                );
-              })}
-            </div>
-
-            {/* Right: detail panel */}
-            <div className="relative lg:border-l border-t lg:border-t-0 border-border min-h-[280px] overflow-hidden">
-              <AnimatePresence mode="wait">
-                {(() => {
-                  const active = values[activeValue];
-                  const Icon = active.icon;
-                  return (
-                    <motion.div
-                      key={activeValue}
-                      initial={{ opacity: 0, x: 30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                      className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-center">
-                      <div className="w-12 h-12 rounded-sm bg-foreground flex items-center justify-center mb-6">
-                        <Icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <h3 className="font-display font-bold text-2xl tracking-tight mb-4">
-                        {L({ en: active.en, fr: active.fr })}
-                      </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        {L({ en: active.descEn, fr: active.descFr })}
-                      </p>
-                      <div className="mt-6 h-0.5 w-12 bg-primary" />
-                    </motion.div>
-                  );
-                })()}
-              </AnimatePresence>
-            </div>
+                    <p className="text-sidebar-foreground/60 text-xs leading-relaxed">
+                      {L({ en: descEn, fr: descFr })}
+                    </p>
+                  </div>
+                  {/* Arrow */}
+                  <div className="flex justify-center">
+                    <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px]
+                      border-l-transparent border-r-transparent border-t-foreground" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </motion.div>
+
+          {/* Mobile: compact icon list */}
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="md:hidden grid grid-cols-1 divide-y divide-border border border-border rounded-sm">
+            {values.map(({ icon: Icon, en, fr, descEn, descFr }) => (
+              <div key={en} className="flex items-start gap-4 p-4">
+                <div className="w-8 h-8 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Icon className="h-3.5 w-3.5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-display font-bold text-sm mb-1">{L({ en, fr })}</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed">{L({ en: descEn, fr: descFr })}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
         </div>
       </section>
 
