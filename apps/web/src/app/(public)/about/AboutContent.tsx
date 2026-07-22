@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   CheckCircle2, Target, Globe2, ShieldCheck, Lightbulb,
@@ -60,7 +60,6 @@ const values = [
 export default function AboutPage() {
   const { L } = useLanguage();
   const [activeMVV, setActiveMVV] = useState<number | null>(null);
-  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
 
   const { data: siteSettings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -260,12 +259,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── CORE VALUES — Style 3: Stacked Marquee ──────────────────────────── */}
+      {/* ── CORE VALUES — Style 4: Flip Cards ───────────────────────────────── */}
       <section className="bg-background border-t border-border py-16">
-        <style>{`
-          @keyframes mq-left  { from { transform: translateX(0); }     to { transform: translateX(-50%); } }
-          @keyframes mq-right { from { transform: translateX(-50%); }  to { transform: translateX(0); } }
-        `}</style>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
@@ -280,97 +275,53 @@ export default function AboutPage() {
             </div>
             <div className="hidden sm:block h-px flex-1 bg-border mx-8" />
             <span className="hidden sm:block text-muted-foreground/40 font-display font-bold text-xs uppercase tracking-[0.3em] whitespace-nowrap">
-              {L({ en: 'Hover to explore', fr: 'Survolez pour explorer' })}
+              {L({ en: 'Hover to flip', fr: 'Survolez pour retourner' })}
             </span>
           </motion.div>
 
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="border border-border rounded-sm overflow-hidden">
+          <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+            {values.map(({ icon: Icon, en, fr, descEn, descFr }, i) => (
+              <motion.div key={en} variants={scaleIn}
+                className="[perspective:900px] h-40 sm:h-44">
+                {/* Flip container */}
+                <div className="relative w-full h-full [transform-style:preserve-3d]
+                  transition-transform duration-500 ease-out
+                  hover:[transform:rotateY(180deg)] cursor-default">
 
-            {/* Row 1 — scrolls left */}
-            <div className="overflow-hidden border-b border-border py-5">
-              <div
-                className="flex w-max"
-                style={{
-                  animation: 'mq-left 28s linear infinite',
-                  animationPlayState: hoveredValue !== null ? 'paused' : 'running',
-                }}>
-                {[...values, ...values].map(({ en, fr }, i) => {
-                  const idx = i % values.length;
-                  const isHot = hoveredValue === idx;
-                  return (
-                    <span key={i}
-                      className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tighter
-                        px-6 cursor-default select-none transition-colors duration-150"
-                      style={{ color: hoveredValue === null ? undefined : isHot ? 'hsl(var(--primary))' : 'hsl(var(--foreground) / 0.14)' }}
-                      onMouseEnter={() => setHoveredValue(idx)}
-                      onMouseLeave={() => setHoveredValue(null)}>
-                      {L({ en, fr })}
-                      <span className="opacity-30 mx-3">/</span>
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Row 2 — scrolls right */}
-            <div className="overflow-hidden py-5">
-              <div
-                className="flex w-max"
-                style={{
-                  animation: 'mq-right 22s linear infinite',
-                  animationPlayState: hoveredValue !== null ? 'paused' : 'running',
-                }}>
-                {[...values, ...values].map(({ en, fr }, i) => {
-                  const idx = i % values.length;
-                  const isHot = hoveredValue === idx;
-                  return (
-                    <span key={i}
-                      className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tighter
-                        px-6 cursor-default select-none transition-colors duration-150"
-                      style={{ color: hoveredValue === null ? 'hsl(var(--foreground) / 0.35)' : isHot ? 'hsl(var(--primary))' : 'hsl(var(--foreground) / 0.1)' }}
-                      onMouseEnter={() => setHoveredValue(idx)}
-                      onMouseLeave={() => setHoveredValue(null)}>
-                      {L({ en, fr })}
-                      <span className="opacity-20 mx-3">/</span>
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Detail card — slides in when hovering */}
-            <AnimatePresence>
-              {hoveredValue !== null && (() => {
-                const v = values[hoveredValue];
-                const Icon = v.icon;
-                return (
-                  <motion.div
-                    key={hoveredValue}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden border-t border-border">
-                    <div className="flex items-start gap-5 p-6 bg-muted/20">
-                      <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
-                        <Icon className="h-4 w-4 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-display font-bold text-lg tracking-tight mb-1">
-                          {L({ en: v.en, fr: v.fr })}
-                        </h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
-                          {L({ en: v.descEn, fr: v.descFr })}
-                        </p>
-                      </div>
+                  {/* Front face */}
+                  <div className="absolute inset-0 [backface-visibility:hidden]
+                    bg-card border border-border rounded-sm
+                    flex flex-col items-center justify-center gap-3 p-5
+                    group hover:border-primary/40 transition-colors duration-200">
+                    <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center">
+                      <Icon className="h-4.5 w-4.5 text-primary" style={{ width: '1.125rem', height: '1.125rem' }} />
                     </div>
-                  </motion.div>
-                );
-              })()}
-            </AnimatePresence>
+                    <span className="font-display font-bold text-sm uppercase tracking-wide text-center leading-tight">
+                      {L({ en, fr })}
+                    </span>
+                    <span className="text-muted-foreground/40 text-[10px] font-display uppercase tracking-widest">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
 
+                  {/* Back face */}
+                  <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]
+                    bg-foreground border border-primary/20 rounded-sm
+                    flex flex-col justify-center p-5">
+                    <div className="h-px w-8 bg-primary mb-3" />
+                    <p className="font-display font-bold text-xs text-sidebar-foreground uppercase tracking-wide mb-2">
+                      {L({ en, fr })}
+                    </p>
+                    <p className="text-sidebar-foreground/60 text-xs leading-relaxed">
+                      {L({ en: descEn, fr: descFr })}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
+
         </div>
       </section>
 
