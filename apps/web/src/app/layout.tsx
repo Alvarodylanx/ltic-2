@@ -1,19 +1,30 @@
 import type { Metadata } from 'next';
-import { Barlow_Condensed, Plus_Jakarta_Sans } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import { Providers } from './providers';
 
-const barlow = Barlow_Condensed({
-  subsets: ['latin'],
+const barlow = localFont({
+  src: [
+    { path: '../../public/fonts/barlow-400.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/barlow-500.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/barlow-600.woff2', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/barlow-700.woff2', weight: '700', style: 'normal' },
+    { path: '../../public/fonts/barlow-800.woff2', weight: '800', style: 'normal' },
+  ],
   variable: '--font-display',
-  weight: ['400', '500', '600', '700', '800'],
-  style: ['normal', 'italic'],
   display: 'swap',
 });
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+
+const jakarta = localFont({
+  src: [
+    { path: '../../public/fonts/jakarta-300.woff2', weight: '300', style: 'normal' },
+    { path: '../../public/fonts/jakarta-400.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/jakarta-500.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/jakarta-600.woff2', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/jakarta-700.woff2', weight: '700', style: 'normal' },
+    { path: '../../public/fonts/jakarta-800.woff2', weight: '800', style: 'normal' },
+  ],
   variable: '--font-body',
-  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -70,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className={`${barlow.variable} ${plusJakarta.variable}`}>
+      <body className={`${barlow.variable} ${jakarta.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>
