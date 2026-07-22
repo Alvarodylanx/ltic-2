@@ -22,10 +22,10 @@ import {
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const heroBgs = [
-  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1800&auto=format&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1800&auto=format&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1800&auto=format&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1800&auto=format&fit=crop&q=75',
+  'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1800&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1800&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1553413077-190dd305871c?w=1800&auto=format&fit=crop&q=80',
 ];
 
 const statDefs = [
@@ -173,7 +173,7 @@ function HeroBg({ idx }: { idx: number }) {
           priority={idx === 0}
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-sidebar/88" />
+        <div className="absolute inset-0 bg-sidebar/80" />
       </motion.div>
     </AnimatePresence>
   );
@@ -257,7 +257,7 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
               {L({ en, fr })}
             </h3>
             {/* /65 gives ~4.8:1 contrast on bg-sidebar — meets WCAG AA */}
-            <p className="text-sidebar-foreground/65 text-sm leading-relaxed">
+            <p className="text-sidebar-foreground/65 text-base leading-relaxed">
               {L({ en: descEn, fr: descFr })}
             </p>
           </div>
@@ -315,7 +315,7 @@ function ProductCategoryCard({ en, fr, descEn, descFr, image, tag }: ProductCate
                        group-hover:text-primary transition-colors duration-200">
           {L({ en, fr })}
         </h3>
-        <p className="text-muted-foreground text-xs leading-relaxed mb-3">
+        <p className="text-muted-foreground text-sm leading-relaxed mb-3">
           {L({ en: descEn, fr: descFr })}
         </p>
         <Link
@@ -438,7 +438,7 @@ export default function HomePage() {
           {/* Eyebrow */}
           <motion.div variants={fadeInUp} className="flex items-center justify-center gap-3 mb-7">
             <span className="w-6 h-px bg-primary" />
-            <span className="font-display font-bold text-[11px] uppercase tracking-[0.3em] text-blue-400">
+            <span className="font-display font-bold text-xs uppercase tracking-[0.25em] text-blue-400">
               {L({ en: 'Global Logistics & Commerce', fr: 'Logistique & Commerce Mondial' })}
             </span>
             <span className="w-6 h-px bg-primary" />
@@ -447,9 +447,8 @@ export default function HomePage() {
           {/* Headline */}
           <motion.h1
             variants={fadeInUp}
-            className="font-display font-extrabold text-sidebar-foreground leading-[1.0]
-                       tracking-tight mb-5 [text-wrap:balance]
-                       text-[2.8rem] sm:text-6xl md:text-7xl lg:text-[5rem]"
+            className="font-display font-extrabold text-sidebar-foreground text-hero
+                       tracking-tight mb-5 [text-wrap:balance]"
           >
             {L({ en: 'Trade. Ship.', fr: 'Commercez. Expédiez.' })}{' '}
             <span className="text-primary">
@@ -460,7 +459,7 @@ export default function HomePage() {
           {/* Subheadline */}
           <motion.p
             variants={fadeInUp}
-            className="text-sidebar-foreground/60 text-base sm:text-lg lg:text-xl
+            className="text-sidebar-foreground/70 text-lg sm:text-xl lg:text-2xl
                        max-w-2xl mx-auto mb-9 leading-relaxed"
           >
             {L({
@@ -552,14 +551,14 @@ export default function HomePage() {
             viewport={viewportOnce}
             className="text-center mb-14"
           >
-            <p className="text-primary font-display font-bold text-[11px] uppercase tracking-[0.25em] mb-4">
+            <p className="text-primary font-display font-bold text-xs uppercase tracking-[0.2em] mb-4">
               {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
             </p>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl
-                           text-sidebar-foreground tracking-tight [text-wrap:balance]">
+            <h2 className="font-display font-extrabold text-section
+                           text-sidebar-foreground [text-wrap:balance]">
               {L({ en: 'Everything Your Business Needs', fr: 'Tout Ce Dont Votre Entreprise a Besoin' })}
             </h2>
-            <p className="text-sidebar-foreground/50 text-base mt-4 max-w-xl mx-auto leading-relaxed">
+            <p className="text-sidebar-foreground/65 text-lg mt-4 max-w-xl mx-auto leading-relaxed">
               {L({
                 en: 'Six integrated capabilities — logistics, trade, supply, consulting and representation — under one roof.',
                 fr: 'Six capacités intégrées — logistique, commerce, fourniture, conseil et représentation — sous un même toit.',
@@ -611,11 +610,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <p className="text-primary font-display font-bold text-[11px] uppercase tracking-[0.25em] mb-4">
+              <p className="text-primary font-display font-bold text-xs uppercase tracking-[0.2em] mb-4">
                 {L({ en: 'Products & Commerce', fr: 'Produits & Commerce' })}
               </p>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl
-                             tracking-tight leading-tight [text-wrap:balance] max-w-lg">
+              <h2 className="font-display font-extrabold text-section
+                             [text-wrap:balance] max-w-lg">
                 {L({ en: 'A Wide Range of Products, Delivered Anywhere', fr: 'Une Large Gamme de Produits, Livrée Partout' })}
               </h2>
             </motion.div>
@@ -759,11 +758,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="text-center mb-14">
-            <p className="text-primary font-display font-bold text-[11px] uppercase tracking-[0.25em] mb-4">
+            <p className="text-primary font-display font-bold text-xs uppercase tracking-[0.2em] mb-4">
               {L({ en: 'How It Works', fr: 'Comment Ça Marche' })}
             </p>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl
-                           tracking-tight [text-wrap:balance]">
+            <h2 className="font-display font-extrabold text-section [text-wrap:balance]">
               {L({ en: 'From Request to Delivery', fr: 'De la Demande à la Livraison' })}
             </h2>
           </motion.div>
@@ -837,13 +835,12 @@ export default function HomePage() {
               {L({ en: 'Ready to Start?', fr: 'Prêt à Commencer ?' })}
             </motion.p>
             <motion.h2 variants={fadeInUp}
-              className="font-display font-extrabold text-sidebar-foreground tracking-tight
-                         leading-[1.0] mb-7 [text-wrap:balance]
-                         text-4xl sm:text-5xl lg:text-6xl xl:text-[4.5rem]">
+              className="font-display font-extrabold text-sidebar-foreground text-section
+                         mb-7 [text-wrap:balance]">
               {L({ en: "Let's Move Your\nBusiness Forward.", fr: 'Faisons Avancer\nVotre Business.' })}
             </motion.h2>
             <motion.p variants={fadeInUp}
-              className="text-sidebar-foreground/45 text-base sm:text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+              className="text-sidebar-foreground/65 text-lg sm:text-xl max-w-lg mx-auto mb-10 leading-relaxed">
               {L({
                 en: 'One partner for freight, industrial supply and general commerce — across 30+ countries.',
                 fr: 'Un partenaire pour le fret, la fourniture industrielle et le commerce général — dans 30+ pays.',

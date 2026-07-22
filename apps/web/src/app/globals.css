@@ -50,7 +50,8 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display), sans-serif;
-  line-height: 1.1;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
 }
 
 /* Blue accent rule */
@@ -62,16 +63,16 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 0;
 }
 
-/* Fluid typography */
+/* Fluid typography — Barlow Condensed needs bigger scale */
 .text-hero {
-  font-size: clamp(2.25rem, 5vw + 0.75rem, 4.5rem);
-  line-height: 1.05;
+  font-size: clamp(3rem, 8vw + 0.5rem, 7rem);
+  line-height: 0.95;
   letter-spacing: -0.02em;
 }
 
 .text-section {
-  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.5rem);
-  line-height: 1.15;
+  font-size: clamp(1.75rem, 3.5vw + 0.5rem, 3.25rem);
+  line-height: 1.0;
   letter-spacing: -0.015em;
 }
 

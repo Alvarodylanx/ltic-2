@@ -1,10 +1,21 @@
 import type { Metadata } from 'next';
-import { Syne, DM_Sans } from 'next/font/google';
+import { Barlow_Condensed, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 
-const syne = Syne({ subsets: ['latin'], variable: '--font-display', weight: ['400', '500', '600', '700', '800'] });
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-body', weight: ['300', '400', '500', '600', '700'] });
+const barlow = Barlow_Condensed({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'swap',
+});
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lticsarl.com';
 
@@ -59,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className={`${syne.variable} ${dmSans.variable}`}>
+      <body className={`${barlow.variable} ${plusJakarta.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>
