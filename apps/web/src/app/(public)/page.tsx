@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
   Handshake, TreePine, Package, FileText, Clock, Truck, ChevronRight,
+  Users2, ShieldCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -347,8 +348,9 @@ export default function HomePage() {
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
-  const brandsRow1 = partners.filter((_, i) => i % 2 === 0);
-  const brandsRow2 = partners.filter((_, i) => i % 2 === 1);
+  // All brands in each row, ×4 so single-set width (~3.4k px) always exceeds any viewport
+  const brandsRow1 = [...partners, ...partners, ...partners, ...partners];
+  const brandsRow2 = [...partners, ...partners, ...partners, ...partners];
 
   return (
     <>
@@ -427,6 +429,27 @@ export default function HomePage() {
         </div>
 
       </section>
+
+      {/* ══ VALUE RIBBON — bridges hero → services ════════════════════════════ */}
+      <div className="bg-foreground">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10">
+            {([
+              { icon: Globe2,      en: '30+ Countries Served',  fr: '30+ Pays Desservis' },
+              { icon: Users2,      en: '500+ Trusted Clients',  fr: '500+ Clients' },
+              { icon: Clock,       en: '24h Quote Turnaround',  fr: 'Devis en 24h' },
+              { icon: ShieldCheck, en: 'Fully Insured Cargo',   fr: 'Cargo Assuré' },
+            ] as const).map(({ icon: Icon, en, fr }, i) => (
+              <div key={i} className="flex items-center justify-center gap-2.5 py-5 px-3">
+                <Icon className="h-4 w-4 text-primary flex-shrink-0" />
+                <span className="text-white/70 text-xs sm:text-sm font-semibold whitespace-nowrap">
+                  {L({ en, fr })}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
       <section className="bg-background py-20 sm:py-28">
