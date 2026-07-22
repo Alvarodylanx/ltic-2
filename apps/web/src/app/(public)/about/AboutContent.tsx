@@ -1,14 +1,21 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { CheckCircle2, Target, Globe2, ShieldCheck, Lightbulb, TrendingUp, ArrowRight } from 'lucide-react';
+import {
+  CheckCircle2, Target, Globe2, ShieldCheck, Lightbulb,
+  TrendingUp, ArrowRight, ArrowUpRight,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
-import { fadeInUp, fadeInLeft, fadeInRight, scaleIn, stagger, staggerFast, viewportOnce } from '@/components/motion/variants';
+import {
+  fadeInUp, fadeInLeft, fadeInRight, scaleIn,
+  stagger, staggerFast, viewportOnce,
+} from '@/components/motion/variants';
 
 const statDefs = [
   { key: 'stat_countries', fallback: '30+',  en: 'Countries', fr: 'Pays' },
@@ -17,17 +24,44 @@ const statDefs = [
   { key: 'stat_shipments', fallback: '10K+', en: 'Shipments', fr: 'Expéditions' },
 ];
 
+const mvvItems = [
+  {
+    icon: Target,
+    number: '01',
+    title: { en: 'Mission', fr: 'Mission' },
+    desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables qui permettent à nos clients de réussir sur les marchés mondiaux." },
+    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=900&auto=format&fit=crop&q=70',
+  },
+  {
+    icon: Globe2,
+    number: '02',
+    title: { en: 'Vision', fr: 'Vision' },
+    desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company — trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue à l'échelle mondiale — de confiance pour les entreprises en Afrique, Europe, Moyen-Orient et Canada." },
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&auto=format&fit=crop&q=70',
+  },
+  {
+    icon: ShieldCheck,
+    number: '03',
+    title: { en: 'Values', fr: 'Valeurs' },
+    desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration — the principles that guide every decision we make.', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle, Innovation, Collaboration Mondiale — les principes qui guident chacune de nos décisions.' },
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&auto=format&fit=crop&q=70',
+  },
+];
+
 const values = [
-  { icon: ShieldCheck,  en: 'Reliability',           fr: 'Fiabilité',                descEn: 'Committed to delivering on every promise — on time, in full, and with complete transparency.', descFr: 'Engagés à tenir chaque promesse — à temps, intégralement et avec une totale transparence.' },
-  { icon: Target,       en: 'Professionalism',        fr: 'Professionnalisme',         descEn: 'Maintaining the highest standards of expertise, conduct, and accountability in every business interaction.', descFr: "Maintenir les plus hauts standards d'expertise, de conduite et de responsabilité dans chaque interaction." },
-  { icon: CheckCircle2, en: 'Integrity',              fr: 'Intégrité',                 descEn: 'Operating with honesty and ethical standards across all client, partner, and supplier relationships.', descFr: 'Agir avec honnêteté et rigueur éthique dans toutes les relations commerciales.' },
-  { icon: Lightbulb,    en: 'Innovation',             fr: 'Innovation',                descEn: 'Continuously adopting modern technologies and methodologies to deliver smarter logistics solutions.', descFr: 'Adopter continuellement les technologies modernes pour des solutions logistiques plus performantes.' },
-  { icon: TrendingUp,   en: 'Operational Excellence', fr: 'Excellence Opérationnelle', descEn: 'Relentless pursuit of efficiency, quality, and continuous improvement across all our operations.', descFr: "Recherche constante d'efficacité, de qualité et d'amélioration continue dans toutes nos opérations." },
-  { icon: Globe2,       en: 'Global Collaboration',   fr: 'Collaboration Mondiale',    descEn: 'Building strong international partnerships to connect businesses with global markets and opportunities.', descFr: 'Construire des partenariats internationaux solides pour connecter les entreprises aux marchés mondiaux.' },
+  { icon: ShieldCheck,  en: 'Reliability',           fr: 'Fiabilité',                descEn: 'Committed to delivering on every promise — on time, in full, and with complete transparency.',                            descFr: 'Engagés à tenir chaque promesse — à temps, intégralement et avec une totale transparence.' },
+  { icon: Target,       en: 'Professionalism',        fr: 'Professionnalisme',         descEn: 'Maintaining the highest standards of expertise, conduct, and accountability in every business interaction.',               descFr: "Maintenir les plus hauts standards d'expertise, de conduite et de responsabilité dans chaque interaction." },
+  { icon: CheckCircle2, en: 'Integrity',              fr: 'Intégrité',                 descEn: 'Operating with honesty and ethical standards across all client, partner, and supplier relationships.',                     descFr: 'Agir avec honnêteté et rigueur éthique dans toutes les relations commerciales.' },
+  { icon: Lightbulb,    en: 'Innovation',             fr: 'Innovation',                descEn: 'Continuously adopting modern technologies and methodologies to deliver smarter logistics solutions.',                       descFr: 'Adopter continuellement les technologies modernes pour des solutions logistiques plus performantes.' },
+  { icon: TrendingUp,   en: 'Operational Excellence', fr: 'Excellence Opérationnelle', descEn: 'Relentless pursuit of efficiency, quality, and continuous improvement across all our operations.',                        descFr: "Recherche constante d'efficacité, de qualité et d'amélioration continue dans toutes nos opérations." },
+  { icon: Globe2,       en: 'Global Collaboration',   fr: 'Collaboration Mondiale',    descEn: 'Building strong international partnerships to connect businesses with global markets and opportunities.',                   descFr: 'Construire des partenariats internationaux solides pour connecter les entreprises aux marchés mondiaux.' },
 ];
 
 export default function AboutPage() {
   const { L } = useLanguage();
+  const [activeMVV, setActiveMVV] = useState<number | null>(null);
+  const [activeValue, setActiveValue] = useState<number>(0);
+
   const { data: siteSettings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
     queryFn: () => api.get('/api/settings'),
@@ -76,7 +110,7 @@ export default function AboutPage() {
                 {L({ en: 'Built for the Demands of Global Commerce', fr: 'Conçu pour les Exigences du Commerce Mondial' })}
               </h2>
               <p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
-                {L({ en: "LTIC — Logistics and Transit International Company — was incorporated in Douala, Cameroon as a SARL to serve a critical need: a reliable, comprehensive partner for logistics, transit, industrial supply, commercial representation, and international trade.", fr: "LTIC — Logistics and Transit International Company — a été constituée à Douala, Cameroun en SARL pour répondre à un besoin essentiel : un partenaire fiable en logistique, transit, fourniture industrielle, représentation commerciale et commerce international." })}
+                {L({ en: "LTIC — Logistics and Transit International Company — was incorporated in Douala, Cameroon as a SARL to serve a critical need: a reliable partner for logistics, transit, industrial supply, commercial representation, and international trade.", fr: "LTIC — Logistics and Transit International Company — a été constituée à Douala, Cameroun en SARL pour répondre à un besoin essentiel : un partenaire fiable en logistique, transit, fourniture industrielle, représentation commerciale et commerce international." })}
               </p>
               <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
                 {L({ en: 'From Douala, we operate across Africa, Europe, the Middle East, and Canada — delivering precision logistics, industrial supply, and strategic trade solutions.', fr: "Depuis Douala, nous opérons en Afrique, Europe, Moyen-Orient et Canada — logistique de précision, fournitures industrielles et solutions commerciales stratégiques." })}
@@ -88,8 +122,9 @@ export default function AboutPage() {
                   { en: 'Certified partnerships with Total, Shell and major OEM brands', fr: "Partenariats certifiés avec Total, Shell et grandes marques OEM" },
                   { en: 'Full compliance: phytosanitary treatment & customs documentation', fr: "Conformité complète : traitement phytosanitaire et documentation douanière" },
                 ].map((item, i) => (
-                  <motion.li key={i} variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
-                    transition={{ delay: i * 0.06 }} className="flex items-start gap-3">
+                  <motion.li key={i} variants={fadeInLeft} initial="hidden" whileInView="show"
+                    viewport={viewportOnce} transition={{ delay: i * 0.06 }}
+                    className="flex items-start gap-3">
                     <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                     <span className="text-muted-foreground text-sm">{L(item)}</span>
                   </motion.li>
@@ -108,7 +143,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── STATS ───────────────────────────────────────────────────────────── */}
+      {/* ── STATS BAND ──────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
@@ -127,10 +162,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── MISSION · VISION · VALUES ───────────────────────────────────────── */}
-      <section className="bg-muted/50 border-y border-border py-20 lg:py-28">
+      {/* ── MISSION · VISION · VALUES — hover-reveal panels ─────────────────── */}
+      <section className="bg-muted/30 border-y border-border py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-12">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="mb-12">
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
               {L({ en: 'Our Foundation', fr: 'Notre Fondation' })}
             </p>
@@ -140,30 +176,95 @@ export default function AboutPage() {
           </motion.div>
 
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              { icon: Target, title: { en: 'Mission', fr: 'Mission' }, desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables et complètes qui permettent à nos clients de réussir sur les marchés mondiaux." } },
-              { icon: Globe2, title: { en: 'Vision', fr: 'Vision' }, desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company — trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue à l'échelle mondiale — de confiance pour les entreprises en Afrique, Europe, Moyen-Orient et Canada." } },
-              { icon: ShieldCheck, title: { en: 'Values', fr: 'Valeurs' }, desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration, Efficiency.', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle, Innovation, Collaboration Mondiale, Efficacité.' } },
-            ].map(({ icon: Icon, title, desc }) => (
-              <motion.div key={title.en} variants={fadeInUp}
-                className="group bg-card border border-border rounded-sm p-7 hover:border-primary/50 transition-colors duration-200 relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="w-11 h-11 rounded-sm bg-foreground flex items-center justify-center mb-6">
-                  <Icon className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="font-display font-bold text-lg mb-3">{L(title)}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{L(desc)}</p>
-              </motion.div>
-            ))}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {mvvItems.map((item, i) => {
+              const isActive = activeMVV === i;
+              return (
+                <motion.div
+                  key={item.title.en}
+                  variants={scaleIn}
+                  className="relative overflow-hidden rounded-sm cursor-default"
+                  style={{ minHeight: 360 }}
+                  onMouseEnter={() => setActiveMVV(i)}
+                  onMouseLeave={() => setActiveMVV(null)}>
+
+                  {/* Background image — revealed on hover */}
+                  <div className="absolute inset-0">
+                    <Image src={item.image} alt="" fill className="object-cover" />
+                    {/* Overlay: lightens when hovered to reveal image */}
+                    <motion.div
+                      className="absolute inset-0 bg-card"
+                      animate={{ opacity: isActive ? 0.82 : 1 }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                    />
+                  </div>
+
+                  {/* Top accent bar — slides in on hover */}
+                  <motion.div
+                    className="absolute top-0 left-0 right-0 h-0.5 bg-primary"
+                    animate={{ scaleX: isActive ? 1 : 0 }}
+                    initial={{ scaleX: 0 }}
+                    style={{ originX: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  />
+
+                  {/* Content */}
+                  <div className="relative h-full p-8 flex flex-col justify-between border border-border rounded-sm">
+                    {/* Top: always visible */}
+                    <div>
+                      <span className="font-display font-bold text-xs text-primary tracking-[0.3em] block mb-5">
+                        {item.number}
+                      </span>
+                      <motion.div
+                        className="w-11 h-11 rounded-sm bg-foreground flex items-center justify-center mb-5"
+                        animate={{ scale: isActive ? 1.08 : 1 }}
+                        transition={{ duration: 0.3 }}>
+                        <item.icon className="h-5 w-5 text-primary" />
+                      </motion.div>
+                      <h3 className="font-display font-bold text-2xl sm:text-3xl tracking-tight">
+                        {L(item.title)}
+                      </h3>
+                    </div>
+
+                    {/* Bottom: description slides up on hover */}
+                    <div>
+                      {/* Always visible on mobile, hover-revealed on desktop */}
+                      <div className="md:hidden mt-5">
+                        <p className="text-muted-foreground text-sm leading-relaxed">{L(item.desc)}</p>
+                      </div>
+                      <motion.div
+                        className="hidden md:block overflow-hidden"
+                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+                        <p className="text-muted-foreground text-sm leading-relaxed mt-5 mb-4">
+                          {L(item.desc)}
+                        </p>
+                      </motion.div>
+
+                      <motion.div
+                        className="flex items-center gap-2 mt-4"
+                        animate={{ x: isActive ? 4 : 0 }}
+                        transition={{ duration: 0.3 }}>
+                        <span className="text-primary text-xs font-display font-bold uppercase tracking-[0.2em]">
+                          {L({ en: 'Read More', fr: 'En Savoir Plus' })}
+                        </span>
+                        <ArrowUpRight className="h-3.5 w-3.5 text-primary" />
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
 
-      {/* ── CORE VALUES ─────────────────────────────────────────────────────── */}
+      {/* ── CORE VALUES — keyword list with sliding detail panel ─────────────── */}
       <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-12">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="mb-12">
             <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
               {L({ en: 'What Drives Us', fr: 'Ce Qui Nous Anime' })}
             </p>
@@ -172,50 +273,74 @@ export default function AboutPage() {
             </h2>
           </motion.div>
 
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {values.map(({ icon: Icon, ...val }) => (
-              <motion.div key={val.en} variants={scaleIn}
-                className="group bg-card border border-border rounded-sm p-6 hover:border-primary/50 transition-colors duration-200">
-                <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center mb-5">
-                  <Icon className="h-4 w-4 text-primary" />
-                </div>
-                <h3 className="font-display font-bold text-sm mb-2">{L({ en: val.en, fr: val.fr })}</h3>
-                <p className="text-muted-foreground text-xs leading-relaxed">{L({ en: val.descEn, fr: val.descFr })}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-1 lg:grid-cols-2 border border-border rounded-sm overflow-hidden">
 
-      {/* ── TEAM ────────────────────────────────────────────────────────────── */}
-      <section className="bg-muted/50 border-y border-border py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce} className="mb-12">
-            <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
-              {L({ en: 'Our Team', fr: 'Notre Équipe' })}
-            </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
-              {L({ en: 'Expert Professionals', fr: 'Experts Professionnels' })}
-            </h2>
-          </motion.div>
+            {/* Left: keyword list */}
+            <div className="divide-y divide-border">
+              {values.map(({ icon: Icon, ...val }, i) => {
+                const isActive = activeValue === i;
+                return (
+                  <motion.button
+                    key={val.en}
+                    className={`w-full text-left py-5 px-8 flex items-center justify-between transition-all duration-200 group ${
+                      isActive
+                        ? 'bg-foreground'
+                        : 'hover:bg-muted/40'
+                    }`}
+                    onMouseEnter={() => setActiveValue(i)}
+                    onClick={() => setActiveValue(i)}>
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        className={`w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0 transition-colors duration-200 ${
+                          isActive ? 'bg-primary/20' : 'bg-muted'
+                        }`}
+                        animate={{ rotate: isActive ? 0 : 0 }}>
+                        <Icon className={`h-3.5 w-3.5 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
+                      </motion.div>
+                      <span className={`font-display font-bold text-lg sm:text-xl transition-colors duration-200 ${
+                        isActive ? 'text-sidebar-foreground' : 'text-foreground group-hover:text-foreground'
+                      }`}>
+                        {L({ en: val.en, fr: val.fr })}
+                      </span>
+                    </div>
+                    <motion.div animate={{ x: isActive ? 3 : 0 }} transition={{ duration: 0.2 }}>
+                      <ArrowRight className={`h-4 w-4 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
+                    </motion.div>
+                  </motion.button>
+                );
+              })}
+            </div>
 
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              { role: { en: 'Operations Director', fr: 'Directeur des Opérations' }, desc: { en: 'Experienced in managing international freight, customs operations, and multi-modal logistics across Africa, Europe, and the Middle East.', fr: "Expérimenté dans la gestion du fret international, des opérations douanières et de la logistique multimodale en Afrique, Europe et Moyen-Orient." } },
-              { role: { en: 'Trade Manager', fr: 'Responsable Commercial' }, desc: { en: 'Specialist in global sourcing, import/export compliance, and building strategic trade partnerships across 30+ markets.', fr: "Spécialiste en approvisionnement mondial, conformité import/export et partenariats commerciaux stratégiques dans 30+ marchés." } },
-              { role: { en: 'Supply Chain Consultant', fr: 'Consultant Chaîne Logistique' }, desc: { en: 'Expert in supply chain design, procurement optimization, and industrial supply solutions for complex operational environments.', fr: "Expert en conception de chaîne logistique, optimisation des achats et solutions industrielles pour environnements complexes." } },
-            ].map((member, i) => (
-              <motion.div key={i} variants={scaleIn}
-                className="group bg-card border border-border rounded-sm p-6 hover:border-primary/50 transition-colors duration-200">
-                <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center mb-5">
-                  <span className="font-display font-bold text-xs text-primary">{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <h3 className="font-display font-bold text-sm mb-3">{L(member.role)}</h3>
-                <p className="text-muted-foreground text-xs leading-relaxed">{L(member.desc)}</p>
-              </motion.div>
-            ))}
+            {/* Right: detail panel */}
+            <div className="relative lg:border-l border-t lg:border-t-0 border-border min-h-[280px] overflow-hidden">
+              <AnimatePresence mode="wait">
+                {(() => {
+                  const active = values[activeValue];
+                  const Icon = active.icon;
+                  return (
+                    <motion.div
+                      key={activeValue}
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                      className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-center">
+                      <div className="w-12 h-12 rounded-sm bg-foreground flex items-center justify-center mb-6">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <h3 className="font-display font-bold text-2xl tracking-tight mb-4">
+                        {L({ en: active.en, fr: active.fr })}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {L({ en: active.descEn, fr: active.descFr })}
+                      </p>
+                      <div className="mt-6 h-0.5 w-12 bg-primary" />
+                    </motion.div>
+                  );
+                })()}
+              </AnimatePresence>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -223,7 +348,8 @@ export default function AboutPage() {
       {/* ── CTA ─────────────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-16 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+          flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
               {L({ en: 'Ready to Partner with LTIC SARL?', fr: 'Prêt à Collaborer avec LTIC SARL ?' })}
