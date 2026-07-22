@@ -325,12 +325,28 @@ export default function HomePage() {
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
   });
-  const { data: partners = [] } = useQuery<Partner[]>({
+  const { data: apiPartners = [] } = useQuery<Partner[]>({
     queryKey: ['partners'],
     queryFn: () => api.get('/api/partners'),
     staleTime: 5 * 60 * 1000,
   });
 
+  const staticBrands: Partner[] = [
+    { id: 101, name: 'Total Energies',   sectorEn: 'Energy',      sectorFr: 'Énergie' },
+    { id: 102, name: 'Shell',            sectorEn: 'Energy',      sectorFr: 'Énergie' },
+    { id: 103, name: 'CMA CGM',          sectorEn: 'Shipping',    sectorFr: 'Transport Maritime' },
+    { id: 104, name: 'DHL',             sectorEn: 'Logistics',   sectorFr: 'Logistique' },
+    { id: 105, name: 'Bolloré Logistics',sectorEn: 'Logistics',   sectorFr: 'Logistique' },
+    { id: 106, name: 'Maersk',          sectorEn: 'Shipping',    sectorFr: 'Transport Maritime' },
+    { id: 107, name: 'MSC',             sectorEn: 'Shipping',    sectorFr: 'Transport Maritime' },
+    { id: 108, name: 'Camair-Co',       sectorEn: 'Aviation',    sectorFr: 'Aviation' },
+    { id: 109, name: 'Port de Douala',   sectorEn: 'Port',        sectorFr: 'Port' },
+    { id: 110, name: 'CFAO',            sectorEn: 'Trade',       sectorFr: 'Commerce' },
+    { id: 111, name: 'Ciments Cameroun',sectorEn: 'Industry',    sectorFr: 'Industrie' },
+    { id: 112, name: 'Orange Cameroun', sectorEn: 'Telecom',     sectorFr: 'Télécoms' },
+  ];
+
+  const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
   const brandsRow1 = partners.filter((_, i) => i % 2 === 0);
   const brandsRow2 = partners.filter((_, i) => i % 2 === 1);
 
@@ -410,9 +426,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bottom fade into page background */}
-        <div className="absolute bottom-0 left-0 right-0 h-20
-                        bg-gradient-to-t from-background to-transparent" />
       </section>
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
