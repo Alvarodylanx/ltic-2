@@ -22,194 +22,190 @@ export default function NewsPage() {
 
   return (
     <>
-      {/* ── PAGE HEADER ─────────────────────────────────────────────────────── */}
-      <section className="bg-background border-b border-border overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          <motion.div
-            variants={stagger} initial="hidden" animate="show"
-            className="px-6 sm:px-10 lg:px-16 py-20 sm:py-24 lg:py-32 flex flex-col justify-center">
-            <motion.div variants={fadeInUp} className="w-10 h-0.5 bg-primary mb-8" />
-            <motion.p variants={fadeInUp}
-              className="text-primary font-display font-bold text-xs uppercase tracking-[0.3em] mb-4">
-              {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
-            </motion.p>
-            <motion.h1 variants={fadeInUp}
-              className="font-display font-extrabold text-section text-foreground leading-none mb-6">
-              {L({ en: 'Industry\nUpdates', fr: 'Actualités\ndu Secteur' })}
-            </motion.h1>
-            <motion.p variants={fadeInUp}
-              className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-lg">
-              {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informé des dernières évolutions en logistique mondiale, commerce et fournitures industrielles.' })}
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            variants={scaleIn} initial="hidden" animate="show"
-            className="relative h-72 lg:h-auto min-h-[360px] hidden lg:block">
-            <Image
-              src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&auto=format&fit=crop&q=70"
-              alt="News" fill className="object-cover" priority />
-            <div className="absolute inset-0 bg-foreground/25" />
-          </motion.div>
-        </div>
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
+      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&auto=format&fit=crop&q=50"
+          alt="" fill className="object-cover opacity-15" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/90 via-sidebar/70 to-sidebar/30" />
+        <motion.div variants={stagger} initial="hidden" animate="show"
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.p variants={fadeInUp}
+            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
+          </motion.p>
+          <motion.h1 variants={fadeInUp}
+            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
+            {L({ en: 'Industry News & Updates', fr: 'Actualités & Mises à Jour' })}
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-xl leading-relaxed">
+            {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informé des dernières évolutions en logistique mondiale, commerce et fournitures industrielles.' })}
+          </motion.p>
+        </motion.div>
       </section>
 
-      {/* ── CONTENT ──────────────────────────────────────────────────────────── */}
+      {/* ── ARTICLES ────────────────────────────────────────────────────────── */}
       <section className="bg-background py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Loading state */}
+          {/* Loading */}
           {isLoading && (
-            <div className="space-y-12">
-              {/* Featured skeleton */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-border">
-                <Skeleton className="h-72 lg:h-96" />
-                <div className="p-8 space-y-4">
-                  <Skeleton className="h-3 w-24" />
-                  <Skeleton className="h-8 w-full" />
-                  <Skeleton className="h-8 w-3/4" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-2/3" />
+            <div className="space-y-10">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <div className="lg:col-span-3 rounded-sm overflow-hidden border border-border">
+                  <Skeleton className="aspect-video w-full" />
+                  <div className="p-6 space-y-3">
+                    <Skeleton className="h-3 w-24" />
+                    <Skeleton className="h-7 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
                 </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {Array(3).fill(0).map((_, i) => (
-                  <div key={i} className="border border-border">
-                    <Skeleton className="aspect-video w-full" />
-                    <div className="p-5 space-y-3">
+                <div className="lg:col-span-2 space-y-4">
+                  {Array(3).fill(0).map((_, i) => (
+                    <div key={i} className="border border-border rounded-sm p-5 space-y-2">
                       <Skeleton className="h-3 w-20" />
                       <Skeleton className="h-5 w-full" />
-                      <Skeleton className="h-4 w-full" />
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
-          {/* Empty state */}
+          {/* Empty */}
           {!isLoading && !articles?.length && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
-              className="flex flex-col items-center justify-center py-28 gap-6 text-center">
-              <div className="w-20 h-20 border border-border flex items-center justify-center">
-                <Newspaper className="h-8 w-8 text-muted-foreground/40" />
+              className="flex flex-col items-center justify-center py-24 gap-5 text-center">
+              <div className="w-14 h-14 rounded-sm bg-foreground flex items-center justify-center">
+                <Newspaper className="h-6 w-6 text-primary" />
               </div>
-              <div>
-                <p className="font-display font-extrabold text-xl mb-2">
-                  {L({ en: 'No Articles Yet', fr: 'Aucun Article' })}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {L({ en: 'Check back soon for news and industry insights.', fr: 'Revenez bientôt pour des actualités et analyses sectorielles.' })}
-                </p>
-              </div>
+              <p className="text-muted-foreground">
+                {L({ en: 'No news articles available yet.', fr: 'Aucun article disponible pour le moment.' })}
+              </p>
             </motion.div>
           )}
 
           {/* Articles */}
           {!isLoading && articles && articles.length > 0 && (
             <AnimatePresence>
-              <motion.div variants={stagger} initial="hidden" animate="show" className="space-y-12">
+              <motion.div variants={stagger} initial="hidden" animate="show" className="space-y-10">
 
-                {/* Featured article — large editorial card */}
-                {featured && (
-                  <motion.article variants={fadeInUp}
-                    className="group grid grid-cols-1 lg:grid-cols-2 border border-border overflow-hidden hover:border-primary/50 transition-colors duration-300">
-                    <div className="relative h-72 lg:h-auto min-h-[320px] overflow-hidden">
-                      {featured.imageUrl ? (
-                        <Image
-                          src={featured.imageUrl}
-                          alt={L({ en: featured.titleEn, fr: featured.titleFr })} fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                      ) : (
-                        <div className="w-full h-full bg-muted flex items-center justify-center">
-                          <Newspaper className="h-12 w-12 text-muted-foreground/30" />
+                {/* Featured + sidebar layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
+
+                  {/* Featured */}
+                  {featured && (
+                    <motion.article variants={scaleIn}
+                      className="lg:col-span-3 group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col">
+                      {featured.imageUrl && (
+                        <div className="aspect-video relative overflow-hidden">
+                          <Image src={featured.imageUrl} alt={L({ en: featured.titleEn, fr: featured.titleFr })} fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                          <div className="absolute top-4 left-4">
+                            <span className="bg-primary text-primary-foreground text-xs font-display font-semibold uppercase tracking-[0.15em] px-3 py-1 rounded-sm">
+                              {L({ en: 'Featured', fr: 'À la Une' })}
+                            </span>
+                          </div>
                         </div>
                       )}
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-primary text-primary-foreground text-xs font-display font-bold uppercase tracking-[0.2em] px-3 py-1.5">
-                          {L({ en: 'Featured', fr: 'À la une' })}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-8 lg:p-10 flex flex-col justify-center">
-                      <div className="flex items-center gap-3 mb-5">
-                        {featured.category && (
-                          <span className="border border-primary text-primary text-xs font-display font-bold uppercase tracking-[0.15em] px-2.5 py-1">
-                            {featured.category}
+                      <div className="p-6 flex flex-col flex-1">
+                        <div className="flex items-center gap-3 mb-3">
+                          {featured.category && (
+                            <span className="bg-primary/10 text-primary text-xs font-semibold rounded-sm px-2.5 py-0.5">
+                              {featured.category}
+                            </span>
+                          )}
+                          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <Calendar className="h-3 w-3" />
+                            {format(new Date(featured.publishedAt), 'dd MMM yyyy')}
                           </span>
+                        </div>
+                        <h2 className="font-display font-bold text-xl sm:text-2xl tracking-tight mb-3 group-hover:text-primary transition-colors leading-tight flex-1">
+                          {L({ en: featured.titleEn, fr: featured.titleFr })}
+                        </h2>
+                        {(featured.summaryEn || featured.summaryFr) && (
+                          <p className="text-muted-foreground text-sm line-clamp-2 mb-4 leading-relaxed">
+                            {L({ en: featured.summaryEn || '', fr: featured.summaryFr || '' })}
+                          </p>
                         )}
-                        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(featured.publishedAt), 'dd MMM yyyy')}
-                        </span>
+                        <Link href={`/news/${featured.id}`}
+                          className="inline-flex items-center gap-1.5 text-primary text-sm font-display font-semibold hover:gap-2.5 transition-all duration-200">
+                          {L({ en: 'Read Article', fr: 'Lire l\'Article' })}
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
                       </div>
-                      <h2 className="font-display font-extrabold text-2xl sm:text-3xl leading-tight tracking-tight mb-4 group-hover:text-primary transition-colors duration-200">
-                        {L({ en: featured.titleEn, fr: featured.titleFr })}
-                      </h2>
-                      {(featured.summaryEn || featured.summaryFr) && (
-                        <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3">
-                          {L({ en: featured.summaryEn || '', fr: featured.summaryFr || '' })}
-                        </p>
-                      )}
-                      <Link href={`/news/${featured.id}`}
-                        className="inline-flex items-center gap-2 text-primary font-display font-bold text-sm uppercase tracking-[0.2em] hover:gap-3 transition-all duration-200">
-                        {L({ en: 'Read Article', fr: 'Lire l\'Article' })}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </motion.article>
-                )}
+                    </motion.article>
+                  )}
 
-                {/* Rest of articles — 3-col grid */}
-                {rest.length > 0 && (
-                  <>
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-0.5 bg-primary flex-shrink-0" />
-                      <p className="text-muted-foreground text-xs uppercase tracking-[0.25em] font-display font-bold">
-                        {L({ en: 'More Articles', fr: 'Plus d\'Articles' })}
-                      </p>
-                    </div>
-
-                    <motion.div
-                      variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {rest.map((article) => (
-                        <motion.article key={article.id} variants={scaleIn}
-                          className="group border border-border overflow-hidden hover:border-primary/50 transition-colors duration-300 flex flex-col">
+                  {/* Sidebar articles */}
+                  {rest.length > 0 && (
+                    <div className="lg:col-span-2 space-y-4">
+                      {rest.slice(0, 4).map((article) => (
+                        <motion.article key={article.id} variants={fadeInUp}
+                          className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 transition-all duration-200 flex gap-0">
                           {article.imageUrl && (
-                            <div className="aspect-video relative overflow-hidden flex-shrink-0">
-                              <Image
-                                src={article.imageUrl}
-                                alt={L({ en: article.titleEn, fr: article.titleFr })} fill
+                            <div className="w-24 sm:w-28 relative flex-shrink-0 overflow-hidden">
+                              <Image src={article.imageUrl} alt={L({ en: article.titleEn, fr: article.titleFr })} fill
                                 className="object-cover transition-transform duration-500 group-hover:scale-105" />
                             </div>
                           )}
-                          <div className="p-5 flex flex-col flex-1">
-                            <div className="flex items-center gap-2.5 mb-3">
-                              {article.category && (
-                                <span className="border border-border text-muted-foreground text-xs font-display font-semibold uppercase tracking-[0.1em] px-2 py-0.5">
-                                  {article.category}
-                                </span>
-                              )}
-                              <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                                <Calendar className="h-3 w-3" />
-                                {format(new Date(article.publishedAt), 'dd MMM yyyy')}
-                              </span>
-                            </div>
-                            <h2 className="font-display font-extrabold text-base leading-tight mb-3 group-hover:text-primary transition-colors duration-200 flex-1">
+                          <div className="p-4 flex flex-col justify-center flex-1">
+                            <span className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1.5">
+                              <Calendar className="h-3 w-3" />
+                              {format(new Date(article.publishedAt), 'dd MMM yyyy')}
+                            </span>
+                            <h2 className="font-display font-bold text-sm leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                               {L({ en: article.titleEn, fr: article.titleFr })}
                             </h2>
                             <Link href={`/news/${article.id}`}
-                              className="inline-flex items-center gap-1.5 text-primary text-xs font-display font-bold uppercase tracking-[0.2em] hover:gap-2.5 transition-all duration-200 mt-auto">
+                              className="inline-flex items-center gap-1 text-primary text-xs font-semibold hover:gap-1.5 transition-all duration-200">
                               {L({ en: 'Read', fr: 'Lire' })}
                               <ArrowRight className="h-3 w-3" />
                             </Link>
                           </div>
                         </motion.article>
                       ))}
-                    </motion.div>
-                  </>
+                    </div>
+                  )}
+                </div>
+
+                {/* Remaining grid */}
+                {rest.length > 4 && (
+                  <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 border-t border-border">
+                    {rest.slice(4).map((article) => (
+                      <motion.article key={article.id} variants={scaleIn}
+                        className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col">
+                        {article.imageUrl && (
+                          <div className="aspect-video relative overflow-hidden">
+                            <Image src={article.imageUrl} alt={L({ en: article.titleEn, fr: article.titleFr })} fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                          </div>
+                        )}
+                        <div className="p-5 flex flex-col flex-1">
+                          <div className="flex items-center gap-2 mb-3">
+                            {article.category && (
+                              <span className="bg-primary/10 text-primary text-xs font-semibold rounded-sm px-2 py-0.5">
+                                {article.category}
+                              </span>
+                            )}
+                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                              <Calendar className="h-3 w-3" />
+                              {format(new Date(article.publishedAt), 'dd MMM yyyy')}
+                            </span>
+                          </div>
+                          <h2 className="font-display font-bold text-base leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
+                            {L({ en: article.titleEn, fr: article.titleFr })}
+                          </h2>
+                          <Link href={`/news/${article.id}`}
+                            className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold hover:gap-2.5 transition-all duration-200 mt-auto">
+                            {L({ en: 'Read More', fr: 'Lire la Suite' })}
+                            <ArrowRight className="h-3.5 w-3.5" />
+                          </Link>
+                        </div>
+                      </motion.article>
+                    ))}
+                  </motion.div>
                 )}
               </motion.div>
             </AnimatePresence>

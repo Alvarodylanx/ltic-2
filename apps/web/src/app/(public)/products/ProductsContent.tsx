@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { Package, ArrowRight, AlertCircle, RefreshCw, Search, X } from 'lucide-react';
+import { Package, Filter, ArrowRight, AlertCircle, RefreshCw, Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -46,74 +46,62 @@ export default function ProductsPage() {
 
   return (
     <>
-      {/* ── PAGE HEADER ─────────────────────────────────────────────────────── */}
-      <section className="bg-background border-b border-border overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          <motion.div
-            variants={stagger} initial="hidden" animate="show"
-            className="px-6 sm:px-10 lg:px-16 py-20 sm:py-24 lg:py-28 flex flex-col justify-center">
-            <motion.div variants={fadeInUp} className="w-10 h-0.5 bg-primary mb-8" />
-            <motion.p variants={fadeInUp}
-              className="text-primary font-display font-bold text-xs uppercase tracking-[0.3em] mb-4">
-              {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
-            </motion.p>
-            <motion.h1 variants={fadeInUp}
-              className="font-display font-extrabold text-section text-foreground leading-none mb-6">
-              {L({ en: 'Our\nProducts', fr: 'Nos\nProduits' })}
-            </motion.h1>
-            <motion.p variants={fadeInUp}
-              className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-lg">
-              {L({ en: 'Premium certified industrial equipment, supplies, and materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés premium, fournitures et matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="relative h-72 lg:h-auto min-h-[360px] hidden lg:block">
-            <Image
-              src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=900&auto=format&fit=crop&q=70"
-              alt="Products" fill className="object-cover" priority />
-            <div className="absolute inset-0 bg-foreground/20" />
-          </motion.div>
-        </div>
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
+      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&auto=format&fit=crop&q=50"
+          alt="" fill className="object-cover opacity-20" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/90 via-sidebar/70 to-sidebar/30" />
+        <motion.div variants={stagger} initial="hidden" animate="show"
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.p variants={fadeInUp}
+            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
+          </motion.p>
+          <motion.h1 variants={fadeInUp}
+            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
+            {L({ en: 'Our Products', fr: 'Nos Produits' })}
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-xl leading-relaxed">
+            {L({ en: 'Premium certified industrial equipment, supplies, and materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés premium, fournitures et matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
+          </motion.p>
+        </motion.div>
       </section>
 
       {/* ── FILTER BAR ──────────────────────────────────────────────────────── */}
-      <div className="sticky top-16 z-40 bg-background border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-          {/* Search */}
-          <div className="relative w-full sm:w-64">
+      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              placeholder={L({ en: 'Search products…', fr: 'Rechercher…' })}
-              className="pl-9 pr-8 h-9 text-sm rounded-none border-border"
+              placeholder={L({ en: 'Search products…', fr: 'Rechercher des produits…' })}
+              className="pl-9 pr-8 h-9 text-sm rounded-sm w-56"
             />
             {searchInput && (
-              <button
-                onClick={() => setSearchInput('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                aria-label="Clear search">
+              <button onClick={() => setSearchInput('')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                aria-label="Clear">
                 <X className="h-3.5 w-3.5" />
               </button>
             )}
           </div>
 
-          {/* Category tabs */}
-          <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+              <Filter className="h-3.5 w-3.5" />
+              {L({ en: 'Filter:', fr: 'Filtrer:' })}
+            </div>
             {[{ id: undefined, nameEn: 'All', nameFr: 'Tous' }, ...(categories || [])].map((cat) => {
               const active = (!selectedCategory && cat.id === undefined) || selectedCategory === cat.id;
               return (
-                <motion.button
-                  key={cat.id ?? 'all'}
-                  whileTap={{ scale: 0.96 }}
+                <motion.button key={cat.id ?? 'all'} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3.5 py-1.5 text-xs font-display font-bold uppercase tracking-[0.15em] border transition-all duration-150 ${
+                  className={`px-3.5 py-1.5 rounded-sm text-xs font-display font-semibold border transition-all duration-200 ${
                     active
-                      ? 'bg-foreground text-sidebar-foreground border-foreground'
-                      : 'bg-transparent text-muted-foreground border-border hover:border-foreground hover:text-foreground'
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'bg-background text-foreground hover:bg-primary/10 hover:text-primary border-border'
                   }`}>
                   {L({ en: cat.nameEn, fr: cat.nameFr })}
                 </motion.button>
@@ -127,14 +115,14 @@ export default function ProductsPage() {
       <section className="bg-background py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 border border-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {Array(8).fill(0).map((_, i) => (
-                <div key={i} className="border-r border-b border-border">
+                <div key={i} className="border border-border rounded-sm overflow-hidden">
                   <Skeleton className="aspect-[4/3] w-full" />
                   <div className="p-4 space-y-2">
                     <Skeleton className="h-3 w-16" />
                     <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-8 w-full mt-2" />
+                    <Skeleton className="h-9 w-full mt-2" />
                   </div>
                 </div>
               ))}
@@ -143,19 +131,10 @@ export default function ProductsPage() {
 
           {isError && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
-              className="flex flex-col items-center justify-center py-24 gap-5">
-              <div className="w-16 h-16 border border-destructive/40 flex items-center justify-center">
-                <AlertCircle className="h-7 w-7 text-destructive/60" />
-              </div>
-              <div className="text-center">
-                <p className="font-display font-bold text-base mb-1">
-                  {L({ en: 'Unable to load products', fr: 'Impossible de charger les produits' })}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {L({ en: 'Please check your connection and try again.', fr: 'Veuillez vérifier votre connexion et réessayer.' })}
-                </p>
-              </div>
-              <Button variant="outline" onClick={() => refetch()} className="gap-2 rounded-none">
+              className="flex flex-col items-center justify-center py-24 gap-4">
+              <AlertCircle className="h-14 w-14 text-destructive/40" />
+              <p className="text-muted-foreground font-medium">{L({ en: 'Unable to load products', fr: 'Impossible de charger les produits' })}</p>
+              <Button variant="outline" onClick={() => refetch()} className="gap-2 rounded-sm">
                 <RefreshCw className="h-4 w-4" />
                 {L({ en: 'Retry', fr: 'Réessayer' })}
               </Button>
@@ -164,22 +143,17 @@ export default function ProductsPage() {
 
           {!isLoading && !isError && !products?.length && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
-              className="flex flex-col items-center justify-center py-24 gap-5 text-center">
-              <div className="w-16 h-16 border border-border flex items-center justify-center">
-                <Package className="h-7 w-7 text-muted-foreground/40" />
+              className="flex flex-col items-center justify-center py-24 gap-4">
+              <div className="w-14 h-14 rounded-sm bg-foreground flex items-center justify-center">
+                <Package className="h-6 w-6 text-primary" />
               </div>
-              <div>
-                <p className="font-display font-bold text-base mb-1">
-                  {debouncedSearch
-                    ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit pour "${debouncedSearch}"` })
-                    : L({ en: 'No products in this category', fr: 'Aucun produit dans cette catégorie' })}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {L({ en: 'Try adjusting your filters', fr: 'Essayez d\'ajuster vos filtres' })}
-                </p>
-              </div>
+              <p className="text-muted-foreground">
+                {debouncedSearch
+                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvé pour "${debouncedSearch}"` })
+                  : L({ en: 'No products found in this category', fr: 'Aucun produit trouvé dans cette catégorie' })}
+              </p>
               <Button variant="outline" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}
-                className="rounded-none">
+                className="rounded-sm">
                 {L({ en: 'View All Products', fr: 'Voir Tous les Produits' })}
               </Button>
             </motion.div>
@@ -190,36 +164,37 @@ export default function ProductsPage() {
               <motion.div
                 key={`${selectedCategory ?? 'all'}-${debouncedSearch}`}
                 variants={stagger} initial="hidden" animate="show"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-border overflow-hidden">
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {products.map((product) => (
                   <motion.div key={product.id} variants={scaleIn}
-                    className="group bg-background hover:bg-foreground transition-colors duration-300">
-                    <div className="aspect-[4/3] relative bg-muted overflow-hidden">
-                      {product.imageUrl ? (
-                        <Image
-                          src={product.imageUrl}
-                          alt={L({ en: product.nameEn, fr: product.nameFr })} fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105 group-hover:opacity-40" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Package className="h-10 w-10 text-muted-foreground/30 group-hover:text-primary transition-colors duration-300" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      {product.categoryName && (
-                        <span className="inline-block border border-border group-hover:border-primary/30 text-muted-foreground group-hover:text-primary/70 text-xs font-display font-bold uppercase tracking-[0.12em] px-2 py-0.5 mb-3 transition-colors duration-300">
-                          {product.categoryName}
-                        </span>
-                      )}
-                      <h3 className="font-display font-bold text-sm leading-tight mb-4 group-hover:text-sidebar-foreground transition-colors duration-300">
-                        {L({ en: product.nameEn, fr: product.nameFr })}
-                      </h3>
-                      <Link href={`/products/${product.slug}`}
-                        className="inline-flex items-center gap-2 text-primary group-hover:text-primary text-xs font-display font-bold uppercase tracking-[0.2em] hover:gap-3 transition-all duration-200">
-                        {L({ en: 'Details', fr: 'Détails' })}
-                        <ArrowRight className="h-3 w-3" />
-                      </Link>
+                    whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                    <div className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+                      <div className="aspect-[4/3] relative bg-muted overflow-hidden">
+                        {product.imageUrl ? (
+                          <Image src={product.imageUrl} alt={L({ en: product.nameEn, fr: product.nameFr })} fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Package className="h-10 w-10 text-muted-foreground/30" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4 flex flex-col flex-1">
+                        {product.categoryName && (
+                          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold rounded-sm px-2 py-0.5 mb-2 w-fit">
+                            {product.categoryName}
+                          </span>
+                        )}
+                        <h3 className="font-display font-bold text-sm leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
+                          {L({ en: product.nameEn, fr: product.nameFr })}
+                        </h3>
+                        <Button asChild size="sm" className="w-full rounded-sm">
+                          <Link href={`/products/${product.slug}`}>
+                            {L({ en: 'View Details', fr: 'Voir les Détails' })}
+                            <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                          </Link>
+                        </Button>
+                      </div>
                     </div>
                   </motion.div>
                 ))}

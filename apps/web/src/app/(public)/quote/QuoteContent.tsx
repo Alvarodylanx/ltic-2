@@ -18,7 +18,7 @@ import { CountrySelect } from '@/components/ui/CountrySelect';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
 import { Suspense } from 'react';
-import { fadeInUp, fadeInRight, stagger } from '@/components/motion/variants';
+import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/components/motion/variants';
 
 const schema = z.object({
   companyName:     z.string().min(1),
@@ -59,85 +59,83 @@ function QuoteForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="companyName" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+          <Label htmlFor="companyName" className="text-xs font-display font-semibold uppercase tracking-wide">
             {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })} *
           </Label>
-          <Input id="companyName" {...register('companyName')} className="rounded-none" />
+          <Input id="companyName" {...register('companyName')} className="mt-1.5 rounded-sm" />
           {errors.companyName && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
         </div>
         <div>
-          <Label htmlFor="contactName" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+          <Label htmlFor="contactName" className="text-xs font-display font-semibold uppercase tracking-wide">
             {L({ en: 'Contact Name', fr: 'Nom du Contact' })} *
           </Label>
-          <Input id="contactName" {...register('contactName')} className="rounded-none" />
+          <Input id="contactName" {...register('contactName')} className="mt-1.5 rounded-sm" />
           {errors.contactName && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
         </div>
       </div>
 
       <div>
-        <Label htmlFor="email" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+        <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Email Address', fr: 'Adresse Email' })} *
         </Label>
         <Controller name="email" control={control}
           render={({ field }) => (
-            <EmailInput id="email" placeholder="you@company.com" className="rounded-none" {...field} />
+            <EmailInput id="email" placeholder="you@company.com" className="mt-1.5 rounded-sm" {...field} />
           )} />
         {errors.email && <p className="text-destructive text-xs mt-1">{L({ en: 'Valid email required', fr: 'Email valide requis' })}</p>}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="country" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+          <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide">
             {L({ en: 'Country', fr: 'Pays' })}
           </Label>
           <Controller name="country" control={control}
             render={({ field }) => (
-              <CountrySelect id="country" value={field.value ?? ''} onChange={field.onChange}
+              <CountrySelect id="country" className="mt-1.5" value={field.value ?? ''} onChange={field.onChange}
                 lang={language} placeholderEn="Select your country…" placeholderFr="Sélectionnez votre pays…" />
             )} />
         </div>
         <div>
-          <Label htmlFor="phone" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+          <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide">
             {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
           </Label>
           <Controller name="phone" control={control}
             render={({ field }) => (
               <PhoneInput id="phone" value={field.value} onChange={field.onChange}
-                syncCountry={selectedCountry} />
+                syncCountry={selectedCountry} className="mt-1.5" />
             )} />
         </div>
       </div>
 
       <div>
-        <Label htmlFor="productInterest" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+        <Label htmlFor="productInterest" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Product / Service of Interest', fr: "Produit / Service d'Intérêt" })} *
         </Label>
-        <Input id="productInterest" {...register('productInterest')} className="rounded-none" />
+        <Input id="productInterest" {...register('productInterest')} className="mt-1.5 rounded-sm" />
         {errors.productInterest && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
       </div>
 
       <div>
-        <Label htmlFor="quantity" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+        <Label htmlFor="quantity" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Quantity / Volume', fr: 'Quantité / Volume' })}
         </Label>
-        <Input id="quantity" {...register('quantity')} className="rounded-none" />
+        <Input id="quantity" {...register('quantity')} className="mt-1.5 rounded-sm" />
       </div>
 
       <div>
-        <Label htmlFor="message" className="text-xs font-display font-bold uppercase tracking-[0.15em] mb-1.5 block">
+        <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide">
           {L({ en: 'Additional Information', fr: 'Informations Supplémentaires' })}
         </Label>
-        <Textarea id="message" {...register('message')} rows={4} className="rounded-none" />
+        <Textarea id="message" {...register('message')} rows={4} className="mt-1.5 rounded-sm" />
       </div>
 
       <Button type="submit" size="lg" disabled={isSubmitting}
-        className="w-full font-display font-bold text-sm rounded-none">
-        {isSubmitting
-          ? <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-          : <Send className="h-4 w-4 mr-2" />}
+        className="w-full font-display font-semibold text-sm rounded-sm">
+        {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
         {L({ en: 'Submit Quote Request', fr: 'Envoyer la Demande de Devis' })}
       </Button>
     </form>
@@ -147,14 +145,7 @@ function QuoteForm() {
 export default function QuotePage() {
   const { L } = useLanguage();
 
-  const process = [
-    { icon: FileText,     en: 'Submit this form — takes less than 2 minutes.',               fr: 'Soumettez ce formulaire — moins de 2 minutes.' },
-    { icon: Clock,        en: 'Our team prepares a custom offer within 24–48 hours.',         fr: 'Notre équipe prépare une offre sous 24–48h.' },
-    { icon: CheckCircle2, en: 'You receive a detailed quote with pricing and delivery dates.', fr: 'Vous recevez un devis détaillé avec prix et délais.' },
-    { icon: Truck,        en: 'Confirm — we handle customs, freight, and logistics.',          fr: 'Confirmez — nous gérons les douanes, le fret et la logistique.' },
-  ];
-
-  const trust = [
+  const highlights = [
     { icon: Clock,        en: 'Response within 24 hours',       fr: 'Réponse dans les 24 heures' },
     { icon: Shield,       en: 'Confidential & secure',           fr: 'Confidentiel & sécurisé' },
     { icon: Globe2,       en: 'Global coverage — 30+ countries', fr: 'Couverture mondiale — 30+ pays' },
@@ -163,88 +154,86 @@ export default function QuotePage() {
 
   return (
     <>
-      {/* ── SPLIT LAYOUT ────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr]">
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
+      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&auto=format&fit=crop&q=50"
+          alt="" fill className="object-cover opacity-15" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/60" />
+        <motion.div variants={stagger} initial="hidden" animate="show"
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.p variants={fadeInUp}
+            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
+          </motion.p>
+          <motion.h1 variants={fadeInUp}
+            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
+            {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
+            {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
+          </motion.p>
+        </motion.div>
+      </section>
 
-        {/* LEFT — dark panel */}
-        <motion.aside
-          variants={stagger} initial="hidden" animate="show"
-          className="bg-foreground px-8 sm:px-12 py-16 lg:py-20 relative overflow-hidden lg:sticky lg:top-16 lg:self-start lg:min-h-[calc(100dvh-64px)]">
+      {/* ── QUOTE BODY ──────────────────────────────────────────────────────── */}
+      <section className="bg-background py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
-          <div className="absolute inset-0 pointer-events-none">
-            <Image
-              src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&auto=format&fit=crop&q=20"
-              alt="" fill className="object-cover opacity-5" />
-          </div>
-          <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
-
-          <div className="relative">
-            <motion.div variants={fadeInUp} className="w-8 h-0.5 bg-primary mb-8" />
-            <motion.p variants={fadeInUp}
-              className="text-primary font-display font-bold text-xs uppercase tracking-[0.3em] mb-4">
-              {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
-            </motion.p>
-            <motion.h1 variants={fadeInUp}
-              className="font-display font-extrabold text-3xl sm:text-4xl text-sidebar-foreground leading-tight tracking-tight mb-4">
-              {L({ en: 'Request\na Quote', fr: 'Demandez\nun Devis' })}
-            </motion.h1>
-            <motion.p variants={fadeInUp}
-              className="text-sidebar-foreground/55 text-sm leading-relaxed mb-10">
-              {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
-            </motion.p>
-
-            {/* Trust signals */}
-            <div className="grid grid-cols-2 gap-px bg-white/5 mb-10">
-              {trust.map(({ icon: Icon, en, fr }) => (
-                <div key={en} className="bg-foreground p-4 flex items-start gap-2.5">
-                  <Icon className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sidebar-foreground/65 text-xs leading-snug font-medium">{L({ en, fr })}</span>
-                </div>
+            {/* Sidebar: highlights + process */}
+            <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="space-y-4">
+              {highlights.map(({ icon: Icon, en, fr }, i) => (
+                <motion.div key={en} variants={fadeInLeft} initial="hidden" whileInView="show"
+                  viewport={viewportOnce} transition={{ delay: i * 0.06 }}
+                  className="group bg-card border border-border rounded-sm p-4 flex items-start gap-4 hover:border-primary/50 transition-colors duration-200">
+                  <div className="w-9 h-9 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
+                    <Icon className="h-4 w-4 text-primary" />
+                  </div>
+                  <p className="font-display font-semibold text-sm leading-relaxed pt-1.5">{L({ en, fr })}</p>
+                </motion.div>
               ))}
-            </div>
 
-            {/* Process steps */}
-            <motion.div variants={fadeInUp}>
-              <p className="text-sidebar-foreground/40 text-xs font-display font-bold uppercase tracking-[0.25em] mb-5">
-                {L({ en: 'What happens next', fr: 'Que se passe-t-il ensuite' })}
-              </p>
-              <ol className="space-y-5">
-                {process.map(({ icon: Icon, en, fr }, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <div className="flex-shrink-0 flex items-center gap-2.5">
-                      <span className="font-display font-extrabold text-xs text-primary/50 w-4 text-center">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <div className="w-7 h-7 border border-white/10 flex items-center justify-center">
+              <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+                className="bg-card border border-border rounded-sm p-6">
+                <p className="font-display font-semibold text-xs uppercase tracking-[0.2em] text-primary mb-5">
+                  {L({ en: 'What happens next?', fr: 'Que se passe-t-il ensuite ?' })}
+                </p>
+                <ol className="space-y-4">
+                  {[
+                    { icon: FileText,     en: 'Submit this form — takes less than 2 minutes.', fr: 'Soumettez ce formulaire — moins de 2 minutes.' },
+                    { icon: Clock,        en: 'Our team prepares a custom offer within 24–48 hours.', fr: 'Notre équipe prépare une offre sous 24–48h.' },
+                    { icon: CheckCircle2, en: 'You receive a detailed quote with pricing and timeline.', fr: 'Vous recevez un devis détaillé avec prix et délai.' },
+                    { icon: Truck,        en: 'Confirm the offer — we handle customs, freight, and logistics.', fr: "Confirmez l'offre — nous gérons les douanes, le fret et la logistique." },
+                  ].map(({ icon: Icon, en, fr }, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="w-7 h-7 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Icon className="h-3 w-3 text-primary" />
                       </div>
-                    </div>
-                    <p className="text-sidebar-foreground/60 text-xs leading-relaxed pt-1.5">{L({ en, fr })}</p>
-                  </li>
-                ))}
-              </ol>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{L({ en, fr })}</p>
+                    </li>
+                  ))}
+                </ol>
+              </motion.div>
+            </motion.div>
+
+            {/* Form */}
+            <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8">
+              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-2">
+                {L({ en: 'Quote Details', fr: 'Détails du Devis' })}
+              </p>
+              <h2 className="font-display font-bold text-xl mb-6">
+                {L({ en: 'Your Quote Details', fr: 'Détails de Votre Devis' })}
+              </h2>
+              <Suspense>
+                <QuoteForm />
+              </Suspense>
             </motion.div>
           </div>
-        </motion.aside>
-
-        {/* RIGHT — white form */}
-        <motion.main
-          variants={fadeInRight} initial="hidden" animate="show"
-          className="bg-background px-6 sm:px-10 lg:px-16 py-16 lg:py-20">
-          <div className="max-w-2xl">
-            <div className="w-10 h-0.5 bg-primary mb-8" />
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl tracking-tight mb-2">
-              {L({ en: 'Your Quote Details', fr: 'Détails de Votre Devis' })}
-            </h2>
-            <p className="text-muted-foreground text-sm mb-8">
-              {L({ en: 'Fill in the details below and we\'ll prepare a tailored proposal for you.', fr: 'Remplissez les détails ci-dessous et nous préparerons une proposition personnalisée.' })}
-            </p>
-            <Suspense>
-              <QuoteForm />
-            </Suspense>
-          </div>
-        </motion.main>
-      </div>
+        </div>
+      </section>
     </>
   );
 }
