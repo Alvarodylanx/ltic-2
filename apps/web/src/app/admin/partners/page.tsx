@@ -202,7 +202,6 @@ function PartnerForm({ form, setForm }: { form: any; setForm: (f: any) => void }
           <MediaUpload
             value={form.logoUrl}
             onChange={(url) => setForm((f: any) => ({ ...f, logoUrl: url }))}
-            accept="image"
           />
         </div>
       </div>
