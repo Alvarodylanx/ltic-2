@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   CheckCircle2, Target, Globe2, ShieldCheck, Lightbulb,
@@ -60,6 +60,7 @@ const values = [
 export default function AboutPage() {
   const { L } = useLanguage();
   const [activeMVV, setActiveMVV] = useState<number | null>(null);
+  const [flipped, setFlipped] = useState<number | null>(null);
 
   const { data: siteSettings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -259,7 +260,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── CORE VALUES — Style 4: Flip Cards ───────────────────────────────── */}
+      {/* ── CORE VALUES — Flip Cards (smooth state-based) ───────────────────── */}
       <section className="bg-background border-t border-border py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -274,51 +275,65 @@ export default function AboutPage() {
               </h2>
             </div>
             <div className="hidden sm:block h-px flex-1 bg-border mx-8" />
-            <span className="hidden sm:block text-muted-foreground/40 font-display font-bold text-xs uppercase tracking-[0.3em] whitespace-nowrap">
-              {L({ en: 'Hover to flip', fr: 'Survolez pour retourner' })}
+            <span className="hidden sm:block text-muted-foreground/30 text-xs font-display uppercase tracking-[0.3em] whitespace-nowrap">
+              {L({ en: 'Hover each value', fr: 'Survolez chaque valeur' })}
             </span>
           </motion.div>
 
-          <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-            {values.map(({ icon: Icon, en, fr, descEn, descFr }, i) => (
-              <motion.div key={en} variants={scaleIn}
-                className="[perspective:900px] h-40 sm:h-44">
-                {/* Flip container */}
-                <div className="relative w-full h-full [transform-style:preserve-3d]
-                  transition-transform duration-500 ease-out
-                  hover:[transform:rotateY(180deg)] cursor-default">
+          {/* Hairline-divided grid — no gaps, pure border lines between cells */}
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-border border border-border rounded-sm overflow-hidden">
+            {values.map(({ en, fr, descEn, descFr }, i) => (
+              <div
+                key={en}
+                className="relative bg-background h-44 sm:h-48 cursor-default overflow-hidden"
+                style={{ perspective: '1000px' }}
+                onMouseEnter={() => setFlipped(i)}
+                onMouseLeave={() => setFlipped(null)}>
 
-                  {/* Front face */}
-                  <div className="absolute inset-0 [backface-visibility:hidden]
-                    bg-card border border-border rounded-sm
-                    flex flex-col items-center justify-center gap-3 p-5
-                    group hover:border-primary/40 transition-colors duration-200">
-                    <div className="w-10 h-10 rounded-sm bg-foreground flex items-center justify-center">
-                      <Icon className="h-4.5 w-4.5 text-primary" style={{ width: '1.125rem', height: '1.125rem' }} />
-                    </div>
-                    <span className="font-display font-bold text-sm uppercase tracking-wide text-center leading-tight">
-                      {L({ en, fr })}
-                    </span>
-                    <span className="text-muted-foreground/40 text-[10px] font-display uppercase tracking-widest">
+                <motion.div
+                  className="relative w-full h-full"
+                  animate={{ rotateY: flipped === i ? 180 : 0 }}
+                  transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ transformStyle: 'preserve-3d' }}>
+
+                  {/* ── Front ── */}
+                  <div
+                    className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7"
+                    style={{ backfaceVisibility: 'hidden' }}>
+                    {/* Ghost number */}
+                    <span className="font-display font-black leading-none select-none"
+                      style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', color: 'hsl(var(--foreground) / 0.05)' }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
+                    {/* Value name */}
+                    <div>
+                      <div className="h-px w-6 bg-primary mb-3" />
+                      <span className="font-display font-bold text-sm sm:text-base uppercase tracking-tight leading-none">
+                        {L({ en, fr })}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Back face */}
-                  <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]
-                    bg-foreground border border-primary/20 rounded-sm
-                    flex flex-col justify-center p-5">
-                    <div className="h-px w-8 bg-primary mb-3" />
-                    <p className="font-display font-bold text-xs text-sidebar-foreground uppercase tracking-wide mb-2">
+                  {/* ── Back ── */}
+                  <div
+                    className="absolute inset-0 bg-foreground flex flex-col justify-end p-6 sm:p-7"
+                    style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+                    {/* Ghost number on back too */}
+                    <span className="absolute top-4 right-5 font-display font-black leading-none select-none text-2xl"
+                      style={{ color: 'hsl(var(--sidebar-foreground) / 0.07)' }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div className="h-px w-6 bg-primary mb-3" />
+                    <p className="text-sidebar-foreground font-display font-bold text-xs uppercase tracking-wider mb-2">
                       {L({ en, fr })}
                     </p>
-                    <p className="text-sidebar-foreground/60 text-xs leading-relaxed">
+                    <p className="text-sidebar-foreground/50 text-xs leading-relaxed">
                       {L({ en: descEn, fr: descFr })}
                     </p>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             ))}
           </motion.div>
 
