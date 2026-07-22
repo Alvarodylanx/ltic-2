@@ -162,101 +162,119 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── MISSION · VISION · VALUES — hover-reveal panels ─────────────────── */}
-      <section className="bg-muted/30 border-y border-border py-20 lg:py-28">
+      {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
+      <section className="bg-sidebar py-14 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Header */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="mb-12">
-            <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
-              {L({ en: 'Our Foundation', fr: 'Notre Fondation' })}
-            </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
-              {L({ en: 'Mission, Vision & Values', fr: 'Mission, Vision & Valeurs' })}
-            </h2>
+            className="flex items-center gap-6 mb-10">
+            <div>
+              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-2">
+                {L({ en: 'Our Foundation', fr: 'Notre Fondation' })}
+              </p>
+              <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-sidebar-foreground">
+                {L({ en: 'Mission, Vision & Values', fr: 'Mission, Vision & Valeurs' })}
+              </h2>
+            </div>
+            <div className="hidden md:block h-px flex-1 bg-white/10" />
           </motion.div>
 
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* ── DESKTOP: Oblique expanding panels ── */}
+          <motion.div
+            variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="hidden md:flex h-[460px] overflow-hidden rounded-sm border border-white/10">
             {mvvItems.map((item, i) => {
               const isActive = activeMVV === i;
+              const isFirst = i === 0;
               return (
                 <motion.div
                   key={item.title.en}
-                  variants={scaleIn}
-                  className="relative overflow-hidden rounded-sm cursor-default"
-                  style={{ minHeight: 360 }}
+                  className="relative overflow-hidden flex-shrink-0 cursor-default"
+                  style={{
+                    transform: 'skewX(-5deg)',
+                    transformOrigin: 'top left',
+                    marginLeft: isFirst ? 0 : '-36px',
+                    zIndex: isActive ? 10 : mvvItems.length - i,
+                  }}
+                  animate={{ flexGrow: activeMVV === null ? 1 : isActive ? 2.6 : 0.65 }}
+                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                   onMouseEnter={() => setActiveMVV(i)}
                   onMouseLeave={() => setActiveMVV(null)}>
 
-                  {/* Background image — revealed on hover */}
-                  <div className="absolute inset-0">
-                    <Image src={item.image} alt="" fill className="object-cover" />
-                    {/* Overlay: lightens when hovered to reveal image */}
+                  {/* Background image + overlay — counter-skewed */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ transform: 'skewX(5deg) scaleX(1.12)', transformOrigin: 'top left' }}>
+                    <Image src={item.image} alt="" fill className="object-cover" sizes="60vw" />
                     <motion.div
-                      className="absolute inset-0 bg-card"
-                      animate={{ opacity: isActive ? 0.82 : 1 }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                      className="absolute inset-0 bg-sidebar"
+                      animate={{ opacity: isActive ? 0.55 : 0.82 }}
+                      transition={{ duration: 0.5 }}
                     />
+                    {/* Gradient: dark at bottom for text legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/40 to-transparent" />
                   </div>
 
-                  {/* Top accent bar — slides in on hover */}
-                  <motion.div
-                    className="absolute top-0 left-0 right-0 h-0.5 bg-primary"
-                    animate={{ scaleX: isActive ? 1 : 0 }}
-                    initial={{ scaleX: 0 }}
-                    style={{ originX: 0 }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  />
+                  {/* Content — counter-skewed */}
+                  <div
+                    className="relative h-full flex flex-col justify-end pb-9 pl-10 pr-6"
+                    style={{ transform: 'skewX(5deg)', transformOrigin: 'top left' }}>
 
-                  {/* Content */}
-                  <div className="relative h-full p-8 flex flex-col justify-between border border-border rounded-sm">
-                    {/* Top: always visible */}
-                    <div>
-                      <span className="font-display font-bold text-xs text-primary tracking-[0.3em] block mb-5">
-                        {item.number}
-                      </span>
-                      <motion.div
-                        className="w-11 h-11 rounded-sm bg-foreground flex items-center justify-center mb-5"
-                        animate={{ scale: isActive ? 1.08 : 1 }}
-                        transition={{ duration: 0.3 }}>
-                        <item.icon className="h-5 w-5 text-primary" />
-                      </motion.div>
-                      <h3 className="font-display font-bold text-2xl sm:text-3xl tracking-tight">
-                        {L(item.title)}
-                      </h3>
-                    </div>
+                    {/* Ghost number — top right */}
+                    <span
+                      className="absolute top-6 right-10 font-display font-black leading-none select-none pointer-events-none"
+                      style={{ fontSize: 'clamp(4rem, 8vw, 7rem)', color: 'hsl(var(--sidebar-foreground) / 0.05)' }}>
+                      {item.number}
+                    </span>
 
-                    {/* Bottom: description slides up on hover */}
-                    <div>
-                      {/* Always visible on mobile, hover-revealed on desktop */}
-                      <div className="md:hidden mt-5">
-                        <p className="text-muted-foreground text-sm leading-relaxed">{L(item.desc)}</p>
-                      </div>
-                      <motion.div
-                        className="hidden md:block overflow-hidden"
-                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-                        initial={{ opacity: 0, y: 20 }}
-                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
-                        <p className="text-muted-foreground text-sm leading-relaxed mt-5 mb-4">
-                          {L(item.desc)}
-                        </p>
-                      </motion.div>
+                    {/* Accent line — grows on hover */}
+                    <motion.div
+                      className="bg-primary origin-left mb-4"
+                      style={{ height: '2px' }}
+                      animate={{ scaleX: isActive ? 1 : 0.4, width: '3rem' }}
+                      transition={{ duration: 0.45 }}
+                    />
 
-                      <motion.div
-                        className="flex items-center gap-2 mt-4"
-                        animate={{ x: isActive ? 4 : 0 }}
-                        transition={{ duration: 0.3 }}>
-                        <span className="text-primary text-xs font-display font-bold uppercase tracking-[0.2em]">
-                          {L({ en: 'Read More', fr: 'En Savoir Plus' })}
-                        </span>
-                        <ArrowUpRight className="h-3.5 w-3.5 text-primary" />
-                      </motion.div>
-                    </div>
+                    {/* Title */}
+                    <h3 className="font-display font-extrabold text-sidebar-foreground leading-none tracking-tight mb-0"
+                      style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)' }}>
+                      {L(item.title)}
+                    </h3>
+
+                    {/* Description — fades in when panel expands */}
+                    <motion.p
+                      className="text-sidebar-foreground/60 text-sm leading-relaxed mt-3 max-w-[22ch]"
+                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
+                      transition={{ duration: 0.3, delay: isActive ? 0.18 : 0 }}>
+                      {L(item.desc)}
+                    </motion.p>
                   </div>
                 </motion.div>
               );
             })}
           </motion.div>
+
+          {/* ── MOBILE: stacked panels, always expanded ── */}
+          <div className="md:hidden flex flex-col gap-3">
+            {mvvItems.map((item, i) => (
+              <div key={item.title.en} className="relative overflow-hidden rounded-sm h-56">
+                <Image src={item.image} alt="" fill className="object-cover" sizes="100vw" />
+                <div className="absolute inset-0 bg-sidebar/75" />
+                <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/30 to-transparent" />
+                <div className="absolute inset-0 flex flex-col justify-end p-6">
+                  <div className="h-px w-8 bg-primary mb-3" />
+                  <h3 className="font-display font-extrabold text-sidebar-foreground text-2xl tracking-tight mb-2">
+                    {L(item.title)}
+                  </h3>
+                  <p className="text-sidebar-foreground/60 text-xs leading-relaxed">
+                    {L(item.desc)}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
