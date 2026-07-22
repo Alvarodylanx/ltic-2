@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Ship, Globe2, Factory, BarChart3, Handshake, Leaf, Truck, ArrowRight, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Ship, Globe2, Factory, BarChart3, Handshake, Leaf, Truck, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { fadeInUp, fadeInLeft, stagger, viewportOnce } from '@/components/motion/variants';
@@ -75,13 +75,31 @@ const services = [
   },
 ];
 
-const STRIP_H = 72;
-const PANEL_H = 400;
-const EXPANDED_H = STRIP_H + PANEL_H;
+const slideVariants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 60 : -60 }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -60 : 60 }),
+};
+
+const contentVariants = {
+  enter: { opacity: 0, y: 24 },
+  center: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -12 },
+};
 
 export default function ServicesPage() {
   const { L } = useLanguage();
   const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const goTo = (i: number) => {
+    setDir(i >= active ? 1 : -1);
+    setActive(i);
+  };
+  const prev = () => goTo(active > 0 ? active - 1 : services.length - 1);
+  const next = () => goTo(active < services.length - 1 ? active + 1 : 0);
+
+  const svc = services[active];
 
   return (
     <>
@@ -107,181 +125,164 @@ export default function ServicesPage() {
         </motion.div>
       </section>
 
-      {/* ── EXPANDING STRIPS ────────────────────────────────────────────────── */}
+      {/* ── CINEMATIC CAROUSEL ──────────────────────────────────────────────── */}
       <section className="bg-background py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Section header */}
+          {/* Number navigation strip */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="flex items-baseline justify-between mb-8">
-            <div>
-              <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-1">
-                {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
-              </p>
-              <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-tight">
-                {L({ en: 'Our Services', fr: 'Nos Services' })}
-              </h2>
-            </div>
-            <span className="text-muted-foreground/40 font-display text-xs uppercase tracking-[0.2em] hidden sm:block">
-              {L({ en: '7 Specializations', fr: '7 Spécialisations' })}
-            </span>
-          </motion.div>
-
-          {/* Desktop: expanding strips */}
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="hidden lg:block border border-border rounded-sm overflow-hidden divide-y divide-border">
-            {services.map((svc, i) => {
+            className="flex border border-border rounded-sm overflow-hidden mb-4">
+            {services.map((s, i) => {
               const isActive = active === i;
               return (
-                <motion.div
-                  key={svc.en}
-                  animate={{ height: isActive ? EXPANDED_H : STRIP_H }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative overflow-hidden cursor-pointer select-none"
-                  onClick={() => setActive(i)}>
-
-                  {/* Full-bleed image panel — sits below the strip bar */}
-                  <div className="absolute left-0 right-0 bottom-0" style={{ top: STRIP_H }}>
-                    <Image
-                      src={svc.image} alt="" fill className="object-cover"
-                      sizes="(max-width: 1280px) 100vw, 1280px"
-                      priority={i === 0} />
-                    <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/85" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-transparent" />
-                  </div>
-
-                  {/* Strip bar — always on top */}
-                  <div className={`relative z-10 flex items-center px-6 gap-5 transition-colors duration-300 ${
-                    isActive ? 'bg-foreground/75 backdrop-blur-sm' : 'bg-background hover:bg-muted/25'
-                  }`} style={{ height: STRIP_H }}>
-                    {/* Left accent */}
-                    {isActive && <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" />}
-
-                    <span className={`font-display font-black text-sm tabular-nums w-8 flex-shrink-0 transition-colors duration-300 ${
-                      isActive ? 'text-primary' : 'text-muted-foreground/25'
-                    }`}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-
-                    <span className={`font-display font-bold text-base flex-1 transition-colors duration-300 ${
-                      isActive ? 'text-sidebar-foreground' : 'text-foreground'
-                    }`}>
-                      {L({ en: svc.en, fr: svc.fr })}
-                    </span>
-
-                    <motion.span
-                      className="text-muted-foreground/45 text-xs font-display hidden xl:block max-w-xs text-right"
-                      animate={{ opacity: isActive ? 0 : 1 }}
-                      transition={{ duration: 0.18 }}>
-                      {L({ en: svc.headlineEn, fr: svc.headlineFr })}
-                    </motion.span>
-
-                    <motion.div
-                      animate={{ rotate: isActive ? 90 : 0 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                      className="flex-shrink-0">
-                      <ChevronRight className={`h-4 w-4 transition-colors duration-300 ${
-                        isActive ? 'text-primary' : 'text-muted-foreground/35'
-                      }`} />
-                    </motion.div>
-                  </div>
-
-                  {/* Content — fades in at bottom of image panel */}
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-7 flex items-end gap-10"
-                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-                    transition={{ duration: 0.38, delay: isActive ? 0.24 : 0, ease: [0.22, 1, 0.36, 1] }}>
-
-                    {/* Headline + description */}
-                    <div className="flex-1 min-w-0">
-                      <div className="h-px w-8 bg-primary mb-3" />
-                      <h3 className="font-display font-bold text-xl lg:text-2xl text-sidebar-foreground tracking-tight mb-2 leading-tight">
-                        {L({ en: svc.headlineEn, fr: svc.headlineFr })}
-                      </h3>
-                      <p className="text-sidebar-foreground/55 text-sm leading-relaxed max-w-sm">
-                        {L({ en: svc.descEn, fr: svc.descFr })}
-                      </p>
-                    </div>
-
-                    {/* Bullet list */}
-                    <div className="flex-shrink-0 grid grid-cols-2 gap-x-8 gap-y-2">
-                      {svc.bulletsEn.map((b, bi) => (
-                        <span key={bi} className="flex items-start gap-2 text-xs text-sidebar-foreground/50">
-                          <span className="mt-1.5 h-px w-3 bg-primary flex-shrink-0" />
-                          {L({ en: b, fr: svc.bulletsFr[bi] })}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* CTA */}
-                    <Button asChild size="sm"
-                      className="flex-shrink-0 rounded-sm font-display font-semibold text-xs"
-                      onClick={e => e.stopPropagation()}>
-                      <Link href="/quote">
-                        {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-                        <ArrowRight className="h-3 w-3 ml-1.5" />
-                      </Link>
-                    </Button>
-                  </motion.div>
-                </motion.div>
+                <button
+                  key={s.en}
+                  onClick={() => goTo(i)}
+                  className={`relative flex-1 flex flex-col items-center justify-center py-3 gap-0.5 transition-colors duration-200 border-r border-border last:border-r-0 ${
+                    isActive ? 'bg-foreground' : 'bg-background hover:bg-muted/25'
+                  }`}>
+                  {isActive && (
+                    <motion.div layoutId="nav-indicator"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary"
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }} />
+                  )}
+                  <span className={`font-display font-black text-xs tabular-nums transition-colors duration-200 ${
+                    isActive ? 'text-primary' : 'text-muted-foreground/30'
+                  }`}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className={`font-display font-semibold text-[9px] uppercase tracking-wider leading-none text-center px-1 hidden sm:block transition-colors duration-200 ${
+                    isActive ? 'text-sidebar-foreground/80' : 'text-muted-foreground/40'
+                  }`}>
+                    {L({ en: s.en, fr: s.fr }).split(' ')[0]}
+                  </span>
+                </button>
               );
             })}
           </motion.div>
 
-          {/* Mobile: scroll tabs + card */}
-          <div className="lg:hidden">
-            <div className="flex overflow-x-auto gap-2 pb-3 mb-6 scrollbar-hide">
-              {services.map((s, i) => (
-                <button key={s.en} onClick={() => setActive(i)}
-                  className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-sm border text-sm font-display font-bold transition-all duration-200 ${
-                    active === i ? 'bg-foreground border-foreground text-sidebar-foreground' : 'bg-background border-border text-muted-foreground'
-                  }`}>
-                  <span className={`text-[10px] font-black ${active === i ? 'text-primary' : 'text-muted-foreground/40'}`}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  {L({ en: s.en, fr: s.fr })}
-                </button>
+          {/* Main carousel panel */}
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="relative rounded-sm overflow-hidden border border-border"
+            style={{ height: 'clamp(480px, 55vw, 600px)' }}>
+
+            {/* Slide — image layer */}
+            <AnimatePresence custom={dir} mode="sync">
+              <motion.div
+                key={`img-${active}`}
+                custom={dir}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0">
+                <Image
+                  src={svc.image} alt="" fill
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  priority={active === 0} />
+                {/* Layered gradients: subtle top, heavy bottom-left */}
+                <div className="absolute inset-0 bg-gradient-to-b from-foreground/25 via-transparent to-foreground/92" />
+                <div className="absolute inset-0 bg-gradient-to-r from-foreground/50 via-foreground/10 to-transparent" />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Ghost number watermark */}
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={`num-${active}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute top-5 right-7 font-display font-black leading-none select-none pointer-events-none z-10"
+                style={{ fontSize: 'clamp(6rem, 14vw, 11rem)', color: 'rgba(255,255,255,0.04)' }}>
+                {String(active + 1).padStart(2, '0')}
+              </motion.span>
+            </AnimatePresence>
+
+            {/* Content layer */}
+            <AnimatePresence custom={dir} mode="wait">
+              <motion.div
+                key={`content-${active}`}
+                custom={dir}
+                variants={contentVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                className="absolute bottom-0 left-0 right-0 z-10 p-7 lg:p-10 flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-10">
+
+                {/* Left: text content */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-2">
+                    {L({ en: svc.en, fr: svc.fr })}
+                  </p>
+                  <div className="h-px w-10 bg-primary mb-3" />
+                  <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-sidebar-foreground tracking-tight leading-tight mb-3">
+                    {L({ en: svc.headlineEn, fr: svc.headlineFr })}
+                  </h2>
+                  <p className="text-sidebar-foreground/55 text-sm leading-relaxed max-w-lg mb-4">
+                    {L({ en: svc.descEn, fr: svc.descFr })}
+                  </p>
+                  <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+                    {svc.bulletsEn.map((b, bi) => (
+                      <span key={bi} className="flex items-center gap-2 text-xs text-sidebar-foreground/45">
+                        <span className="h-px w-3 bg-primary flex-shrink-0" />
+                        {L({ en: b, fr: svc.bulletsFr[bi] })}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right: CTA + counter + nav */}
+                <div className="flex-shrink-0 flex flex-row lg:flex-col items-center lg:items-end gap-4 lg:gap-3">
+                  <Button asChild size="sm" className="rounded-sm font-display font-semibold text-xs">
+                    <Link href="/quote">
+                      {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+                      <ArrowRight className="h-3 w-3 ml-1.5" />
+                    </Link>
+                  </Button>
+
+                  {/* Counter + arrows */}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={prev}
+                      aria-label="Previous service"
+                      className="w-8 h-8 flex items-center justify-center border border-white/20 rounded-sm text-sidebar-foreground/60 hover:bg-white/10 hover:text-sidebar-foreground transition-all duration-150">
+                      <ArrowLeft className="h-3.5 w-3.5" />
+                    </button>
+                    <span className="text-sidebar-foreground/40 font-display text-xs tabular-nums tracking-wider">
+                      {String(active + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
+                    </span>
+                    <button
+                      onClick={next}
+                      aria-label="Next service"
+                      className="w-8 h-8 flex items-center justify-center border border-white/20 rounded-sm text-sidebar-foreground/60 hover:bg-white/10 hover:text-sidebar-foreground transition-all duration-150">
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Progress ticks — thin bar at very top */}
+            <div className="absolute top-0 left-0 right-0 z-20 h-[2px] flex">
+              {services.map((_, i) => (
+                <div key={i} className="flex-1 relative">
+                  <div className="absolute inset-0 bg-white/8" />
+                  {i === active && (
+                    <motion.div
+                      layoutId="progress-fill"
+                      className="absolute inset-0 bg-primary"
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  )}
+                </div>
               ))}
             </div>
-
-            {(() => {
-              const svc = services[active];
-              return (
-                <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.28 }}
-                  className="border border-border rounded-sm overflow-hidden">
-                  <div className="relative h-52">
-                    <Image src={svc.image} alt={L({ en: svc.en, fr: svc.fr })} fill
-                      className="object-cover" sizes="100vw" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/70" />
-                  </div>
-                  <div className="p-6">
-                    <div className="h-px w-6 bg-primary mb-3" />
-                    <h2 className="font-display font-bold text-xl tracking-tight mb-2">
-                      {L({ en: svc.headlineEn, fr: svc.headlineFr })}
-                    </h2>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                      {L({ en: svc.descEn, fr: svc.descFr })}
-                    </p>
-                    <ul className="space-y-2 mb-5">
-                      {svc.bulletsEn.map((b, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                          <span className="mt-2 h-px w-4 bg-primary flex-shrink-0" />
-                          {L({ en: b, fr: svc.bulletsFr[i] })}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button asChild size="sm" className="rounded-sm font-display font-semibold w-full">
-                      <Link href="/quote">
-                        {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-                        <ArrowRight className="h-3.5 w-3.5 ml-2" />
-                      </Link>
-                    </Button>
-                  </div>
-                </motion.div>
-              );
-            })()}
-          </div>
+          </motion.div>
 
         </div>
       </section>
