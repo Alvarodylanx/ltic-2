@@ -3,14 +3,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Ship, Globe2, Factory, BarChart3, Handshake, Leaf, Truck, CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { fadeInUp, fadeInLeft, fadeInRight, scaleIn, stagger, staggerFast, viewportOnce } from '@/components/motion/variants';
+import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/components/motion/variants';
 
 const services = [
   {
-    icon: Ship, en: 'Logistics & Transit', fr: 'Logistique & Transit',
+    en: 'Logistics & Transit', fr: 'Logistique & Transit',
     headlineEn: 'End-to-End Global Freight Solutions', headlineFr: 'Solutions de Fret Mondial de Bout en Bout',
     descEn: 'LTIC SARL manages the complete logistics lifecycle — from freight booking and customs clearance to final-mile delivery across air, sea, and road in 30+ countries.',
     descFr: "LTIC SARL gère le cycle logistique complet — de la réservation de fret et du dédouanement jusqu'à la livraison finale sur les réseaux aériens, maritimes et routiers dans plus de 30 pays.",
@@ -19,7 +19,7 @@ const services = [
     bulletsFr: ['Coordination du fret international (air, mer, route)', 'Manutention et entreposage de marchandises', 'Dédouanement et documentation', 'Gestion du transit international', 'Solutions de distribution dernier kilomètre', 'Suivi en temps réel des expéditions'],
   },
   {
-    icon: Globe2, en: 'Import & Export', fr: 'Import & Export',
+    en: 'Import & Export', fr: 'Import & Export',
     headlineEn: 'Seamless International Trade Facilitation', headlineFr: 'Facilitation Fluide du Commerce International',
     descEn: 'We facilitate seamless cross-border transactions with expert compliance management, strategic sourcing, and comprehensive documentation support.',
     descFr: 'Nous facilitons des transactions transfrontalières fluides avec une gestion experte de la conformité, un sourcing stratégique et un support documentaire complet.',
@@ -28,7 +28,7 @@ const services = [
     bulletsFr: ['Facilitation du commerce international', 'Coordination douanière et conformité', 'Sourcing mondial et approvisionnement', 'Gestion de la documentation commerciale', 'Conseil en conformité réglementaire', 'Sourcing stratégique de marché'],
   },
   {
-    icon: Factory, en: 'Industrial Supply', fr: 'Fourniture Industrielle',
+    en: 'Industrial Supply', fr: 'Fourniture Industrielle',
     headlineEn: 'Premium Industrial Products & Materials', headlineFr: 'Produits & Matériaux Industriels Premium',
     descEn: 'As an authorized distributor for Total, Shell and major OEM brands, we supply certified industrial products directly to your operations anywhere in the world.',
     descFr: 'En tant que distributeur agréé de Total, Shell et grandes marques OEM, nous fournissons des produits industriels certifiés directement à vos opérations partout dans le monde.',
@@ -37,16 +37,16 @@ const services = [
     bulletsFr: ['Générateurs industriels (diesel, gaz, secours)', 'Lubrifiants — Total, Shell et grandes marques', 'Filtres à huile et à air (qualité OEM)', 'Bois et grumes (essences tropicales certifiées)', 'Matériaux industriels lourds et équipements', 'Approvisionnement industriel sur mesure'],
   },
   {
-    icon: BarChart3, en: 'Supply Chain Consulting', fr: "Conseil en Chaîne d'Approvisionnement",
+    en: 'Supply Chain Consulting', fr: "Conseil en Chaîne d'Approvisionnement",
     headlineEn: 'Strategic Logistics Optimization', headlineFr: 'Optimisation Logistique Stratégique',
     descEn: 'Our consultants bring deep expertise in logistics network design, procurement strategy, and supply chain risk management for complex market environments.',
     descFr: "Nos consultants apportent une expertise approfondie en conception de réseaux logistiques, stratégie d'approvisionnement et gestion des risques de la chaîne logistique.",
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=70',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=70',
     bulletsEn: ['Supply chain strategy and design', 'Logistics network optimization', 'Procurement consulting', 'Cost reduction analysis', 'Risk management in trade', 'Operational efficiency consulting'],
     bulletsFr: ["Stratégie et conception de la chaîne d'approvisionnement", 'Optimisation du réseau logistique', 'Conseil en approvisionnement', 'Analyse de réduction des coûts', 'Gestion des risques commerciaux', 'Conseil en efficacité opérationnelle'],
   },
   {
-    icon: Handshake, en: 'Commercial & Brand Representation', fr: 'Représentation Commerciale & de Marque',
+    en: 'Commercial & Brand Representation', fr: 'Représentation Commerciale & de Marque',
     headlineEn: 'Your Gateway to New Markets', headlineFr: "Votre Porte d'Entrée vers de Nouveaux Marchés",
     descEn: 'We connect international brands with local market opportunities through strategic representation, joint ventures, and distribution partnerships.',
     descFr: 'Nous connectons les marques internationales aux opportunités de marché locales grâce à la représentation stratégique, aux coentreprises et aux partenariats de distribution.',
@@ -55,7 +55,7 @@ const services = [
     bulletsFr: ["Stratégie d'entrée sur le marché", 'Représentation de marque sur les marchés cibles', 'Facilitation de coentreprises', 'Partenariats commerciaux stratégiques', 'Développement de canaux de distribution', 'Coordination de missions commerciales'],
   },
   {
-    icon: Leaf, en: 'Phytosanitary Treatment', fr: 'Traitement Phytosanitaire',
+    en: 'Phytosanitary Treatment', fr: 'Traitement Phytosanitaire',
     headlineEn: 'Compliance-First Treatment Services', headlineFr: 'Services de Traitement Axés sur la Conformité',
     descEn: 'Our certified phytosanitary and sanitation services ensure your timber, agricultural goods, and equipment meet all importing country requirements.',
     descFr: "Nos services certifiés de traitement phytosanitaire garantissent que votre bois, vos produits agricoles et équipements répondent à toutes les exigences des pays importateurs.",
@@ -64,7 +64,7 @@ const services = [
     bulletsFr: ['Traitement phytosanitaire pour bois et produits agricoles', "Services d'assainissement industriel", 'Documentation de conformité réglementaire', 'Coordination des inspections', 'Certification de traitement'],
   },
   {
-    icon: Truck, en: 'Transportation', fr: 'Transport',
+    en: 'Transportation', fr: 'Transport',
     headlineEn: 'Reliable Multimodal Transportation', headlineFr: 'Transport Multimodal Fiable',
     descEn: 'From local road freight to international sea and air cargo, LTIC SARL coordinates reliable, cost-effective transportation solutions tailored to your timeline.',
     descFr: 'Du fret routier local au cargo maritime et aérien international, LTIC SARL coordonne des solutions de transport fiables et économiques adaptées à votre calendrier.',
@@ -101,26 +101,6 @@ export default function ServicesPage() {
         </motion.div>
       </section>
 
-      {/* ── SERVICE OVERVIEW CARDS ───────────────────────────────────────────── */}
-      <section className="bg-background py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
-            {services.map((svc) => (
-              <motion.div key={svc.en} variants={scaleIn}
-                className="group bg-card border border-border rounded-sm p-4 text-center hover:border-primary/50 hover:bg-primary/5 transition-all duration-200 cursor-default">
-                <div className="w-9 h-9 rounded-sm bg-foreground flex items-center justify-center mx-auto mb-3">
-                  <svc.icon className="h-4 w-4 text-primary" />
-                </div>
-                <p className="font-display font-semibold text-xs leading-tight text-muted-foreground group-hover:text-foreground transition-colors">
-                  {L({ en: svc.en, fr: svc.fr })}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* ── DETAILED SERVICE SECTIONS ────────────────────────────────────────── */}
       {services.map((svc, index) => {
         const isEven = index % 2 === 0;
@@ -132,9 +112,6 @@ export default function ServicesPage() {
                 <motion.div
                   variants={isEven ? fadeInLeft : fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
                   className={isEven ? '' : 'lg:order-2'}>
-                  <div className="w-11 h-11 rounded-sm bg-foreground flex items-center justify-center mb-5">
-                    <svc.icon className="h-5 w-5 text-primary" />
-                  </div>
                   <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
                     {L({ en: svc.en, fr: svc.fr })}
                   </p>
