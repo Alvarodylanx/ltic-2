@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Ship, Globe2, Factory, BarChart3, Handshake, Leaf, Truck, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Ship, Globe2, Factory, BarChart3, Handshake, Leaf, Truck, ArrowRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { fadeInUp, fadeInLeft, stagger, viewportOnce } from '@/components/motion/variants';
@@ -75,40 +75,11 @@ const services = [
   },
 ];
 
-const cardVariants = {
-  enter: (dir: number) => ({
-    x: dir > 0 ? 120 : -120,
-    opacity: 0,
-    rotate: dir > 0 ? 4 : -4,
-    scale: 0.94,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-    rotate: 0,
-    scale: 1,
-  },
-  exit: (dir: number) => ({
-    x: dir > 0 ? -120 : 120,
-    opacity: 0,
-    rotate: dir > 0 ? -4 : 4,
-    scale: 0.94,
-  }),
-};
-
 export default function ServicesPage() {
   const { L } = useLanguage();
-  const [active, setActive] = useState(0);
-  const [dir, setDir] = useState(1);
+  const [selected, setSelected] = useState<number | null>(null);
 
-  const goTo = (i: number) => {
-    setDir(i >= active ? 1 : -1);
-    setActive(i);
-  };
-  const prev = () => goTo(active > 0 ? active - 1 : services.length - 1);
-  const next = () => goTo(active < services.length - 1 ? active + 1 : 0);
-
-  const svc = services[active];
+  const svc = selected !== null ? services[selected] : null;
 
   return (
     <>
@@ -134,13 +105,13 @@ export default function ServicesPage() {
         </motion.div>
       </section>
 
-      {/* ── STACKED DEAL CARDS ──────────────────────────────────────────────── */}
+      {/* ── OVERVIEW GRID + OVERLAY ──────────────────────────────────────────── */}
       <section className="bg-background py-16 lg:py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Section header + number nav */}
+          {/* Section header */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="flex items-center justify-between mb-10">
+            className="flex items-baseline justify-between mb-8">
             <div>
               <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-1">
                 {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
@@ -149,142 +120,168 @@ export default function ServicesPage() {
                 {L({ en: 'Our Services', fr: 'Nos Services' })}
               </h2>
             </div>
-
-            {/* Dot nav */}
-            <div className="flex items-center gap-2">
-              {services.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  aria-label={`Service ${i + 1}`}
-                  className={`transition-all duration-200 rounded-full ${
-                    active === i
-                      ? 'w-6 h-2 bg-primary'
-                      : 'w-2 h-2 bg-border hover:bg-muted-foreground/40'
-                  }`}
-                />
-              ))}
-            </div>
+            <span className="text-muted-foreground/30 font-display font-black text-xs tracking-[0.2em] hidden sm:block">07</span>
           </motion.div>
 
-          {/* Desktop: card stack */}
+          {/* Grid container — overflow-hidden clips the slide-up overlay */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="hidden lg:block">
+            className="hidden lg:block relative border border-border rounded-sm overflow-hidden">
 
-            {/* Stack wrapper — extra bottom padding reveals the peeking cards */}
-            <div className="relative" style={{ paddingBottom: 28 }}>
+            {/* 4×2 service grid */}
+            <div className="grid grid-cols-4 gap-px bg-border">
+              {services.map((s, i) => (
+                <button
+                  key={s.en}
+                  onClick={() => setSelected(i)}
+                  className="group relative bg-background flex flex-col justify-between p-6 text-left transition-colors duration-200 hover:bg-muted/25 min-h-[240px]">
 
-              {/* Decorative card backs — peeking behind active card */}
-              {[2, 1].map(offset => (
-                <div
-                  key={offset}
-                  className="absolute left-0 right-0 bottom-0 border border-border rounded-sm bg-muted/20"
-                  style={{
-                    height: 'calc(100% - 28px)',
-                    transform: `translateY(${offset * 12}px) scale(${1 - offset * 0.018})`,
-                    transformOrigin: 'bottom center',
-                    zIndex: 10 - offset,
-                    opacity: 1 - offset * 0.35,
-                  }}
-                />
+                  {/* Top: number */}
+                  <span className="font-display font-black text-xs text-muted-foreground/25 tabular-nums">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+
+                  {/* Middle: ghost number watermark */}
+                  <span className="absolute top-3 right-4 font-display font-black leading-none select-none pointer-events-none transition-colors duration-200"
+                    style={{ fontSize: '5rem', color: 'hsl(var(--foreground) / 0.04)' }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+
+                  {/* Bottom: service name + arrow */}
+                  <div>
+                    <div className="h-px w-5 bg-primary mb-3 origin-left transition-all duration-300 group-hover:w-8" />
+                    <h3 className="font-display font-bold text-sm uppercase tracking-tight leading-tight mb-1.5">
+                      {L({ en: s.en, fr: s.fr })}
+                    </h3>
+                    <p className="text-muted-foreground/50 text-xs leading-snug line-clamp-2">
+                      {L({ en: s.headlineEn, fr: s.headlineFr })}
+                    </p>
+                    <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1.5">
+                      <span className="text-primary font-display font-semibold text-[10px] uppercase tracking-wider">
+                        {L({ en: 'Explore', fr: 'Découvrir' })}
+                      </span>
+                      <ArrowRight className="h-3 w-3 text-primary" />
+                    </div>
+                  </div>
+                </button>
               ))}
 
-              {/* Active card */}
-              <div className="relative z-20" style={{ minHeight: 540 }}>
-                <AnimatePresence custom={dir} mode="wait">
-                  <motion.div
-                    key={active}
-                    custom={dir}
-                    variants={cardVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                    className="border border-border rounded-sm overflow-hidden bg-background"
-                    style={{ minHeight: 540 }}>
-
-                    {/* Card layout: image left (40%) + content right (60%) */}
-                    <div className="grid grid-cols-[2fr_3fr] h-full min-h-[540px]">
-
-                      {/* Image side */}
-                      <div className="relative overflow-hidden">
-                        <Image
-                          src={svc.image} alt="" fill
-                          className="object-cover"
-                          sizes="40vw"
-                          priority={active === 0} />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/30" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-foreground/20 via-transparent to-foreground/40" />
-                        {/* Ghost number on image */}
-                        <span className="absolute bottom-5 left-5 font-display font-black leading-none select-none pointer-events-none"
-                          style={{ fontSize: 'clamp(5rem, 10vw, 8rem)', color: 'rgba(255,255,255,0.07)' }}>
-                          {String(active + 1).padStart(2, '0')}
-                        </span>
-                      </div>
-
-                      {/* Content side */}
-                      <div className="flex flex-col justify-between p-8 lg:p-10 bg-background">
-
-                        {/* Top: label + headline */}
-                        <div>
-                          <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-3">
-                            {L({ en: svc.en, fr: svc.fr })}
-                          </p>
-                          <div className="h-px w-8 bg-primary mb-4" />
-                          <h3 className="font-display font-bold text-2xl lg:text-3xl tracking-tight leading-tight mb-4">
-                            {L({ en: svc.headlineEn, fr: svc.headlineFr })}
-                          </h3>
-                          <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-prose">
-                            {L({ en: svc.descEn, fr: svc.descFr })}
-                          </p>
-                          <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5">
-                            {svc.bulletsEn.map((b, bi) => (
-                              <li key={bi} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                <span className="mt-2 h-px w-3 bg-primary flex-shrink-0" />
-                                {L({ en: b, fr: svc.bulletsFr[bi] })}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Bottom: CTA + navigation */}
-                        <div className="flex items-center justify-between pt-6 mt-6 border-t border-border">
-                          <Button asChild size="sm" className="rounded-sm font-display font-semibold text-sm">
-                            <Link href="/quote">
-                              {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-                              <ArrowRight className="h-3.5 w-3.5 ml-2" />
-                            </Link>
-                          </Button>
-
-                          <div className="flex items-center gap-3">
-                            <button onClick={prev} aria-label="Previous"
-                              className="w-8 h-8 flex items-center justify-center border border-border rounded-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground transition-all duration-150">
-                              <ArrowLeft className="h-3.5 w-3.5" />
-                            </button>
-                            <span className="font-display font-black text-xs tabular-nums text-muted-foreground/50 tracking-wider">
-                              {String(active + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
-                            </span>
-                            <button onClick={next} aria-label="Next"
-                              className="w-8 h-8 flex items-center justify-center border border-border rounded-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground transition-all duration-150">
-                              <ArrowRight className="h-3.5 w-3.5" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
+              {/* 8th cell — CTA tile */}
+              <div className="bg-foreground flex flex-col justify-between p-6 min-h-[240px]">
+                <span className="font-display font-black text-xs text-primary tabular-nums">→</span>
+                <div>
+                  <div className="h-px w-5 bg-primary mb-3" />
+                  <p className="font-display font-bold text-sm text-sidebar-foreground uppercase tracking-tight mb-2">
+                    {L({ en: 'Ready to start?', fr: 'Prêt à commencer ?' })}
+                  </p>
+                  <Button asChild size="sm" className="rounded-sm font-display font-semibold text-xs w-full">
+                    <Link href="/quote">
+                      {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
+
+            {/* Slide-up overlay */}
+            <AnimatePresence>
+              {selected !== null && svc && (
+                <motion.div
+                  initial={{ y: '100%' }}
+                  animate={{ y: 0 }}
+                  exit={{ y: '100%' }}
+                  transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0 z-30 grid grid-cols-[45%_55%]">
+
+                  {/* Left: full-bleed image */}
+                  <div className="relative overflow-hidden">
+                    <Image src={svc.image} alt="" fill className="object-cover" sizes="45vw" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-foreground/40" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-transparent to-foreground/60" />
+                    {/* Ghost number on image */}
+                    <span className="absolute bottom-6 left-6 font-display font-black leading-none select-none pointer-events-none"
+                      style={{ fontSize: 'clamp(6rem, 12vw, 10rem)', color: 'rgba(255,255,255,0.06)' }}>
+                      {String(selected + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  {/* Right: content */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.38, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                    className="bg-foreground flex flex-col justify-between p-8 lg:p-10 overflow-y-auto">
+
+                    {/* Close */}
+                    <div className="flex items-start justify-between mb-6">
+                      <div>
+                        <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-1">
+                          {String(selected + 1).padStart(2, '0')} / 07
+                        </p>
+                        <p className="text-sidebar-foreground/40 text-[10px] font-display uppercase tracking-widest">
+                          {L({ en: svc.en, fr: svc.fr })}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setSelected(null)}
+                        aria-label="Close"
+                        className="w-8 h-8 flex items-center justify-center border border-white/15 rounded-sm text-sidebar-foreground/50 hover:bg-white/10 hover:text-sidebar-foreground transition-all duration-150 flex-shrink-0">
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="h-px w-8 bg-primary mb-4" />
+                      <h2 className="font-display font-bold text-2xl lg:text-3xl text-sidebar-foreground tracking-tight leading-tight mb-4">
+                        {L({ en: svc.headlineEn, fr: svc.headlineFr })}
+                      </h2>
+                      <p className="text-sidebar-foreground/55 text-sm leading-relaxed mb-6 max-w-prose">
+                        {L({ en: svc.descEn, fr: svc.descFr })}
+                      </p>
+                      <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
+                        {svc.bulletsEn.map((b, bi) => (
+                          <li key={bi} className="flex items-start gap-2 text-xs text-sidebar-foreground/50">
+                            <span className="mt-1.5 h-px w-3 bg-primary flex-shrink-0" />
+                            {L({ en: b, fr: svc.bulletsFr[bi] })}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Footer: nav + CTA */}
+                    <div className="flex items-center gap-3 pt-5 border-t border-white/10">
+                      <Button asChild size="sm" className="rounded-sm font-display font-semibold text-xs flex-1">
+                        <Link href="/quote">
+                          {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+                          <ArrowRight className="h-3 w-3 ml-1.5" />
+                        </Link>
+                      </Button>
+                      <button
+                        onClick={() => setSelected(selected > 0 ? selected - 1 : services.length - 1)}
+                        aria-label="Previous service"
+                        className="w-8 h-8 flex items-center justify-center border border-white/15 rounded-sm text-sidebar-foreground/50 hover:bg-white/10 hover:text-sidebar-foreground transition-all">
+                        <ArrowRight className="h-3.5 w-3.5 rotate-180" />
+                      </button>
+                      <button
+                        onClick={() => setSelected(selected < services.length - 1 ? selected + 1 : 0)}
+                        aria-label="Next service"
+                        className="w-8 h-8 flex items-center justify-center border border-white/15 rounded-sm text-sidebar-foreground/50 hover:bg-white/10 hover:text-sidebar-foreground transition-all">
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           {/* Mobile: accordion */}
           <div className="lg:hidden divide-y divide-border/40 border-t border-border/40">
             {services.map((s, i) => {
-              const isOpen = active === i;
+              const isOpen = selected === i;
               return (
                 <div key={s.en}>
-                  <button onClick={() => setActive(i)}
+                  <button onClick={() => setSelected(isOpen ? null : i)}
                     className="w-full flex items-center gap-4 py-4 text-left">
                     <span className={`font-display font-black text-xs tabular-nums flex-shrink-0 transition-colors ${isOpen ? 'text-primary' : 'text-muted-foreground/30'}`}>
                       {String(i + 1).padStart(2, '0')}
