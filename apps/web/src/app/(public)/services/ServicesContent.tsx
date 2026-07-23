@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Ship, Globe2, Factory, BarChart3, Handshake, Leaf, Truck, ArrowRight } from 'lucide-react';
+import { Ship, Globe2, Factory, BarChart3, Handshake, Leaf, Truck, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { fadeInUp, fadeInLeft, stagger, viewportOnce } from '@/components/motion/variants';
@@ -75,12 +75,40 @@ const services = [
   },
 ];
 
+const cardVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? 120 : -120,
+    opacity: 0,
+    rotate: dir > 0 ? 4 : -4,
+    scale: 0.94,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    rotate: 0,
+    scale: 1,
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? -120 : 120,
+    opacity: 0,
+    rotate: dir > 0 ? -4 : 4,
+    scale: 0.94,
+  }),
+};
+
 export default function ServicesPage() {
   const { L } = useLanguage();
   const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const goTo = (i: number) => {
+    setDir(i >= active ? 1 : -1);
+    setActive(i);
+  };
+  const prev = () => goTo(active > 0 ? active - 1 : services.length - 1);
+  const next = () => goTo(active < services.length - 1 ? active + 1 : 0);
 
   const svc = services[active];
-  const others = services.map((s, i) => ({ ...s, idx: i })).filter(({ idx }) => idx !== active);
 
   return (
     <>
@@ -106,13 +134,13 @@ export default function ServicesPage() {
         </motion.div>
       </section>
 
-      {/* ── BENTO GRID ──────────────────────────────────────────────────────── */}
+      {/* ── STACKED DEAL CARDS ──────────────────────────────────────────────── */}
       <section className="bg-background py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Section header */}
+          {/* Section header + number nav */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="flex items-baseline justify-between mb-8">
+            className="flex items-center justify-between mb-10">
             <div>
               <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-1">
                 {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
@@ -121,121 +149,132 @@ export default function ServicesPage() {
                 {L({ en: 'Our Services', fr: 'Nos Services' })}
               </h2>
             </div>
-            <span className="text-muted-foreground/30 font-display font-black text-xs tracking-[0.2em] hidden sm:block">07</span>
+
+            {/* Dot nav */}
+            <div className="flex items-center gap-2">
+              {services.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  aria-label={`Service ${i + 1}`}
+                  className={`transition-all duration-200 rounded-full ${
+                    active === i
+                      ? 'w-6 h-2 bg-primary'
+                      : 'w-2 h-2 bg-border hover:bg-muted-foreground/40'
+                  }`}
+                />
+              ))}
+            </div>
           </motion.div>
 
-          {/* Desktop: bento grid */}
+          {/* Desktop: card stack */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="hidden lg:grid lg:grid-cols-[2fr_3fr] gap-px bg-border border border-border rounded-sm overflow-hidden"
-            style={{ minHeight: 520 }}>
+            className="hidden lg:block">
 
-            {/* Featured tile — left, full height */}
-            <div className="relative bg-background overflow-hidden">
-              {/* Background image crossfade */}
-              <AnimatePresence mode="sync">
-                <motion.div
-                  key={`feat-img-${active}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute inset-0">
-                  <Image
-                    src={svc.image} alt="" fill
-                    className="object-cover"
-                    sizes="40vw"
-                    priority={active === 0} />
-                  <div className="absolute inset-0 bg-gradient-to-b from-foreground/15 via-transparent to-foreground/88" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-foreground/10" />
-                </motion.div>
-              </AnimatePresence>
+            {/* Stack wrapper — extra bottom padding reveals the peeking cards */}
+            <div className="relative" style={{ paddingBottom: 28 }}>
 
-              {/* Ghost number */}
-              <span className="absolute top-5 right-6 font-display font-black leading-none select-none pointer-events-none z-10"
-                style={{ fontSize: 'clamp(5rem, 9vw, 8rem)', color: 'rgba(255,255,255,0.05)' }}>
-                {String(active + 1).padStart(2, '0')}
-              </span>
+              {/* Decorative card backs — peeking behind active card */}
+              {[2, 1].map(offset => (
+                <div
+                  key={offset}
+                  className="absolute left-0 right-0 bottom-0 border border-border rounded-sm bg-muted/20"
+                  style={{
+                    height: 'calc(100% - 28px)',
+                    transform: `translateY(${offset * 12}px) scale(${1 - offset * 0.018})`,
+                    transformOrigin: 'bottom center',
+                    zIndex: 10 - offset,
+                    opacity: 1 - offset * 0.35,
+                  }}
+                />
+              ))}
 
-              {/* Content — crossfades */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`feat-content-${active}`}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute bottom-0 left-0 right-0 z-10 p-7">
-                  <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-2">
-                    {L({ en: svc.en, fr: svc.fr })}
-                  </p>
-                  <div className="h-px w-7 bg-primary mb-3" />
-                  <h3 className="font-display font-bold text-xl text-sidebar-foreground tracking-tight leading-snug mb-2">
-                    {L({ en: svc.headlineEn, fr: svc.headlineFr })}
-                  </h3>
-                  <p className="text-sidebar-foreground/50 text-xs leading-relaxed mb-4 max-w-[26ch]">
-                    {L({ en: svc.descEn, fr: svc.descFr })}
-                  </p>
-                  <ul className="space-y-1.5 mb-5">
-                    {svc.bulletsEn.slice(0, 3).map((b, bi) => (
-                      <li key={bi} className="flex items-start gap-2 text-xs text-sidebar-foreground/45">
-                        <span className="mt-1.5 h-px w-3 bg-primary flex-shrink-0" />
-                        {L({ en: b, fr: svc.bulletsFr[bi] })}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button asChild size="sm" className="rounded-sm font-display font-semibold text-xs">
-                    <Link href="/quote">
-                      {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-                      <ArrowRight className="h-3 w-3 ml-1.5" />
-                    </Link>
-                  </Button>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+              {/* Active card */}
+              <div className="relative z-20" style={{ minHeight: 540 }}>
+                <AnimatePresence custom={dir} mode="wait">
+                  <motion.div
+                    key={active}
+                    custom={dir}
+                    variants={cardVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                    className="border border-border rounded-sm overflow-hidden bg-background"
+                    style={{ minHeight: 540 }}>
 
-            {/* Right 3×2 compact grid */}
-            <div className="grid grid-cols-3 grid-rows-2 gap-px bg-border">
-              <AnimatePresence mode="popLayout">
-                {others.map(({ idx, en, fr, headlineEn, headlineFr, image }) => (
-                  <motion.button
-                    key={idx}
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    onClick={() => setActive(idx)}
-                    className="relative group bg-background overflow-hidden text-left flex flex-col justify-end p-5 cursor-pointer">
+                    {/* Card layout: image left (40%) + content right (60%) */}
+                    <div className="grid grid-cols-[2fr_3fr] h-full min-h-[540px]">
 
-                    {/* Hover image — subtle */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
-                      <Image src={image} alt="" fill className="object-cover opacity-25" sizes="20vw" />
-                      <div className="absolute inset-0 bg-background/55" />
-                    </div>
+                      {/* Image side */}
+                      <div className="relative overflow-hidden">
+                        <Image
+                          src={svc.image} alt="" fill
+                          className="object-cover"
+                          sizes="40vw"
+                          priority={active === 0} />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/30" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-foreground/20 via-transparent to-foreground/40" />
+                        {/* Ghost number on image */}
+                        <span className="absolute bottom-5 left-5 font-display font-black leading-none select-none pointer-events-none"
+                          style={{ fontSize: 'clamp(5rem, 10vw, 8rem)', color: 'rgba(255,255,255,0.07)' }}>
+                          {String(active + 1).padStart(2, '0')}
+                        </span>
+                      </div>
 
-                    {/* Ghost number */}
-                    <span className="absolute top-3 right-4 font-display font-black leading-none select-none pointer-events-none transition-colors duration-200"
-                      style={{ fontSize: '3.5rem', color: 'hsl(var(--foreground) / 0.05)' }}>
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
+                      {/* Content side */}
+                      <div className="flex flex-col justify-between p-8 lg:p-10 bg-background">
 
-                    {/* Content */}
-                    <div className="relative z-10">
-                      <span className="text-primary font-display font-black text-[10px] tabular-nums block mb-1">
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
-                      <h4 className="font-display font-bold text-sm uppercase tracking-tight leading-tight text-foreground group-hover:text-foreground transition-colors">
-                        {L({ en, fr })}
-                      </h4>
-                      {/* Arrow on hover */}
-                      <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1.5">
-                        <span className="h-px w-4 bg-primary" />
-                        <ArrowRight className="h-3 w-3 text-primary" />
+                        {/* Top: label + headline */}
+                        <div>
+                          <p className="text-primary font-display font-semibold text-[10px] uppercase tracking-[0.25em] mb-3">
+                            {L({ en: svc.en, fr: svc.fr })}
+                          </p>
+                          <div className="h-px w-8 bg-primary mb-4" />
+                          <h3 className="font-display font-bold text-2xl lg:text-3xl tracking-tight leading-tight mb-4">
+                            {L({ en: svc.headlineEn, fr: svc.headlineFr })}
+                          </h3>
+                          <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-prose">
+                            {L({ en: svc.descEn, fr: svc.descFr })}
+                          </p>
+                          <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5">
+                            {svc.bulletsEn.map((b, bi) => (
+                              <li key={bi} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                <span className="mt-2 h-px w-3 bg-primary flex-shrink-0" />
+                                {L({ en: b, fr: svc.bulletsFr[bi] })}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Bottom: CTA + navigation */}
+                        <div className="flex items-center justify-between pt-6 mt-6 border-t border-border">
+                          <Button asChild size="sm" className="rounded-sm font-display font-semibold text-sm">
+                            <Link href="/quote">
+                              {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+                              <ArrowRight className="h-3.5 w-3.5 ml-2" />
+                            </Link>
+                          </Button>
+
+                          <div className="flex items-center gap-3">
+                            <button onClick={prev} aria-label="Previous"
+                              className="w-8 h-8 flex items-center justify-center border border-border rounded-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground transition-all duration-150">
+                              <ArrowLeft className="h-3.5 w-3.5" />
+                            </button>
+                            <span className="font-display font-black text-xs tabular-nums text-muted-foreground/50 tracking-wider">
+                              {String(active + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
+                            </span>
+                            <button onClick={next} aria-label="Next"
+                              className="w-8 h-8 flex items-center justify-center border border-border rounded-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground transition-all duration-150">
+                              <ArrowRight className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </motion.button>
-                ))}
-              </AnimatePresence>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
           </motion.div>
 
