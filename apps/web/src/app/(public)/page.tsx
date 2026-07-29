@@ -252,15 +252,18 @@ interface Partner {
 }
 
 function PartnerCard({ b }: { b: Partner }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const logoSrc = b.logoUrl && !imgFailed ? b.logoUrl : null;
   return (
     <div className="flex items-center gap-2 mx-2.5 px-4 py-2 bg-white border border-border
                     rounded-lg hover:border-primary/40 hover:shadow-sm
                     transition-all duration-200 cursor-default flex-shrink-0">
       <div className="w-6 h-6 flex items-center justify-center flex-shrink-0 overflow-hidden">
-        {b.logoUrl
-          ? <img src={b.logoUrl} alt={b.name} width={24} height={24}
-              className="w-full h-full object-contain" />
-          : <span className="text-[10px] font-display font-extrabold text-primary">
+        {logoSrc
+          ? <img src={logoSrc} alt={b.name} width={24} height={24}
+              className="w-full h-full object-contain"
+              onError={() => setImgFailed(true)} />
+          : <span className="text-[10px] font-display font-extrabold text-primary leading-none">
               {b.name.charAt(0)}
             </span>}
       </div>
@@ -332,18 +335,18 @@ export default function HomePage() {
   });
 
   const staticBrands: Partner[] = [
-    { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',           logoUrl: 'https://logo.clearbit.com/totalenergies.com' },
-    { id: 102, name: 'Shell',             sectorEn: 'Energy',    sectorFr: 'Énergie',           logoUrl: 'https://logo.clearbit.com/shell.com' },
-    { id: 103, name: 'CMA CGM',           sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/cma-cgm.com' },
-    { id: 104, name: 'DHL',               sectorEn: 'Logistics', sectorFr: 'Logistique',        logoUrl: 'https://logo.clearbit.com/dhl.com' },
-    { id: 105, name: 'Bolloré Logistics', sectorEn: 'Logistics', sectorFr: 'Logistique',        logoUrl: 'https://logo.clearbit.com/bollore.com' },
-    { id: 106, name: 'Maersk',            sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/maersk.com' },
-    { id: 107, name: 'MSC',               sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/msc.com' },
-    { id: 108, name: 'Camair-Co',         sectorEn: 'Aviation',  sectorFr: 'Aviation' },
-    { id: 109, name: 'Port de Douala',    sectorEn: 'Port',      sectorFr: 'Port' },
-    { id: 110, name: 'CFAO',              sectorEn: 'Trade',     sectorFr: 'Commerce',          logoUrl: 'https://logo.clearbit.com/cfao.com' },
-    { id: 111, name: 'Ciments Cameroun',  sectorEn: 'Industry',  sectorFr: 'Industrie' },
-    { id: 112, name: 'Orange Cameroun',   sectorEn: 'Telecom',   sectorFr: 'Télécoms',          logoUrl: 'https://logo.clearbit.com/orange.com' },
+    { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=totalenergies.com&sz=64' },
+    { id: 102, name: 'Shell',             sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=shell.com&sz=64' },
+    { id: 103, name: 'CMA CGM',           sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=cma-cgm.com&sz=64' },
+    { id: 104, name: 'DHL',               sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=dhl.com&sz=64' },
+    { id: 105, name: 'Bolloré Logistics', sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=bollore-logistics.com&sz=64' },
+    { id: 106, name: 'Maersk',            sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=maersk.com&sz=64' },
+    { id: 107, name: 'MSC',               sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=msc.com&sz=64' },
+    { id: 108, name: 'Camair-Co',         sectorEn: 'Aviation',  sectorFr: 'Aviation',           logoUrl: 'https://www.google.com/s2/favicons?domain=camair-co.com&sz=64' },
+    { id: 109, name: 'Port de Douala',    sectorEn: 'Port',      sectorFr: 'Port',               logoUrl: 'https://www.google.com/s2/favicons?domain=port-douala.com&sz=64' },
+    { id: 110, name: 'CFAO',              sectorEn: 'Trade',     sectorFr: 'Commerce',           logoUrl: 'https://www.google.com/s2/favicons?domain=cfao.com&sz=64' },
+    { id: 111, name: 'Ciments Cameroun',  sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: 'https://www.google.com/s2/favicons?domain=cimentscameroun.com&sz=64' },
+    { id: 112, name: 'Orange Cameroun',   sectorEn: 'Telecom',   sectorFr: 'Télécoms',           logoUrl: 'https://www.google.com/s2/favicons?domain=orange.cm&sz=64' },
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
