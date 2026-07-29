@@ -380,7 +380,7 @@ export default function AboutPage() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline"
-              className="font-display font-semibold text-sm rounded-sm border-white/20 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground">
+              className="font-display font-semibold text-sm rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
               <Link href="/quote">
                 {L({ en: 'Get a Quote', fr: 'Devis Gratuit' })}
               </Link>
