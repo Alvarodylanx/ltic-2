@@ -26,29 +26,50 @@ const HERO_INTERVAL = 5500;
 const heroSlides = [
   {
     tag:   { en: 'Logistics & Transit',  fr: 'Logistique & Transit' },
-    lines: { en: 'WE MOVE\nYOUR WORLD.',       fr: 'NOUS BOUGEONS\nVOTRE MONDE.' },
+    lines: { en: 'WE MOVE\nYOUR WORLD.',        fr: 'NOUS BOUGEONS\nVOTRE MONDE.' },
     sub:   { en: 'End-to-end freight forwarding across 30+ countries — air, sea and road, fully tracked.', fr: 'Freight forwarding complet dans 30+ pays — aérien, maritime et routier, entièrement suivi.' },
-    cta1:  { label: { en: 'Get a Free Quote', fr: 'Obtenir un Devis' },  href: '/quote' },
-    cta2:  { label: { en: 'Our Services',     fr: 'Nos Services' },      href: '/services' },
-    image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1800&auto=format&fit=crop&q=80',
+    cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
+    cta2:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
+    image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1800&auto=format&fit=crop&q=80',
+    theme: {
+      tag:      'text-blue-400',
+      tagBg:    'bg-blue-400',
+      headline: 'text-white',
+      sub:      'text-slate-200/75',
+      overlay:  'linear-gradient(105deg,rgba(2,8,23,0.93) 0%,rgba(2,8,23,0.62) 42%,rgba(2,8,23,0.12) 100%)',
+    },
   },
   {
     tag:   { en: 'Industrial Supply',    fr: 'Fourniture Industrielle' },
-    lines: { en: 'POWERED BY\nEXPERTISE.',     fr: 'ALIMENTÉ PAR\nL\'EXPERTISE.' },
+    lines: { en: 'POWERED BY\nEXPERTISE.',      fr: 'ALIMENTÉ PAR\nL\'EXPERTISE.' },
     sub:   { en: 'Generators, lubricants and OEM-grade parts — Total, Shell and certified industrial brands.', fr: 'Générateurs, lubrifiants et pièces OEM — Total, Shell et marques industrielles certifiées.' },
-    cta1:  { label: { en: 'View Products',    fr: 'Voir les Produits' }, href: '/products' },
-    cta2:  { label: { en: 'Request a Quote',  fr: 'Demander un Devis' }, href: '/quote' },
-    image: 'https://images.unsplash.com/photo-1548683726-203119be6a39?w=1800&auto=format&fit=crop&q=80',
+    cta1:  { label: { en: 'View Products',     fr: 'Voir les Produits' }, href: '/products' },
+    cta2:  { label: { en: 'Request a Quote',   fr: 'Demander un Devis' }, href: '/quote' },
+    image: 'https://images.unsplash.com/photo-1670689334799-cdc6777db8cc?w=1800&auto=format&fit=crop&q=80',
+    theme: {
+      tag:      'text-amber-400',
+      tagBg:    'bg-amber-400',
+      headline: 'text-orange-50',
+      sub:      'text-orange-100/70',
+      overlay:  'linear-gradient(105deg,rgba(12,6,0,0.94) 0%,rgba(12,6,0,0.64) 42%,rgba(12,6,0,0.10) 100%)',
+    },
   },
   {
     tag:   { en: 'Global Commerce',      fr: 'Commerce Mondial' },
-    lines: { en: 'TRADE ACROSS\nALL BORDERS.',  fr: 'COMMERCE SANS\nFRONTIÈRES.' },
+    lines: { en: 'TRADE ACROSS\nALL BORDERS.',   fr: 'COMMERCE SANS\nFRONTIÈRES.' },
     sub:   { en: 'Import, export and brand representation across emerging markets — one partner for every transaction.', fr: 'Import, export et représentation de marque sur marchés émergents — un partenaire pour chaque transaction.' },
-    cta1:  { label: { en: 'Get a Free Quote', fr: 'Obtenir un Devis' },  href: '/quote' },
-    cta2:  { label: { en: 'About LTIC',       fr: 'À Propos de LTIC' }, href: '/about' },
-    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1800&auto=format&fit=crop&q=80',
+    cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
+    cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
+    image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1800&auto=format&fit=crop&q=80',
+    theme: {
+      tag:      'text-yellow-300',
+      tagBg:    'bg-yellow-300',
+      headline: 'text-amber-50',
+      sub:      'text-amber-100/70',
+      overlay:  'linear-gradient(105deg,rgba(8,5,1,0.92) 0%,rgba(8,5,1,0.60) 42%,rgba(8,5,1,0.10) 100%)',
+    },
   },
-] as const;
+];
 
 const services = [
   { icon: Ship,      en: 'Logistics & Transit',        fr: 'Logistique & Transit',               descEn: 'End-to-end freight forwarding, customs clearance and international transit by air, sea and road.',        descFr: 'Freight forwarding complet, dédouanement et transit international.' },
@@ -399,79 +420,91 @@ export default function HomePage() {
     <>
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
-        className="relative min-h-[100dvh] overflow-hidden bg-black"
+        className="relative h-[100dvh] overflow-hidden bg-black"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
         {/* ── Animated backgrounds (crossfade + Ken Burns zoom) ── */}
         <AnimatePresence initial={false} mode="sync">
           <motion.div
-            key={activeSlide}
+            key={`bg-${activeSlide}`}
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 1.07 }}
             animate={{ opacity: 1, scale: 1.0 }}
             exit={{ opacity: 0, scale: 1.0 }}
             transition={{
               opacity: { duration: 1.0, ease: 'easeInOut' },
-              scale: { duration: HERO_INTERVAL / 1000 + 1.5, ease: 'linear' },
+              scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
             }}
           >
             <Image
               src={heroSlides[activeSlide].image}
               alt=""
               fill
-              className="object-cover"
+              className="object-cover object-center"
               priority={activeSlide === 0}
               sizes="100vw"
             />
           </motion.div>
         </AnimatePresence>
 
-        {/* ── Persistent overlays ── */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10 pointer-events-none" />
+        {/* ── Per-slide tinted overlay — crossfades to match image palette ── */}
+        <AnimatePresence initial={false} mode="sync">
+          <motion.div
+            key={`overlay-${activeSlide}`}
+            className="absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: 'easeInOut' }}
+            style={{ background: heroSlides[activeSlide].theme.overlay }}
+          />
+        </AnimatePresence>
+
+        {/* ── Bottom vignette — consistent across all slides ── */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
         {/* ── Slide counter — top right ── */}
-        <div className="absolute top-5 right-6 sm:right-10 z-20 font-display font-bold text-white/30 text-[10px] tracking-[0.4em] select-none tabular-nums">
+        <div className="absolute top-5 right-6 sm:right-10 z-20 font-display font-semibold text-white/25 text-[9px] tracking-[0.5em] select-none tabular-nums">
           {String(activeSlide + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(heroSlides.length).padStart(2, '0')}
         </div>
 
         {/* ── Main content ── */}
-        <div className="relative z-10 min-h-[100dvh] flex items-center pb-28">
+        <div className="relative z-10 h-full flex items-center pb-24 pt-16">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSlide}
-                exit={{ opacity: 0, y: -18, transition: { duration: 0.22, ease: 'easeIn' } }}
-                className="max-w-2xl xl:max-w-3xl"
+                exit={{ opacity: 0, y: -20, transition: { duration: 0.2, ease: 'easeIn' } }}
+                className="max-w-[640px] xl:max-w-[780px]"
               >
                 {/* Tag label */}
                 <motion.div
-                  initial={{ opacity: 0, x: -22 }}
+                  initial={{ opacity: 0, x: -24 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-                  className="flex items-center gap-2.5 mb-7"
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+                  className="flex items-center gap-3 mb-8"
                 >
-                  <span className="w-7 h-px bg-primary flex-shrink-0" />
-                  <span className="text-primary font-display font-bold text-[10px] uppercase tracking-[0.35em]">
+                  <span className={`h-px w-8 flex-shrink-0 ${heroSlides[activeSlide].theme.tagBg}`} />
+                  <span className={`font-display font-bold text-[10px] uppercase tracking-[0.38em] ${heroSlides[activeSlide].theme.tag}`}>
                     {L(heroSlides[activeSlide].tag)}
                   </span>
                 </motion.div>
 
-                {/* Headline — word-by-word clip reveal */}
-                <h1 className="font-display font-extrabold text-white text-hero leading-[0.9] tracking-[-0.025em] mb-7">
+                {/* Headline — per-word clip reveal */}
+                <h1 className={`font-display font-extrabold text-hero leading-[0.88] tracking-[-0.03em] mb-8 ${heroSlides[activeSlide].theme.headline}`}>
                   {L(heroSlides[activeSlide].lines).split('\n').map((line, li) => (
                     <span key={li} className="block overflow-hidden">
                       {line.split(' ').map((word, wi) => (
                         <motion.span
                           key={wi}
-                          className="inline-block mr-[0.22em] last:mr-0"
-                          initial={{ y: '110%' }}
+                          className="inline-block mr-[0.18em] last:mr-0"
+                          initial={{ y: '115%' }}
                           animate={{ y: 0 }}
                           transition={{
-                            duration: 0.65,
-                            ease: [0.22, 1, 0.36, 1],
-                            delay: 0.1 + (li * 3 + wi) * 0.07,
+                            duration: 0.68,
+                            ease: [0.16, 1, 0.3, 1],
+                            delay: 0.08 + (li * 3 + wi) * 0.075,
                           }}
                         >
                           {word}
@@ -481,33 +514,41 @@ export default function HomePage() {
                   ))}
                 </h1>
 
+                {/* Separator */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.42 }}
+                  className={`h-px w-14 origin-left mb-6 ${heroSlides[activeSlide].theme.tagBg}`}
+                />
+
                 {/* Subtext */}
                 <motion.p
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: 'easeOut', delay: 0.52 }}
-                  className="text-white/72 text-base sm:text-lg leading-relaxed mb-9 max-w-lg"
+                  transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 }}
+                  className={`text-base sm:text-[1.05rem] leading-[1.7] mb-10 max-w-[42ch] ${heroSlides[activeSlide].theme.sub}`}
                 >
                   {L(heroSlides[activeSlide].sub)}
                 </motion.p>
 
                 {/* CTAs */}
                 <motion.div
-                  initial={{ opacity: 0, y: 14 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, ease: 'easeOut', delay: 0.68 }}
+                  transition={{ duration: 0.4, ease: 'easeOut', delay: 0.66 }}
                   className="flex flex-wrap gap-3"
                 >
                   <Button asChild size="lg"
-                    className="font-semibold rounded-full h-12 px-8 shadow-lg shadow-primary/30 text-base">
+                    className="font-semibold rounded-full h-12 px-8 shadow-lg shadow-black/40 text-base">
                     <Link href={heroSlides[activeSlide].cta1.href}>
                       {L(heroSlides[activeSlide].cta1.label)}
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline"
-                    className="font-semibold rounded-full h-12 px-8 text-base bg-white/10
-                               border-white/40 text-white hover:bg-white/20 hover:border-white/70
+                    className="font-semibold rounded-full h-12 px-8 text-base bg-white/8
+                               border-white/35 text-white hover:bg-white/18 hover:border-white/60
                                backdrop-blur-sm">
                     <Link href={heroSlides[activeSlide].cta2.href}>
                       {L(heroSlides[activeSlide].cta2.label)}
@@ -519,12 +560,12 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ── Bottom navigation ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
+        {/* ── Bottom navigation bar ── */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-7 sm:pb-9">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
 
             {/* Slide dots */}
-            <div className="flex items-center gap-3" role="tablist" aria-label="Hero slides">
+            <div className="flex items-center gap-2.5" role="tablist" aria-label="Hero slides">
               {heroSlides.map((_, i) => (
                 <button
                   key={i}
@@ -532,10 +573,10 @@ export default function HomePage() {
                   aria-selected={i === activeSlide}
                   aria-label={`Slide ${i + 1}`}
                   onClick={() => goTo(i)}
-                  className={`rounded-full transition-all duration-300 ${
+                  className={`rounded-full transition-all duration-350 ${
                     i === activeSlide
-                      ? 'w-9 h-[5px] bg-primary'
-                      : 'w-[5px] h-[5px] bg-white/35 hover:bg-white/65'
+                      ? 'w-8 h-[4px] bg-primary'
+                      : 'w-[4px] h-[4px] bg-white/30 hover:bg-white/60'
                   }`}
                 />
               ))}
@@ -543,11 +584,11 @@ export default function HomePage() {
 
             {/* Progress bar + arrows */}
             <div className="flex items-center gap-4">
-              <div className="hidden sm:block w-28 h-px bg-white/15 relative overflow-hidden rounded-full">
+              <div className="hidden sm:block w-24 h-px bg-white/12 relative overflow-hidden rounded-full">
                 {!shouldReduce && (
                   <motion.div
                     key={`progress-${activeSlide}`}
-                    className="absolute inset-y-0 left-0 w-full bg-white/55 origin-left rounded-full"
+                    className="absolute inset-y-0 left-0 w-full bg-white/50 origin-left rounded-full"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: paused ? undefined : 1 }}
                     transition={{ duration: HERO_INTERVAL / 1000, ease: 'linear' }}
@@ -556,23 +597,17 @@ export default function HomePage() {
               </div>
 
               <div className="flex gap-1.5">
-                <button
-                  onClick={prev}
-                  aria-label="Previous slide"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 text-white/60
-                             hover:bg-white/10 hover:text-white hover:border-white/50
-                             transition-all duration-200 flex items-center justify-center"
-                >
-                  <ChevronLeft className="h-4 w-4" />
+                <button onClick={prev} aria-label="Previous slide"
+                  className="w-9 h-9 rounded-full border border-white/20 text-white/50
+                             hover:bg-white/10 hover:text-white hover:border-white/45
+                             transition-all duration-200 flex items-center justify-center">
+                  <ChevronLeft className="h-3.5 w-3.5" />
                 </button>
-                <button
-                  onClick={next}
-                  aria-label="Next slide"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 text-white/60
-                             hover:bg-white/10 hover:text-white hover:border-white/50
-                             transition-all duration-200 flex items-center justify-center"
-                >
-                  <ChevronRight className="h-4 w-4" />
+                <button onClick={next} aria-label="Next slide"
+                  className="w-9 h-9 rounded-full border border-white/20 text-white/50
+                             hover:bg-white/10 hover:text-white hover:border-white/45
+                             transition-all duration-200 flex items-center justify-center">
+                  <ChevronRight className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
