@@ -76,6 +76,30 @@ const orderSteps = [
   { icon: Truck,    num: '04', title: { en: 'Tracked Delivery', fr: 'Livraison Suivie' },       desc: { en: 'Customs, freight and logistics tracked in real time.',   fr: 'Douanes, fret et logistique suivis en temps réel.' },           action: { en: 'Track Shipment', fr: 'Suivre' },            href: '/tracking' },
 ];
 
+const heroPanels = [
+  {
+    number: '01',
+    titleEn: 'Logistics & Transit',   titleFr: 'Logistique & Transit',
+    descEn: 'Air, sea & road freight across 30+ countries — fully tracked.',
+    descFr: 'Fret aérien, maritime & routier dans 30+ pays — suivi complet.',
+    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=900&auto=format&fit=crop&q=70',
+  },
+  {
+    number: '02',
+    titleEn: 'Industrial Supply',     titleFr: 'Fourniture Industrielle',
+    descEn: 'Generators, lubricants & OEM-grade parts. Total, Shell and beyond.',
+    descFr: 'Générateurs, lubrifiants & pièces OEM. Total, Shell et au-delà.',
+    image: 'https://images.unsplash.com/photo-1548683726-203119be6a39?w=900&auto=format&fit=crop&q=70',
+  },
+  {
+    number: '03',
+    titleEn: 'Global Commerce',       titleFr: 'Commerce Mondial',
+    descEn: 'Brand representation, joint ventures & market entry worldwide.',
+    descFr: 'Représentation de marque, coentreprises & entrée sur marché.',
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&auto=format&fit=crop&q=70',
+  },
+];
+
 // ─── ServiceCard ──────────────────────────────────────────────────────────────
 
 interface ServiceCardProps {
@@ -324,6 +348,19 @@ export default function HomePage() {
   const { L } = useLanguage();
   const shouldReduce = useReducedMotion();
 
+  const [activeHeroPanel, setActiveHeroPanel] = useState<number>(0);
+  const autoCycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const panelIndexRef = useRef(0);
+
+  useEffect(() => {
+    if (shouldReduce) return;
+    autoCycleRef.current = setInterval(() => {
+      panelIndexRef.current = (panelIndexRef.current + 1) % heroPanels.length;
+      setActiveHeroPanel(panelIndexRef.current);
+    }, 3500);
+    return () => { if (autoCycleRef.current) clearInterval(autoCycleRef.current); };
+  }, [shouldReduce]);
+
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
@@ -356,35 +393,45 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ══ 1. HERO — cinematic medium-height ═════════════════════════════════ */}
-      <section className="relative h-[72vh] min-h-[520px] overflow-hidden">
-        {/* Background image */}
-        <Image
-          src={heroBg}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
+      {/* ══ 1. HERO — Oblique Command Center ══════════════════════════════════ */}
+      <section className="relative min-h-[100dvh] bg-sidebar overflow-hidden">
 
-        {/* Cinematic gradient overlay — darker left for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        {/* Engineering grid texture */}
+        <div className="absolute inset-0 grid-bg opacity-[0.18] pointer-events-none" />
 
-        {/* Content */}
-        <div className="relative z-10 h-full flex items-center">
-          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="max-w-2xl"
-              variants={stagger}
-              initial="hidden"
-              animate="show"
-            >
+        {/* Mobile-only background image */}
+        <div className="lg:hidden absolute inset-0">
+          <Image src={heroBg} alt="" fill className="object-cover opacity-25" priority sizes="100vw" />
+          <div className="absolute inset-0 bg-gradient-to-b from-sidebar/60 via-sidebar/80 to-sidebar" />
+        </div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row min-h-[100dvh]">
+
+          {/* ── LEFT: Editorial copy ──────────────────────────────── */}
+          <div className="relative flex flex-col justify-end lg:justify-center
+                          pt-28 pb-12 px-6 sm:px-10 lg:px-14 xl:px-20
+                          lg:w-[54%] lg:min-h-[100dvh]">
+
+            {/* Oversized ghost number — atmospheric depth */}
+            <span
+              aria-hidden="true"
+              className="absolute select-none pointer-events-none font-display font-black leading-none"
+              style={{
+                fontSize: 'clamp(9rem, 20vw, 17rem)',
+                color: 'hsl(var(--sidebar-foreground) / 0.032)',
+                right: '-2%',
+                top: '50%',
+                transform: 'translateY(-50%)',
+              }}>
+              01
+            </span>
+
+            <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10">
+
               {/* Eyebrow */}
-              <motion.div variants={fadeInUp} className="flex items-center gap-2 mb-6">
-                <span className="w-8 h-px bg-primary" />
-                <span className="text-white/80 text-xs font-semibold uppercase tracking-[0.3em]">
+              <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-7">
+                <span className="w-8 h-px bg-primary flex-shrink-0" />
+                <span className="text-primary font-display font-bold text-xs uppercase tracking-[0.28em]">
                   {L({ en: 'Global Logistics & Commerce', fr: 'Logistique & Commerce Mondial' })}
                 </span>
               </motion.div>
@@ -392,15 +439,15 @@ export default function HomePage() {
               {/* Headline */}
               <motion.h1
                 variants={fadeInUp}
-                className="font-display font-extrabold text-white text-hero
-                           leading-[0.9] tracking-[-0.02em] mb-6"
-              >
-                {L({ en: 'TRADE.\nSHIP.\nSUPPLY.', fr: 'TRADEZ.\nEXPÉDIEZ.\nAPPROVISIONNEZ.' })}
+                className="font-display font-extrabold text-sidebar-foreground text-hero
+                           leading-[0.9] tracking-[-0.02em] mb-7 whitespace-pre-line">
+                {L({ en: 'TRADE.\nSHIP.\nSUPPLY.', fr: 'TRADEZ.\nEXPÉDIEZ.\nAPPROV.' })}
               </motion.h1>
 
               {/* Sub */}
-              <motion.p variants={fadeInUp}
-                className="text-white/80 text-lg leading-relaxed mb-8 max-w-lg">
+              <motion.p
+                variants={fadeInUp}
+                className="text-sidebar-foreground/60 text-base sm:text-lg leading-relaxed mb-9 max-w-[42ch]">
                 {L({
                   en: 'LTIC SARL delivers freight, industrial supply and general commerce across 30+ countries — one partner, zero complications.',
                   fr: 'LTIC SARL livre fret, fournitures industrielles et commerce général dans 30+ pays — un partenaire, zéro complication.',
@@ -408,28 +455,141 @@ export default function HomePage() {
               </motion.p>
 
               {/* CTAs */}
-              <motion.div variants={fadeInUp} className="flex flex-wrap gap-3">
+              <motion.div variants={fadeInUp} className="flex flex-wrap gap-3 mb-12 lg:mb-16">
                 <Button asChild size="lg"
-                  className="font-semibold rounded-full h-12 px-8 shadow-lg
-                             shadow-primary/30 text-base">
+                  className="font-semibold rounded-sm h-12 px-8 shadow-lg shadow-primary/30 text-base">
                   <Link href="/quote">
                     {L({ en: 'Get a Free Quote', fr: 'Obtenir un Devis Gratuit' })}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline"
-                  className="font-semibold rounded-full h-12 px-8 text-base bg-white/10
-                             border-white/40 text-white hover:bg-white/20 hover:border-white/70
-                             backdrop-blur-sm">
+                  className="font-semibold rounded-sm h-12 px-8 text-base bg-transparent
+                             border-sidebar-foreground/30 text-sidebar-foreground
+                             hover:bg-white/10 hover:border-sidebar-foreground/50">
                   <Link href="/products">
                     {L({ en: 'Browse Products', fr: 'Voir les Produits' })}
                   </Link>
                 </Button>
               </motion.div>
+
+              {/* Stats — inline at hero bottom */}
+              <motion.div variants={staggerFast}
+                className="grid grid-cols-2 sm:grid-cols-4 border-t border-white/10 pt-8 gap-y-6">
+                {([
+                  { value: '30+',  en: 'Countries',  fr: 'Pays' },
+                  { value: '500+', en: 'Clients',    fr: 'Clients' },
+                  { value: '24h',  en: 'Quote Time', fr: 'Délai Devis' },
+                  { value: '100%', en: 'Insured',    fr: 'Assuré' },
+                ] as const).map((s, i) => (
+                  <motion.div key={i} variants={fadeInUp} className="flex flex-col pr-6">
+                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-primary leading-none mb-1.5">
+                      {s.value}
+                    </span>
+                    <span className="text-sidebar-foreground/40 text-[10px] uppercase tracking-widest font-semibold">
+                      {L({ en: s.en, fr: s.fr })}
+                    </span>
+                  </motion.div>
+                ))}
+              </motion.div>
+
             </motion.div>
           </div>
-        </div>
 
+          {/* ── RIGHT: Oblique service panels — auto-cycling (desktop only) ── */}
+          <div aria-hidden="true" className="hidden lg:flex lg:w-[46%] overflow-hidden">
+            {heroPanels.map((panel, i) => {
+              const isActive = activeHeroPanel === i;
+              return (
+                <motion.div
+                  key={panel.number}
+                  className="relative overflow-hidden flex-shrink-0 cursor-default"
+                  style={{
+                    transform: 'skewX(-5deg)',
+                    transformOrigin: 'top left',
+                    marginLeft: i === 0 ? '-40px' : '-36px',
+                    zIndex: isActive ? 10 : heroPanels.length - i,
+                  }}
+                  animate={{ flexGrow: isActive ? 2.8 : 0.6 }}
+                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                  onMouseEnter={() => {
+                    if (autoCycleRef.current) { clearInterval(autoCycleRef.current); autoCycleRef.current = null; }
+                    panelIndexRef.current = i;
+                    setActiveHeroPanel(i);
+                  }}
+                  onMouseLeave={() => {
+                    if (autoCycleRef.current) clearInterval(autoCycleRef.current);
+                    autoCycleRef.current = setInterval(() => {
+                      panelIndexRef.current = (panelIndexRef.current + 1) % heroPanels.length;
+                      setActiveHeroPanel(panelIndexRef.current);
+                    }, 3500);
+                  }}
+                >
+                  {/* Background image — counter-skewed to fill cleanly */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ transform: 'skewX(5deg) scaleX(1.12)', transformOrigin: 'top left' }}>
+                    <Image
+                      src={panel.image}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="40vw"
+                      priority={i === 0}
+                    />
+                    <motion.div
+                      className="absolute inset-0 bg-sidebar"
+                      animate={{ opacity: isActive ? 0.45 : 0.8 }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/35 to-transparent" />
+                  </div>
+
+                  {/* Content — counter-skewed */}
+                  <div
+                    className="relative h-full flex flex-col justify-end pb-12 pl-10 pr-6"
+                    style={{ transform: 'skewX(5deg)', transformOrigin: 'top left' }}>
+
+                    {/* Ghost panel number */}
+                    <span
+                      className="absolute top-8 right-8 font-display font-black leading-none select-none"
+                      style={{
+                        fontSize: 'clamp(4rem, 7vw, 6rem)',
+                        color: 'hsl(var(--sidebar-foreground) / 0.07)',
+                      }}>
+                      {panel.number}
+                    </span>
+
+                    {/* Accent line — grows on active */}
+                    <motion.div
+                      className="bg-primary origin-left mb-4"
+                      style={{ height: '2px', width: '3rem' }}
+                      animate={{ scaleX: isActive ? 1 : 0.38 }}
+                      transition={{ duration: 0.45 }}
+                    />
+
+                    {/* Panel title */}
+                    <h2
+                      className="font-display font-extrabold text-sidebar-foreground leading-none tracking-tight"
+                      style={{ fontSize: 'clamp(1.25rem, 2.2vw, 1.875rem)' }}>
+                      {L({ en: panel.titleEn, fr: panel.titleFr })}
+                    </h2>
+
+                    {/* Description — fades in on active */}
+                    <motion.p
+                      className="text-sidebar-foreground/55 text-sm leading-relaxed mt-3 max-w-[22ch]"
+                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
+                      transition={{ duration: 0.32, delay: isActive ? 0.18 : 0 }}>
+                      {L({ en: panel.descEn, fr: panel.descFr })}
+                    </motion.p>
+
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+        </div>
       </section>
 
       {/* ══ VALUE RIBBON — bridges hero → services ════════════════════════════ */}
