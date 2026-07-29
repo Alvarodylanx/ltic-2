@@ -3,11 +3,11 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useReducedMotion, useInView } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
-  Handshake, TreePine, Package, FileText, Clock, Truck, ChevronRight,
+  Handshake, TreePine, Package, FileText, Clock, Truck, ChevronLeft, ChevronRight,
   Users2, ShieldCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -21,8 +21,34 @@ import {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const heroBg =
-  'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1800&auto=format&fit=crop&q=80';
+const HERO_INTERVAL = 5500;
+
+const heroSlides = [
+  {
+    tag:   { en: 'Logistics & Transit',  fr: 'Logistique & Transit' },
+    lines: { en: 'WE MOVE\nYOUR WORLD.',       fr: 'NOUS BOUGEONS\nVOTRE MONDE.' },
+    sub:   { en: 'End-to-end freight forwarding across 30+ countries — air, sea and road, fully tracked.', fr: 'Freight forwarding complet dans 30+ pays — aérien, maritime et routier, entièrement suivi.' },
+    cta1:  { label: { en: 'Get a Free Quote', fr: 'Obtenir un Devis' },  href: '/quote' },
+    cta2:  { label: { en: 'Our Services',     fr: 'Nos Services' },      href: '/services' },
+    image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1800&auto=format&fit=crop&q=80',
+  },
+  {
+    tag:   { en: 'Industrial Supply',    fr: 'Fourniture Industrielle' },
+    lines: { en: 'POWERED BY\nEXPERTISE.',     fr: 'ALIMENTÉ PAR\nL\'EXPERTISE.' },
+    sub:   { en: 'Generators, lubricants and OEM-grade parts — Total, Shell and certified industrial brands.', fr: 'Générateurs, lubrifiants et pièces OEM — Total, Shell et marques industrielles certifiées.' },
+    cta1:  { label: { en: 'View Products',    fr: 'Voir les Produits' }, href: '/products' },
+    cta2:  { label: { en: 'Request a Quote',  fr: 'Demander un Devis' }, href: '/quote' },
+    image: 'https://images.unsplash.com/photo-1548683726-203119be6a39?w=1800&auto=format&fit=crop&q=80',
+  },
+  {
+    tag:   { en: 'Global Commerce',      fr: 'Commerce Mondial' },
+    lines: { en: 'TRADE ACROSS\nALL BORDERS.',  fr: 'COMMERCE SANS\nFRONTIÈRES.' },
+    sub:   { en: 'Import, export and brand representation across emerging markets — one partner for every transaction.', fr: 'Import, export et représentation de marque sur marchés émergents — un partenaire pour chaque transaction.' },
+    cta1:  { label: { en: 'Get a Free Quote', fr: 'Obtenir un Devis' },  href: '/quote' },
+    cta2:  { label: { en: 'About LTIC',       fr: 'À Propos de LTIC' }, href: '/about' },
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1800&auto=format&fit=crop&q=80',
+  },
+] as const;
 
 const services = [
   { icon: Ship,      en: 'Logistics & Transit',        fr: 'Logistique & Transit',               descEn: 'End-to-end freight forwarding, customs clearance and international transit by air, sea and road.',        descFr: 'Freight forwarding complet, dédouanement et transit international.' },
@@ -324,6 +350,21 @@ export default function HomePage() {
   const { L } = useLanguage();
   const shouldReduce = useReducedMotion();
 
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const goTo = (i: number) => setActiveSlide(i);
+  const prev = () => setActiveSlide(i => (i - 1 + heroSlides.length) % heroSlides.length);
+  const next = () => setActiveSlide(i => (i + 1) % heroSlides.length);
+
+  useEffect(() => {
+    if (paused || shouldReduce) return;
+    const id = setInterval(() => {
+      setActiveSlide(i => (i + 1) % heroSlides.length);
+    }, HERO_INTERVAL);
+    return () => clearInterval(id);
+  }, [activeSlide, paused, shouldReduce]);
+
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
@@ -356,80 +397,188 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ══ 1. HERO — cinematic medium-height ═════════════════════════════════ */}
-      <section className="relative h-[72vh] min-h-[520px] overflow-hidden">
-        {/* Background image */}
-        <Image
-          src={heroBg}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
+      {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
+      <section
+        className="relative min-h-[100dvh] overflow-hidden bg-black"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {/* ── Animated backgrounds (crossfade + Ken Burns zoom) ── */}
+        <AnimatePresence initial={false} mode="sync">
+          <motion.div
+            key={activeSlide}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.07 }}
+            animate={{ opacity: 1, scale: 1.0 }}
+            exit={{ opacity: 0, scale: 1.0 }}
+            transition={{
+              opacity: { duration: 1.0, ease: 'easeInOut' },
+              scale: { duration: HERO_INTERVAL / 1000 + 1.5, ease: 'linear' },
+            }}
+          >
+            <Image
+              src={heroSlides[activeSlide].image}
+              alt=""
+              fill
+              className="object-cover"
+              priority={activeSlide === 0}
+              sizes="100vw"
+            />
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Cinematic gradient overlay — darker left for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        {/* ── Persistent overlays ── */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10 pointer-events-none" />
 
-        {/* Content */}
-        <div className="relative z-10 h-full flex items-center">
+        {/* ── Slide counter — top right ── */}
+        <div className="absolute top-5 right-6 sm:right-10 z-20 font-display font-bold text-white/30 text-[10px] tracking-[0.4em] select-none tabular-nums">
+          {String(activeSlide + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(heroSlides.length).padStart(2, '0')}
+        </div>
+
+        {/* ── Main content ── */}
+        <div className="relative z-10 min-h-[100dvh] flex items-center pb-28">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="max-w-2xl"
-              variants={stagger}
-              initial="hidden"
-              animate="show"
-            >
-              {/* Eyebrow */}
-              <motion.div variants={fadeInUp} className="flex items-center gap-2 mb-6">
-                <span className="w-8 h-px bg-primary" />
-                <span className="text-white/80 text-xs font-semibold uppercase tracking-[0.3em]">
-                  {L({ en: 'Global Logistics & Commerce', fr: 'Logistique & Commerce Mondial' })}
-                </span>
-              </motion.div>
-
-              {/* Headline */}
-              <motion.h1
-                variants={fadeInUp}
-                className="font-display font-extrabold text-white text-hero
-                           leading-[0.9] tracking-[-0.02em] mb-6"
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeSlide}
+                exit={{ opacity: 0, y: -18, transition: { duration: 0.22, ease: 'easeIn' } }}
+                className="max-w-2xl xl:max-w-3xl"
               >
-                {L({ en: 'TRADE.\nSHIP.\nSUPPLY.', fr: 'TRADEZ.\nEXPÉDIEZ.\nAPPROVISIONNEZ.' })}
-              </motion.h1>
+                {/* Tag label */}
+                <motion.div
+                  initial={{ opacity: 0, x: -22 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+                  className="flex items-center gap-2.5 mb-7"
+                >
+                  <span className="w-7 h-px bg-primary flex-shrink-0" />
+                  <span className="text-primary font-display font-bold text-[10px] uppercase tracking-[0.35em]">
+                    {L(heroSlides[activeSlide].tag)}
+                  </span>
+                </motion.div>
 
-              {/* Sub */}
-              <motion.p variants={fadeInUp}
-                className="text-white/80 text-lg leading-relaxed mb-8 max-w-lg">
-                {L({
-                  en: 'LTIC SARL delivers freight, industrial supply and general commerce across 30+ countries — one partner, zero complications.',
-                  fr: 'LTIC SARL livre fret, fournitures industrielles et commerce général dans 30+ pays — un partenaire, zéro complication.',
-                })}
-              </motion.p>
+                {/* Headline — word-by-word clip reveal */}
+                <h1 className="font-display font-extrabold text-white text-hero leading-[0.9] tracking-[-0.025em] mb-7">
+                  {L(heroSlides[activeSlide].lines).split('\n').map((line, li) => (
+                    <span key={li} className="block overflow-hidden">
+                      {line.split(' ').map((word, wi) => (
+                        <motion.span
+                          key={wi}
+                          className="inline-block mr-[0.22em] last:mr-0"
+                          initial={{ y: '110%' }}
+                          animate={{ y: 0 }}
+                          transition={{
+                            duration: 0.65,
+                            ease: [0.22, 1, 0.36, 1],
+                            delay: 0.1 + (li * 3 + wi) * 0.07,
+                          }}
+                        >
+                          {word}
+                        </motion.span>
+                      ))}
+                    </span>
+                  ))}
+                </h1>
 
-              {/* CTAs */}
-              <motion.div variants={fadeInUp} className="flex flex-wrap gap-3">
-                <Button asChild size="lg"
-                  className="font-semibold rounded-full h-12 px-8 shadow-lg
-                             shadow-primary/30 text-base">
-                  <Link href="/quote">
-                    {L({ en: 'Get a Free Quote', fr: 'Obtenir un Devis Gratuit' })}
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline"
-                  className="font-semibold rounded-full h-12 px-8 text-base bg-white/10
-                             border-white/40 text-white hover:bg-white/20 hover:border-white/70
-                             backdrop-blur-sm">
-                  <Link href="/products">
-                    {L({ en: 'Browse Products', fr: 'Voir les Produits' })}
-                  </Link>
-                </Button>
+                {/* Subtext */}
+                <motion.p
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeOut', delay: 0.52 }}
+                  className="text-white/72 text-base sm:text-lg leading-relaxed mb-9 max-w-lg"
+                >
+                  {L(heroSlides[activeSlide].sub)}
+                </motion.p>
+
+                {/* CTAs */}
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, ease: 'easeOut', delay: 0.68 }}
+                  className="flex flex-wrap gap-3"
+                >
+                  <Button asChild size="lg"
+                    className="font-semibold rounded-full h-12 px-8 shadow-lg shadow-primary/30 text-base">
+                    <Link href={heroSlides[activeSlide].cta1.href}>
+                      {L(heroSlides[activeSlide].cta1.label)}
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline"
+                    className="font-semibold rounded-full h-12 px-8 text-base bg-white/10
+                               border-white/40 text-white hover:bg-white/20 hover:border-white/70
+                               backdrop-blur-sm">
+                    <Link href={heroSlides[activeSlide].cta2.href}>
+                      {L(heroSlides[activeSlide].cta2.label)}
+                    </Link>
+                  </Button>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
+        {/* ── Bottom navigation ── */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
+
+            {/* Slide dots */}
+            <div className="flex items-center gap-3" role="tablist" aria-label="Hero slides">
+              {heroSlides.map((_, i) => (
+                <button
+                  key={i}
+                  role="tab"
+                  aria-selected={i === activeSlide}
+                  aria-label={`Slide ${i + 1}`}
+                  onClick={() => goTo(i)}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === activeSlide
+                      ? 'w-9 h-[5px] bg-primary'
+                      : 'w-[5px] h-[5px] bg-white/35 hover:bg-white/65'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Progress bar + arrows */}
+            <div className="flex items-center gap-4">
+              <div className="hidden sm:block w-28 h-px bg-white/15 relative overflow-hidden rounded-full">
+                {!shouldReduce && (
+                  <motion.div
+                    key={`progress-${activeSlide}`}
+                    className="absolute inset-y-0 left-0 w-full bg-white/55 origin-left rounded-full"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: paused ? undefined : 1 }}
+                    transition={{ duration: HERO_INTERVAL / 1000, ease: 'linear' }}
+                  />
+                )}
+              </div>
+
+              <div className="flex gap-1.5">
+                <button
+                  onClick={prev}
+                  aria-label="Previous slide"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 text-white/60
+                             hover:bg-white/10 hover:text-white hover:border-white/50
+                             transition-all duration-200 flex items-center justify-center"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={next}
+                  aria-label="Next slide"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 text-white/60
+                             hover:bg-white/10 hover:text-white hover:border-white/50
+                             transition-all duration-200 flex items-center justify-center"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </section>
 
       {/* ══ VALUE RIBBON — bridges hero → services ════════════════════════════ */}
