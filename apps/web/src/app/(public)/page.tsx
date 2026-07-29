@@ -253,19 +253,18 @@ interface Partner {
 
 function PartnerCard({ b }: { b: Partner }) {
   return (
-    <div className="flex items-center gap-2.5 mx-3 px-5 py-3 bg-white border border-border
-                    rounded-xl hover:border-primary/40 hover:shadow-md
+    <div className="flex items-center gap-2 mx-2.5 px-4 py-2 bg-white border border-border
+                    rounded-lg hover:border-primary/40 hover:shadow-sm
                     transition-all duration-200 cursor-default flex-shrink-0">
-      <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center
-                      flex-shrink-0 overflow-hidden">
+      <div className="w-6 h-6 flex items-center justify-center flex-shrink-0 overflow-hidden">
         {b.logoUrl
-          ? <img src={b.logoUrl} alt={b.name} width={32} height={32}
-              className="w-full h-full object-contain p-0.5" />
-          : <span className="text-xs font-display font-extrabold text-primary">
+          ? <img src={b.logoUrl} alt={b.name} width={24} height={24}
+              className="w-full h-full object-contain" />
+          : <span className="text-[10px] font-display font-extrabold text-primary">
               {b.name.charAt(0)}
             </span>}
       </div>
-      <span className="font-semibold text-sm text-foreground/70 whitespace-nowrap">
+      <span className="font-semibold text-xs text-foreground/65 whitespace-nowrap">
         {b.name}
       </span>
     </div>
@@ -333,18 +332,18 @@ export default function HomePage() {
   });
 
   const staticBrands: Partner[] = [
-    { id: 101, name: 'Total Energies',   sectorEn: 'Energy',      sectorFr: 'Énergie' },
-    { id: 102, name: 'Shell',            sectorEn: 'Energy',      sectorFr: 'Énergie' },
-    { id: 103, name: 'CMA CGM',          sectorEn: 'Shipping',    sectorFr: 'Transport Maritime' },
-    { id: 104, name: 'DHL',             sectorEn: 'Logistics',   sectorFr: 'Logistique' },
-    { id: 105, name: 'Bolloré Logistics',sectorEn: 'Logistics',   sectorFr: 'Logistique' },
-    { id: 106, name: 'Maersk',          sectorEn: 'Shipping',    sectorFr: 'Transport Maritime' },
-    { id: 107, name: 'MSC',             sectorEn: 'Shipping',    sectorFr: 'Transport Maritime' },
-    { id: 108, name: 'Camair-Co',       sectorEn: 'Aviation',    sectorFr: 'Aviation' },
-    { id: 109, name: 'Port de Douala',   sectorEn: 'Port',        sectorFr: 'Port' },
-    { id: 110, name: 'CFAO',            sectorEn: 'Trade',       sectorFr: 'Commerce' },
-    { id: 111, name: 'Ciments Cameroun',sectorEn: 'Industry',    sectorFr: 'Industrie' },
-    { id: 112, name: 'Orange Cameroun', sectorEn: 'Telecom',     sectorFr: 'Télécoms' },
+    { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',           logoUrl: 'https://logo.clearbit.com/totalenergies.com' },
+    { id: 102, name: 'Shell',             sectorEn: 'Energy',    sectorFr: 'Énergie',           logoUrl: 'https://logo.clearbit.com/shell.com' },
+    { id: 103, name: 'CMA CGM',           sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/cma-cgm.com' },
+    { id: 104, name: 'DHL',               sectorEn: 'Logistics', sectorFr: 'Logistique',        logoUrl: 'https://logo.clearbit.com/dhl.com' },
+    { id: 105, name: 'Bolloré Logistics', sectorEn: 'Logistics', sectorFr: 'Logistique',        logoUrl: 'https://logo.clearbit.com/bollore.com' },
+    { id: 106, name: 'Maersk',            sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/maersk.com' },
+    { id: 107, name: 'MSC',               sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/msc.com' },
+    { id: 108, name: 'Camair-Co',         sectorEn: 'Aviation',  sectorFr: 'Aviation' },
+    { id: 109, name: 'Port de Douala',    sectorEn: 'Port',      sectorFr: 'Port' },
+    { id: 110, name: 'CFAO',              sectorEn: 'Trade',     sectorFr: 'Commerce',          logoUrl: 'https://logo.clearbit.com/cfao.com' },
+    { id: 111, name: 'Ciments Cameroun',  sectorEn: 'Industry',  sectorFr: 'Industrie' },
+    { id: 112, name: 'Orange Cameroun',   sectorEn: 'Telecom',   sectorFr: 'Télécoms',          logoUrl: 'https://logo.clearbit.com/orange.com' },
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
