@@ -133,7 +133,7 @@ export default function AboutPage() {
             </motion.div>
 
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="relative h-80 lg:h-full min-h-[420px] rounded-sm overflow-hidden">
+              className="relative h-80 lg:h-full min-h-[420px] rounded-2xl overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=70"
                 alt="LTIC SARL operations" fill className="object-cover transition-transform duration-700 hover:scale-105" />
@@ -183,7 +183,7 @@ export default function AboutPage() {
           {/* ── DESKTOP: Oblique expanding panels ── */}
           <motion.div
             variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="hidden md:flex h-[460px] overflow-hidden rounded-sm border border-white/10">
+            className="hidden md:flex h-[460px] overflow-hidden rounded-2xl border border-white/10">
             {mvvItems.map((item, i) => {
               const isActive = activeMVV === i;
               const isFirst = i === 0;
@@ -258,7 +258,7 @@ export default function AboutPage() {
           {/* ── MOBILE: stacked panels, always expanded ── */}
           <div className="md:hidden flex flex-col gap-3">
             {mvvItems.map((item, i) => (
-              <div key={item.title.en} className="relative overflow-hidden rounded-sm h-56">
+              <div key={item.title.en} className="relative overflow-hidden rounded-2xl h-56">
                 <Image src={item.image} alt="" fill className="object-cover" sizes="100vw" />
                 <div className="absolute inset-0 bg-sidebar/75" />
                 <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/30 to-transparent" />
@@ -300,7 +300,7 @@ export default function AboutPage() {
 
           {/* Hairline-divided grid — no gaps, pure border lines between cells */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-border border border-border rounded-sm overflow-hidden">
+            className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-border border border-border rounded-xl overflow-hidden">
             {values.map(({ en, fr, descEn, descFr }, i) => (
               <div
                 key={en}
