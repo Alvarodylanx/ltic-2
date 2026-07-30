@@ -62,14 +62,14 @@ function QuoteForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="companyName" className="text-xs font-display font-semibold uppercase tracking-wide">
+          <Label htmlFor="companyName" className="text-xs font-semibold uppercase tracking-wide">
             {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })} *
           </Label>
           <Input id="companyName" {...register('companyName')} className="mt-1.5 rounded-sm" />
           {errors.companyName && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
         </div>
         <div>
-          <Label htmlFor="contactName" className="text-xs font-display font-semibold uppercase tracking-wide">
+          <Label htmlFor="contactName" className="text-xs font-semibold uppercase tracking-wide">
             {L({ en: 'Contact Name', fr: 'Nom du Contact' })} *
           </Label>
           <Input id="contactName" {...register('contactName')} className="mt-1.5 rounded-sm" />
@@ -78,7 +78,7 @@ function QuoteForm() {
       </div>
 
       <div>
-        <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide">
+        <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wide">
           {L({ en: 'Email Address', fr: 'Adresse Email' })} *
         </Label>
         <Controller name="email" control={control}
@@ -90,7 +90,7 @@ function QuoteForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide">
+          <Label htmlFor="country" className="text-xs font-semibold uppercase tracking-wide">
             {L({ en: 'Country', fr: 'Pays' })}
           </Label>
           <Controller name="country" control={control}
@@ -100,7 +100,7 @@ function QuoteForm() {
             )} />
         </div>
         <div>
-          <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide">
+          <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wide">
             {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
           </Label>
           <Controller name="phone" control={control}
@@ -112,7 +112,7 @@ function QuoteForm() {
       </div>
 
       <div>
-        <Label htmlFor="productInterest" className="text-xs font-display font-semibold uppercase tracking-wide">
+        <Label htmlFor="productInterest" className="text-xs font-semibold uppercase tracking-wide">
           {L({ en: 'Product / Service of Interest', fr: "Produit / Service d'Intérêt" })} *
         </Label>
         <Input id="productInterest" {...register('productInterest')} className="mt-1.5 rounded-sm" />
@@ -120,21 +120,21 @@ function QuoteForm() {
       </div>
 
       <div>
-        <Label htmlFor="quantity" className="text-xs font-display font-semibold uppercase tracking-wide">
+        <Label htmlFor="quantity" className="text-xs font-semibold uppercase tracking-wide">
           {L({ en: 'Quantity / Volume', fr: 'Quantité / Volume' })}
         </Label>
         <Input id="quantity" {...register('quantity')} className="mt-1.5 rounded-sm" />
       </div>
 
       <div>
-        <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide">
+        <Label htmlFor="message" className="text-xs font-semibold uppercase tracking-wide">
           {L({ en: 'Additional Information', fr: 'Informations Supplémentaires' })}
         </Label>
         <Textarea id="message" {...register('message')} rows={4} className="mt-1.5 rounded-sm" />
       </div>
 
       <Button type="submit" size="lg" disabled={isSubmitting}
-        className="w-full font-display font-semibold text-sm rounded-sm">
+        className="w-full font-semibold text-sm rounded-sm">
         {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
         {L({ en: 'Submit Quote Request', fr: 'Envoyer la Demande de Devis' })}
       </Button>
@@ -163,7 +163,7 @@ export default function QuotePage() {
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.p variants={fadeInUp}
-            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-4">
             {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
           </motion.p>
           <motion.h1 variants={fadeInUp}
@@ -191,13 +191,13 @@ export default function QuotePage() {
                   <div className="w-9 h-9 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
                     <Icon className="h-4 w-4 text-primary" />
                   </div>
-                  <p className="font-display font-semibold text-sm leading-relaxed pt-1.5">{L({ en, fr })}</p>
+                  <p className="font-semibold text-sm leading-relaxed pt-1.5">{L({ en, fr })}</p>
                 </motion.div>
               ))}
 
               <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
                 className="bg-card border border-border rounded-sm p-6">
-                <p className="font-display font-semibold text-xs uppercase tracking-[0.2em] text-primary mb-5">
+                <p className="font-semibold text-xs uppercase tracking-[0.2em] text-primary mb-5">
                   {L({ en: 'What happens next?', fr: 'Que se passe-t-il ensuite ?' })}
                 </p>
                 <ol className="space-y-4">
@@ -221,10 +221,10 @@ export default function QuotePage() {
             {/* Form */}
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
               className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8">
-              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-2">
+              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em] mb-2">
                 {L({ en: 'Quote Details', fr: 'Détails du Devis' })}
               </p>
-              <h2 className="font-display font-bold text-xl mb-6">
+              <h2 className="font-bold text-xl mb-6">
                 {L({ en: 'Your Quote Details', fr: 'Détails de Votre Devis' })}
               </h2>
               <Suspense>

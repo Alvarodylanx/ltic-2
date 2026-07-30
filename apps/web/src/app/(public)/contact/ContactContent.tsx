@@ -82,7 +82,7 @@ export default function ContactPage() {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
+            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'Get In Touch', fr: 'Prendre Contact' })}
             </span>
           </motion.div>
@@ -118,11 +118,11 @@ export default function ContactPage() {
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="text-center mb-12">
             <motion.p variants={fadeInUp}
-              className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-3">
+              className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-3">
               {L({ en: 'Reach Out', fr: 'Nous Contacter' })}
             </motion.p>
             <motion.h2 variants={fadeInUp}
-              className="font-display font-bold text-2xl sm:text-3xl tracking-tight mb-3">
+              className="font-bold text-2xl sm:text-3xl tracking-tight mb-3">
               {L({ en: 'How Can We Help You?', fr: 'Comment Pouvons-Nous Vous Aider ?' })}
             </motion.h2>
             <motion.p variants={fadeInUp} className="text-muted-foreground text-sm max-w-md mx-auto">
@@ -140,7 +140,7 @@ export default function ContactPage() {
                   <Icon className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-muted-foreground font-display font-semibold uppercase tracking-[0.15em] mb-0.5">
+                  <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-[0.15em] mb-0.5">
                     {L(label)}
                   </p>
                   <p className="text-xs font-medium leading-snug">{value}</p>
@@ -155,7 +155,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="name" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  <Label htmlFor="name" className="text-xs font-semibold uppercase tracking-wide">
                     {L({ en: 'Your Name', fr: 'Votre Nom' })} *
                   </Label>
                   <Input id="name" {...register('name')} className="mt-1.5 rounded-xl"
@@ -163,7 +163,7 @@ export default function ContactPage() {
                   {errors.name && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 2 characters', fr: '2 caractères minimum' })}</p>}
                 </div>
                 <div>
-                  <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wide">
                     {L({ en: 'Email Address', fr: 'Adresse Email' })} *
                   </Label>
                   <Controller name="email" control={control}
@@ -176,7 +176,7 @@ export default function ContactPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  <Label htmlFor="country" className="text-xs font-semibold uppercase tracking-wide">
                     {L({ en: 'Country', fr: 'Pays' })}
                   </Label>
                   <Controller name="country" control={control}
@@ -186,7 +186,7 @@ export default function ContactPage() {
                     )} />
                 </div>
                 <div>
-                  <Label htmlFor="company" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  <Label htmlFor="company" className="text-xs font-semibold uppercase tracking-wide">
                     {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })}
                   </Label>
                   <Input id="company" {...register('company')} className="mt-1.5 rounded-xl"
@@ -195,7 +195,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide">
+                <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wide">
                   {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
                 </Label>
                 <Controller name="phone" control={control}
@@ -206,7 +206,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <Label htmlFor="subject" className="text-xs font-display font-semibold uppercase tracking-wide">
+                <Label htmlFor="subject" className="text-xs font-semibold uppercase tracking-wide">
                   {L({ en: 'Subject', fr: 'Sujet' })} *
                 </Label>
                 <Input id="subject" {...register('subject')} className="mt-1.5 rounded-xl"
@@ -215,7 +215,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide">
+                <Label htmlFor="message" className="text-xs font-semibold uppercase tracking-wide">
                   {L({ en: 'Your Message', fr: 'Votre Message' })} *
                 </Label>
                 <Textarea id="message" {...register('message')} rows={5} className="mt-1.5 rounded-xl"
@@ -224,7 +224,7 @@ export default function ContactPage() {
               </div>
 
               <Button type="submit" size="lg" disabled={isSubmitting}
-                className="w-full font-display font-semibold text-sm rounded-xl">
+                className="w-full font-semibold text-sm rounded-xl">
                 {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
                 {L({ en: 'Send Message', fr: 'Envoyer le Message' })}
               </Button>

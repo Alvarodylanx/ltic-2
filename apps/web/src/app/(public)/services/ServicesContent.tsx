@@ -92,7 +92,7 @@ export default function ServicesPage() {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
+            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'Our Services', fr: 'Nos Services' })}
             </span>
           </motion.div>
@@ -131,10 +131,10 @@ export default function ServicesPage() {
                 <motion.div
                   variants={isEven ? fadeInLeft : fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
                   className={isEven ? '' : 'lg:order-2'}>
-                  <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
+                  <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em] mb-3">
                     {L({ en: svc.en, fr: svc.fr })}
                   </p>
-                  <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-tight mb-4">
+                  <h2 className="font-bold text-2xl sm:text-3xl tracking-tight mb-4">
                     {L({ en: svc.headlineEn, fr: svc.headlineFr })}
                   </h2>
                   <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
@@ -168,7 +168,7 @@ export default function ServicesPage() {
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
+            <h2 className="font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
               {L({ en: 'Ready to Get Started?', fr: 'Prêt à Commencer ?' })}
             </h2>
             <p className="text-sidebar-foreground/60 text-sm mt-2">
@@ -177,14 +177,14 @@ export default function ServicesPage() {
           </motion.div>
           <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex flex-shrink-0 gap-3">
-            <Button asChild size="lg" className="font-display font-semibold text-sm rounded-sm">
+            <Button asChild size="lg" className="font-semibold text-sm rounded-sm">
               <Link href="/contact">
                 {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline"
-              className="font-display font-semibold text-sm rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
+              className="font-semibold text-sm rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
               <Link href="/quote">
                 {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
               </Link>

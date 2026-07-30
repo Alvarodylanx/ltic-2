@@ -77,7 +77,7 @@ function TrackingContent() {
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.p variants={fadeInUp}
-            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-4">
             {L({ en: 'Real-Time Tracking', fr: 'Suivi en Temps Réel' })}
           </motion.p>
           <motion.h1 variants={fadeInUp}
@@ -101,7 +101,7 @@ function TrackingContent() {
             </div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Button type="submit" size="lg" disabled={isLoading || !trackingNumber.trim()}
-                className="h-12 rounded-sm font-display font-semibold">
+                className="h-12 rounded-sm font-semibold">
                 {isLoading
                   ? <Loader2 className="h-4 w-4 animate-spin" />
                   : L({ en: 'Track', fr: 'Suivre' })}
@@ -142,7 +142,7 @@ function TrackingContent() {
               <motion.div key="error" variants={scaleIn} initial="hidden" animate="show"
                 className="bg-card border border-destructive/30 rounded-sm p-8 text-center">
                 <AlertCircle className="h-10 w-10 text-destructive mx-auto mb-4" />
-                <h2 className="font-display font-bold text-xl text-destructive mb-2">{error}</h2>
+                <h2 className="font-bold text-xl text-destructive mb-2">{error}</h2>
                 <p className="text-muted-foreground text-sm">
                   {L({ en: 'The tracking number you entered was not found. Please check the number and try again.', fr: "Le numéro de suivi entré n'a pas été trouvé. Veuillez vérifier et réessayer." })}
                 </p>
@@ -157,7 +157,7 @@ function TrackingContent() {
                     <span className="bg-primary/10 text-primary text-sm font-mono font-bold px-3 py-1 rounded-sm">
                       {order.trackingNumber}
                     </span>
-                    <span className={`text-xs font-display font-semibold uppercase tracking-[0.15em] px-3 py-1.5 rounded-sm border ${statusColors[order.status] || 'bg-gray-100 text-gray-700'}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-[0.15em] px-3 py-1.5 rounded-sm border ${statusColors[order.status] || 'bg-gray-100 text-gray-700'}`}>
                       {L(statusLabels[order.status] || { en: order.status, fr: order.status })}
                     </span>
                   </div>
@@ -171,7 +171,7 @@ function TrackingContent() {
                       { label: { en: 'Estimated Delivery', fr: 'Livraison Estimée' }, value: order.estimatedDelivery },
                     ].filter((item) => item.value).map(({ label, value }) => (
                       <div key={label.en}>
-                        <p className="text-xs text-muted-foreground font-display font-semibold uppercase tracking-[0.15em] mb-1">{L(label)}</p>
+                        <p className="text-xs text-muted-foreground font-semibold uppercase tracking-[0.15em] mb-1">{L(label)}</p>
                         <p className="font-medium text-sm">{value}</p>
                       </div>
                     ))}
@@ -179,7 +179,7 @@ function TrackingContent() {
 
                   {order.timeline && order.timeline.length > 0 && (
                     <div className="border-t border-border pt-5">
-                      <h3 className="font-display font-bold text-sm mb-4">
+                      <h3 className="font-bold text-sm mb-4">
                         {L({ en: 'Shipment Timeline', fr: "Chronologie de l'Expédition" })}
                       </h3>
                       <div className="space-y-4">
@@ -197,11 +197,11 @@ function TrackingContent() {
                             </div>
                             <div className="pb-4">
                               <div className="flex flex-wrap items-center gap-2 mb-1">
-                                <span className={`text-xs font-display font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded-sm border ${statusColors[event.status] || 'bg-gray-100 text-gray-700'}`}>
+                                <span className={`text-xs font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded-sm border ${statusColors[event.status] || 'bg-gray-100 text-gray-700'}`}>
                                   {L(statusLabels[event.status] || { en: event.status, fr: event.status })}
                                 </span>
                                 {idx === 0 && (
-                                  <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-sm font-display font-semibold">
+                                  <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-sm font-semibold">
                                     {L({ en: 'Latest Update', fr: 'Dernière Mise à Jour' })}
                                   </span>
                                 )}

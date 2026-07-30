@@ -154,7 +154,7 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
         {String(index + 1).padStart(2, '0')}
       </span>
 
-      <h3 className="font-display font-bold text-xl text-foreground mb-3 leading-tight">
+      <h3 className="font-bold text-xl text-foreground mb-3 leading-tight">
         {L({ en, fr })}
       </h3>
       <p className="text-muted-foreground text-base leading-relaxed flex-1 mb-5">
@@ -217,7 +217,7 @@ function FeatureBlock({ label, heading, body, image, tag, href, reverse }: Featu
         <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
           {L(label)}
         </p>
-        <h3 className="font-display font-extrabold text-section text-foreground
+        <h3 className="font-extrabold text-section text-foreground
                        whitespace-pre-line leading-none mb-5">
           {L(heading)}
         </h3>
@@ -271,7 +271,7 @@ function ProductCategoryCard({ en, fr, descEn, descFr, image, tag }: ProductCate
         </span>
       </div>
       <div className="p-5">
-        <h3 className="font-display font-bold text-base text-foreground mb-1.5
+        <h3 className="font-bold text-base text-foreground mb-1.5
                        group-hover:text-primary transition-colors duration-200">
           {L({ en, fr })}
         </h3>
@@ -310,7 +310,7 @@ function PartnerCard({ b }: { b: Partner }) {
           ? <img src={logoSrc} alt={b.name} width={24} height={24}
               className="w-full h-full object-contain"
               onError={() => setImgFailed(true)} />
-          : <span className="text-[10px] font-display font-extrabold text-primary leading-none">
+          : <span className="text-[10px] font-extrabold text-primary leading-none">
               {b.name.charAt(0)}
             </span>}
       </div>
@@ -348,7 +348,7 @@ function ProcessStep({ icon: Icon, num, title, desc, action, href }: ProcessStep
         </span>
       </div>
 
-      <h3 className="font-display font-bold text-base text-foreground mb-2 leading-tight">
+      <h3 className="font-bold text-base text-foreground mb-2 leading-tight">
         {L(title)}
       </h3>
       <p className="text-muted-foreground text-sm leading-relaxed mb-4 max-w-[200px] lg:max-w-[180px]">
@@ -465,7 +465,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
         {/* ── Slide counter — top right ── */}
-        <div className="absolute top-5 right-6 sm:right-10 z-20 font-display font-semibold text-white/25 text-[9px] tracking-[0.5em] select-none tabular-nums">
+        <div className="absolute top-5 right-6 sm:right-10 z-20 font-semibold text-white/25 text-[9px] tracking-[0.5em] select-none tabular-nums">
           {String(activeSlide + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(heroSlides.length).padStart(2, '0')}
         </div>
 
@@ -486,7 +486,7 @@ export default function HomePage() {
                   className="flex items-center gap-3 mb-8"
                 >
                   <span className={`h-px w-8 flex-shrink-0 ${heroSlides[activeSlide].theme.tagBg}`} />
-                  <span className={`font-display font-bold text-[10px] uppercase tracking-[0.38em] ${heroSlides[activeSlide].theme.tag}`}>
+                  <span className={`font-bold text-[10px] uppercase tracking-[0.38em] ${heroSlides[activeSlide].theme.tag}`}>
                     {L(heroSlides[activeSlide].tag)}
                   </span>
                 </motion.div>
@@ -648,7 +648,7 @@ export default function HomePage() {
               <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
                 {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
               </p>
-              <h2 className="font-display font-extrabold text-section text-foreground
+              <h2 className="font-extrabold text-section text-foreground
                              [text-wrap:balance] max-w-xl whitespace-pre-line">
                 {L({ en: 'Six Services,\nOne Reliable Partner.', fr: 'Six Services,\nUn Partenaire Fiable.' })}
               </h2>
@@ -696,7 +696,7 @@ export default function HomePage() {
             <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
               {L({ en: 'Products & Commerce', fr: 'Produits & Commerce' })}
             </p>
-            <h2 className="font-display font-extrabold text-section text-foreground
+            <h2 className="font-extrabold text-section text-foreground
                            [text-wrap:balance] max-w-2xl whitespace-pre-line">
               {L({ en: 'A Wide Range of Products,\nDelivered Anywhere.', fr: 'Une Large Gamme de Produits,\nLivrée Partout.' })}
             </h2>
@@ -716,7 +716,7 @@ export default function HomePage() {
               <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-3">
                 {L({ en: 'Our Catalog', fr: 'Notre Catalogue' })}
               </p>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-foreground">
+              <h2 className="font-extrabold text-3xl sm:text-4xl text-foreground">
                 {L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' })}
               </h2>
             </motion.div>
@@ -747,7 +747,7 @@ export default function HomePage() {
           {/* API featured products */}
           {(isLoading || (featuredProducts && featuredProducts.length > 0)) && (
             <div className="mt-12">
-              <p className="font-display font-bold text-xs uppercase tracking-[0.2em]
+              <p className="font-bold text-xs uppercase tracking-[0.2em]
                             text-muted-foreground mb-6">
                 {L({ en: 'Featured This Week', fr: 'En Vedette Cette Semaine' })}
               </p>
@@ -790,7 +790,7 @@ export default function HomePage() {
                                 {product.categoryName}
                               </span>
                             )}
-                            <h3 className="font-display font-bold text-xs leading-snug
+                            <h3 className="font-bold text-xs leading-snug
                                            group-hover:text-primary transition-colors duration-150">
                               {L({ en: product.nameEn, fr: product.nameFr })}
                             </h3>
@@ -832,7 +832,7 @@ export default function HomePage() {
             <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
               {L({ en: 'How It Works', fr: 'Comment Ça Marche' })}
             </p>
-            <h2 className="font-display font-extrabold text-section text-foreground
+            <h2 className="font-extrabold text-section text-foreground
                            [text-wrap:balance] max-w-xl mx-auto whitespace-pre-line">
               {L({ en: 'From Request\nto Delivery.', fr: 'De la Demande\nà la Livraison.' })}
             </h2>
@@ -871,7 +871,7 @@ export default function HomePage() {
             </motion.p>
 
             <motion.h2 variants={fadeInUp}
-              className="font-display font-extrabold text-sidebar-foreground
+              className="font-extrabold text-sidebar-foreground
                          text-hero mb-6 [text-wrap:balance] whitespace-pre-line">
               {L({ en: "Let's Move Your\nBusiness Forward.", fr: 'Faisons Avancer\nVotre Business.' })}
             </motion.h2>

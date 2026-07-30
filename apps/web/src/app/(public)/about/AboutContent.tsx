@@ -88,7 +88,7 @@ export default function AboutPage() {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
+            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'About LTIC SARL', fr: 'À Propos de LTIC SARL' })}
             </span>
           </motion.div>
@@ -121,10 +121,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-3">
+              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em] mb-3">
                 {L({ en: 'Our Story', fr: 'Notre Histoire' })}
               </p>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight mb-5">
+              <h2 className="font-bold text-3xl sm:text-4xl tracking-tight mb-5">
                 {L({ en: 'Built for the Demands of Global Commerce', fr: 'Conçu pour les Exigences du Commerce Mondial' })}
               </h2>
               <p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
@@ -168,7 +168,7 @@ export default function AboutPage() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((stat, i) => (
               <motion.div key={i} variants={scaleIn} className="flex flex-col items-center">
-                <span className="font-display font-bold text-4xl sm:text-5xl text-primary leading-none mb-2">
+                <span className="font-bold text-4xl sm:text-5xl text-primary leading-none mb-2">
                   {stat.value}
                 </span>
                 <span className="text-sidebar-foreground/60 text-xs uppercase tracking-widest font-medium">
@@ -188,10 +188,10 @@ export default function AboutPage() {
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex items-center gap-6 mb-10">
             <div>
-              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-2">
+              <p className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-2">
                 {L({ en: 'Our Foundation', fr: 'Notre Fondation' })}
               </p>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-sidebar-foreground">
+              <h2 className="font-bold text-3xl sm:text-4xl tracking-tight text-sidebar-foreground">
                 {L({ en: 'Mission, Vision & Values', fr: 'Mission, Vision & Valeurs' })}
               </h2>
             </div>
@@ -241,7 +241,7 @@ export default function AboutPage() {
 
                     {/* Ghost number — top right */}
                     <span
-                      className="absolute top-6 right-10 font-display font-black leading-none select-none pointer-events-none"
+                      className="absolute top-6 right-10 font-black leading-none select-none pointer-events-none"
                       style={{ fontSize: 'clamp(4rem, 8vw, 7rem)', color: 'hsl(var(--sidebar-foreground) / 0.05)' }}>
                       {item.number}
                     </span>
@@ -255,7 +255,7 @@ export default function AboutPage() {
                     />
 
                     {/* Title */}
-                    <h3 className="font-display font-extrabold text-sidebar-foreground leading-none tracking-tight mb-0"
+                    <h3 className="font-extrabold text-sidebar-foreground leading-none tracking-tight mb-0"
                       style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)' }}>
                       {L(item.title)}
                     </h3>
@@ -282,7 +282,7 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/30 to-transparent" />
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
                   <div className="h-px w-8 bg-primary mb-3" />
-                  <h3 className="font-display font-extrabold text-sidebar-foreground text-2xl tracking-tight mb-2">
+                  <h3 className="font-extrabold text-sidebar-foreground text-2xl tracking-tight mb-2">
                     {L(item.title)}
                   </h3>
                   <p className="text-sidebar-foreground/60 text-xs leading-relaxed">
@@ -303,15 +303,15 @@ export default function AboutPage() {
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex items-center justify-between mb-10">
             <div>
-              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-2">
+              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em] mb-2">
                 {L({ en: 'What Drives Us', fr: 'Ce Qui Nous Anime' })}
               </p>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight">
+              <h2 className="font-bold text-3xl sm:text-4xl tracking-tight">
                 {L({ en: 'Core Values', fr: 'Valeurs Fondamentales' })}
               </h2>
             </div>
             <div className="hidden sm:block h-px flex-1 bg-border mx-8" />
-            <span className="hidden sm:block text-muted-foreground/30 text-xs font-display uppercase tracking-[0.3em] whitespace-nowrap">
+            <span className="hidden sm:block text-muted-foreground/30 text-xs uppercase tracking-[0.3em] whitespace-nowrap">
               {L({ en: 'Hover each value', fr: 'Survolez chaque valeur' })}
             </span>
           </motion.div>
@@ -338,14 +338,14 @@ export default function AboutPage() {
                     className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7"
                     style={{ backfaceVisibility: 'hidden' }}>
                     {/* Ghost number */}
-                    <span className="font-display font-black leading-none select-none"
+                    <span className="font-black leading-none select-none"
                       style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', color: 'hsl(var(--foreground) / 0.05)' }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     {/* Value name */}
                     <div>
                       <div className="h-px w-6 bg-primary mb-3" />
-                      <span className="font-display font-bold text-sm sm:text-base uppercase tracking-tight leading-none">
+                      <span className="font-bold text-sm sm:text-base uppercase tracking-tight leading-none">
                         {L({ en, fr })}
                       </span>
                     </div>
@@ -356,12 +356,12 @@ export default function AboutPage() {
                     className="absolute inset-0 bg-foreground flex flex-col justify-end p-6 sm:p-7"
                     style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                     {/* Ghost number on back too */}
-                    <span className="absolute top-4 right-5 font-display font-black leading-none select-none text-2xl"
+                    <span className="absolute top-4 right-5 font-black leading-none select-none text-2xl"
                       style={{ color: 'hsl(var(--sidebar-foreground) / 0.07)' }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div className="h-px w-6 bg-primary mb-3" />
-                    <p className="text-sidebar-foreground font-display font-bold text-xs uppercase tracking-wider mb-2">
+                    <p className="text-sidebar-foreground font-bold text-xs uppercase tracking-wider mb-2">
                       {L({ en, fr })}
                     </p>
                     <p className="text-sidebar-foreground/50 text-xs leading-relaxed">
@@ -382,7 +382,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
           flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
+            <h2 className="font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
               {L({ en: 'Ready to Partner with LTIC SARL?', fr: 'Prêt à Collaborer avec LTIC SARL ?' })}
             </h2>
             <p className="text-sidebar-foreground/60 text-sm mt-2">
@@ -391,14 +391,14 @@ export default function AboutPage() {
           </motion.div>
           <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex flex-shrink-0 gap-3">
-            <Button asChild size="lg" className="font-display font-semibold text-sm rounded-sm">
+            <Button asChild size="lg" className="font-semibold text-sm rounded-sm">
               <Link href="/contact">
                 {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline"
-              className="font-display font-semibold text-sm rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
+              className="font-semibold text-sm rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
               <Link href="/quote">
                 {L({ en: 'Get a Quote', fr: 'Devis Gratuit' })}
               </Link>

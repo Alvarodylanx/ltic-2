@@ -35,7 +35,7 @@ export default function NewsPage() {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
+            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
             </span>
           </motion.div>
@@ -121,7 +121,7 @@ export default function NewsPage() {
                           <Image src={featured.imageUrl} alt={L({ en: featured.titleEn, fr: featured.titleFr })} fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105" />
                           <div className="absolute top-4 left-4">
-                            <span className="bg-primary text-primary-foreground text-xs font-display font-semibold uppercase tracking-[0.15em] px-3 py-1 rounded-full">
+                            <span className="bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-[0.15em] px-3 py-1 rounded-full">
                               {L({ en: 'Featured', fr: 'À la Une' })}
                             </span>
                           </div>
@@ -139,7 +139,7 @@ export default function NewsPage() {
                             {format(new Date(featured.publishedAt), 'dd MMM yyyy')}
                           </span>
                         </div>
-                        <h2 className="font-display font-bold text-xl sm:text-2xl tracking-tight mb-3 group-hover:text-primary transition-colors leading-tight flex-1">
+                        <h2 className="font-bold text-xl sm:text-2xl tracking-tight mb-3 group-hover:text-primary transition-colors leading-tight flex-1">
                           {L({ en: featured.titleEn, fr: featured.titleFr })}
                         </h2>
                         {(featured.summaryEn || featured.summaryFr) && (
@@ -148,7 +148,7 @@ export default function NewsPage() {
                           </p>
                         )}
                         <Link href={`/news/${featured.id}`}
-                          className="inline-flex items-center gap-1.5 text-primary text-sm font-display font-semibold hover:gap-2.5 transition-all duration-200">
+                          className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold hover:gap-2.5 transition-all duration-200">
                           {L({ en: 'Read Article', fr: 'Lire l\'Article' })}
                           <ArrowRight className="h-3.5 w-3.5" />
                         </Link>
@@ -173,7 +173,7 @@ export default function NewsPage() {
                               <Calendar className="h-3 w-3" />
                               {format(new Date(article.publishedAt), 'dd MMM yyyy')}
                             </span>
-                            <h2 className="font-display font-bold text-sm leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                            <h2 className="font-bold text-sm leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                               {L({ en: article.titleEn, fr: article.titleFr })}
                             </h2>
                             <Link href={`/news/${article.id}`}
@@ -213,7 +213,7 @@ export default function NewsPage() {
                               {format(new Date(article.publishedAt), 'dd MMM yyyy')}
                             </span>
                           </div>
-                          <h2 className="font-display font-bold text-base leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
+                          <h2 className="font-bold text-base leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
                             {L({ en: article.titleEn, fr: article.titleFr })}
                           </h2>
                           <Link href={`/news/${article.id}`}

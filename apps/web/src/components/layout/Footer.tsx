@@ -87,7 +87,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-display font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
+            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
               {L({ en: 'Quick Links', fr: 'Liens Rapides' })}
             </h3>
             <ul className="space-y-2.5">
@@ -113,7 +113,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="font-display font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
+            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
               {L({ en: 'Services', fr: 'Services' })}
             </h3>
             <ul className="space-y-2.5">
@@ -132,7 +132,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-display font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
+            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
               {L({ en: 'Contact', fr: 'Contact' })}
             </h3>
             <ul className="space-y-3.5">

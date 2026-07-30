@@ -59,7 +59,7 @@ export default function ProductsPage() {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
+            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
             </span>
           </motion.div>
@@ -117,7 +117,7 @@ export default function ProductsPage() {
               return (
                 <motion.button key={cat.id ?? 'all'} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3.5 py-1.5 rounded-sm text-xs font-display font-semibold border transition-all duration-200 ${
+                  className={`px-3.5 py-1.5 rounded-sm text-xs font-semibold border transition-all duration-200 ${
                     active
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-background text-foreground hover:bg-primary/10 hover:text-primary border-border'
@@ -204,7 +204,7 @@ export default function ProductsPage() {
                             {product.categoryName}
                           </span>
                         )}
-                        <h3 className="font-display font-bold text-sm leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
+                        <h3 className="font-bold text-sm leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
                           {L({ en: product.nameEn, fr: product.nameFr })}
                         </h3>
                         <Button asChild size="sm" className="w-full rounded-sm">
