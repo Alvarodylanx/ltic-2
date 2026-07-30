@@ -91,13 +91,13 @@ export default function ServicesPage() {
             initial={{ opacity: 0, x: -22 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-2.5 mb-5">
+            className="flex items-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-display font-bold text-[10px] uppercase tracking-[0.35em]">
+            <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'Our Services', fr: 'Nos Services' })}
             </span>
           </motion.div>
-          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-5">
+          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
             {L({ en: 'Full-Spectrum Business Solutions', fr: "Solutions d'Affaires Complètes" }).split(' ').map((word, wi) => (
               <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
                 <motion.span
@@ -114,7 +114,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-            className="text-sidebar-foreground/65 text-sm sm:text-base leading-relaxed max-w-xl">
+            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl">
             {L({ en: 'From freight coordination to industrial supply and strategic consulting — excellence across every dimension of global commerce.', fr: "De la coordination du fret aux fournitures industrielles et au conseil stratégique — l'excellence dans toutes les dimensions du commerce mondial." })}
           </motion.p>
         </div>
