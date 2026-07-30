@@ -61,7 +61,7 @@ h2, h3, h4, h5, h6 {
 }
 
 /* All non-heading text always uses body font */
-p, li, a, label, button, input, textarea, select, td, th, span {
+p, li, a, label, button, input, textarea, select, td, th {
   font-family: var(--font-body), sans-serif;
 }
 
