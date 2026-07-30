@@ -853,7 +853,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ 7. CTA — dark cinematic ════════════════════════════════════════════ */}
-      <section className="relative bg-sidebar py-24 sm:py-36 overflow-hidden">
+      <section className="relative bg-sidebar py-14 sm:py-20 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&auto=format&fit=crop&q=60"
           alt=""
