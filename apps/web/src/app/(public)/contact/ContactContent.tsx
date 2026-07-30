@@ -70,23 +70,13 @@ export default function ContactPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative h-[52vh] min-h-[440px] overflow-hidden bg-sidebar flex items-end">
+      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-end">
         <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&auto=format&fit=crop&q=50" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
-        {/* Floating stat widget */}
-        <motion.div
-          initial={{ opacity: 0, y: -18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85, duration: 0.55, ease: 'easeOut' }}
-          className="absolute top-8 right-6 sm:right-12 lg:right-16 hidden sm:flex flex-col items-end gap-1 bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-2xl px-5 py-4">
-          <span className="font-display font-extrabold text-3xl text-primary leading-none">24h</span>
-          <span className="text-sidebar-foreground/45 text-[9px] uppercase tracking-[0.4em]">Response</span>
-        </motion.div>
-
         {/* Content — bottom anchored */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
           <motion.div
             initial={{ opacity: 0, x: -22 }}
             animate={{ opacity: 1, x: 0 }}
@@ -119,14 +109,6 @@ export default function ContactPage() {
           </motion.p>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          animate={{ y: [0, 7, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-          className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">
-          <span className="text-white/20 text-[7px] uppercase tracking-[0.5em] font-semibold">scroll</span>
-          <div className="w-px h-6 bg-gradient-to-b from-white/25 to-transparent" />
-        </motion.div>
       </section>
 
       {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
