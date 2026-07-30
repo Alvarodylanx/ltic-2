@@ -23,24 +23,62 @@ export default function NewsPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&auto=format&fit=crop&q=50"
-          alt="" fill className="object-cover opacity-15" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/90 via-sidebar/70 to-sidebar/30" />
-        <motion.div variants={stagger} initial="hidden" animate="show"
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.p variants={fadeInUp}
-            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-            {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
-          </motion.p>
-          <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
-            {L({ en: 'Industry News & Updates', fr: 'Actualités & Mises à Jour' })}
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-xl leading-relaxed">
+      <section className="relative h-[52vh] min-h-[440px] overflow-hidden bg-sidebar flex items-end">
+        <Image src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&auto=format&fit=crop&q=50" alt="" fill className="object-cover object-center opacity-30" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
+
+        {/* Floating stat widget */}
+        <motion.div
+          initial={{ opacity: 0, y: -18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.55, ease: 'easeOut' }}
+          className="absolute top-8 right-6 sm:right-12 lg:right-16 hidden sm:flex flex-col items-end gap-1 bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-2xl px-5 py-4">
+          <span className="font-display font-extrabold text-3xl text-primary leading-none">5+</span>
+          <span className="text-sidebar-foreground/45 text-[9px] uppercase tracking-[0.4em]">Yrs Active</span>
+        </motion.div>
+
+        {/* Content — bottom anchored */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
+          <motion.div
+            initial={{ opacity: 0, x: -22 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-2.5 mb-5">
+            <span className="w-6 h-px bg-primary flex-shrink-0" />
+            <span className="text-primary font-display font-bold text-[10px] uppercase tracking-[0.35em]">
+              {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
+            </span>
+          </motion.div>
+          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-5">
+            {L({ en: 'Industry News & Updates', fr: 'Actualités & Mises à Jour' }).split(' ').map((word, wi) => (
+              <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: '112%' }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
+            className="text-sidebar-foreground/65 text-sm sm:text-base leading-relaxed max-w-xl">
             {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informé des dernières évolutions en logistique mondiale, commerce et fournitures industrielles.' })}
           </motion.p>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+          className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">
+          <span className="text-white/20 text-[7px] uppercase tracking-[0.5em] font-semibold">scroll</span>
+          <div className="w-px h-6 bg-gradient-to-b from-white/25 to-transparent" />
         </motion.div>
       </section>
 
@@ -52,7 +90,7 @@ export default function NewsPage() {
           {isLoading && (
             <div className="space-y-10">
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                <div className="lg:col-span-3 rounded-sm overflow-hidden border border-border">
+                <div className="lg:col-span-3 rounded-2xl overflow-hidden border border-border">
                   <Skeleton className="aspect-video w-full" />
                   <div className="p-6 space-y-3">
                     <Skeleton className="h-3 w-24" />
@@ -62,7 +100,7 @@ export default function NewsPage() {
                 </div>
                 <div className="lg:col-span-2 space-y-4">
                   {Array(3).fill(0).map((_, i) => (
-                    <div key={i} className="border border-border rounded-sm p-5 space-y-2">
+                    <div key={i} className="border border-border rounded-2xl p-5 space-y-2">
                       <Skeleton className="h-3 w-20" />
                       <Skeleton className="h-5 w-full" />
                     </div>
@@ -76,7 +114,7 @@ export default function NewsPage() {
           {!isLoading && !articles?.length && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
               className="flex flex-col items-center justify-center py-24 gap-5 text-center">
-              <div className="w-14 h-14 rounded-sm bg-foreground flex items-center justify-center">
+              <div className="w-14 h-14 rounded-xl bg-foreground flex items-center justify-center">
                 <Newspaper className="h-6 w-6 text-primary" />
               </div>
               <p className="text-muted-foreground">
@@ -96,13 +134,13 @@ export default function NewsPage() {
                   {/* Featured */}
                   {featured && (
                     <motion.article variants={scaleIn}
-                      className="lg:col-span-3 group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col">
+                      className="lg:col-span-3 group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col">
                       {featured.imageUrl && (
                         <div className="aspect-video relative overflow-hidden">
                           <Image src={featured.imageUrl} alt={L({ en: featured.titleEn, fr: featured.titleFr })} fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105" />
                           <div className="absolute top-4 left-4">
-                            <span className="bg-primary text-primary-foreground text-xs font-display font-semibold uppercase tracking-[0.15em] px-3 py-1 rounded-sm">
+                            <span className="bg-primary text-primary-foreground text-xs font-display font-semibold uppercase tracking-[0.15em] px-3 py-1 rounded-full">
                               {L({ en: 'Featured', fr: 'À la Une' })}
                             </span>
                           </div>
@@ -111,7 +149,7 @@ export default function NewsPage() {
                       <div className="p-6 flex flex-col flex-1">
                         <div className="flex items-center gap-3 mb-3">
                           {featured.category && (
-                            <span className="bg-primary/10 text-primary text-xs font-semibold rounded-sm px-2.5 py-0.5">
+                            <span className="bg-primary/10 text-primary text-xs font-semibold rounded-full px-2.5 py-0.5">
                               {featured.category}
                             </span>
                           )}
@@ -142,7 +180,7 @@ export default function NewsPage() {
                     <div className="lg:col-span-2 space-y-4">
                       {rest.slice(0, 4).map((article) => (
                         <motion.article key={article.id} variants={fadeInUp}
-                          className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 transition-all duration-200 flex gap-0">
+                          className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-200 flex gap-0">
                           {article.imageUrl && (
                             <div className="w-24 sm:w-28 relative flex-shrink-0 overflow-hidden">
                               <Image src={article.imageUrl} alt={L({ en: article.titleEn, fr: article.titleFr })} fill
@@ -175,7 +213,7 @@ export default function NewsPage() {
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 border-t border-border">
                     {rest.slice(4).map((article) => (
                       <motion.article key={article.id} variants={scaleIn}
-                        className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col">
+                        className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col">
                         {article.imageUrl && (
                           <div className="aspect-video relative overflow-hidden">
                             <Image src={article.imageUrl} alt={L({ en: article.titleEn, fr: article.titleFr })} fill
@@ -185,7 +223,7 @@ export default function NewsPage() {
                         <div className="p-5 flex flex-col flex-1">
                           <div className="flex items-center gap-2 mb-3">
                             {article.category && (
-                              <span className="bg-primary/10 text-primary text-xs font-semibold rounded-sm px-2 py-0.5">
+                              <span className="bg-primary/10 text-primary text-xs font-semibold rounded-full px-2 py-0.5">
                                 {article.category}
                               </span>
                             )}

@@ -70,145 +70,186 @@ export default function ContactPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&auto=format&fit=crop&q=50"
-          alt="" fill className="object-cover opacity-20" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/90 via-sidebar/70 to-sidebar/30" />
-        <motion.div variants={stagger} initial="hidden" animate="show"
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.p variants={fadeInUp}
-            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-            {L({ en: 'Get In Touch', fr: 'Prendre Contact' })}
-          </motion.p>
-          <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
-            {L({ en: 'Contact Our Team', fr: 'Contactez Notre Équipe' })}
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
+      <section className="relative h-[52vh] min-h-[440px] overflow-hidden bg-sidebar flex items-end">
+        <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&auto=format&fit=crop&q=50" alt="" fill className="object-cover object-center opacity-30" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
+
+        {/* Floating stat widget */}
+        <motion.div
+          initial={{ opacity: 0, y: -18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.55, ease: 'easeOut' }}
+          className="absolute top-8 right-6 sm:right-12 lg:right-16 hidden sm:flex flex-col items-end gap-1 bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-2xl px-5 py-4">
+          <span className="font-display font-extrabold text-3xl text-primary leading-none">24h</span>
+          <span className="text-sidebar-foreground/45 text-[9px] uppercase tracking-[0.4em]">Response</span>
+        </motion.div>
+
+        {/* Content — bottom anchored */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
+          <motion.div
+            initial={{ opacity: 0, x: -22 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-2.5 mb-5">
+            <span className="w-6 h-px bg-primary flex-shrink-0" />
+            <span className="text-primary font-display font-bold text-[10px] uppercase tracking-[0.35em]">
+              {L({ en: 'Get In Touch', fr: 'Prendre Contact' })}
+            </span>
+          </motion.div>
+          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-5">
+            {L({ en: 'Contact Our Team', fr: 'Contactez Notre Équipe' }).split(' ').map((word, wi) => (
+              <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: '112%' }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
+            className="text-sidebar-foreground/65 text-sm sm:text-base leading-relaxed max-w-xl">
             {L({ en: 'Our experts are ready to discuss your logistics and supply needs.', fr: 'Nos experts sont prêts à discuter de vos besoins en logistique et fournitures.' })}
           </motion.p>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+          className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">
+          <span className="text-white/20 text-[7px] uppercase tracking-[0.5em] font-semibold">scroll</span>
+          <div className="w-px h-6 bg-gradient-to-b from-white/25 to-transparent" />
         </motion.div>
       </section>
 
       {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
       <section className="bg-background py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {/* Contact info column */}
-            <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-6">
-                {L({ en: 'Contact Information', fr: 'Informations de Contact' })}
-              </p>
-              <div className="space-y-4">
-                {contactInfo.map(({ icon: Icon, label, value }, i) => (
-                  <motion.div key={label.en} variants={fadeInLeft} initial="hidden" whileInView="show"
-                    viewport={viewportOnce} transition={{ delay: i * 0.06 }}
-                    className="group bg-card border border-border rounded-sm p-4 flex items-start gap-4 hover:border-primary/50 transition-colors duration-200">
-                    <div className="w-9 h-9 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
-                      <Icon className="h-4 w-4 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground font-display font-semibold uppercase tracking-[0.15em] mb-0.5">
-                        {L(label)}
-                      </p>
-                      <p className="text-sm font-medium leading-snug">{value}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+          {/* Section heading — centered */}
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="text-center mb-12">
+            <motion.p variants={fadeInUp}
+              className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-3">
+              {L({ en: 'Reach Out', fr: 'Nous Contacter' })}
+            </motion.p>
+            <motion.h2 variants={fadeInUp}
+              className="font-display font-bold text-2xl sm:text-3xl tracking-tight mb-3">
+              {L({ en: 'How Can We Help You?', fr: 'Comment Pouvons-Nous Vous Aider ?' })}
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="text-muted-foreground text-sm max-w-md mx-auto">
+              {L({ en: 'Fill in the form and our team will respond within 24 hours.', fr: 'Remplissez le formulaire et notre équipe répondra dans les 24 heures.' })}
+            </motion.p>
+          </motion.div>
 
-            {/* Form */}
-            <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8">
-              <p className="text-primary font-display font-semibold text-xs uppercase tracking-[0.2em] mb-2">
-                {L({ en: 'Send a Message', fr: 'Envoyer un Message' })}
-              </p>
-              <h2 className="font-display font-bold text-xl mb-6">
-                {L({ en: 'How Can We Help You?', fr: 'Comment Pouvons-Nous Vous Aider ?' })}
-              </h2>
-
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="name" className="text-xs font-display font-semibold uppercase tracking-wide">
-                      {L({ en: 'Your Name', fr: 'Votre Nom' })} *
-                    </Label>
-                    <Input id="name" {...register('name')} className="mt-1.5 rounded-sm"
-                      placeholder={L({ en: 'John Doe', fr: 'Jean Dupont' })} />
-                    {errors.name && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 2 characters', fr: '2 caractères minimum' })}</p>}
-                  </div>
-                  <div>
-                    <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide">
-                      {L({ en: 'Email Address', fr: 'Adresse Email' })} *
-                    </Label>
-                    <Controller name="email" control={control}
-                      render={({ field }) => (
-                        <EmailInput id="email" placeholder="you@company.com" className="mt-1.5 rounded-sm" {...field} />
-                      )} />
-                    {errors.email && <p className="text-destructive text-xs mt-1">{L({ en: 'Valid email required', fr: 'Email valide requis' })}</p>}
-                  </div>
+          {/* Contact info strip */}
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-12">
+            {contactInfo.map(({ icon: Icon, label, value }, i) => (
+              <motion.div key={label.en} variants={fadeInUp} transition={{ delay: i * 0.06 }}
+                className="group bg-card border border-border rounded-2xl p-4 flex flex-col items-center text-center gap-2 hover:border-primary/50 hover:shadow-sm transition-all duration-200">
+                <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Icon className="h-4 w-4 text-primary" />
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide">
-                      {L({ en: 'Country', fr: 'Pays' })}
-                    </Label>
-                    <Controller name="country" control={control}
-                      render={({ field }) => (
-                        <CountrySelect id="country" className="mt-1.5" value={field.value ?? ''} onChange={field.onChange}
-                          lang={language} placeholderEn="Select country…" placeholderFr="Sélectionnez votre pays…" />
-                      )} />
-                  </div>
-                  <div>
-                    <Label htmlFor="company" className="text-xs font-display font-semibold uppercase tracking-wide">
-                      {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })}
-                    </Label>
-                    <Input id="company" {...register('company')} className="mt-1.5 rounded-sm"
-                      placeholder={L({ en: 'Your Company Ltd.', fr: 'Votre Société S.A.' })} />
-                  </div>
-                </div>
-
                 <div>
-                  <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide">
-                    {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
+                  <p className="text-[10px] text-muted-foreground font-display font-semibold uppercase tracking-[0.15em] mb-0.5">
+                    {L(label)}
+                  </p>
+                  <p className="text-xs font-medium leading-snug">{value}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Form — centered */}
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="max-w-2xl mx-auto bg-card border border-border rounded-2xl p-6 sm:p-10">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    {L({ en: 'Your Name', fr: 'Votre Nom' })} *
                   </Label>
-                  <Controller name="phone" control={control}
+                  <Input id="name" {...register('name')} className="mt-1.5 rounded-xl"
+                    placeholder={L({ en: 'John Doe', fr: 'Jean Dupont' })} />
+                  {errors.name && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 2 characters', fr: '2 caractères minimum' })}</p>}
+                </div>
+                <div>
+                  <Label htmlFor="email" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    {L({ en: 'Email Address', fr: 'Adresse Email' })} *
+                  </Label>
+                  <Controller name="email" control={control}
                     render={({ field }) => (
-                      <PhoneInput id="phone" value={field.value} onChange={field.onChange}
-                        syncCountry={selectedCountry} className="mt-1.5" />
+                      <EmailInput id="email" placeholder="you@company.com" className="mt-1.5 rounded-xl" {...field} />
+                    )} />
+                  {errors.email && <p className="text-destructive text-xs mt-1">{L({ en: 'Valid email required', fr: 'Email valide requis' })}</p>}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="country" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    {L({ en: 'Country', fr: 'Pays' })}
+                  </Label>
+                  <Controller name="country" control={control}
+                    render={({ field }) => (
+                      <CountrySelect id="country" className="mt-1.5" value={field.value ?? ''} onChange={field.onChange}
+                        lang={language} placeholderEn="Select country…" placeholderFr="Sélectionnez votre pays…" />
                     )} />
                 </div>
-
                 <div>
-                  <Label htmlFor="subject" className="text-xs font-display font-semibold uppercase tracking-wide">
-                    {L({ en: 'Subject', fr: 'Sujet' })} *
+                  <Label htmlFor="company" className="text-xs font-display font-semibold uppercase tracking-wide">
+                    {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })}
                   </Label>
-                  <Input id="subject" {...register('subject')} className="mt-1.5 rounded-sm"
-                    placeholder={L({ en: 'How can we help?', fr: 'Comment pouvons-nous vous aider ?' })} />
-                  {errors.subject && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
+                  <Input id="company" {...register('company')} className="mt-1.5 rounded-xl"
+                    placeholder={L({ en: 'Your Company Ltd.', fr: 'Votre Société S.A.' })} />
                 </div>
+              </div>
 
-                <div>
-                  <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide">
-                    {L({ en: 'Your Message', fr: 'Votre Message' })} *
-                  </Label>
-                  <Textarea id="message" {...register('message')} rows={5} className="mt-1.5 rounded-sm"
-                    placeholder={L({ en: 'Tell us about your logistics or supply requirements…', fr: 'Parlez-nous de vos besoins en logistique ou fournitures…' })} />
-                  {errors.message && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 10 characters', fr: '10 caractères minimum' })}</p>}
-                </div>
+              <div>
+                <Label htmlFor="phone" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
+                </Label>
+                <Controller name="phone" control={control}
+                  render={({ field }) => (
+                    <PhoneInput id="phone" value={field.value} onChange={field.onChange}
+                      syncCountry={selectedCountry} className="mt-1.5" />
+                  )} />
+              </div>
 
-                <Button type="submit" size="lg" disabled={isSubmitting}
-                  className="w-full font-display font-semibold text-sm rounded-sm">
-                  {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
-                  {L({ en: 'Send Message', fr: 'Envoyer le Message' })}
-                </Button>
-              </form>
-            </motion.div>
-          </div>
+              <div>
+                <Label htmlFor="subject" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  {L({ en: 'Subject', fr: 'Sujet' })} *
+                </Label>
+                <Input id="subject" {...register('subject')} className="mt-1.5 rounded-xl"
+                  placeholder={L({ en: 'How can we help?', fr: 'Comment pouvons-nous vous aider ?' })} />
+                {errors.subject && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
+              </div>
+
+              <div>
+                <Label htmlFor="message" className="text-xs font-display font-semibold uppercase tracking-wide">
+                  {L({ en: 'Your Message', fr: 'Votre Message' })} *
+                </Label>
+                <Textarea id="message" {...register('message')} rows={5} className="mt-1.5 rounded-xl"
+                  placeholder={L({ en: 'Tell us about your logistics or supply requirements…', fr: 'Parlez-nous de vos besoins en logistique ou fournitures…' })} />
+                {errors.message && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 10 characters', fr: '10 caractères minimum' })}</p>}
+              </div>
+
+              <Button type="submit" size="lg" disabled={isSubmitting}
+                className="w-full font-display font-semibold text-sm rounded-xl">
+                {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                {L({ en: 'Send Message', fr: 'Envoyer le Message' })}
+              </Button>
+            </form>
+          </motion.div>
+
         </div>
       </section>
     </>

@@ -47,24 +47,62 @@ export default function ProductsPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&auto=format&fit=crop&q=50"
-          alt="" fill className="object-cover opacity-20" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/90 via-sidebar/70 to-sidebar/30" />
-        <motion.div variants={stagger} initial="hidden" animate="show"
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.p variants={fadeInUp}
-            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-            {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
-          </motion.p>
-          <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
-            {L({ en: 'Our Products', fr: 'Nos Produits' })}
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-xl leading-relaxed">
+      <section className="relative h-[52vh] min-h-[440px] overflow-hidden bg-sidebar flex items-end">
+        <Image src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&auto=format&fit=crop&q=50" alt="" fill className="object-cover object-center opacity-30" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
+
+        {/* Floating stat widget */}
+        <motion.div
+          initial={{ opacity: 0, y: -18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.55, ease: 'easeOut' }}
+          className="absolute top-8 right-6 sm:right-12 lg:right-16 hidden sm:flex flex-col items-end gap-1 bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-2xl px-5 py-4">
+          <span className="font-display font-extrabold text-3xl text-primary leading-none">500+</span>
+          <span className="text-sidebar-foreground/45 text-[9px] uppercase tracking-[0.4em]">Clients</span>
+        </motion.div>
+
+        {/* Content — bottom anchored */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
+          <motion.div
+            initial={{ opacity: 0, x: -22 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-2.5 mb-5">
+            <span className="w-6 h-px bg-primary flex-shrink-0" />
+            <span className="text-primary font-display font-bold text-[10px] uppercase tracking-[0.35em]">
+              {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
+            </span>
+          </motion.div>
+          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-5">
+            {L({ en: 'Our Products', fr: 'Nos Produits' }).split(' ').map((word, wi) => (
+              <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: '112%' }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
+            className="text-sidebar-foreground/65 text-sm sm:text-base leading-relaxed max-w-xl">
             {L({ en: 'Premium certified industrial equipment, supplies, and materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés premium, fournitures et matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
           </motion.p>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+          className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">
+          <span className="text-white/20 text-[7px] uppercase tracking-[0.5em] font-semibold">scroll</span>
+          <div className="w-px h-6 bg-gradient-to-b from-white/25 to-transparent" />
         </motion.div>
       </section>
 
@@ -117,7 +155,7 @@ export default function ProductsPage() {
           {isLoading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {Array(8).fill(0).map((_, i) => (
-                <div key={i} className="border border-border rounded-sm overflow-hidden">
+                <div key={i} className="border border-border rounded-2xl overflow-hidden">
                   <Skeleton className="aspect-[4/3] w-full" />
                   <div className="p-4 space-y-2">
                     <Skeleton className="h-3 w-16" />
@@ -144,7 +182,7 @@ export default function ProductsPage() {
           {!isLoading && !isError && !products?.length && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
               className="flex flex-col items-center justify-center py-24 gap-4">
-              <div className="w-14 h-14 rounded-sm bg-foreground flex items-center justify-center">
+              <div className="w-14 h-14 rounded-xl bg-foreground flex items-center justify-center">
                 <Package className="h-6 w-6 text-primary" />
               </div>
               <p className="text-muted-foreground">
@@ -168,7 +206,7 @@ export default function ProductsPage() {
                 {products.map((product) => (
                   <motion.div key={product.id} variants={scaleIn}
                     whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                    <div className="group bg-card border border-border rounded-sm overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+                    <div className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                       <div className="aspect-[4/3] relative bg-muted overflow-hidden">
                         {product.imageUrl ? (
                           <Image src={product.imageUrl} alt={L({ en: product.nameEn, fr: product.nameFr })} fill
@@ -181,7 +219,7 @@ export default function ProductsPage() {
                       </div>
                       <div className="p-4 flex flex-col flex-1">
                         {product.categoryName && (
-                          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold rounded-sm px-2 py-0.5 mb-2 w-fit">
+                          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold rounded-full px-2 py-0.5 mb-2 w-fit">
                             {product.categoryName}
                           </span>
                         )}
