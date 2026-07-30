@@ -29,12 +29,12 @@ export default function NewsPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
         {/* Content — bottom anchored */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10 text-center">
           <motion.div
             initial={{ opacity: 0, x: -22 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-2.5 mb-3">
+            className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
             <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
@@ -57,7 +57,7 @@ export default function NewsPage() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl">
+            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
             {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informé des dernières évolutions en logistique mondiale, commerce et fournitures industrielles.' })}
           </motion.p>
         </div>

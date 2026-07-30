@@ -76,12 +76,12 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
         {/* Content — bottom anchored */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10 text-center">
           <motion.div
             initial={{ opacity: 0, x: -22 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-2.5 mb-3">
+            className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
             <span className="text-primary font-display font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'Get In Touch', fr: 'Prendre Contact' })}
@@ -104,7 +104,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl">
+            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
             {L({ en: 'Our experts are ready to discuss your logistics and supply needs.', fr: 'Nos experts sont prêts à discuter de vos besoins en logistique et fournitures.' })}
           </motion.p>
         </div>
