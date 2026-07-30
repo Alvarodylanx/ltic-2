@@ -113,45 +113,47 @@ export default function ContactPage() {
       {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
       <section className="bg-background py-20 lg:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 items-start">
 
-          {/* Section heading — centered */}
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="text-center mb-12">
-            <motion.p variants={fadeInUp}
-              className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-3">
-              {L({ en: 'Reach Out', fr: 'Nous Contacter' })}
-            </motion.p>
-            <motion.h2 variants={fadeInUp}
-              className="font-bold text-2xl sm:text-3xl tracking-tight mb-3">
-              {L({ en: 'How Can We Help You?', fr: 'Comment Pouvons-Nous Vous Aider ?' })}
-            </motion.h2>
-            <motion.p variants={fadeInUp} className="text-muted-foreground text-sm max-w-md mx-auto">
-              {L({ en: 'Fill in the form and our team will respond within 24 hours.', fr: 'Remplissez le formulaire et notre équipe répondra dans les 24 heures.' })}
-            </motion.p>
-          </motion.div>
+            {/* LEFT — heading + contact info */}
+            <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="lg:col-span-2 space-y-8">
 
-          {/* Contact info strip */}
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-12">
-            {contactInfo.map(({ icon: Icon, label, value }, i) => (
-              <motion.div key={label.en} variants={fadeInUp} transition={{ delay: i * 0.06 }}
-                className="group bg-card border border-border rounded-2xl p-4 flex flex-col items-center text-center gap-2 hover:border-primary/50 hover:shadow-sm transition-all duration-200">
-                <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Icon className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-[0.15em] mb-0.5">
-                    {L(label)}
-                  </p>
-                  <p className="text-xs font-medium leading-snug">{value}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              <div>
+                <motion.p variants={fadeInUp}
+                  className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-3">
+                  {L({ en: 'Reach Out', fr: 'Nous Contacter' })}
+                </motion.p>
+                <motion.h2 variants={fadeInUp}
+                  className="font-bold text-2xl sm:text-3xl tracking-tight mb-3">
+                  {L({ en: 'How Can We Help You?', fr: 'Comment Pouvons-Nous Vous Aider ?' })}
+                </motion.h2>
+                <motion.p variants={fadeInUp} className="text-muted-foreground text-sm leading-relaxed">
+                  {L({ en: 'Fill in the form and our team will respond within 24 hours.', fr: 'Remplissez le formulaire et notre équipe répondra dans les 24 heures.' })}
+                </motion.p>
+              </div>
 
-          {/* Form — centered */}
+              <div className="space-y-3">
+                {contactInfo.map(({ icon: Icon, label, value }, i) => (
+                  <motion.div key={label.en} variants={fadeInUp} transition={{ delay: i * 0.06 }}
+                    className="flex items-start gap-3 bg-card border border-border rounded-2xl p-4 hover:border-primary/40 hover:shadow-sm transition-all duration-200">
+                    <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-[0.15em] mb-0.5">
+                        {L(label)}
+                      </p>
+                      <p className="text-sm font-medium leading-snug break-words">{value}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* RIGHT — form */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="max-w-2xl mx-auto bg-card border border-border rounded-2xl p-6 sm:p-10">
+            className="lg:col-span-3 bg-card border border-border rounded-2xl p-6 sm:p-8">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -231,6 +233,7 @@ export default function ContactPage() {
             </form>
           </motion.div>
 
+          </div>{/* end grid */}
         </div>
       </section>
     </>

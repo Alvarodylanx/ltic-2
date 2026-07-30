@@ -48,16 +48,11 @@ body {
   line-height: 1.6;
 }
 
-/* All headings default to body font; hero h1s use font-display class to override */
+/* All headings use body font — no exceptions */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-body), sans-serif;
+  font-family: var(--font-body), sans-serif !important;
   line-height: 1.05;
   letter-spacing: -0.01em;
-}
-
-/* Enforce body font on h2–h6 so font-display class cannot override them */
-h2, h3, h4, h5, h6 {
-  font-family: var(--font-body), sans-serif !important;
 }
 
 /* All non-heading text always uses body font */
