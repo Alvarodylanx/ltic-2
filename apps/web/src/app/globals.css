@@ -48,9 +48,9 @@ body {
   line-height: 1.6;
 }
 
-/* All headings use body font — no exceptions */
+/* All headings use Barlow Condensed */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-body), sans-serif !important;
+  font-family: var(--font-display), sans-serif;
   line-height: 1.05;
   letter-spacing: -0.01em;
 }
