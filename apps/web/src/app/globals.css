@@ -48,13 +48,20 @@ body {
   line-height: 1.6;
 }
 
+/* All headings default to body font; hero h1s use font-display class to override */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-body), sans-serif;
   line-height: 1.05;
   letter-spacing: -0.01em;
 }
 
-p, li, a, label, button, input, textarea, select, td, th {
+/* Enforce body font on h2–h6 so font-display class cannot override them */
+h2, h3, h4, h5, h6 {
+  font-family: var(--font-body), sans-serif !important;
+}
+
+/* All non-heading text always uses body font */
+p, li, a, label, button, input, textarea, select, td, th, span {
   font-family: var(--font-body), sans-serif;
 }
 
