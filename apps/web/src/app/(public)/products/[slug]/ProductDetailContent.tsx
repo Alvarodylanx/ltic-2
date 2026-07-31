@@ -104,16 +104,15 @@ export default function ProductDetailPage({ initialProduct }: { initialProduct?:
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           {/* Image */}
           <motion.div variants={fadeInLeft}>
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted group">
+            <div className="relative aspect-square rounded-2xl overflow-hidden bg-white border border-border">
               {product.imageUrl ? (
                 <Image src={product.imageUrl} alt={L({ en: product.nameEn, fr: product.nameFr })} fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                  className="object-contain p-4" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center bg-muted">
                   <Package className="h-24 w-24 text-muted-foreground/30" />
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           </motion.div>
 
@@ -188,12 +187,11 @@ export default function ProductDetailPage({ initialProduct }: { initialProduct?:
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
                   <Link href={`/products/${p.slug}`}
                     className="group bg-card border rounded-xl overflow-hidden hover:shadow-xl hover:border-primary/40 transition-all duration-300 block">
-                    <div className="aspect-[4/3] relative bg-muted overflow-hidden">
+                    <div className="aspect-[4/3] relative bg-white overflow-hidden">
                       {p.imageUrl && (
                         <Image src={p.imageUrl} alt={L({ en: p.nameEn, fr: p.nameFr })} fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                          className="object-contain p-2" />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                     <div className="p-4">
                       <p className="font-bold text-sm group-hover:text-primary transition-colors">{L({ en: p.nameEn, fr: p.nameFr })}</p>

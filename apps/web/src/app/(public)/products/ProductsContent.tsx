@@ -187,12 +187,12 @@ export default function ProductsPage() {
                   <motion.div key={product.id} variants={scaleIn}
                     whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
                     <div className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-                      <div className="aspect-[4/3] relative bg-muted overflow-hidden">
+                      <div className="aspect-[4/3] relative bg-white overflow-hidden">
                         {product.imageUrl ? (
                           <Image src={product.imageUrl} alt={L({ en: product.nameEn, fr: product.nameFr })} fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                            className="object-contain p-2" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
+                          <div className="w-full h-full flex items-center justify-center bg-muted">
                             <Package className="h-10 w-10 text-muted-foreground/30" />
                           </div>
                         )}
