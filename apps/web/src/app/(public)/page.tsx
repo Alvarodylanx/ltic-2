@@ -322,7 +322,11 @@ function PartnerCard({ b }: { b: Partner }) {
         {logoSrc
           ? <img src={logoSrc} alt={b.name} width={28} height={28}
               className="w-full h-full object-contain"
-              onError={() => setImgFailed(true)} />
+              onError={() => setImgFailed(true)}
+              onLoad={(e) => {
+                const img = e.currentTarget;
+                if (img.naturalWidth <= 1 || img.naturalHeight <= 1) setImgFailed(true);
+              }} />
           : <div className="w-full h-full bg-primary/15 rounded-sm flex items-center justify-center">
               <span className="text-[9px] font-black text-primary leading-none">
                 {b.name.slice(0, 2).toUpperCase()}
@@ -412,18 +416,18 @@ export default function HomePage() {
   });
 
   const staticBrands: Partner[] = [
-    { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://logo.clearbit.com/totalenergies.com' },
-    { id: 102, name: 'Shell',             sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://logo.clearbit.com/shell.com' },
-    { id: 103, name: 'CMA CGM',           sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/cma-cgm.com' },
-    { id: 104, name: 'DHL',               sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://logo.clearbit.com/dhl.com' },
-    { id: 105, name: 'Bolloré Logistics', sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://logo.clearbit.com/bollore.com' },
-    { id: 106, name: 'Maersk',            sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/maersk.com' },
-    { id: 107, name: 'MSC',               sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://logo.clearbit.com/msc.com' },
+    { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=totalenergies.com&sz=128' },
+    { id: 102, name: 'Shell',             sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=shell.com&sz=128' },
+    { id: 103, name: 'CMA CGM',           sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=cma-cgm.com&sz=128' },
+    { id: 104, name: 'DHL',               sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=dhl.com&sz=128' },
+    { id: 105, name: 'Bolloré Logistics', sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=bollore.com&sz=128' },
+    { id: 106, name: 'Maersk',            sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=maersk.com&sz=128' },
+    { id: 107, name: 'MSC',               sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=msc.com&sz=128' },
     { id: 108, name: 'Camair-Co',         sectorEn: 'Aviation',  sectorFr: 'Aviation',           logoUrl: '' },
     { id: 109, name: 'Port de Douala',    sectorEn: 'Port',      sectorFr: 'Port',               logoUrl: '' },
-    { id: 110, name: 'CFAO',              sectorEn: 'Trade',     sectorFr: 'Commerce',           logoUrl: 'https://logo.clearbit.com/groupecfao.com' },
+    { id: 110, name: 'CFAO',              sectorEn: 'Trade',     sectorFr: 'Commerce',           logoUrl: 'https://www.google.com/s2/favicons?domain=cfao.com&sz=128' },
     { id: 111, name: 'Ciments Cameroun',  sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: '' },
-    { id: 112, name: 'Orange Cameroun',   sectorEn: 'Telecom',   sectorFr: 'Télécoms',           logoUrl: 'https://logo.clearbit.com/orange.com' },
+    { id: 112, name: 'Orange Cameroun',   sectorEn: 'Telecom',   sectorFr: 'Télécoms',           logoUrl: 'https://www.google.com/s2/favicons?domain=orange.cm&sz=128' },
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
