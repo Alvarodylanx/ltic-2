@@ -28,8 +28,12 @@ const CATEGORY_PATTERNS: Array<{ keywords: RegExp; slug: string }> = [
     slug: 'generators',
   },
   {
-    keywords: /marine|vecom|unitor|tank.?clean|degreaser|degraissant|marpol|carbon.?remov|air.?cooler|multi.?clean|descal|antifoul|bilge|chemical|chimique|chemical.?marine|mainten/i,
+    keywords: /marine|vecom|unitor|tank.?clean|degreaser|degraissant|marpol|carbon.?remov|air.?cooler|multi.?clean|descal|antifoul|bilge|chemical.?marine|mainten/i,
     slug: 'marine',
+  },
+  {
+    keywords: /sulfur|sulphur|soufre|acid|acide|solvent|solvant|mineral|minéral|chemical|chimique|raw.?material|matieres?.?premi|granular|caustic|nitrate|phosphate|ammonia|chlorine|resin|résine/i,
+    slug: 'chemicals',
   },
   {
     keywords: /timber|log\b|logs\b|bois|grume|wood|lumber|sapele|ayous|iroko|okoume|teak/i,
@@ -79,6 +83,11 @@ const TEMPLATES: Record<string, Template> = {
     descFr: (n) => `${n} est un équipement industriel robuste conçu pour les opérations exigeantes de construction, d'exploitation minière et de logistique. Conçu pour la durabilité, le confort de l'opérateur et un faible coût total de possession.`,
     specs: () => `Engine: Diesel, Tier 3/4 compliant\nOperating weight: Varies by model\nHydraulic system: Load-sensing\nService interval: 500 hours\nWarranty: 12 months / 2000 hours`,
   },
+  chemicals: {
+    descEn: (n) => `${n} is an industrial-grade chemical or raw material supplied by LTIC SARL for manufacturing, agriculture, and industrial processing applications. Available in bulk and standard packaging.`,
+    descFr: (n) => `${n} est un produit chimique ou une matière première de qualité industrielle fourni par LTIC SARL pour les applications de fabrication, d'agriculture et de traitement industriel. Disponible en vrac et en emballage standard.`,
+    specs: () => `Grade: Industrial / Technical grade\nPackaging: 25kg bags, 50kg bags, bulk\nOrigin: International sourcing\nStorage: Cool, dry, ventilated area\nCompliance: SDS/MSDS available on request`,
+  },
   general: {
     descEn: (n) => `${n} is a quality commercial product sourced and distributed by LTIC SARL for B2B clients across Africa and international markets. Available in bulk and standard packaging.`,
     descFr: (n) => `${n} est un produit commercial de qualité fourni et distribué par LTIC SARL aux clients professionnels en Afrique et sur les marchés internationaux. Disponible en vrac et en emballage standard.`,
@@ -116,6 +125,7 @@ export class AiService {
       marine:     ['marine', 'chemical', 'chimique', 'maintenance'],
       timber:     ['timber', 'log', 'bois', 'grume', 'wood'],
       equipment:  ['equipment', 'heavy', 'engin', 'lourd'],
+      chemicals:  ['chemical', 'chimique', 'raw material', 'sulfur', 'mineral'],
       general:    ['general', 'merchandise', 'marchandise', 'commerce'],
     };
 
