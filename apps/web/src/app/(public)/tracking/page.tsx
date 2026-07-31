@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Loader2, Package, AlertCircle, MapPin, Calendar } from 'lucide-react';
+import { Search, Loader2, AlertCircle, MapPin, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -120,8 +120,13 @@ function TrackingContent() {
               <motion.div key="idle" variants={fadeInUp} initial="hidden" animate="show"
                 exit={{ opacity: 0, y: -16 }}
                 className="flex flex-col items-center justify-center py-20 gap-5 text-center">
-                <div className="w-14 h-14 rounded-sm bg-muted flex items-center justify-center">
-                  <Package className="h-6 w-6 text-muted-foreground/40" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">LT</span>
+                  </div>
+                  <span className="font-bold text-xl">
+                    LTIC <span className="text-primary">SARL</span>
+                  </span>
                 </div>
                 <p className="text-muted-foreground text-sm max-w-xs">
                   {L({ en: 'Enter your tracking number above to see shipment status and timeline.', fr: "Entrez votre numéro de suivi ci-dessus pour voir l'état de l'expédition." })}
