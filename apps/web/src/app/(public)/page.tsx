@@ -832,11 +832,11 @@ export default function HomePage() {
                         <Link href={`/products/${product.slug}`}
                           className="group bg-white border border-border rounded-xl overflow-hidden
                                      hover:border-primary/40 hover:shadow-md transition-all duration-200 block">
-                          <div className="aspect-square relative bg-muted overflow-hidden">
+                          <div className="aspect-square relative bg-white overflow-hidden">
                             {product.imageUrl && (
                               <Image src={product.imageUrl}
                                 alt={L({ en: product.nameEn, fr: product.nameFr })}
-                                fill className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                fill className="object-contain p-2"
                                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                               />
                             )}
