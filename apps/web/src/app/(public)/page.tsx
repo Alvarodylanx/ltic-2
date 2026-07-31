@@ -854,126 +854,55 @@ export default function HomePage() {
 
       {/* ══ 7. CTA — dark cinematic ════════════════════════════════════════════ */}
       <section className="relative bg-sidebar py-24 sm:py-36 overflow-hidden">
-
-        {/* Background — Ken Burns zoom-out on enter */}
-        <motion.div className="absolute inset-0"
-          initial={{ scale: 1.08 }} whileInView={{ scale: 1.0 }}
-          transition={{ duration: 14, ease: 'linear' }} viewport={{ once: true }}>
-          <Image src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&auto=format&fit=crop&q=60"
-            alt="" fill className="object-cover opacity-20" sizes="100vw" />
-        </motion.div>
-
-        {/* Layered gradients */}
-        <div className="absolute inset-0 bg-gradient-to-br from-sidebar/98 via-sidebar/88 to-sidebar/80" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-transparent to-transparent" />
-
-        {/* Ambient primary glow — pulsing */}
-        <motion.div
-          animate={{ opacity: [0.10, 0.22, 0.10], scale: [1, 1.15, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[320px] rounded-full bg-primary/25 blur-[110px] pointer-events-none" />
-
-        {/* Subtle dot grid */}
-        <div className="absolute inset-0 dot-grid opacity-[0.035] pointer-events-none" />
-
-        {/* Background watermark */}
-        <div className="absolute right-[-2vw] top-1/2 -translate-y-1/2 font-display font-black text-white/[0.025] select-none pointer-events-none leading-none tracking-tighter"
-          style={{ fontSize: 'clamp(6rem, 14vw, 14rem)' }}>
-          LTIC
-        </div>
+        <Image
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&auto=format&fit=crop&q=60"
+          alt=""
+          fill
+          className="object-cover opacity-25"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-sidebar/95 via-sidebar/80 to-sidebar/90" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-
-          {/* Eyebrow — symmetric lines */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} viewport={{ once: true }}
-            className="flex items-center justify-center gap-4 mb-7">
-            <motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}
-              className="block w-10 h-px bg-primary origin-right" />
-            <span className="text-primary font-bold text-[10px] uppercase tracking-[0.42em] whitespace-nowrap">
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}>
+            <motion.p variants={fadeInUp}
+              className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-6">
               {L({ en: 'Ready to Start?', fr: 'Prêt à Commencer ?' })}
-            </span>
-            <motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}
-              className="block w-10 h-px bg-primary origin-left" />
+            </motion.p>
+
+            <motion.h2 variants={fadeInUp}
+              className="font-extrabold text-sidebar-foreground
+                         text-hero mb-6 [text-wrap:balance] whitespace-pre-line">
+              {L({ en: "Let's Move Your\nBusiness Forward.", fr: 'Faisons Avancer\nVotre Business.' })}
+            </motion.h2>
+
+            <motion.p variants={fadeInUp}
+              className="text-sidebar-foreground/65 text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+              {L({
+                en: 'One partner for freight, industrial supply and general commerce — across 30+ countries.',
+                fr: 'Un partenaire pour le fret, la fourniture industrielle et le commerce général — dans 30+ pays.',
+              })}
+            </motion.p>
+
+            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4">
+              <Button asChild size="lg"
+                className="font-semibold rounded-full h-14 px-10 text-base shadow-lg
+                           shadow-primary/30">
+                <Link href="/contact">
+                  {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline"
+                className="font-semibold rounded-full h-14 px-10 text-base bg-white/10
+                           border-white/30 text-white hover:bg-white/20 hover:border-white/60
+                           backdrop-blur-sm">
+                <Link href="/quote">
+                  {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
+                </Link>
+              </Button>
+            </motion.div>
           </motion.div>
-
-          {/* Headline — word-by-word clip reveal */}
-          <h2 className="font-extrabold text-sidebar-foreground text-hero leading-[0.92] tracking-[-0.02em] mb-7">
-            {L({ en: "Let's Move Your Business Forward.", fr: 'Faisons Avancer Votre Business.' })
-              .split(' ').map((word, wi) => (
-                <span key={wi} className="inline-block overflow-hidden mr-[0.14em] last:mr-0">
-                  <motion.span className="inline-block"
-                    initial={{ y: '110%' }} whileInView={{ y: 0 }}
-                    transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1], delay: 0.18 + wi * 0.07 }}
-                    viewport={{ once: true }}>
-                    {word}
-                  </motion.span>
-                </span>
-              ))}
-          </h2>
-
-          {/* Separator */}
-          <motion.div
-            initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}
-            viewport={{ once: true }}
-            className="h-px w-14 bg-primary/40 mx-auto mb-9 origin-center" />
-
-          {/* Stats strip */}
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true }}
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.6 } } }}
-            className="flex items-center justify-center mb-10">
-            {([
-              { value: '30+', label: { en: 'Countries', fr: 'Pays' } },
-              { value: '500+', label: { en: 'Clients', fr: 'Clients' } },
-              { value: '7', label: { en: 'Services', fr: 'Services' } },
-            ] as const).map((stat, i) => (
-              <motion.div key={stat.value}
-                variants={{ hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-                className={`flex flex-col items-center px-8 sm:px-14 ${i < 2 ? 'border-r border-white/10' : ''}`}>
-                <span className="font-display font-black text-2xl sm:text-3xl text-primary leading-none mb-1">{stat.value}</span>
-                <span className="text-sidebar-foreground/40 text-[9px] uppercase tracking-[0.38em]">{L(stat.label)}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }} viewport={{ once: true }}
-            className="text-sidebar-foreground/70 text-base sm:text-lg max-w-lg mx-auto mb-11 leading-relaxed">
-            {L({
-              en: 'One partner for freight, industrial supply and general commerce — across 30+ countries.',
-              fr: 'Un partenaire pour le fret, la fourniture industrielle et le commerce général — dans 30+ pays.',
-            })}
-          </motion.p>
-
-          {/* Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }} viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-4">
-            <Button asChild size="lg"
-              className="font-semibold rounded-full h-14 px-10 text-base shadow-lg shadow-primary/30">
-              <Link href="/contact">
-                {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline"
-              className="font-semibold rounded-full h-14 px-10 text-base bg-white/10
-                         border-white/30 text-white hover:bg-white/20 hover:border-white/60
-                         backdrop-blur-sm">
-              <Link href="/quote">
-                {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
-              </Link>
-            </Button>
-          </motion.div>
-
         </div>
       </section>
     </>
