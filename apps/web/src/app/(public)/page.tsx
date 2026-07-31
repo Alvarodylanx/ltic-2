@@ -101,7 +101,7 @@ const features = [
     label:   { en: 'General Commerce',           fr: 'Commerce Général' },
     heading: { en: 'Everything Your\nBusiness Needs.', fr: 'Tout Ce Dont\nVotre Entreprise a Besoin.' },
     body:    { en: 'A diverse catalog of consumer and trade goods — sourced globally and delivered anywhere. From bulk commodity orders to specialized procurement, we handle it all.', fr: 'Un catalogue diversifié de biens de consommation et commerciaux, sourcés mondialement et livrés partout.' },
-    image:   'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=900&auto=format&fit=crop&q=80',
+    image:   '/images/general-commerce.jpg',
     tag:     { en: 'Commerce', fr: 'Commerce' },
     href:    '/products',
   },
