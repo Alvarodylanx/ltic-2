@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, Pencil, Trash2, Package, Loader2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Pencil, Trash2, Package, Loader2, Search, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -32,6 +32,7 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
   const { L, language } = useLanguage();
   const [translating, setTranslating] = useState(false);
   const [categoryError, setCategoryError] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const srcLang = language as 'en' | 'fr';
   const dstLang = language === 'en' ? 'fr' : 'en';
@@ -41,9 +42,49 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
   const watchedName = watch(nameField) || '';
   const watchedCategory = watch('categoryId');
 
-  // Auto-fill slug from name when creating
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!product) setValue('slug', slugify(e.target.value));
+  };
+
+  const handleGenerateAI = async () => {
+    const name = watch('nameEn') || watch('nameFr') || watchedName;
+    if (!name.trim()) {
+      toast.error(L({ en: 'Enter a product name first', fr: 'Entrez d\'abord un nom de produit' }));
+      return;
+    }
+    setIsGenerating(true);
+    try {
+      const result = await api.post<{
+        descriptionEn: string;
+        descriptionFr: string;
+        specifications: string;
+        categoryId: number;
+      }>('/api/ai/generate-product', { productName: name.trim(), categories });
+
+      if (result.descriptionEn) setValue('descriptionEn', result.descriptionEn);
+      if (result.descriptionFr) setValue('descriptionFr', result.descriptionFr);
+      if (result.specifications) setValue('specifications', result.specifications);
+      if (result.categoryId) {
+        setValue('categoryId', result.categoryId);
+        setCategoryError('');
+      }
+
+      // If the current language is French, show the French description
+      if (language === 'fr' && result.descriptionFr) {
+        setValue('descriptionFr', result.descriptionFr);
+      }
+
+      toast.success(L({ en: 'AI generated content — review before saving', fr: 'Contenu généré par IA — vérifiez avant de sauvegarder' }));
+    } catch (e: any) {
+      const msg = e.message || '';
+      if (msg.includes('GEMINI_API_KEY')) {
+        toast.error('Add GEMINI_API_KEY to .env to use AI generation');
+      } else {
+        toast.error(L({ en: 'AI generation failed. Try again.', fr: 'Échec de la génération IA. Réessayez.' }));
+      }
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const onSubmit = async (data: any) => {
@@ -88,17 +129,29 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <Label>{language === 'en' ? 'Product Name (English)' : 'Nom du produit (Français)'} *</Label>
+        <div className="flex items-center justify-between mb-1">
+          <Label>{language === 'en' ? 'Product Name (English)' : 'Nom du produit (Français)'} *</Label>
+          <button
+            type="button"
+            onClick={handleGenerateAI}
+            disabled={isGenerating || !watchedName.trim()}
+            className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-violet-500/10 text-violet-600 hover:bg-violet-500/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
+            {isGenerating
+              ? <><Loader2 className="h-3 w-3 animate-spin" />{L({ en: 'Generating…', fr: 'Génération…' })}</>
+              : <><Sparkles className="h-3 w-3" />{L({ en: 'Generate with AI', fr: 'Générer avec IA' })}</>}
+          </button>
+        </div>
         <Input
           {...register(nameField, { required: true })}
           onChange={(e) => { register(nameField).onChange(e); handleNameChange(e); }}
-          className={`mt-1 ${errors[nameField] ? 'border-destructive' : ''}`}
+          className={errors[nameField] ? 'border-destructive' : ''}
         />
         {errors[nameField] && <p className="text-xs text-destructive mt-1">{L({ en: 'Name is required', fr: 'Le nom est requis' })}</p>}
         <p className="text-xs text-muted-foreground mt-1">
           {language === 'en'
-            ? 'The French version will be auto-translated on save.'
-            : 'La version anglaise sera traduite automatiquement à la sauvegarde.'}
+            ? 'Type a name then click Generate with AI to auto-fill description, specs and category.'
+            : 'Tapez un nom puis cliquez sur Générer avec IA pour remplir automatiquement.'}
         </p>
       </div>
       <div>
@@ -109,8 +162,8 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
       <div>
         <Label>{L({ en: 'Category', fr: 'Catégorie' })} *</Label>
         <Select
+          value={watchedCategory?.toString() || ''}
           onValueChange={(v) => { setValue('categoryId', Number(v)); setCategoryError(''); }}
-          defaultValue={product?.categoryId?.toString()}
         >
           <SelectTrigger className={`mt-1 ${categoryError ? 'border-destructive' : ''}`}>
             <SelectValue placeholder={L({ en: 'Select category', fr: 'Sélectionner une catégorie' })} />

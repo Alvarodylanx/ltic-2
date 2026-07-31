@@ -25,6 +25,7 @@ import { UploadModule } from "./upload/upload.module";
 import { NotificationsModule } from "./notifications/notifications.module";
 import { UnifiedAuthModule } from "./auth/unified-auth.module";
 import { PartnersModule } from "./partners/partners.module";
+import { AiModule } from "./ai/ai.module";
 
 export const DB_PROVIDER = "DB_POOL";
 
@@ -59,6 +60,7 @@ export const DB_PROVIDER = "DB_POOL";
     NotificationsModule,
     UnifiedAuthModule,
     PartnersModule,
+    AiModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },
