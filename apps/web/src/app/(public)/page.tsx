@@ -123,60 +123,55 @@ const orderSteps = [
   { icon: Truck,    num: '04', title: { en: 'Tracked Delivery', fr: 'Livraison Suivie' },       desc: { en: 'Customs, freight and logistics tracked in real time.',   fr: 'Douanes, fret et logistique suivis en temps réel.' },           action: { en: 'Track Shipment', fr: 'Suivre' },            href: '/tracking' },
 ];
 
-// ─── ServiceRow ───────────────────────────────────────────────────────────────
+// ─── ServiceCard ──────────────────────────────────────────────────────────────
 
-interface ServiceRowProps {
+interface ServiceCardProps {
   icon: React.ElementType;
   en: string; fr: string;
   descEn: string; descFr: string;
   index: number;
 }
 
-function ServiceRow({ en, fr, descEn, descFr, index }: ServiceRowProps) {
+function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardProps) {
   const { L } = useLanguage();
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 18 },
-        show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 95, damping: 22 } },
+        hidden: { opacity: 0, y: 28, scale: 0.97 },
+        show:   { opacity: 1, y: 0,  scale: 1,
+                  transition: { type: 'spring', stiffness: 90, damping: 18, mass: 0.8 } },
       }}
-      className="group relative border-b border-border first:border-t"
+      whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 22 } }}
+      className="group bg-white border border-border rounded-2xl p-7
+                 shadow-sm hover:shadow-xl hover:border-primary/30
+                 transition-shadow transition-colors duration-300 flex flex-col"
     >
+      {/* Icon */}
+      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5
+                      group-hover:bg-primary group-hover:scale-110
+                      transition-all duration-300 flex-shrink-0">
+        <Icon className="h-5 w-5 text-primary group-hover:text-white transition-colors duration-300" />
+      </div>
+
+      {/* Number badge */}
+      <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-primary/60 mb-2 block">
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      <h3 className="font-bold text-xl text-foreground mb-3 leading-tight">
+        {L({ en, fr })}
+      </h3>
+      <p className="text-muted-foreground text-base leading-relaxed flex-1 mb-5">
+        {L({ en: descEn, fr: descFr })}
+      </p>
+
       <Link
         href="/services"
-        className="relative flex items-center gap-5 lg:gap-10 py-6 lg:py-7 pl-5 pr-1"
+        className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold
+                   group-hover:gap-3 transition-all duration-200 w-fit"
       >
-        {/* Left accent bar — scales from top on hover */}
-        <span
-          aria-hidden="true"
-          className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary rounded-full
-                     scale-y-0 origin-top group-hover:scale-y-100 transition-transform duration-300 ease-out"
-        />
-
-        {/* Index number */}
-        <span className="w-7 flex-shrink-0 text-[11px] font-bold tabular-nums tracking-[0.18em]
-                         text-foreground/25 group-hover:text-primary transition-colors duration-200">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-
-        {/* Service name */}
-        <h3 className="flex-1 font-extrabold text-2xl lg:text-[1.75rem] text-foreground leading-tight
-                       group-hover:text-primary transition-colors duration-200">
-          {L({ en, fr })}
-        </h3>
-
-        {/* Description — desktop only */}
-        <p className="hidden lg:block text-sm text-muted-foreground leading-relaxed
-                      max-w-xs xl:max-w-sm flex-shrink-0 line-clamp-2">
-          {L({ en: descEn, fr: descFr })}
-        </p>
-
-        {/* Arrow */}
-        <ArrowUpRight
-          className="h-[18px] w-[18px] text-foreground/20 flex-shrink-0
-                     group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5
-                     transition-all duration-200"
-        />
+        {L({ en: 'Learn more', fr: 'En savoir plus' })}
+        <ArrowRight className="h-3.5 w-3.5 flex-shrink-0" />
       </Link>
     </motion.div>
   );
@@ -652,45 +647,27 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ══ 2. SERVICES — typographic index ═══════════════════════════════════ */}
+      {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
       <section className="bg-background py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
-            <div>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-5 flex items-center gap-3">
-                <span className="w-5 h-px bg-primary flex-shrink-0" />
-                {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
-              </motion.p>
-              <h2 className="font-extrabold text-section text-foreground [text-wrap:balance] max-w-xl">
-                {[
-                  L({ en: 'Six Services,', fr: 'Six Services,' }),
-                  L({ en: 'One Reliable Partner.', fr: 'Un Partenaire Fiable.' }),
-                ].map((line, li) => (
-                  <span key={li} className="block overflow-hidden leading-[1.08]">
-                    <motion.span
-                      className="block"
-                      initial={{ y: '108%' }}
-                      whileInView={{ y: 0 }}
-                      viewport={viewportOnce}
-                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.12 + li * 0.13 }}>
-                      {line}
-                    </motion.span>
-                  </span>
-                ))}
-              </h2>
-            </div>
+          <motion.div
+            initial="hidden" whileInView="show" viewport={viewportOnce}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
+            className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={viewportOnce}
-              transition={{ delay: 0.48, duration: 0.4 }}
+              variants={{ hidden: { opacity: 0, x: -22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } } }}>
+              <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
+                {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
+              </p>
+              <h2 className="font-extrabold text-section text-foreground
+                             [text-wrap:balance] max-w-xl whitespace-pre-line">
+                {L({ en: 'Six Services,\nOne Reliable Partner.', fr: 'Six Services,\nUn Partenaire Fiable.' })}
+              </h2>
+            </motion.div>
+            <motion.div
+              variants={{ hidden: { opacity: 0, x: 22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } } }}
               className="flex-shrink-0">
               <Button asChild variant="outline"
                 className="rounded-full border-border font-semibold text-sm
@@ -701,17 +678,18 @@ export default function HomePage() {
                 </Link>
               </Button>
             </motion.div>
-          </div>
+          </motion.div>
 
-          {/* Service rows — spring stagger */}
+          {/* Card grid — spring stagger */}
           <motion.div
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.18 } } }}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
             {services.map((svc, i) => (
-              <ServiceRow
+              <ServiceCard
                 key={svc.en}
                 icon={svc.icon}
                 en={svc.en}
