@@ -110,17 +110,17 @@ export default function AdminSettingsPage() {
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 {L({
-                  en: 'Gemini API key — stored in the database, never lost when cloning or sharing code. Get a free key at aistudio.google.com.',
-                  fr: 'Clé API Gemini — stockée en base de données, jamais perdue lors du clonage ou partage du code. Clé gratuite sur aistudio.google.com.',
+                  en: 'Groq API key — free, works with any Google/email account, 30 requests/min. Get your key at console.groq.com → API Keys.',
+                  fr: 'Clé API Groq — gratuite, fonctionne avec n\'importe quel compte, 30 req/min. Obtenez votre clé sur console.groq.com → API Keys.',
                 })}
               </p>
-              <Label htmlFor="gemini_api_key" className="font-semibold">Gemini API Key</Label>
+              <Label htmlFor="groq_api_key" className="font-semibold">Groq API Key</Label>
               <div className="relative mt-1">
                 <Input
-                  id="gemini_api_key"
-                  {...register('gemini_api_key')}
+                  id="groq_api_key"
+                  {...register('groq_api_key')}
                   type={showApiKey ? 'text' : 'password'}
-                  placeholder="AIza..."
+                  placeholder="gsk_..."
                   className="pr-10 font-mono text-sm"
                 />
                 <button
@@ -133,7 +133,7 @@ export default function AdminSettingsPage() {
                 </button>
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                {L({ en: 'Saved here once — works forever on any machine without touching .env', fr: 'Sauvegardé ici une fois — fonctionne partout sans toucher .env' })}
+                {L({ en: 'Saved in the database — works on any machine without touching .env', fr: 'Sauvegardé en base de données — fonctionne partout sans toucher .env' })}
               </p>
             </div>
 

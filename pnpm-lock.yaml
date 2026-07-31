@@ -20,6 +20,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@google/generative-ai':
+        specifier: ^0.24.1
+        version: 0.24.1
       '@ltic/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -74,6 +77,9 @@ importers:
       file-type:
         specifier: ^16.5.4
         version: 16.5.4
+      groq-sdk:
+        specifier: ^1.4.1
+        version: 1.4.1
       helmet:
         specifier: ^8.1.0
         version: 8.1.0
@@ -606,6 +612,10 @@ packages:
 
   '@fontsource/plus-jakarta-sans@5.3.0':
     resolution: {integrity: sha512-9WRw3G74Ve4cyPApAZSXLPY5DiLOZXDn7Q7dIBjFBpA0Pj56ljDItEdy2UUajjJxRuTg2HkMLO5C3K2nAQORWg==}
+
+  '@google/generative-ai@0.24.1':
+    resolution: {integrity: sha512-MqO+MLfM6kjxcKoy0p1wRzG3b4ZZXtPI+z2IE26UogS2Cm/XHO+7gGRBh6gcJsOiIVoH93UwKvW4HdgiOZCy9Q==}
+    engines: {node: '>=18.0.0'}
 
   '@hono/node-server@1.19.14':
     resolution: {integrity: sha512-GwtvgtXxnWsucXvbQXkRgqksiH2Qed37H9xHZocE5sA3N8O8O8/8FA3uclQXxXVzc9XBZuEOMK7+r02FmSpHtw==}
@@ -2558,6 +2568,10 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
+  groq-sdk@1.4.1:
+    resolution: {integrity: sha512-M/SmQdHy+nI4ZWyDgXK57p+jQHi9ojjzJVv3mlkDAL/vvxduUYoyAzib70dNvxsWmwsyZTSERMrXgaXR3B3KUA==}
+    hasBin: true
+
   hanji@0.0.5:
     resolution: {integrity: sha512-Abxw1Lq+TnYiL4BueXqMau222fPSPMFtya8HdpWsz/xVAhifXou71mPh/kY2+08RgFcVccjG3uZHs6K5HAe3zw==}
 
@@ -4217,6 +4231,8 @@ snapshots:
   '@fontsource/barlow-condensed@5.3.0': {}
 
   '@fontsource/plus-jakarta-sans@5.3.0': {}
+
+  '@google/generative-ai@0.24.1': {}
 
   '@hono/node-server@1.19.14(hono@4.12.19)':
     dependencies:
@@ -6327,6 +6343,8 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   graphemer@1.4.0: {}
+
+  groq-sdk@1.4.1: {}
 
   hanji@0.0.5:
     dependencies:
