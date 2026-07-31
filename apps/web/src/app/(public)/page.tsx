@@ -252,48 +252,54 @@ interface ProductCategoryCardProps {
   descEn: string; descFr: string;
   image: string;
   tag: { en: string; fr: string };
+  index: number;
 }
 
-function ProductCategoryCard({ en, fr, descEn, descFr, image, tag }: ProductCategoryCardProps) {
+const rowVariant = {
+  hidden: { opacity: 0, x: -14 },
+  show:   { opacity: 1, x: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 26 } },
+};
+
+function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardProps) {
   const { L } = useLanguage();
+  const prefersReduced = useReducedMotion();
   return (
-    <motion.div
-      variants={scaleIn}
-      whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 22 } }}
-      className="group bg-white border border-border rounded-2xl overflow-hidden
-                 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300"
-    >
-      <div className="aspect-[4/3] relative overflow-hidden bg-muted">
-        <Image
-          src={image}
-          alt={en}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <span className="absolute top-3 left-3 bg-primary text-primary-foreground
-                         text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
+    <motion.div variants={rowVariant}>
+      <Link
+        href="/products"
+        className="group flex items-center gap-3 px-3 py-2.5 rounded-xl border border-border
+                   hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary outline-none"
+      >
+        {/* Thumbnail */}
+        <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
+          <Image
+            src={image}
+            alt={en}
+            width={40}
+            height={40}
+            className={`w-full h-full object-cover ${prefersReduced ? '' : 'transition-transform duration-300 group-hover:scale-110'}`}
+          />
+        </div>
+
+        {/* Index */}
+        <span className="font-display text-[10px] font-bold text-muted-foreground/35 w-4 flex-shrink-0 tabular-nums select-none">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
+        {/* Name */}
+        <span className="font-display font-bold text-sm text-foreground group-hover:text-primary transition-colors duration-200 flex-1 leading-tight">
+          {L({ en, fr })}
+        </span>
+
+        {/* Tag */}
+        <span className="hidden sm:inline-flex text-[10px] font-semibold uppercase tracking-wide
+                         px-2 py-0.5 rounded-full bg-primary/10 text-primary flex-shrink-0">
           {L(tag)}
         </span>
-      </div>
-      <div className="p-5">
-        <h3 className="font-bold text-base text-foreground mb-1.5
-                       group-hover:text-primary transition-colors duration-200">
-          {L({ en, fr })}
-        </h3>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-          {L({ en: descEn, fr: descFr })}
-        </p>
-        <Link
-          href="/products"
-          className="inline-flex items-center gap-1.5 text-primary text-xs font-semibold
-                     hover:gap-3 transition-all duration-200"
-        >
-          {L({ en: 'View products', fr: 'Voir les produits' })}
-          <ArrowUpRight className="h-3 w-3" />
-        </Link>
-      </div>
+
+        {/* Arrow */}
+        <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground/40 group-hover:text-primary transition-colors duration-200 flex-shrink-0" />
+      </Link>
     </motion.div>
   );
 }
@@ -725,21 +731,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ 4. PRODUCT CATALOG — tile grid ════════════════════════════════════ */}
-      <section className="bg-background py-20 sm:py-24">
+      {/* ══ 4. PRODUCT CATALOG — compact rows ════════════════════════════════ */}
+      <section className="bg-muted/40 py-12 sm:py-16 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
+          <div className="flex items-center justify-between mb-6">
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-3">
+              <p className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1">
                 {L({ en: 'Our Catalog', fr: 'Notre Catalogue' })}
               </p>
-              <h2 className="font-extrabold text-3xl sm:text-4xl text-foreground">
+              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
                 {L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' })}
               </h2>
             </motion.div>
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <Button asChild variant="outline"
-                className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary">
+              <Button asChild variant="outline" size="sm"
+                className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary rounded-full">
                 <Link href="/products">
                   {L({ en: 'View All', fr: 'Tout Voir' })}
                   <ChevronRight className="h-4 w-4 ml-1" />
@@ -753,10 +759,10 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 gap-1.5"
           >
-            {productCategories.map(cat => (
-              <ProductCategoryCard key={cat.en} {...cat} />
+            {productCategories.map((cat, i) => (
+              <ProductCategoryCard key={cat.en} {...cat} index={i} />
             ))}
           </motion.div>
 
