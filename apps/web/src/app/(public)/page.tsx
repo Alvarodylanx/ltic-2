@@ -114,6 +114,7 @@ const productCategories = [
   { en: 'Filters & Parts',    fr: 'Filtres & Pièces',        descEn: 'OEM-grade filters for all machinery', descFr: 'Filtres OEM pour toutes machines',           image: '/images/filters-parts.jpg', tag: { en: 'Industrial', fr: 'Industriel' } },
   { en: 'Heavy Equipment',    fr: 'Équipements Lourds',      descEn: 'Machinery, tools and structural materials', descFr: 'Machines, outils et matériaux',        image: '/images/heavy-equipment.jpg', tag: { en: 'Supply', fr: 'Fourniture' } },
   { en: 'General Merchandise',fr: 'Marchandises Générales',  descEn: 'Wide range of consumer and trade goods', descFr: 'Large gamme de biens de consommation',   image: '/images/general-merchandise.jpg', tag: { en: 'Commerce', fr: 'Commerce' } },
+  { en: 'Marine & Maintenance Chemicals', fr: 'Produits Chimiques Marins & Entretien', descEn: 'Tank cleaners, degreasers & MARPOL-compliant marine chemicals', descFr: 'Nettoyants de réservoirs, dégraissants et produits chimiques marins conformes MARPOL', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=75', tag: { en: 'Marine', fr: 'Marine' } },
 ];
 
 const orderSteps = [
