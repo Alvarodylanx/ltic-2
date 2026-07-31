@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Globe2, Save, Loader2, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { Globe2, Save, Loader2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -38,7 +38,6 @@ const socialFields = [
 export default function AdminSettingsPage() {
   const qc = useQueryClient();
   const { L } = useLanguage();
-  const [showApiKey, setShowApiKey] = useState(false);
 
   const { data: settings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -104,37 +103,16 @@ export default function AdminSettingsPage() {
               </div>
             ))}
             <div className="pt-2">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="h-4 w-4 text-violet-500" />
-                <h2 className="text-lg font-bold">{L({ en: 'AI Integration', fr: 'Intégration IA' })}</h2>
+                <h2 className="text-lg font-bold">{L({ en: 'AI Auto-Fill', fr: 'Remplissage IA' })}</h2>
               </div>
-              <p className="text-sm text-muted-foreground mb-4">
+              <div className="bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 rounded-lg px-4 py-3 text-sm text-violet-800 dark:text-violet-300">
                 {L({
-                  en: 'Groq API key — free, works with any Google/email account, 30 requests/min. Get your key at console.groq.com → API Keys.',
-                  fr: 'Clé API Groq — gratuite, fonctionne avec n\'importe quel compte, 30 req/min. Obtenez votre clé sur console.groq.com → API Keys.',
+                  en: 'AI auto-fill is built-in and requires no API key. Type a product name in the product form and click "Generate with AI" — description, specs and category fill automatically.',
+                  fr: 'Le remplissage IA est intégré et ne nécessite aucune clé API. Tapez un nom de produit dans le formulaire et cliquez sur "Générer avec IA" — description, spécifications et catégorie se remplissent automatiquement.',
                 })}
-              </p>
-              <Label htmlFor="groq_api_key" className="font-semibold">Groq API Key</Label>
-              <div className="relative mt-1">
-                <Input
-                  id="groq_api_key"
-                  {...register('groq_api_key')}
-                  type={showApiKey ? 'text' : 'password'}
-                  placeholder="gsk_..."
-                  className="pr-10 font-mono text-sm"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowApiKey((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                  aria-label={showApiKey ? 'Hide key' : 'Show key'}
-                >
-                  {showApiKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {L({ en: 'Saved in the database — works on any machine without touching .env', fr: 'Sauvegardé en base de données — fonctionne partout sans toucher .env' })}
-              </p>
             </div>
 
             <Button type="submit" disabled={isSubmitting} className="w-full mt-6">
