@@ -90,8 +90,8 @@ function TrackingContent() {
           </motion.p>
 
           <motion.form variants={fadeInUp} onSubmit={handleTrack}
-            className="flex gap-2 max-w-lg mx-auto">
-            <div className="relative flex-1 translate-x-[5px]">
+            className="flex gap-4 max-w-lg mx-auto">
+            <div className="relative flex-1 translate-x-[18px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 value={trackingNumber}
@@ -99,7 +99,7 @@ function TrackingContent() {
                 placeholder={L({ en: 'Enter tracking number (e.g., LTIC2605001234)', fr: 'Entrez le numéro de suivi (ex: LTIC2605001234)' })}
                 className="pl-10 h-12 text-foreground bg-background border-border" />
             </div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="translate-x-[5px]">
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="translate-x-[18px]">
               <Button type="submit" size="lg" disabled={isLoading || !trackingNumber.trim()}
                 className="h-12 font-display font-semibold">
                 {isLoading
