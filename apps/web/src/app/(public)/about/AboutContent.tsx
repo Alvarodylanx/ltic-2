@@ -60,7 +60,6 @@ const values = [
 export default function AboutPage() {
   const { L } = useLanguage();
   const [activeMVV, setActiveMVV] = useState<number | null>(null);
-  const [flipped, setFlipped] = useState<number | null>(null);
 
   const { data: siteSettings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -296,80 +295,85 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── CORE VALUES — Flip Cards (smooth state-based) ───────────────────── */}
-      <section className="bg-background border-t border-border py-16">
+      {/* ── CORE VALUES — typographic index ─────────────────────────────────── */}
+      <section className="bg-background border-t border-border py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="flex items-center justify-between mb-10">
+          {/* Header */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
             <div>
-              <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em] mb-2">
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-5 flex items-center gap-3">
+                <span className="w-5 h-px bg-primary flex-shrink-0" />
                 {L({ en: 'What Drives Us', fr: 'Ce Qui Nous Anime' })}
-              </p>
-              <h2 className="font-bold text-3xl sm:text-4xl tracking-tight">
-                {L({ en: 'Core Values', fr: 'Valeurs Fondamentales' })}
+              </motion.p>
+              <h2 className="font-extrabold text-section text-foreground [text-wrap:balance] max-w-lg">
+                {[
+                  L({ en: 'Core', fr: 'Valeurs' }),
+                  L({ en: 'Values.', fr: 'Fondamentales.' }),
+                ].map((line, li) => (
+                  <span key={li} className="block overflow-hidden leading-[1.08]">
+                    <motion.span
+                      className="block"
+                      initial={{ y: '108%' }}
+                      whileInView={{ y: 0 }}
+                      viewport={viewportOnce}
+                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 + li * 0.12 }}>
+                      {line}
+                    </motion.span>
+                  </span>
+                ))}
               </h2>
             </div>
-            <div className="hidden sm:block h-px flex-1 bg-border mx-8" />
-            <span className="hidden sm:block text-muted-foreground/30 text-xs uppercase tracking-[0.3em] whitespace-nowrap">
-              {L({ en: 'Hover each value', fr: 'Survolez chaque valeur' })}
-            </span>
-          </motion.div>
+          </div>
 
-          {/* Hairline-divided grid — no gaps, pure border lines between cells */}
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-border border border-border rounded-xl overflow-hidden">
+          {/* Value rows */}
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={viewportOnce}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.065, delayChildren: 0.15 } } }}
+          >
             {values.map(({ en, fr, descEn, descFr }, i) => (
-              <div
+              <motion.div
                 key={en}
-                className="relative bg-background h-44 sm:h-48 cursor-default overflow-hidden"
-                style={{ perspective: '1000px' }}
-                onMouseEnter={() => setFlipped(i)}
-                onMouseLeave={() => setFlipped(null)}>
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 95, damping: 22 } },
+                }}
+                className="group relative border-b border-border first:border-t"
+              >
+                <div className="relative flex items-start lg:items-center gap-5 lg:gap-10 py-6 lg:py-7 pl-5">
+                  {/* Left accent bar */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary rounded-full
+                               scale-y-0 origin-top group-hover:scale-y-100 transition-transform duration-300 ease-out"
+                  />
 
-                <motion.div
-                  className="relative w-full h-full"
-                  animate={{ rotateY: flipped === i ? 180 : 0 }}
-                  transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-                  style={{ transformStyle: 'preserve-3d' }}>
+                  {/* Index */}
+                  <span className="w-7 flex-shrink-0 pt-0.5 lg:pt-0 text-[11px] font-bold tabular-nums tracking-[0.18em]
+                                   text-foreground/25 group-hover:text-primary transition-colors duration-200">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
 
-                  {/* ── Front ── */}
-                  <div
-                    className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7"
-                    style={{ backfaceVisibility: 'hidden' }}>
-                    {/* Ghost number */}
-                    <span className="font-black leading-none select-none"
-                      style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', color: 'hsl(var(--foreground) / 0.05)' }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    {/* Value name */}
-                    <div>
-                      <div className="h-px w-6 bg-primary mb-3" />
-                      <span className="font-bold text-sm sm:text-base uppercase tracking-tight leading-none">
-                        {L({ en, fr })}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* ── Back ── */}
-                  <div
-                    className="absolute inset-0 bg-foreground flex flex-col justify-end p-6 sm:p-7"
-                    style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                    {/* Ghost number on back too */}
-                    <span className="absolute top-4 right-5 font-black leading-none select-none text-2xl"
-                      style={{ color: 'hsl(var(--sidebar-foreground) / 0.07)' }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <div className="h-px w-6 bg-primary mb-3" />
-                    <p className="text-sidebar-foreground font-bold text-xs uppercase tracking-wider mb-2">
+                  {/* Name + description */}
+                  <div className="flex-1 flex flex-col lg:flex-row lg:items-center lg:gap-10">
+                    <h3 className="font-extrabold text-2xl lg:text-[1.75rem] text-foreground leading-tight
+                                   mb-1.5 lg:mb-0 lg:w-64 xl:w-72 flex-shrink-0
+                                   group-hover:text-primary transition-colors duration-200">
                       {L({ en, fr })}
-                    </p>
-                    <p className="text-sidebar-foreground/50 text-xs leading-relaxed">
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
                       {L({ en: descEn, fr: descFr })}
                     </p>
                   </div>
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
             ))}
           </motion.div>
 
