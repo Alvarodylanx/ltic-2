@@ -88,19 +88,19 @@ export default function ProductsPage() {
       </section>
 
       {/* ── FILTER BAR ──────────────────────────────────────────────────────── */}
-      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border py-3">
+      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={L({ en: 'Search products…', fr: 'Rechercher des produits…' })}
-              className="pl-9 pr-8 h-9 text-sm rounded-sm w-56"
+              className="pl-10 pr-8 h-10 text-sm rounded-full w-60"
             />
             {searchInput && (
               <button onClick={() => setSearchInput('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 aria-label="Clear">
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -108,8 +108,8 @@ export default function ProductsPage() {
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
-              <Filter className="h-3.5 w-3.5" />
+            <div className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground">
+              <Filter className="h-4 w-4" />
               {L({ en: 'Filter:', fr: 'Filtrer:' })}
             </div>
             {[{ id: undefined, nameEn: 'All', nameFr: 'Tous' }, ...(categories || [])].map((cat) => {
@@ -117,7 +117,7 @@ export default function ProductsPage() {
               return (
                 <motion.button key={cat.id ?? 'all'} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3.5 py-1.5 rounded-sm text-xs font-semibold border transition-all duration-200 ${
+                  className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
                     active
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-background text-foreground hover:bg-primary/10 hover:text-primary border-border'
