@@ -59,7 +59,7 @@ const services = [
     headlineEn: 'Compliance-First Treatment Services', headlineFr: 'Services de Traitement Axés sur la Conformité',
     descEn: 'Our certified phytosanitary and sanitation services ensure your timber, agricultural goods, and equipment meet all importing country requirements.',
     descFr: "Nos services certifiés de traitement phytosanitaire garantissent que votre bois, vos produits agricoles et équipements répondent à toutes les exigences des pays importateurs.",
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&auto=format&fit=crop&q=70',
+    image: '/images/phytosanitary.jpg',
     bulletsEn: ['Phytosanitary treatment for timber and agricultural goods', 'Industrial sanitation services', 'Regulatory compliance documentation', 'Inspection coordination', 'Treatment certification'],
     bulletsFr: ['Traitement phytosanitaire pour bois et produits agricoles', "Services d'assainissement industriel", 'Documentation de conformité réglementaire', 'Coordination des inspections', 'Certification de traitement'],
   },
