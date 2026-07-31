@@ -277,7 +277,7 @@ function TrackingContent() {
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────────────────────────── */}
-      <section className="relative bg-sidebar overflow-hidden py-24 sm:py-32">
+      <section className="relative bg-sidebar overflow-hidden py-10 sm:py-14">
         {/* Ambient glow */}
         <motion.div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/8 rounded-full blur-3xl pointer-events-none"
