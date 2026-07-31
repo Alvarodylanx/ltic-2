@@ -93,7 +93,7 @@ const features = [
     label:   { en: 'Timber & Natural Resources', fr: 'Bois & Ressources Naturelles' },
     heading: { en: 'Certified Timber\nfor Global Markets.', fr: 'Bois Certifié\npour Marchés Mondiaux.' },
     body:    { en: 'We export certified tropical species for international construction and general trade — sustainably sourced from Central African forests with full documentation.', fr: 'Nous exportons des essences tropicales certifiées pour la construction internationale et le commerce général.' },
-    image:   'https://images.unsplash.com/photo-1542621334-a254cf47733d?w=900&auto=format&fit=crop&q=80',
+    image:   '/images/timber-resources.jpg',
     tag:     { en: 'Trade', fr: 'Commerce' },
     href:    '/products',
   },
