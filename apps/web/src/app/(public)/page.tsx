@@ -136,11 +136,15 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
   const { L } = useLanguage();
   return (
     <motion.div
-      variants={fadeInUp}
-      whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+      variants={{
+        hidden: { opacity: 0, y: 28, scale: 0.97 },
+        show:   { opacity: 1, y: 0,  scale: 1,
+                  transition: { type: 'spring', stiffness: 90, damping: 18, mass: 0.8 } },
+      }}
+      whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 22 } }}
       className="group bg-white border border-border rounded-2xl p-7
                  shadow-sm hover:shadow-xl hover:border-primary/30
-                 transition-all duration-300 flex flex-col"
+                 transition-shadow transition-colors duration-300 flex flex-col"
     >
       {/* Icon */}
       <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5
@@ -648,9 +652,12 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
-            <motion.div variants={fadeInLeft}>
+          <motion.div
+            initial="hidden" whileInView="show" viewport={viewportOnce}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
+            className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
+            <motion.div
+              variants={{ hidden: { opacity: 0, x: -22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } } }}>
               <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
                 {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
               </p>
@@ -659,7 +666,9 @@ export default function HomePage() {
                 {L({ en: 'Six Services,\nOne Reliable Partner.', fr: 'Six Services,\nUn Partenaire Fiable.' })}
               </h2>
             </motion.div>
-            <motion.div variants={fadeInRight} className="flex-shrink-0">
+            <motion.div
+              variants={{ hidden: { opacity: 0, x: 22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } } }}
+              className="flex-shrink-0">
               <Button asChild variant="outline"
                 className="rounded-full border-border font-semibold text-sm
                            hover:border-primary/50 hover:text-primary">
@@ -671,12 +680,12 @@ export default function HomePage() {
             </motion.div>
           </motion.div>
 
-          {/* Card grid */}
+          {/* Card grid — spring stagger */}
           <motion.div
-            variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
             {services.map((svc, i) => (

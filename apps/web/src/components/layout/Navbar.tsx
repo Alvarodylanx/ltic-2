@@ -83,16 +83,16 @@ export function Navbar() {
         </nav>
 
         {/* Desktop right actions */}
-        <div className="hidden lg:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-2.5">
           <button
             onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
             aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+            className="flex items-center gap-1.5 px-4 h-9 rounded-full border border-border text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
           >
             <Globe className="h-3.5 w-3.5" />
             {language.toUpperCase()}
           </button>
-          <Button asChild size="sm" className="font-semibold text-xs px-4 rounded-sm">
+          <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 rounded-full shadow-sm shadow-primary/20">
             <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
           </Button>
         </div>
@@ -145,16 +145,16 @@ export function Navbar() {
                   {L(link)}
                 </Link>
               ))}
-              <div className="flex items-center gap-2 pt-3 mt-2 border-t border-border">
+              <div className="flex items-center gap-2.5 pt-3 mt-2 border-t border-border">
                 <button
                   onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
                   aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-sm border border-border text-xs font-medium hover:bg-muted transition-colors"
+                  className="flex items-center gap-1.5 px-4 h-9 rounded-full border border-border text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
                 >
                   <Globe className="h-3.5 w-3.5" />
                   {language.toUpperCase()}
                 </button>
-                <Button asChild size="sm" className="font-semibold text-xs rounded-sm">
+                <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 rounded-full shadow-sm shadow-primary/20">
                   <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
                 </Button>
               </div>
