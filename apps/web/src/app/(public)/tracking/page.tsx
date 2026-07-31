@@ -97,11 +97,11 @@ function TrackingContent() {
                 value={trackingNumber}
                 onChange={(e) => setTrackingNumber(e.target.value)}
                 placeholder={L({ en: 'Enter tracking number (e.g., LTIC2605001234)', fr: 'Entrez le numéro de suivi (ex: LTIC2605001234)' })}
-                className="pl-10 h-12 text-foreground bg-background border-border rounded-sm" />
+                className="pl-10 h-12 text-foreground bg-background border-border" />
             </div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Button type="submit" size="lg" disabled={isLoading || !trackingNumber.trim()}
-                className="h-12 rounded-sm font-display font-semibold">
+                className="h-12 font-display font-semibold">
                 {isLoading
                   ? <Loader2 className="h-4 w-4 animate-spin" />
                   : L({ en: 'Track', fr: 'Suivre' })}
