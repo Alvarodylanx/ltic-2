@@ -226,7 +226,7 @@ export default function ContactPage() {
               </div>
 
               <Button type="submit" size="lg" disabled={isSubmitting}
-                className="w-full font-semibold text-sm rounded-xl">
+                className="w-full font-semibold text-sm">
                 {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
                 {L({ en: 'Send Message', fr: 'Envoyer le Message' })}
               </Button>

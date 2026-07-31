@@ -153,7 +153,7 @@ export default function ProductsPage() {
               className="flex flex-col items-center justify-center py-24 gap-4">
               <AlertCircle className="h-14 w-14 text-destructive/40" />
               <p className="text-muted-foreground font-medium">{L({ en: 'Unable to load products', fr: 'Impossible de charger les produits' })}</p>
-              <Button variant="outline" onClick={() => refetch()} className="gap-2 rounded-sm">
+              <Button variant="outline" onClick={() => refetch()} className="gap-2">
                 <RefreshCw className="h-4 w-4" />
                 {L({ en: 'Retry', fr: 'Réessayer' })}
               </Button>
@@ -171,8 +171,7 @@ export default function ProductsPage() {
                   ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvé pour "${debouncedSearch}"` })
                   : L({ en: 'No products found in this category', fr: 'Aucun produit trouvé dans cette catégorie' })}
               </p>
-              <Button variant="outline" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}
-                className="rounded-sm">
+              <Button variant="outline" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}>
                 {L({ en: 'View All Products', fr: 'Voir Tous les Produits' })}
               </Button>
             </motion.div>
@@ -207,7 +206,7 @@ export default function ProductsPage() {
                         <h3 className="font-bold text-sm leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
                           {L({ en: product.nameEn, fr: product.nameFr })}
                         </h3>
-                        <Button asChild size="sm" className="w-full rounded-sm">
+                        <Button asChild size="sm" className="w-full">
                           <Link href={`/products/${product.slug}`}>
                             {L({ en: 'View Details', fr: 'Voir les Détails' })}
                             <ArrowRight className="h-3.5 w-3.5 ml-1" />

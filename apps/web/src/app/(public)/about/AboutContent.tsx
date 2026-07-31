@@ -395,14 +395,14 @@ export default function AboutPage() {
           </motion.div>
           <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex flex-shrink-0 gap-3">
-            <Button asChild size="lg" className="font-semibold text-sm rounded-sm">
+            <Button asChild size="lg" className="font-semibold text-sm">
               <Link href="/contact">
                 {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline"
-              className="font-semibold text-sm rounded-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
+              className="font-semibold text-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
               <Link href="/quote">
                 {L({ en: 'Get a Quote', fr: 'Devis Gratuit' })}
               </Link>

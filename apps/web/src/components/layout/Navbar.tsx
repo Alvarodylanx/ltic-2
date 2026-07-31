@@ -87,12 +87,12 @@ export function Navbar() {
           <button
             onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
             aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-            className="flex items-center gap-1.5 px-4 h-9 rounded-full border border-border text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+            className="flex items-center gap-1.5 px-4 h-9 border border-border rounded-full text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
           >
             <Globe className="h-3.5 w-3.5" />
             {language.toUpperCase()}
           </button>
-          <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 rounded-full shadow-sm shadow-primary/20">
+          <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 shadow-sm shadow-primary/20">
             <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
           </Button>
         </div>
@@ -149,12 +149,12 @@ export function Navbar() {
                 <button
                   onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
                   aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-                  className="flex items-center gap-1.5 px-4 h-9 rounded-full border border-border text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+                  className="flex items-center gap-1.5 px-4 h-9 border border-border rounded-full text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
                 >
                   <Globe className="h-3.5 w-3.5" />
                   {language.toUpperCase()}
                 </button>
-                <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 rounded-full shadow-sm shadow-primary/20">
+                <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 shadow-sm shadow-primary/20">
                   <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
                 </Button>
               </div>
