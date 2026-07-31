@@ -193,7 +193,7 @@ function TrackingContent() {
                             <div className="flex flex-col items-center">
                               <motion.div
                                 initial={{ scale: 0 }} animate={{ scale: 1 }}
-                                transition={{ delay: idx * 0.08, type: 'spring', stiffness: 400 }}
+                                transition={{ delay: idx * 0.08, type: 'spring', stiffness: 300, damping: 22 }}
                                 className={`w-3 h-3 rounded-full mt-1 ${idx === 0 ? 'bg-primary ring-4 ring-primary/20' : 'bg-muted-foreground/40'}`} />
                               {idx < (order.timeline.length - 1) && (
                                 <div className="w-0.5 flex-1 bg-muted-foreground/20 mt-1" />

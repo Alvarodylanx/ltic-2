@@ -583,7 +583,7 @@ export default function HomePage() {
                   aria-selected={i === activeSlide}
                   aria-label={`Slide ${i + 1}`}
                   onClick={() => goTo(i)}
-                  className={`rounded-full transition-all duration-350 ${
+                  className={`rounded-full transition-all duration-300 ${
                     i === activeSlide
                       ? 'w-8 h-[4px] bg-primary'
                       : 'w-[4px] h-[4px] bg-white/30 hover:bg-white/60'
