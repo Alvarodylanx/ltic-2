@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException, ServiceUnavailableException } from '@nestjs/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { SettingsService } from '../settings/settings.service';
 
 interface Category {
   id: number;
@@ -16,11 +17,25 @@ export interface GeneratedProduct {
 
 @Injectable()
 export class AiService {
+  constructor(private readonly settings: SettingsService) {}
+
+  private async getApiKey(): Promise<string> {
+    // DB setting takes priority — survives clones and code sharing
+    const all = await this.settings.findAll();
+    const dbKey = all['gemini_api_key'];
+    if (dbKey && dbKey.trim()) return dbKey.trim();
+
+    // Fallback to .env (local dev only, not committed to git)
+    const envKey = process.env.GEMINI_API_KEY;
+    if (envKey && envKey.trim()) return envKey.trim();
+
+    throw new ServiceUnavailableException(
+      'Gemini API key not configured. Go to Admin → Settings → AI Integration and enter your key.',
+    );
+  }
+
   async generateProduct(productName: string, categories: Category[]): Promise<GeneratedProduct> {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      throw new ServiceUnavailableException('GEMINI_API_KEY is not configured. Add it to .env');
-    }
+    const apiKey = await this.getApiKey();
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({

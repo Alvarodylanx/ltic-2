@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Globe2, Save, Loader2 } from 'lucide-react';
+import { Globe2, Save, Loader2, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -38,6 +38,7 @@ const socialFields = [
 export default function AdminSettingsPage() {
   const qc = useQueryClient();
   const { L } = useLanguage();
+  const [showApiKey, setShowApiKey] = useState(false);
 
   const { data: settings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -102,6 +103,40 @@ export default function AdminSettingsPage() {
                 <Input id={key} {...register(key)} placeholder={placeholder} className="mt-1" type="url" />
               </div>
             ))}
+            <div className="pt-2">
+              <div className="flex items-center gap-2 mb-4">
+                <Sparkles className="h-4 w-4 text-violet-500" />
+                <h2 className="text-lg font-bold">{L({ en: 'AI Integration', fr: 'Intégration IA' })}</h2>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                {L({
+                  en: 'Gemini API key — stored in the database, never lost when cloning or sharing code. Get a free key at aistudio.google.com.',
+                  fr: 'Clé API Gemini — stockée en base de données, jamais perdue lors du clonage ou partage du code. Clé gratuite sur aistudio.google.com.',
+                })}
+              </p>
+              <Label htmlFor="gemini_api_key" className="font-semibold">Gemini API Key</Label>
+              <div className="relative mt-1">
+                <Input
+                  id="gemini_api_key"
+                  {...register('gemini_api_key')}
+                  type={showApiKey ? 'text' : 'password'}
+                  placeholder="AIza..."
+                  className="pr-10 font-mono text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowApiKey((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  aria-label={showApiKey ? 'Hide key' : 'Show key'}
+                >
+                  {showApiKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {L({ en: 'Saved here once — works forever on any machine without touching .env', fr: 'Sauvegardé ici une fois — fonctionne partout sans toucher .env' })}
+              </p>
+            </div>
+
             <Button type="submit" disabled={isSubmitting} className="w-full mt-6">
               {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
               {isSubmitting ? L({ en: 'Saving…', fr: 'Enregistrement…' }) : L({ en: 'Save Settings', fr: 'Enregistrer les paramètres' })}
