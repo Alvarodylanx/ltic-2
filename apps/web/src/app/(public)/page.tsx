@@ -255,34 +255,49 @@ interface ProductCategoryCardProps {
   index: number;
 }
 
+const catalogEase = [0.22, 1, 0.36, 1] as const;
+
 const rowVariant = {
-  hidden: { opacity: 0, x: -14 },
-  show:   { opacity: 1, x: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 26 } },
+  hidden: { opacity: 0, y: 14 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.38, ease: catalogEase } },
+};
+
+const catalogStagger = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.035, delayChildren: 0.05 } },
 };
 
 function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardProps) {
   const { L } = useLanguage();
   const prefersReduced = useReducedMotion();
+
   return (
-    <motion.div variants={rowVariant}>
+    <motion.div
+      variants={rowVariant}
+      whileHover={prefersReduced ? {} : { y: -1 }}
+      transition={{ duration: 0.18, ease: 'easeOut' }}
+    >
       <Link
         href="/products"
-        className="group flex items-center gap-3 px-3 py-2.5 rounded-xl border border-border
-                   hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary outline-none"
+        className="group flex items-center gap-3 px-3 py-2.5 rounded-xl
+                   border-l-2 border-l-transparent border border-border
+                   hover:border-l-primary hover:border-primary/30 hover:bg-primary/[0.04]
+                   transition-all duration-200 ease-out
+                   focus-visible:ring-2 focus-visible:ring-primary outline-none"
       >
         {/* Thumbnail */}
-        <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
+        <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-muted shadow-sm">
           <Image
             src={image}
             alt={en}
             width={40}
             height={40}
-            className={`w-full h-full object-cover ${prefersReduced ? '' : 'transition-transform duration-300 group-hover:scale-110'}`}
+            className={`w-full h-full object-cover ${prefersReduced ? '' : 'transition-transform duration-300 ease-out group-hover:scale-110'}`}
           />
         </div>
 
         {/* Index */}
-        <span className="font-display text-[10px] font-bold text-muted-foreground/35 w-4 flex-shrink-0 tabular-nums select-none">
+        <span className="font-display text-[10px] font-bold text-muted-foreground/30 w-4 flex-shrink-0 tabular-nums select-none group-hover:text-primary/40 transition-colors duration-200">
           {String(index + 1).padStart(2, '0')}
         </span>
 
@@ -293,12 +308,13 @@ function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardP
 
         {/* Tag */}
         <span className="hidden sm:inline-flex text-[10px] font-semibold uppercase tracking-wide
-                         px-2 py-0.5 rounded-full bg-primary/10 text-primary flex-shrink-0">
+                         px-2 py-0.5 rounded-full bg-primary/10 text-primary flex-shrink-0
+                         group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-200">
           {L(tag)}
         </span>
 
         {/* Arrow */}
-        <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground/40 group-hover:text-primary transition-colors duration-200 flex-shrink-0" />
+        <ArrowUpRight className={`h-3.5 w-3.5 text-muted-foreground/35 group-hover:text-primary flex-shrink-0 transition-all duration-200 ${prefersReduced ? '' : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`} />
       </Link>
     </motion.div>
   );
@@ -735,15 +751,35 @@ export default function HomePage() {
       <section className="bg-muted/40 py-12 sm:py-16 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
-            <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <p className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1">
+            <motion.div
+              initial="hidden" whileInView="show" viewport={viewportOnce}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
+            >
+              <motion.p
+                variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: catalogEase } } }}
+                className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1"
+              >
                 {L({ en: 'Our Catalog', fr: 'Notre Catalogue' })}
-              </p>
-              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
-                {L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' })}
+              </motion.p>
+              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight overflow-hidden">
+                {L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' }).split(' ').map((word, wi) => (
+                  <span key={wi} className="inline-block overflow-hidden mr-[0.2em] last:mr-0">
+                    <motion.span
+                      className="inline-block"
+                      variants={{ hidden: { y: '110%' }, show: { y: 0, transition: { duration: 0.44, ease: catalogEase } } }}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>
+                ))}
               </h2>
             </motion.div>
-            <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}>
+            <motion.div
+              initial={{ opacity: 0, x: 16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.38, ease: catalogEase, delay: 0.2 }}
+            >
               <Button asChild variant="outline" size="sm"
                 className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary rounded-full">
                 <Link href="/products">
@@ -755,7 +791,7 @@ export default function HomePage() {
           </div>
 
           <motion.div
-            variants={stagger}
+            variants={catalogStagger}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
