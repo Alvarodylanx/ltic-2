@@ -77,10 +77,10 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
       toast.success(L({ en: 'AI generated content — review before saving', fr: 'Contenu généré par IA — vérifiez avant de sauvegarder' }));
     } catch (e: any) {
       const msg = e.message || '';
-      if (msg.includes('GEMINI_API_KEY')) {
-        toast.error('Add GEMINI_API_KEY to .env to use AI generation');
+      if (msg.includes('GEMINI_API_KEY') || msg.includes('not configured')) {
+        toast.error('Add your Gemini API key in Admin → Settings → AI Integration');
       } else {
-        toast.error(L({ en: 'AI generation failed. Try again.', fr: 'Échec de la génération IA. Réessayez.' }));
+        toast.error(msg || 'AI generation failed');
       }
     } finally {
       setIsGenerating(false);

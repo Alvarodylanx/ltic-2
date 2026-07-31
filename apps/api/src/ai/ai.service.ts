@@ -39,7 +39,7 @@ export class AiService {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.0-flash',
       generationConfig: { responseMimeType: 'application/json' },
     });
 
@@ -79,7 +79,10 @@ Example output:
       if (err instanceof SyntaxError) {
         throw new BadRequestException('AI returned invalid JSON. Please try again.');
       }
-      throw new ServiceUnavailableException(err.message || 'AI generation failed');
+      // Surface the real Gemini SDK error (e.g. invalid key, quota, model name)
+      const detail = err?.message ?? err?.toString() ?? 'Unknown error';
+      console.error('[AiService] Gemini error:', detail);
+      throw new ServiceUnavailableException(`Gemini error: ${detail}`);
     }
   }
 }
