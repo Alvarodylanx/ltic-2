@@ -137,46 +137,33 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
   return (
     <motion.div
       variants={fadeInUp}
-      whileHover={{ y: -5, transition: { type: 'spring', stiffness: 300, damping: 22 } }}
-      className="group relative bg-sidebar-accent border border-sidebar-border rounded-2xl p-7
-                 hover:border-primary/40 hover:shadow-[0_8px_40px_hsl(var(--primary)/0.13)]
-                 transition-all duration-300 flex flex-col overflow-hidden"
+      whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+      className="group bg-white border border-border rounded-2xl p-7
+                 shadow-sm hover:shadow-xl hover:border-primary/30
+                 transition-all duration-300 flex flex-col"
     >
-      {/* Glowing top accent line — reveals on hover */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent
-                      opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-      {/* Decorative oversized index — background layer */}
-      <span aria-hidden="true"
-        className="absolute -right-3 -top-5 text-[7rem] font-black leading-none select-none pointer-events-none
-                   text-sidebar-foreground/[0.04] group-hover:text-primary/[0.07] transition-colors duration-500">
-        {String(index + 1).padStart(2, '0')}
-      </span>
-
       {/* Icon */}
-      <div className="relative z-10 w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl
-                      flex items-center justify-center mb-5 flex-shrink-0
-                      group-hover:bg-primary group-hover:border-primary group-hover:scale-110
-                      transition-all duration-300">
+      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5
+                      group-hover:bg-primary group-hover:scale-110
+                      transition-all duration-300 flex-shrink-0">
         <Icon className="h-5 w-5 text-primary group-hover:text-white transition-colors duration-300" />
       </div>
 
-      {/* Number label */}
-      <span className="relative z-10 text-[10px] font-bold uppercase tracking-[0.22em] text-primary/50 mb-2 block">
+      {/* Number badge */}
+      <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-primary/60 mb-2 block">
         {String(index + 1).padStart(2, '0')}
       </span>
 
-      <h3 className="relative z-10 font-bold text-xl text-sidebar-foreground mb-3 leading-tight">
+      <h3 className="font-bold text-xl text-foreground mb-3 leading-tight">
         {L({ en, fr })}
       </h3>
-      <p className="relative z-10 text-sidebar-foreground/55 text-base leading-relaxed flex-1 mb-5
-                    group-hover:text-sidebar-foreground/75 transition-colors duration-300">
+      <p className="text-muted-foreground text-base leading-relaxed flex-1 mb-5">
         {L({ en: descEn, fr: descFr })}
       </p>
 
       <Link
         href="/services"
-        className="relative z-10 inline-flex items-center gap-1.5 text-primary text-sm font-semibold
+        className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold
                    group-hover:gap-3 transition-all duration-200 w-fit"
       >
         {L({ en: 'Learn more', fr: 'En savoir plus' })}
@@ -656,47 +643,26 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ══ 2. SERVICES ════════════════════════════════════════════════════════ */}
-      <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
-        {/* Atmosphere: dot grid + radial glow */}
-        <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_70%,hsl(var(--primary)/0.07),transparent)] pointer-events-none" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
+      <section className="bg-background py-20 sm:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
-
+            className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
             <motion.div variants={fadeInLeft}>
-              <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-5 flex items-center gap-3">
-                <span className="w-6 h-px bg-primary flex-shrink-0" />
+              <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
                 {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
               </p>
-              {/* Line-by-line clip reveal */}
-              <h2 className="font-extrabold text-section text-sidebar-foreground [text-wrap:balance] max-w-xl">
-                {[
-                  L({ en: 'Six Services,', fr: 'Six Services,' }),
-                  L({ en: 'One Reliable Partner.', fr: 'Un Partenaire Fiable.' }),
-                ].map((line, li) => (
-                  <span key={li} className="block overflow-hidden leading-[1.08]">
-                    <motion.span
-                      className="block"
-                      initial={{ y: '105%' }}
-                      whileInView={{ y: 0 }}
-                      viewport={viewportOnce}
-                      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1], delay: 0.1 + li * 0.14 }}>
-                      {line}
-                    </motion.span>
-                  </span>
-                ))}
+              <h2 className="font-extrabold text-section text-foreground
+                             [text-wrap:balance] max-w-xl whitespace-pre-line">
+                {L({ en: 'Six Services,\nOne Reliable Partner.', fr: 'Six Services,\nUn Partenaire Fiable.' })}
               </h2>
             </motion.div>
-
             <motion.div variants={fadeInRight} className="flex-shrink-0">
               <Button asChild variant="outline"
-                className="rounded-full border-sidebar-border text-sidebar-foreground/80 font-semibold text-sm
-                           hover:border-primary hover:text-primary hover:bg-primary/10 transition-all duration-200">
+                className="rounded-full border-border font-semibold text-sm
+                           hover:border-primary/50 hover:text-primary">
                 <Link href="/services">
                   {L({ en: 'All Services', fr: 'Tous les Services' })}
                   <ChevronRight className="h-4 w-4 ml-1" />
@@ -711,7 +677,8 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
             {services.map((svc, i) => (
               <ServiceCard
                 key={svc.en}
