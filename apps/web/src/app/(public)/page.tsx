@@ -85,7 +85,7 @@ const features = [
     label:   { en: 'Industrial Supply',          fr: 'Fourniture Industrielle' },
     heading: { en: 'Industrial Products\nDelivered On-Time.', fr: 'Produits Industriels\nLivrés à Temps.' },
     body:    { en: 'From power generators to OEM-grade lubricants, we source and ship the industrial essentials your operations depend on — Total, Shell and certified OEM brands, shipped anywhere.', fr: 'Des groupes électrogènes aux lubrifiants OEM, nous approvisionnons les produits industriels essentiels — Total, Shell et marques OEM certifiées.' },
-    image:   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80',
+    image:   '/images/industrial-supply.jpg',
     tag:     { en: 'Supply', fr: 'Fourniture' },
     href:    '/products',
   },
