@@ -32,8 +32,12 @@ const CATEGORY_PATTERNS: Array<{ keywords: RegExp; slug: string }> = [
     slug: 'marine',
   },
   {
-    keywords: /sulfur|sulphur|soufre|acid|acide|solvent|solvant|mineral|minéral|chemical|chimique|raw.?material|matieres?.?premi|granular|caustic|nitrate|phosphate|ammonia|chlorine|resin|résine/i,
+    keywords: /sulfur|sulphur|soufre|acid|acide|solvent|solvant|mineral|minéral|chemical|chimique|raw.?material|matieres?.?premi|granular|caustic|nitrate|phosphate|ammonia|chlorine|resin|résine|labsa|cmc|hypochlorite|spirit|white.?spirit/i,
     slug: 'chemicals',
+  },
+  {
+    keywords: /cocoa|cacao|coffee|café|palm.?oil|huile.?palme|spice|épice|cassava|manioc|sesame|sésame|groundnut|arachide|cashew|noix.?cajou|pepper|poivre|vanilla|vanille|ginger|gingembre|food.?grade|alimentaire|agri|agricultural|harvest|récolte/i,
+    slug: 'food',
   },
   {
     keywords: /timber|log\b|logs\b|bois|grume|wood|lumber|sapele|ayous|iroko|okoume|teak/i,
@@ -88,6 +92,11 @@ const TEMPLATES: Record<string, Template> = {
     descFr: (n) => `${n} est un produit chimique ou une matière première de qualité industrielle fourni par LTIC SARL pour les applications de fabrication, d'agriculture et de traitement industriel. Disponible en vrac et en emballage standard.`,
     specs: () => `Grade: Industrial / Technical grade\nPackaging: 25kg bags, 50kg bags, bulk\nOrigin: International sourcing\nStorage: Cool, dry, ventilated area\nCompliance: SDS/MSDS available on request`,
   },
+  food: {
+    descEn: (n) => `${n} is a premium agri-food commodity sourced by LTIC SARL from certified producers for export to international markets. Compliant with food safety and phytosanitary standards.`,
+    descFr: (n) => `${n} est une denrée agro-alimentaire premium approvisionnée par LTIC SARL auprès de producteurs certifiés pour l'exportation vers les marchés internationaux. Conforme aux normes de sécurité alimentaire et phytosanitaires.`,
+    specs: () => `Grade: Food grade / Export quality\nPackaging: 25kg bags, 50kg bags, bulk on request\nMoisture content: As per standard\nOrigin: Cameroon / West & Central Africa\nCertification: Phytosanitary certificate available`,
+  },
   general: {
     descEn: (n) => `${n} is a quality commercial product sourced and distributed by LTIC SARL for B2B clients across Africa and international markets. Available in bulk and standard packaging.`,
     descFr: (n) => `${n} est un produit commercial de qualité fourni et distribué par LTIC SARL aux clients professionnels en Afrique et sur les marchés internationaux. Disponible en vrac et en emballage standard.`,
@@ -126,6 +135,7 @@ export class AiService {
       timber:     ['timber', 'log', 'bois', 'grume', 'wood'],
       equipment:  ['equipment', 'heavy', 'engin', 'lourd'],
       chemicals:  ['chemical', 'chimique', 'raw material', 'sulfur', 'mineral'],
+      food:       ['food', 'agricultural', 'cocoa', 'alimentaire', 'agricole'],
       general:    ['general', 'merchandise', 'marchandise', 'commerce'],
     };
 
