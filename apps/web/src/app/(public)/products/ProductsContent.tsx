@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -46,9 +46,9 @@ export default function ProductsPage() {
 
   return (
     <>
-      {/* ── HERO ────────────────────────────────────────────────────────────── */}
+      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
-        <Image src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&auto=format&fit=crop&q=50" alt="" fill className="object-cover object-center opacity-30" priority />
+        <Image src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
@@ -81,13 +81,13 @@ export default function ProductsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
             className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'Premium certified industrial equipment, supplies, and materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés premium, fournitures et matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
+            {L({ en: 'Premium certified industrial equipment, supplies, and materials â€” sourced globally, delivered reliably.', fr: 'Ã‰quipements industriels certifiÃ©s premium, fournitures et matÃ©riaux â€” approvisionnÃ©s mondialement, livrÃ©s de faÃ§on fiable.' })}
           </motion.p>
         </div>
 
       </section>
 
-      {/* ── FILTER BAR ──────────────────────────────────────────────────────── */}
+      {/* â”€â”€ FILTER BAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="sticky top-16 z-40
         bg-white/75 backdrop-blur-md
         border-b border-white/60
@@ -99,7 +99,7 @@ export default function ProductsPage() {
             <Input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              placeholder={L({ en: 'Search products…', fr: 'Rechercher des produits…' })}
+              placeholder={L({ en: 'Search productsâ€¦', fr: 'Rechercher des produitsâ€¦' })}
               className="pl-10 pr-8 h-10 text-sm rounded-full w-60
                 bg-white/60 border-border/50
                 focus:bg-white/95 focus:border-primary/40
@@ -137,7 +137,7 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      {/* ── PRODUCTS GRID ────────────────────────────────────────────────────── */}
+      {/* â”€â”€ PRODUCTS GRID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="bg-background py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading && (
@@ -162,7 +162,7 @@ export default function ProductsPage() {
               <p className="text-muted-foreground font-medium">{L({ en: 'Unable to load products', fr: 'Impossible de charger les produits' })}</p>
               <Button variant="outline" onClick={() => refetch()} className="gap-2">
                 <RefreshCw className="h-4 w-4" />
-                {L({ en: 'Retry', fr: 'Réessayer' })}
+                {L({ en: 'Retry', fr: 'RÃ©essayer' })}
               </Button>
             </motion.div>
           )}
@@ -175,8 +175,8 @@ export default function ProductsPage() {
               </div>
               <p className="text-muted-foreground">
                 {debouncedSearch
-                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvé pour "${debouncedSearch}"` })
-                  : L({ en: 'No products found in this category', fr: 'Aucun produit trouvé dans cette catégorie' })}
+                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvÃ© pour "${debouncedSearch}"` })
+                  : L({ en: 'No products found in this category', fr: 'Aucun produit trouvÃ© dans cette catÃ©gorie' })}
               </p>
               <Button variant="outline" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}>
                 {L({ en: 'View All Products', fr: 'Voir Tous les Produits' })}
@@ -215,7 +215,7 @@ export default function ProductsPage() {
                         </h3>
                         <Button asChild size="sm" className="w-full text-xs sm:text-sm h-8 sm:h-9">
                           <Link href={`/products/${product.slug}`}>
-                            {L({ en: 'View Details', fr: 'Voir les Détails' })}
+                            {L({ en: 'View Details', fr: 'Voir les DÃ©tails' })}
                             <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 ml-1 flex-shrink-0" />
                           </Link>
                         </Button>
@@ -231,3 +231,4 @@ export default function ProductsPage() {
     </>
   );
 }
+

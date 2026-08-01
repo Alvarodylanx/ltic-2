@@ -29,7 +29,7 @@ const heroSlides = [
     sub:   { en: 'End-to-end freight forwarding across 30+ countries — air, sea and road, fully tracked.', fr: 'Freight forwarding complet dans 30+ pays — aérien, maritime et routier, entièrement suivi.' },
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
-    image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1400&auto=format&fit=crop&q=65',
     theme: {
       tag:      'text-blue-400',
       tagBg:    'bg-blue-400',
@@ -44,7 +44,7 @@ const heroSlides = [
     sub:   { en: 'Generators, lubricants and OEM-grade parts — Total, Shell and certified industrial brands.', fr: 'Générateurs, lubrifiants et pièces OEM — Total, Shell et marques industrielles certifiées.' },
     cta1:  { label: { en: 'View Products',     fr: 'Voir les Produits' }, href: '/products' },
     cta2:  { label: { en: 'Request a Quote',   fr: 'Demander un Devis' }, href: '/quote' },
-    image: 'https://images.unsplash.com/photo-1670689334799-cdc6777db8cc?w=1800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1670689334799-cdc6777db8cc?w=1400&auto=format&fit=crop&q=65',
     theme: {
       tag:      'text-amber-400',
       tagBg:    'bg-amber-400',
@@ -59,7 +59,7 @@ const heroSlides = [
     sub:   { en: 'Import, export and brand representation across emerging markets — one partner for every transaction.', fr: 'Import, export et représentation de marque sur marchés émergents — un partenaire pour chaque transaction.' },
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
-    image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1400&auto=format&fit=crop&q=65',
     theme: {
       tag:      'text-yellow-300',
       tagBg:    'bg-yellow-300',
@@ -383,6 +383,7 @@ export default function HomePage() {
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
+    staleTime: 5 * 60 * 1000,
   });
   const { data: apiPartners = [] } = useQuery<Partner[]>({
     queryKey: ['partners'],
@@ -898,7 +899,7 @@ export default function HomePage() {
       {/* ══ 7. CTA — dark cinematic ════════════════════════════════════════════ */}
       <section className="relative bg-sidebar py-24 sm:py-36 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&auto=format&fit=crop&q=60"
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&auto=format&fit=crop&q=55"
           alt=""
           fill
           className="object-cover opacity-25"
