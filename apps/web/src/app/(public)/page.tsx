@@ -454,19 +454,10 @@ export default function HomePage() {
     <>
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
-        className="relative h-[82dvh] min-h-[560px] bg-black"
-        style={{ clipPath: 'url(#heroClip)' }}
+        className="relative h-[82dvh] min-h-[560px] overflow-hidden bg-black"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* Straight sides, deep circular curve at centre-bottom only */}
-        <svg width="0" height="0" className="absolute" aria-hidden="true">
-          <defs>
-            <clipPath id="heroClip" clipPathUnits="objectBoundingBox">
-              <path d="M0,0 L1,0 L1,0.78 Q0.5,1.22 0,0.78 Z" />
-            </clipPath>
-          </defs>
-        </svg>
         {/* ── Animated backgrounds (crossfade + Ken Burns zoom) ── */}
         <AnimatePresence initial={false} mode="sync">
           <motion.div
@@ -508,7 +499,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
         {/* ── Main content ── */}
-        <div className="relative z-10 h-full flex items-center pb-[180px] pt-16">
+        <div className="relative z-10 h-full flex items-center pb-24 pt-16">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -599,7 +590,7 @@ export default function HomePage() {
         </div>
 
         {/* ── Bottom navigation bar ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-[170px] sm:pb-[175px]">
+        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-7 sm:pb-9">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
 
             {/* Slide dots */}
