@@ -501,9 +501,12 @@ export default function HomePage() {
         {/* ── Bottom vignette ── */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
+        {/* ── Mobile: right-side vignette (slide gradients only cover the left on mobile) ── */}
+        <div className="sm:hidden absolute inset-0 bg-gradient-to-l from-black/65 via-black/20 to-transparent pointer-events-none" />
+
         {/* ── Main content ── */}
         <div className="relative z-10 h-full flex items-center pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-24">
-          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto w-full pl-4 pr-2 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSlide}
