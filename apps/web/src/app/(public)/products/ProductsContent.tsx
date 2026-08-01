@@ -22,7 +22,10 @@ export default function ProductsPage() {
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(searchInput.trim()), 350);
@@ -56,6 +59,7 @@ export default function ProductsPage() {
   const { data: products, isLoading, isError, refetch } = useQuery<any[]>({
     queryKey: ['products', productsUrl],
     queryFn: () => api.get(productsUrl),
+    enabled: mounted,
     retry: 2,
   });
 
@@ -203,7 +207,7 @@ export default function ProductsPage() {
       {/* ── PRODUCTS GRID ── */}
       <section className="bg-background py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {isLoading && (
+          {(!mounted || isLoading) && (
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
               {Array(8).fill(0).map((_, i) => (
                 <div key={i} className="border border-border rounded-2xl overflow-hidden">
@@ -218,7 +222,7 @@ export default function ProductsPage() {
             </div>
           )}
 
-          {isError && (
+          {mounted && isError && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
               className="flex flex-col items-center justify-center py-24 gap-4">
               <AlertCircle className="h-14 w-14 text-destructive/40" />
@@ -232,7 +236,7 @@ export default function ProductsPage() {
             </motion.div>
           )}
 
-          {!isLoading && !isError && !products?.length && (
+          {mounted && !isLoading && !isError && !products?.length && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
               className="flex flex-col items-center justify-center py-24 gap-4">
               <div className="w-14 h-14 rounded-xl bg-foreground flex items-center justify-center">
@@ -249,7 +253,7 @@ export default function ProductsPage() {
             </motion.div>
           )}
 
-          {!isLoading && !isError && products && products.length > 0 && (
+          {mounted && !isLoading && !isError && products && products.length > 0 && (
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${selectedCategory ?? 'all'}-${debouncedSearch}`}
