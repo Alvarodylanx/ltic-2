@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '@/lib/api';
@@ -15,6 +16,7 @@ const WhatsAppIcon = () => (
 export function WhatsAppButton() {
   const { L } = useLanguage();
   const [hovered, setHovered] = useState(false);
+  const pathname = usePathname();
 
   const { data: settings } = useQuery<Record<string, string>>({
     queryKey: ['settings'],
@@ -23,6 +25,8 @@ export function WhatsAppButton() {
   });
 
   const url = settings?.social_whatsapp || 'https://wa.me/2376XXXXXXXX';
+
+  if (/^\/products\/.+/.test(pathname)) return null;
 
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-2">
