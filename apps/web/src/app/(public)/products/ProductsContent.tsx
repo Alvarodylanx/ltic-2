@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -45,18 +45,18 @@ export default function ProductsPage() {
     queryFn: () => api.get('/api/categories'),
   });
 
+  const productsUrl = useMemo(() => {
+    const params = new URLSearchParams();
+    if (selectedCategory) params.set('categoryId', String(selectedCategory));
+    if (debouncedSearch) params.set('search', debouncedSearch);
+    const q = params.toString();
+    return `/api/products${q ? `?${q}` : ''}`;
+  }, [selectedCategory, debouncedSearch]);
+
   const { data: products, isLoading, isError, refetch } = useQuery<any[]>({
-    queryKey: ['products', selectedCategory ?? null, debouncedSearch],
-    queryFn: ({ queryKey }) => {
-      const [, categoryId, search] = queryKey as [string, number | null, string];
-      const params = new URLSearchParams();
-      if (categoryId) params.set('categoryId', String(categoryId));
-      if (search) params.set('search', search);
-      const q = params.toString();
-      return api.get(`/api/products${q ? `?${q}` : ''}`);
-    },
+    queryKey: ['products', productsUrl],
+    queryFn: () => api.get(productsUrl),
     retry: 2,
-    staleTime: 0,
   });
 
   const allCategories = [{ id: undefined, nameEn: 'All Products', nameFr: 'Tous les Produits' }, ...(categories || [])];
