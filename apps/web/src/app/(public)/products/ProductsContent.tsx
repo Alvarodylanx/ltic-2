@@ -45,19 +45,18 @@ export default function ProductsPage() {
     queryFn: () => api.get('/api/categories'),
   });
 
-  const buildUrl = () => {
-    const params = new URLSearchParams();
-    if (selectedCategory) params.set('categoryId', String(selectedCategory));
-    if (debouncedSearch) params.set('search', debouncedSearch);
-    const q = params.toString();
-    return `/api/products${q ? `?${q}` : ''}`;
-  };
-
   const { data: products, isLoading, isError, refetch } = useQuery<any[]>({
-    queryKey: ['products', selectedCategory, debouncedSearch],
-    queryFn: () => api.get(buildUrl()),
+    queryKey: ['products', selectedCategory ?? null, debouncedSearch],
+    queryFn: ({ queryKey }) => {
+      const [, categoryId, search] = queryKey as [string, number | null, string];
+      const params = new URLSearchParams();
+      if (categoryId) params.set('categoryId', String(categoryId));
+      if (search) params.set('search', search);
+      const q = params.toString();
+      return api.get(`/api/products${q ? `?${q}` : ''}`);
+    },
     retry: 2,
-    staleTime: 2 * 60 * 1000,
+    staleTime: 0,
   });
 
   const allCategories = [{ id: undefined, nameEn: 'All Products', nameFr: 'Tous les Produits' }, ...(categories || [])];
