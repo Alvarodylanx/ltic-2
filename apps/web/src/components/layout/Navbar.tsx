@@ -51,7 +51,7 @@ export function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center flex-shrink-0" aria-label="LTIC SARL — Home">
-          <Image src="/logo.png" alt="LTIC SARL" width={62} height={62} className="object-contain translate-x-1.5 -translate-y-1 drop-shadow-[0_4px_12px_rgba(0,0,0,0.18)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.12)]" priority />
+          <Image src="/logo.png" alt="LTIC SARL" width={62} height={62} className="object-contain translate-x-1.5 -translate-y-1 mix-blend-mode-multiply drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)]" style={{ mixBlendMode: 'multiply' }} priority />
         </Link>
 
         {/* Desktop nav */}
