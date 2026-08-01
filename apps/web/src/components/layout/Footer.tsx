@@ -24,7 +24,7 @@ export function Footer() {
     { key: 'social_tiktok',    icon: Music2,    label: 'TikTok' },
   ];
 
-  const year = new Date().getFullYear();
+  const year = 2026;
 
   return (
     <footer className="bg-sidebar text-sidebar-foreground">

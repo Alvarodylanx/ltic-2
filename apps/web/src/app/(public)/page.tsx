@@ -292,6 +292,7 @@ function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardP
             width={40}
             height={40}
             className={`w-full h-full object-cover ${prefersReduced ? '' : 'transition-transform duration-300 ease-out group-hover:scale-110'}`}
+            suppressHydrationWarning
           />
         </div>
 
@@ -313,7 +314,7 @@ function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardP
         </span>
 
         {/* Arrow */}
-        <ArrowUpRight className={`h-3.5 w-3.5 text-muted-foreground/35 group-hover:text-primary flex-shrink-0 transition-all duration-200 ${prefersReduced ? '' : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`} />
+        <ArrowUpRight suppressHydrationWarning className={`h-3.5 w-3.5 text-muted-foreground/35 group-hover:text-primary flex-shrink-0 transition-all duration-200 ${prefersReduced ? '' : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`} />
       </Link>
     </motion.div>
   );
