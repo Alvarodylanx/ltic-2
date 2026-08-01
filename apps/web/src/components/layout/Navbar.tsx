@@ -43,7 +43,7 @@ export function Navbar() {
         'sticky top-0 z-50 h-16 flex items-center transition-all duration-300',
         scrolled
           ? 'bg-white/98 backdrop-blur-md border-b border-border shadow-sm'
-          : 'bg-white border-b border-border',
+          : 'bg-transparent border-b border-white/10',
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
@@ -52,8 +52,8 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-2 flex-shrink-0 group" aria-label="LTIC SARL — Home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="LTIC SARL" className="h-9 w-auto object-contain" />
-          <span className="font-bold text-lg">
-            LTIC <span className="text-primary">SARL</span>
+          <span className={cn('font-bold text-lg transition-colors duration-300', scrolled ? 'text-foreground' : 'text-white')}>
+            LTIC <span className={scrolled ? 'text-primary' : 'text-blue-300'}>SARL</span>
           </span>
         </Link>
 
@@ -65,9 +65,9 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 'relative px-3.5 py-2 text-sm font-medium transition-colors duration-200 rounded-sm',
-                isActive(link.href)
-                  ? 'text-foreground'
-                  : 'text-muted-foreground hover:text-foreground',
+                scrolled
+                  ? isActive(link.href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  : isActive(link.href) ? 'text-white' : 'text-white/70 hover:text-white',
               )}
             >
               {L(link)}
@@ -86,7 +86,12 @@ export function Navbar() {
           <button
             onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
             aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-            className="flex items-center gap-1.5 px-4 h-9 border border-border rounded-full text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+            className={cn(
+              'flex items-center gap-1.5 px-4 h-9 rounded-full text-xs font-semibold transition-all duration-200 border',
+              scrolled
+                ? 'border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5'
+                : 'border-white/30 text-white/80 hover:text-white hover:border-white/60 hover:bg-white/10',
+            )}
           >
             <Globe className="h-3.5 w-3.5" />
             {language.toUpperCase()}
@@ -98,7 +103,7 @@ export function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden p-2 rounded-sm hover:bg-muted transition-colors"
+          className={cn('lg:hidden p-2 rounded-sm transition-colors', scrolled ? 'hover:bg-muted' : 'hover:bg-white/10')}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
@@ -112,7 +117,7 @@ export function Navbar() {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileOpen ? <X className={cn('h-5 w-5', !scrolled && 'text-white')} /> : <Menu className={cn('h-5 w-5', !scrolled && 'text-white')} />}
             </motion.div>
           </AnimatePresence>
         </button>
