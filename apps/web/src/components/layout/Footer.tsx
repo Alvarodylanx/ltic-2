@@ -37,9 +37,12 @@ export function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-flex items-center mb-6" aria-label="LTIC SARL — Home">
+            <Link href="/" className="inline-flex items-center gap-2 mb-6" aria-label="LTIC SARL — Home">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="LTIC SARL" className="h-16 w-auto object-contain" />
+              <img src="/logo.png" alt="LTIC SARL" className="h-9 w-auto object-contain" />
+              <span className="font-bold text-lg">
+                LTIC <span className="text-primary">SARL</span>
+              </span>
             </Link>
             <p className="text-sidebar-foreground/70 text-sm leading-relaxed mb-6 max-w-xs">
               {L({
