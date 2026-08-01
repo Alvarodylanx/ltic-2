@@ -140,9 +140,9 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 28, scale: 0.97 },
-        show:   { opacity: 1, y: 0,  scale: 1,
-                  transition: { type: 'spring', stiffness: 90, damping: 18, mass: 0.8 } },
+        hidden: { opacity: 0, y: 24 },
+        show:   { opacity: 1, y: 0,
+                  transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] } },
       }}
       whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 22 } }}
       className="group bg-white border border-border rounded-2xl p-7
@@ -367,8 +367,15 @@ export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [paused, setPaused] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const goTo = (i: number) => setActiveSlide(i);
   const prev = () => setActiveSlide(i => (i - 1 + heroSlides.length) % heroSlides.length);
@@ -425,11 +432,12 @@ export default function HomePage() {
           <motion.div
             key={`bg-${activeSlide}`}
             className="absolute inset-0"
-            initial={{ opacity: 0, scale: 1.07 }}
+            style={{ willChange: 'transform, opacity' }}
+            initial={{ opacity: 0, scale: isMobile ? 1.0 : 1.05 }}
             animate={{ opacity: 1, scale: 1.0 }}
             exit={{ opacity: 0, scale: 1.0 }}
             transition={{
-              opacity: { duration: 1.0, ease: 'easeInOut' },
+              opacity: { duration: isMobile ? 0.5 : 1.0, ease: 'easeInOut' },
               scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
             }}
           >
@@ -500,25 +508,30 @@ export default function HomePage() {
 
                 {/* Headline — per-word clip reveal */}
                 <h1 className={`font-display font-extrabold text-hero leading-[0.88] tracking-[-0.03em] mb-4 sm:mb-8 ${heroSlides[activeSlide].theme.headline}`}>
-                  {L(heroSlides[activeSlide].lines).split('\n').map((line, li) => (
-                    <span key={li} className="block overflow-hidden">
-                      {line.split(' ').map((word, wi) => (
-                        <motion.span
-                          key={wi}
-                          className="inline-block mr-[0.18em] last:mr-0"
-                          initial={{ y: '115%' }}
-                          animate={{ y: 0 }}
-                          transition={{
-                            duration: 0.68,
-                            ease: [0.16, 1, 0.3, 1],
-                            delay: 0.08 + (li * 3 + wi) * 0.075,
-                          }}
-                        >
-                          {word}
-                        </motion.span>
-                      ))}
-                    </span>
-                  ))}
+                  {isMobile
+                    ? L(heroSlides[activeSlide].lines).split('\n').map((line, li) => (
+                        <span key={li} className="block">{line}</span>
+                      ))
+                    : L(heroSlides[activeSlide].lines).split('\n').map((line, li) => (
+                        <span key={li} className="block overflow-hidden">
+                          {line.split(' ').map((word, wi) => (
+                            <motion.span
+                              key={wi}
+                              className="inline-block mr-[0.18em] last:mr-0"
+                              initial={{ y: '115%' }}
+                              animate={{ y: 0 }}
+                              transition={{
+                                duration: 0.58,
+                                ease: [0.16, 1, 0.3, 1],
+                                delay: 0.08 + (li * 3 + wi) * 0.055,
+                              }}
+                            >
+                              {word}
+                            </motion.span>
+                          ))}
+                        </span>
+                      ))
+                  }
                 </h1>
 
                 {/* Separator — hidden on mobile to save vertical space */}
@@ -556,7 +569,7 @@ export default function HomePage() {
                   <Button asChild size="lg" variant="outline"
                     className="font-semibold h-12 px-8 text-sm sm:text-base bg-white/8
                                border-white/35 text-white hover:bg-white/18 hover:border-white/60
-                               backdrop-blur-sm w-full sm:w-auto justify-center">
+                               w-full sm:w-auto justify-center">
                     <Link href={heroSlides[activeSlide].cta2.href}>
                       {L(heroSlides[activeSlide].cta2.label)}
                     </Link>

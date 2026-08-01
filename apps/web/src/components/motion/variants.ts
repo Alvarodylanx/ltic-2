@@ -40,4 +40,4 @@ export const staggerFast = {
   show: { transition: { staggerChildren: 0.045, delayChildren: 0.03 } },
 };
 
-export const viewportOnce = { once: true, amount: 0.12 };
+export const viewportOnce = { once: true, amount: 0.15 };
