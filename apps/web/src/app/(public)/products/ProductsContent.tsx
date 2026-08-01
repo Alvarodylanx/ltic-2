@@ -141,7 +141,7 @@ export default function ProductsPage() {
       <section className="bg-background py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
               {Array(8).fill(0).map((_, i) => (
                 <div key={i} className="border border-border rounded-2xl overflow-hidden">
                   <Skeleton className="aspect-[4/3] w-full" />
@@ -189,7 +189,7 @@ export default function ProductsPage() {
               <motion.div
                 key={`${selectedCategory ?? 'all'}-${debouncedSearch}`}
                 variants={stagger} initial="hidden" animate="show"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
                 {products.map((product) => (
                   <motion.div key={product.id} variants={scaleIn}
                     whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
@@ -204,19 +204,19 @@ export default function ProductsPage() {
                           </div>
                         )}
                       </div>
-                      <div className="p-4 flex flex-col flex-1">
+                      <div className="p-2.5 sm:p-4 flex flex-col flex-1">
                         {product.categoryName && (
-                          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold rounded-full px-2 py-0.5 mb-2 w-fit">
+                          <span className="inline-block bg-primary/10 text-primary text-[10px] sm:text-xs font-semibold rounded-full px-2 py-0.5 mb-1.5 w-fit">
                             {product.categoryName}
                           </span>
                         )}
-                        <h3 className="font-bold text-sm leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
+                        <h3 className="font-bold text-xs sm:text-sm leading-tight mb-2.5 sm:mb-3 group-hover:text-primary transition-colors flex-1 line-clamp-2">
                           {L({ en: product.nameEn, fr: product.nameFr })}
                         </h3>
-                        <Button asChild size="sm" className="w-full">
+                        <Button asChild size="sm" className="w-full text-xs sm:text-sm h-8 sm:h-9">
                           <Link href={`/products/${product.slug}`}>
                             {L({ en: 'View Details', fr: 'Voir les Détails' })}
-                            <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                            <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 ml-1 flex-shrink-0" />
                           </Link>
                         </Button>
                       </div>
