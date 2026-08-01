@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Globe, Facebook, Twitter, Linkedin, Instagram, Youtube, Music2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useQuery } from '@tanstack/react-query';
@@ -39,7 +38,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-flex items-center mb-6" aria-label="LTIC SARL — Home">
-              <Image src="/logo.png" alt="LTIC SARL" width={80} height={60} className="object-contain" />
+              <Image src="/logo.png" alt="LTIC SARL" width={80} height={60} className="object-contain" unoptimized />
             </Link>
             <p className="text-sidebar-foreground/70 text-sm leading-relaxed mb-6 max-w-xs">
               {L({

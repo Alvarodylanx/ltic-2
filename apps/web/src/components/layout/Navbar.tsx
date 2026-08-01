@@ -51,7 +51,7 @@ export function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center flex-shrink-0" aria-label="LTIC SARL — Home">
-          <Image src="/logo.png" alt="LTIC SARL" width={64} height={48} className="object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)]" priority />
+          <Image src="/logo.png" alt="LTIC SARL" width={64} height={48} className="object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)]" priority unoptimized />
         </Link>
 
         {/* Desktop nav */}
