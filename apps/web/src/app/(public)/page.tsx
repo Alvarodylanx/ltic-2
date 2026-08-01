@@ -457,7 +457,7 @@ export default function HomePage() {
     <>
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
-        className="relative h-[62dvh] sm:h-[75dvh] lg:h-[82dvh] min-h-[480px] sm:min-h-[520px] lg:min-h-[560px] overflow-hidden bg-black"
+        className="relative h-[52dvh] sm:h-[72dvh] lg:h-[82dvh] min-h-[420px] sm:min-h-[500px] lg:min-h-[560px] overflow-hidden bg-black"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
