@@ -32,6 +32,6 @@ Thumbs.db
 # Test coverage
 coverage/
 
-# User uploaded files (avatars, etc.)
-apps/api/uploads/
-uploads/
+# User uploaded files — intentionally tracked so product images survive clones
+# apps/api/uploads/
+# uploads/

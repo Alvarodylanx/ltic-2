@@ -63,6 +63,30 @@ async function seed() {
       descriptionFr: "Matériaux industriels lourds et équipements divers",
       imageUrl: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&auto=format&fit=crop&q=70",
     },
+    {
+      nameEn: "Marine & Maintenance Chemicals",
+      nameFr: "Produits Chimiques Marins & Maintenance",
+      slug: "marine-maintenance-chemicals",
+      descriptionEn: "MARPOL-compliant marine chemicals, degreasers, and vessel maintenance products",
+      descriptionFr: "Produits chimiques marins conformes MARPOL, dégraissants et produits d'entretien des navires",
+      imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=70",
+    },
+    {
+      nameEn: "Industrial Chemicals & Raw Materials",
+      nameFr: "Produits Chimiques Industriels & Matières Premières",
+      slug: "industrial-chemicals-raw-materials",
+      descriptionEn: "Industrial-grade chemicals, solvents, surfactants, and raw materials for manufacturing",
+      descriptionFr: "Produits chimiques industriels, solvants, tensioactifs et matières premières pour la fabrication",
+      imageUrl: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&auto=format&fit=crop&q=70",
+    },
+    {
+      nameEn: "Food & Agricultural Products",
+      nameFr: "Produits Alimentaires & Agricoles",
+      slug: "food-agricultural-products",
+      descriptionEn: "Premium agri-food commodities, fertilizers, and agricultural inputs for export",
+      descriptionFr: "Denrées agroalimentaires premium, engrais et intrants agricoles pour l'exportation",
+      imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=70",
+    },
   ]).onConflictDoNothing();
 
   const cats = await db.select().from(categories);
