@@ -456,7 +456,7 @@ export default function HomePage() {
         </AnimatePresence>
 
         {/* ── Bottom vignette ── */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/50 via-black/10 to-transparent pointer-events-none" />
 
         {/* ── Mobile: right-side vignette (slide gradients only cover the left on mobile) ── */}
         <div className="sm:hidden absolute inset-0 bg-gradient-to-l from-black/65 via-black/20 to-transparent pointer-events-none" />
@@ -506,12 +506,12 @@ export default function HomePage() {
                   ))}
                 </h1>
 
-                {/* Separator */}
+                {/* Separator — hidden on mobile to save vertical space */}
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.42 }}
-                  className={`h-px w-14 origin-left mb-3 sm:mb-6 ${heroSlides[activeSlide].theme.tagBg}`}
+                  className={`hidden sm:block h-px w-14 origin-left mb-6 ${heroSlides[activeSlide].theme.tagBg}`}
                 />
 
                 {/* Subtext */}
@@ -519,7 +519,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 }}
-                  className={`text-base sm:text-[1.05rem] leading-[1.7] mb-5 sm:mb-10 max-w-[42ch] ${heroSlides[activeSlide].theme.sub}`}
+                  className={`text-[0.82rem] sm:text-[1.05rem] leading-[1.6] sm:leading-[1.7] mb-5 sm:mb-10 max-w-[36ch] sm:max-w-[42ch] line-clamp-2 sm:line-clamp-none ${heroSlides[activeSlide].theme.sub}`}
                 >
                   {L(heroSlides[activeSlide].sub)}
                 </motion.p>
@@ -529,19 +529,19 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, ease: 'easeOut', delay: 0.66 }}
-                  className="flex flex-wrap gap-3"
+                  className="flex flex-col sm:flex-row gap-2.5 sm:gap-3"
                 >
                   <Button asChild size="lg"
-                    className="font-semibold h-12 px-8 shadow-lg shadow-black/40 text-base">
+                    className="font-semibold h-12 px-8 shadow-lg shadow-black/40 text-sm sm:text-base w-full sm:w-auto justify-center">
                     <Link href={heroSlides[activeSlide].cta1.href}>
                       {L(heroSlides[activeSlide].cta1.label)}
-                      <ArrowRight className="h-4 w-4 ml-2" />
+                      <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline"
-                    className="font-semibold h-12 px-8 text-base bg-white/8
+                    className="font-semibold h-12 px-8 text-sm sm:text-base bg-white/8
                                border-white/35 text-white hover:bg-white/18 hover:border-white/60
-                               backdrop-blur-sm">
+                               backdrop-blur-sm w-full sm:w-auto justify-center">
                     <Link href={heroSlides[activeSlide].cta2.href}>
                       {L(heroSlides[activeSlide].cta2.label)}
                     </Link>
@@ -556,8 +556,8 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-7 sm:pb-9">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
 
-            {/* Slide dots */}
-            <div className="flex items-center gap-2.5" role="tablist" aria-label="Hero slides">
+            {/* Slide dots — padded for 44px touch targets on mobile */}
+            <div className="flex items-center gap-1 sm:gap-2.5" role="tablist" aria-label="Hero slides">
               {heroSlides.map((_, i) => (
                 <button
                   key={i}
@@ -565,12 +565,14 @@ export default function HomePage() {
                   aria-selected={i === activeSlide}
                   aria-label={`Slide ${i + 1}`}
                   onClick={() => goTo(i)}
-                  className={`rounded-full transition-all duration-300 ${
+                  className="flex items-center justify-center p-3 sm:p-0 -m-3 sm:m-0"
+                >
+                  <span className={`block rounded-full transition-all duration-300 ${
                     i === activeSlide
-                      ? 'w-8 h-[4px] bg-primary'
-                      : 'w-[4px] h-[4px] bg-white/30 hover:bg-white/60'
-                  }`}
-                />
+                      ? 'w-7 sm:w-8 h-[5px] sm:h-[4px] bg-primary'
+                      : 'w-[5px] h-[5px] sm:w-[4px] sm:h-[4px] bg-white/35 hover:bg-white/60'
+                  }`} />
+                </button>
               ))}
             </div>
 
@@ -590,16 +592,16 @@ export default function HomePage() {
 
               <div className="flex gap-1.5">
                 <button onClick={prev} aria-label="Previous slide"
-                  className="w-9 h-9 rounded-full border border-white/20 text-white/50
+                  className="w-11 h-11 sm:w-9 sm:h-9 rounded-full border border-white/20 text-white/50
                              hover:bg-white/10 hover:text-white hover:border-white/45
                              transition-all duration-200 flex items-center justify-center">
-                  <ChevronLeft className="h-3.5 w-3.5" />
+                  <ChevronLeft className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
                 </button>
                 <button onClick={next} aria-label="Next slide"
-                  className="w-9 h-9 rounded-full border border-white/20 text-white/50
+                  className="w-11 h-11 sm:w-9 sm:h-9 rounded-full border border-white/20 text-white/50
                              hover:bg-white/10 hover:text-white hover:border-white/45
                              transition-all duration-200 flex items-center justify-center">
-                  <ChevronRight className="h-3.5 w-3.5" />
+                  <ChevronRight className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
                 </button>
               </div>
             </div>
