@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
@@ -252,6 +252,7 @@ interface ProductCategoryCardProps {
   image: string;
   tag: { en: string; fr: string };
   index: number;
+  prefersReduced: boolean;
 }
 
 const catalogEase = [0.22, 1, 0.36, 1] as const;
@@ -266,9 +267,8 @@ const catalogStagger = {
   show:   { transition: { staggerChildren: 0.035, delayChildren: 0.05 } },
 };
 
-function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardProps) {
+function ProductCategoryCard({ en, fr, image, tag, index, prefersReduced }: ProductCategoryCardProps) {
   const { L } = useLanguage();
-  const prefersReduced = useReducedMotion() ?? false;
 
   return (
     <motion.div
@@ -378,7 +378,7 @@ export default function HomePage() {
       setActiveSlide(i => (i + 1) % heroSlides.length);
     }, HERO_INTERVAL);
     return () => clearInterval(id);
-  }, [activeSlide, paused, shouldReduce]);
+  }, [paused, shouldReduce]);
 
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
@@ -407,9 +407,9 @@ export default function HomePage() {
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
-  // All brands in each row, ×4 so single-set width (~3.4k px) always exceeds any viewport
-  const brandsRow1 = [...partners, ...partners, ...partners, ...partners];
-  const brandsRow2 = [...partners, ...partners, ...partners, ...partners];
+  // 2× duplication — CSS translateX(-50%) loops seamlessly with exactly 2 copies
+  const brandsRow1 = [...partners, ...partners];
+  const brandsRow2 = [...partners, ...partners];
 
   return (
     <>
@@ -419,42 +419,41 @@ export default function HomePage() {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* ── Animated backgrounds (crossfade + Ken Burns zoom) ── */}
-        <AnimatePresence initial={false} mode="sync">
+        {/* ── Backgrounds — all 3 always in DOM so they preload immediately ── */}
+        {heroSlides.map((slide, i) => (
           <motion.div
-            key={`bg-${activeSlide}`}
+            key={i}
             className="absolute inset-0"
-            initial={{ opacity: 0, scale: 1.07 }}
-            animate={{ opacity: 1, scale: 1.0 }}
-            exit={{ opacity: 0, scale: 1.0 }}
+            animate={{
+              opacity: i === activeSlide ? 1 : 0,
+              scale:   i === activeSlide ? 1.0 : 1.07,
+            }}
             transition={{
               opacity: { duration: 1.0, ease: 'easeInOut' },
-              scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
+              scale:   { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
             }}
           >
             <Image
-              src={heroSlides[activeSlide].image}
+              src={slide.image}
               alt=""
               fill
-              className="object-cover object-center"
-              priority={activeSlide === 0}
+              priority
               sizes="100vw"
+              className="object-cover object-center"
             />
           </motion.div>
-        </AnimatePresence>
+        ))}
 
-        {/* ── Per-slide tinted overlay ── */}
-        <AnimatePresence initial={false} mode="sync">
+        {/* ── Per-slide tinted overlays — all always in DOM, crossfade via opacity ── */}
+        {heroSlides.map((slide, i) => (
           <motion.div
-            key={`overlay-${activeSlide}`}
+            key={i}
             className="absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            animate={{ opacity: i === activeSlide ? 1 : 0 }}
             transition={{ duration: 1.2, ease: 'easeInOut' }}
-            style={{ background: heroSlides[activeSlide].theme.overlay }}
+            style={{ background: slide.theme.overlay }}
           />
-        </AnimatePresence>
+        ))}
 
         {/* ── Bottom vignette ── */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/50 via-black/10 to-transparent pointer-events-none" />
@@ -738,7 +737,7 @@ export default function HomePage() {
             className="grid grid-cols-1 md:grid-cols-2 gap-1.5"
           >
             {productCategories.map((cat, i) => (
-              <ProductCategoryCard key={cat.en} {...cat} index={i} />
+              <ProductCategoryCard key={cat.en} {...cat} index={i} prefersReduced={shouldReduce} />
             ))}
           </motion.div>
 
