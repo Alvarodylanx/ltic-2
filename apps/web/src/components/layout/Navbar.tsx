@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Menu, X } from 'lucide-react';
@@ -50,8 +49,13 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center flex-shrink-0" aria-label="LTIC SARL — Home">
-          <Image src="/logo.png" alt="LTIC SARL" width={62} height={62} className="object-contain translate-x-1.5 -translate-y-1 drop-shadow-[0_4px_14px_rgba(0,0,0,0.18)]" priority />
+        <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="LTIC SARL — Home">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+            <span className="text-white font-bold text-sm">LT</span>
+          </div>
+          <span className="font-bold text-lg">
+            LTIC <span className="text-primary">SARL</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}

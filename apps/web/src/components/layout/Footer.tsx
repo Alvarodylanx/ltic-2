@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Globe, Facebook, Twitter, Linkedin, Instagram, Youtube, Music2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -38,11 +37,21 @@ export function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2.5 mb-6" aria-label="LTIC SARL — Home">
-              <Image src="/logo.png" alt="LTIC SARL" width={52} height={52} className="object-contain" />
-              <span className="font-bold text-lg">
+            <Link href="/" className="inline-flex items-center gap-2.5 mb-6 group" aria-label="LTIC SARL — Home">
+              <motion.div
+                whileHover={{ scale: 1.12, rotate: -6 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+                className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0"
+              >
+                <span className="text-white font-bold text-sm">LT</span>
+              </motion.div>
+              <motion.span
+                whileHover={{ x: 3 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="font-bold text-lg"
+              >
                 LTIC <span className="text-primary">SARL</span>
-              </span>
+              </motion.span>
             </Link>
             <p className="text-sidebar-foreground/70 text-sm leading-relaxed mb-6 max-w-xs">
               {L({
