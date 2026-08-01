@@ -557,19 +557,19 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, ease: 'easeOut', delay: 0.66 }}
-                  className="flex flex-col sm:flex-row gap-2.5 sm:gap-3"
+                  className="flex flex-row gap-2 sm:gap-3"
                 >
                   <Button asChild size="lg"
-                    className="font-semibold h-12 px-8 shadow-lg shadow-black/40 text-sm sm:text-base w-full sm:w-auto justify-center">
+                    className="font-semibold h-9 px-4 sm:h-12 sm:px-8 shadow-lg shadow-black/40 text-xs sm:text-base w-auto justify-center">
                     <Link href={heroSlides[activeSlide].cta1.href}>
                       {L(heroSlides[activeSlide].cta1.label)}
-                      <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
+                      <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 ml-1.5 sm:ml-2 flex-shrink-0" />
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline"
-                    className="font-semibold h-12 px-8 text-sm sm:text-base bg-white/8
+                    className="font-semibold h-9 px-4 sm:h-12 sm:px-8 text-xs sm:text-base bg-white/8
                                border-white/35 text-white hover:bg-white/18 hover:border-white/60
-                               w-full sm:w-auto justify-center">
+                               w-auto justify-center">
                     <Link href={heroSlides[activeSlide].cta2.href}>
                       {L(heroSlides[activeSlide].cta2.label)}
                     </Link>
