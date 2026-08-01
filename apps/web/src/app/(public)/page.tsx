@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
   Handshake, TreePine, Package, FileText, Clock, Truck, ChevronLeft, ChevronRight,
-  Users2, ShieldCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -499,11 +498,6 @@ export default function HomePage() {
         {/* ── Bottom vignette — consistent across all slides ── */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
-        {/* ── Slide counter — top right ── */}
-        <div className="absolute top-5 right-6 sm:right-10 z-20 font-semibold text-white/25 text-[9px] tracking-[0.5em] select-none tabular-nums">
-          {String(activeSlide + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(heroSlides.length).padStart(2, '0')}
-        </div>
-
         {/* ── Main content ── */}
         <div className="relative z-10 h-full flex items-center pb-24 pt-16">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
@@ -650,27 +644,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ══ VALUE RIBBON — bridges hero → services ════════════════════════════ */}
-      <div className="bg-foreground">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10">
-            {([
-              { icon: Globe2,      en: '30+ Countries Served',  fr: '30+ Pays Desservis' },
-              { icon: Users2,      en: '500+ Trusted Clients',  fr: '500+ Clients' },
-              { icon: Clock,       en: '24h Quote Turnaround',  fr: 'Devis en 24h' },
-              { icon: ShieldCheck, en: 'Fully Insured Cargo',   fr: 'Cargo Assuré' },
-            ] as const).map(({ icon: Icon, en, fr }, i) => (
-              <div key={i} className="flex items-center justify-center gap-2.5 py-5 px-3">
-                <Icon className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="text-white/70 text-xs sm:text-sm font-semibold whitespace-nowrap">
-                  {L({ en, fr })}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
       <section className="bg-background py-20 sm:py-28">
