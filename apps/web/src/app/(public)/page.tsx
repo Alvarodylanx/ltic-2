@@ -355,49 +355,6 @@ function PartnerCard({ b }: { b: Partner }) {
   );
 }
 
-// ─── ProcessStep ──────────────────────────────────────────────────────────────
-
-interface ProcessStepProps {
-  icon: React.ElementType;
-  num: string;
-  title: { en: string; fr: string };
-  desc: { en: string; fr: string };
-  action: { en: string; fr: string } | null;
-  href: string | null;
-}
-
-function ProcessStep({ icon: Icon, num, title, desc, action, href }: ProcessStepProps) {
-  const { L } = useLanguage();
-  return (
-    <motion.div variants={fadeInUp} className="group flex flex-col items-start lg:items-center text-left lg:text-center">
-      {/* Number + icon stack */}
-      <div className="relative mb-5">
-        <div className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center
-                        shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
-          <Icon className="h-6 w-6 text-white" />
-        </div>
-        <span className="absolute -top-2 -right-2 w-6 h-6 bg-foreground text-background
-                         rounded-full flex items-center justify-center text-[10px] font-bold">
-          {num}
-        </span>
-      </div>
-
-      <h3 className="font-bold text-base text-foreground mb-2 leading-tight">
-        {L(title)}
-      </h3>
-      <p className="text-muted-foreground text-sm leading-relaxed mb-4 max-w-[200px] lg:max-w-[180px]">
-        {L(desc)}
-      </p>
-      {href && action && (
-        <Link href={href}
-          className="inline-flex items-center gap-1.5 text-primary text-xs font-semibold
-                     hover:gap-3 transition-all duration-200">
-          {L(action)} <ArrowRight className="h-3 w-3 flex-shrink-0" />
-        </Link>
-      )}
-    </motion.div>
-  );
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -862,30 +819,76 @@ export default function HomePage() {
                         bg-gradient-to-l from-muted to-transparent z-10" />
       </section>
 
-      {/* ══ 6. PROCESS — numbered steps ════════════════════════════════════════ */}
-      <section className="bg-white py-20 sm:py-28">
+      {/* ══ 6. PROCESS — compact 2×2 / 4-col steps ══════════════════════════ */}
+      <section className="bg-white py-10 sm:py-14 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="text-center mb-16">
-            <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
-              {L({ en: 'How It Works', fr: 'Comment Ça Marche' })}
-            </p>
-            <h2 className="font-extrabold text-section text-foreground
-                           [text-wrap:balance] max-w-xl mx-auto whitespace-pre-line">
-              {L({ en: 'From Request\nto Delivery.', fr: 'De la Demande\nà la Livraison.' })}
-            </h2>
+
+          {/* Header — inline, saves vertical space vs centred block */}
+          <motion.div
+            variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8"
+          >
+            <div>
+              <p className="text-primary font-bold text-[10px] uppercase tracking-[0.3em] mb-1.5">
+                {L({ en: 'How It Works', fr: 'Comment Ça Marche' })}
+              </p>
+              <h2 className="font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
+                {L({ en: 'From Request to Delivery.', fr: 'De la Demande à la Livraison.' })}
+              </h2>
+            </div>
+            <Button asChild size="sm" variant="outline"
+              className="self-start sm:self-auto border-border font-semibold text-xs
+                         hover:border-primary/50 hover:text-primary flex-shrink-0">
+              <Link href="/quote">
+                {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
+                <ArrowRight className="h-3 w-3 ml-1.5" />
+              </Link>
+            </Button>
           </motion.div>
 
+          {/* Steps — 2×2 on mobile, single row on desktop */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3"
           >
-            {orderSteps.map((step, i) => (
-              <ProcessStep key={i} {...step} />
-            ))}
+            {orderSteps.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <motion.div
+                  key={i}
+                  variants={fadeInUp}
+                  className="group flex items-start gap-3 p-3.5 sm:p-4 rounded-xl
+                             border border-border bg-muted/30
+                             hover:bg-primary/5 hover:border-primary/25
+                             transition-all duration-200"
+                >
+                  <div className="relative flex-shrink-0">
+                    <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center
+                                    group-hover:bg-primary group-hover:scale-105
+                                    transition-all duration-200">
+                      <Icon className="h-4 w-4 text-primary group-hover:text-white transition-colors duration-200" />
+                    </div>
+                    <span className="absolute -top-1.5 -right-1.5 w-[17px] h-[17px]
+                                     bg-foreground text-background rounded-full
+                                     text-[8px] font-black flex items-center justify-center leading-none">
+                      {step.num}
+                    </span>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-bold text-xs sm:text-sm text-foreground leading-tight mb-1">
+                      {L(step.title)}
+                    </p>
+                    <p className="text-muted-foreground text-[11px] sm:text-xs leading-relaxed
+                                  line-clamp-2 hidden sm:block">
+                      {L(step.desc)}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
