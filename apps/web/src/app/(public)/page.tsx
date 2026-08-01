@@ -455,7 +455,6 @@ export default function HomePage() {
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
         className="relative h-[82dvh] min-h-[560px] overflow-hidden bg-black"
-        style={{ borderBottomLeftRadius: '50% 60px', borderBottomRightRadius: '50% 60px' }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -591,7 +590,7 @@ export default function HomePage() {
         </div>
 
         {/* ── Bottom navigation bar ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-20 sm:pb-24">
+        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
 
             {/* Slide dots */}
@@ -643,6 +642,18 @@ export default function HomePage() {
             </div>
 
           </div>
+        </div>
+
+        {/* ── Arch: background colour domes up into hero at centre-bottom ── */}
+        <div className="absolute bottom-0 left-0 right-0 z-[5] pointer-events-none" aria-hidden="true">
+          <svg
+            viewBox="0 0 1440 110"
+            preserveAspectRatio="none"
+            className="w-full block"
+            style={{ height: '110px' }}
+          >
+            <path d="M0,110 Q720,-110 1440,110 Z" fill="hsl(210 20% 98%)" />
+          </svg>
         </div>
       </section>
 
