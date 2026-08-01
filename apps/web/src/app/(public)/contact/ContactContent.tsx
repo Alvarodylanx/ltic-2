@@ -17,7 +17,6 @@ import { PhoneInput } from '@/components/ui/PhoneInput';
 import { CountrySelect } from '@/components/ui/CountrySelect';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
-import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/components/motion/variants';
 
 const schema = z.object({
   name:    z.string().min(2),
@@ -114,8 +113,7 @@ export default function ContactPage() {
       <section className="bg-background py-10 sm:py-14 lg:py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="bg-card border border-border rounded-2xl p-6 sm:p-8">
+          <div className="bg-card border border-border rounded-2xl p-6 sm:p-8">
 
             {/* Heading */}
             <div className="mb-6">
@@ -226,7 +224,7 @@ export default function ContactPage() {
               ))}
             </div>
 
-          </motion.div>
+          </div>
         </div>
       </section>
     </>
