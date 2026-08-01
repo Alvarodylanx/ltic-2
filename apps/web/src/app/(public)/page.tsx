@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
@@ -29,7 +29,7 @@ const heroSlides = [
     sub:   { en: 'End-to-end freight forwarding across 30+ countries — air, sea and road, fully tracked.', fr: 'Freight forwarding complet dans 30+ pays — aérien, maritime et routier, entièrement suivi.' },
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
-    image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1400&auto=format&fit=crop&q=65',
+    image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1800&auto=format&fit=crop&q=80',
     theme: {
       tag:      'text-blue-400',
       tagBg:    'bg-blue-400',
@@ -44,7 +44,7 @@ const heroSlides = [
     sub:   { en: 'Generators, lubricants and OEM-grade parts — Total, Shell and certified industrial brands.', fr: 'Générateurs, lubrifiants et pièces OEM — Total, Shell et marques industrielles certifiées.' },
     cta1:  { label: { en: 'View Products',     fr: 'Voir les Produits' }, href: '/products' },
     cta2:  { label: { en: 'Request a Quote',   fr: 'Demander un Devis' }, href: '/quote' },
-    image: 'https://images.unsplash.com/photo-1670689334799-cdc6777db8cc?w=1400&auto=format&fit=crop&q=65',
+    image: 'https://images.unsplash.com/photo-1670689334799-cdc6777db8cc?w=1800&auto=format&fit=crop&q=80',
     theme: {
       tag:      'text-amber-400',
       tagBg:    'bg-amber-400',
@@ -59,7 +59,7 @@ const heroSlides = [
     sub:   { en: 'Import, export and brand representation across emerging markets — one partner for every transaction.', fr: 'Import, export et représentation de marque sur marchés émergents — un partenaire pour chaque transaction.' },
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
-    image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1400&auto=format&fit=crop&q=65',
+    image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1800&auto=format&fit=crop&q=80',
     theme: {
       tag:      'text-yellow-300',
       tagBg:    'bg-yellow-300',
@@ -252,7 +252,6 @@ interface ProductCategoryCardProps {
   image: string;
   tag: { en: string; fr: string };
   index: number;
-  prefersReduced: boolean;
 }
 
 const catalogEase = [0.22, 1, 0.36, 1] as const;
@@ -267,8 +266,9 @@ const catalogStagger = {
   show:   { transition: { staggerChildren: 0.035, delayChildren: 0.05 } },
 };
 
-function ProductCategoryCard({ en, fr, image, tag, index, prefersReduced }: ProductCategoryCardProps) {
+function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardProps) {
   const { L } = useLanguage();
+  const prefersReduced = useReducedMotion() ?? false;
 
   return (
     <motion.div
@@ -378,12 +378,11 @@ export default function HomePage() {
       setActiveSlide(i => (i + 1) % heroSlides.length);
     }, HERO_INTERVAL);
     return () => clearInterval(id);
-  }, [paused, shouldReduce]);
+  }, [activeSlide, paused, shouldReduce]);
 
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
-    staleTime: 5 * 60 * 1000,
   });
   const { data: apiPartners = [] } = useQuery<Partner[]>({
     queryKey: ['partners'],
@@ -407,9 +406,9 @@ export default function HomePage() {
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
-  // 2× duplication — CSS translateX(-50%) loops seamlessly with exactly 2 copies
-  const brandsRow1 = [...partners, ...partners];
-  const brandsRow2 = [...partners, ...partners];
+  // All brands in each row, ×4 so single-set width (~3.4k px) always exceeds any viewport
+  const brandsRow1 = [...partners, ...partners, ...partners, ...partners];
+  const brandsRow2 = [...partners, ...partners, ...partners, ...partners];
 
   return (
     <>
@@ -419,41 +418,42 @@ export default function HomePage() {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* ── Backgrounds — all 3 always in DOM so they preload immediately ── */}
-        {heroSlides.map((slide, i) => (
+        {/* ── Animated backgrounds (crossfade + Ken Burns zoom) ── */}
+        <AnimatePresence initial={false} mode="sync">
           <motion.div
-            key={i}
+            key={`bg-${activeSlide}`}
             className="absolute inset-0"
-            animate={{
-              opacity: i === activeSlide ? 1 : 0,
-              scale:   i === activeSlide ? 1.0 : 1.07,
-            }}
+            initial={{ opacity: 0, scale: 1.07 }}
+            animate={{ opacity: 1, scale: 1.0 }}
+            exit={{ opacity: 0, scale: 1.0 }}
             transition={{
               opacity: { duration: 1.0, ease: 'easeInOut' },
-              scale:   { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
+              scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
             }}
           >
             <Image
-              src={slide.image}
+              src={heroSlides[activeSlide].image}
               alt=""
               fill
-              priority
-              sizes="100vw"
               className="object-cover object-center"
+              priority={activeSlide === 0}
+              sizes="100vw"
             />
           </motion.div>
-        ))}
+        </AnimatePresence>
 
-        {/* ── Per-slide tinted overlays — all always in DOM, crossfade via opacity ── */}
-        {heroSlides.map((slide, i) => (
+        {/* ── Per-slide tinted overlay ── */}
+        <AnimatePresence initial={false} mode="sync">
           <motion.div
-            key={i}
+            key={`overlay-${activeSlide}`}
             className="absolute inset-0 pointer-events-none"
-            animate={{ opacity: i === activeSlide ? 1 : 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 1.2, ease: 'easeInOut' }}
-            style={{ background: slide.theme.overlay }}
+            style={{ background: heroSlides[activeSlide].theme.overlay }}
           />
-        ))}
+        </AnimatePresence>
 
         {/* ── Bottom vignette ── */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/50 via-black/10 to-transparent pointer-events-none" />
@@ -737,7 +737,7 @@ export default function HomePage() {
             className="grid grid-cols-1 md:grid-cols-2 gap-1.5"
           >
             {productCategories.map((cat, i) => (
-              <ProductCategoryCard key={cat.en} {...cat} index={i} prefersReduced={shouldReduce} />
+              <ProductCategoryCard key={cat.en} {...cat} index={i} />
             ))}
           </motion.div>
 
@@ -898,7 +898,7 @@ export default function HomePage() {
       {/* ══ 7. CTA — dark cinematic ════════════════════════════════════════════ */}
       <section className="relative bg-sidebar py-24 sm:py-36 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&auto=format&fit=crop&q=55"
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&auto=format&fit=crop&q=60"
           alt=""
           fill
           className="object-cover opacity-25"
