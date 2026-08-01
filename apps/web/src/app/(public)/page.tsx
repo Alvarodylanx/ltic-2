@@ -499,7 +499,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
         {/* ── Main content ── */}
-        <div className="relative z-10 h-full flex items-center pb-24 pt-16">
+        <div className="relative z-10 h-full flex items-center pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-24">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -512,7 +512,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, x: -24 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-                  className="flex items-center gap-3 mb-8"
+                  className="flex items-center gap-3 mb-4 sm:mb-8"
                 >
                   <span className={`h-px w-8 flex-shrink-0 ${heroSlides[activeSlide].theme.tagBg}`} />
                   <span className={`font-bold text-[10px] uppercase tracking-[0.38em] ${heroSlides[activeSlide].theme.tag}`}>
@@ -521,7 +521,7 @@ export default function HomePage() {
                 </motion.div>
 
                 {/* Headline — per-word clip reveal */}
-                <h1 className={`font-display font-extrabold text-hero leading-[0.88] tracking-[-0.03em] mb-8 ${heroSlides[activeSlide].theme.headline}`}>
+                <h1 className={`font-display font-extrabold text-hero leading-[0.88] tracking-[-0.03em] mb-4 sm:mb-8 ${heroSlides[activeSlide].theme.headline}`}>
                   {L(heroSlides[activeSlide].lines).split('\n').map((line, li) => (
                     <span key={li} className="block overflow-hidden">
                       {line.split(' ').map((word, wi) => (
@@ -548,7 +548,7 @@ export default function HomePage() {
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.42 }}
-                  className={`h-px w-14 origin-left mb-6 ${heroSlides[activeSlide].theme.tagBg}`}
+                  className={`h-px w-14 origin-left mb-3 sm:mb-6 ${heroSlides[activeSlide].theme.tagBg}`}
                 />
 
                 {/* Subtext */}
@@ -556,7 +556,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 }}
-                  className={`text-base sm:text-[1.05rem] leading-[1.7] mb-10 max-w-[42ch] ${heroSlides[activeSlide].theme.sub}`}
+                  className={`text-base sm:text-[1.05rem] leading-[1.7] mb-5 sm:mb-10 max-w-[42ch] ${heroSlides[activeSlide].theme.sub}`}
                 >
                   {L(heroSlides[activeSlide].sub)}
                 </motion.p>
