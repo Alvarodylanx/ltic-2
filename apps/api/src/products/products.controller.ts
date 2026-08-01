@@ -1,4 +1,4 @@
-﻿import { Controller, Get, Post, Patch, Delete, Param, Body, Query, UseGuards } from "@nestjs/common";
+﻿import { Controller, Get, Post, Patch, Delete, Param, Body, Query, UseGuards, Header } from "@nestjs/common";
 import { SkipThrottle } from "@nestjs/throttler";
 import { ProductsService } from "./products.service";
 import { AuthGuard } from "../auth/auth.guard";
@@ -28,12 +28,15 @@ export class ProductsController {
   constructor(private svc: ProductsService) {}
 
   @Get("featured")
+  @Header('Cache-Control', 'public, max-age=60, stale-while-revalidate=300')
   getFeatured() { return this.svc.findFeatured(); }
 
   @Get()
+  @Header('Cache-Control', 'public, max-age=30, stale-while-revalidate=300')
   findAll(@Query() q: ProductQuery) { return this.svc.findAll(q); }
 
   @Get(":id")
+  @Header('Cache-Control', 'public, max-age=60, stale-while-revalidate=300')
   findOne(@Param("id") id: string) { return this.svc.findOne(isNaN(+id) ? id : +id); }
 
   @UseGuards(AuthGuard)

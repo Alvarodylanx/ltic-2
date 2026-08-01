@@ -50,7 +50,7 @@ export function WhatsAppButton() {
       <motion.div
         initial={{ scale: 0, opacity: 0, y: 24 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 0.4, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         className="relative"
       >
         {/* Pulse rings */}

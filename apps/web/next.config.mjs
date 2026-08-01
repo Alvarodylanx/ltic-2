@@ -9,7 +9,6 @@ const config = {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
-      { protocol: 'http',  hostname: 'localhost', port: '4000', pathname: '/uploads/**' },
     ],
   },
   async rewrites() {
@@ -17,10 +16,6 @@ const config = {
       {
         source: '/api/:path*',
         destination: 'http://localhost:4000/api/:path*',
-      },
-      {
-        source: '/uploads/:path*',
-        destination: `${API_ORIGIN}/uploads/:path*`,
       },
     ];
   },

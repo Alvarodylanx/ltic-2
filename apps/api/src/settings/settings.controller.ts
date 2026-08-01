@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Patch, Body, UseGuards, Header } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { SettingsService } from './settings.service';
 import { AuthGuard } from '../auth/auth.guard';
@@ -9,6 +9,7 @@ export class SettingsController {
   constructor(private readonly svc: SettingsService) {}
 
   @Get()
+  @Header('Cache-Control', 'public, max-age=300, stale-while-revalidate=3600')
   findAll() { return this.svc.findAll(); }
 
   @Patch()

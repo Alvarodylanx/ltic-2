@@ -10,7 +10,7 @@ import * as fs from "fs";
 import { fromFile } from "file-type";
 import { AuthGuard } from "../auth/auth.guard";
 
-const MEDIA_DIR = path.join(__dirname, "../../../../uploads/media");
+const MEDIA_DIR = path.join(__dirname, "../../../../apps/web/public/uploads/media");
 const MAX_SIZE = 100 * 1024 * 1024; // 100 MB
 
 const ALLOWED_EXT = /\.(jpg|jpeg|png|gif|webp|mp4|mov|avi|mkv|webm)$/i;
