@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -47,13 +47,13 @@ function QuoteForm() {
   const onSubmit = async (data: FormData) => {
     try {
       await api.post('/api/quotes', data);
-      toast.success(L({ en: 'Quote Request Sent', fr: 'Demande de Devis EnvoyÃ©e' }), {
-        description: L({ en: 'We will respond within 24 hours.', fr: 'Nous rÃ©pondrons dans les 24 heures.' }),
+      toast.success(L({ en: 'Quote Request Sent', fr: 'Demande de Devis Envoyée' }), {
+        description: L({ en: 'We will respond within 24 hours.', fr: 'Nous répondrons dans les 24 heures.' }),
       });
       reset();
     } catch {
       toast.error(L({ en: 'Error', fr: 'Erreur' }), {
-        description: L({ en: 'There was a problem sending your request.', fr: "Un problÃ¨me est survenu lors de l'envoi de votre demande." }),
+        description: L({ en: 'There was a problem sending your request.', fr: "Un problème est survenu lors de l'envoi de votre demande." }),
       });
     }
   };
@@ -96,12 +96,12 @@ function QuoteForm() {
           <Controller name="country" control={control}
             render={({ field }) => (
               <CountrySelect id="country" className="mt-1.5" value={field.value ?? ''} onChange={field.onChange}
-                lang={language} placeholderEn="Select your countryâ€¦" placeholderFr="SÃ©lectionnez votre paysâ€¦" />
+                lang={language} placeholderEn="Select your country…" placeholderFr="Sélectionnez votre pays…" />
             )} />
         </div>
         <div>
           <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wide">
-            {L({ en: 'Phone Number', fr: 'NumÃ©ro de TÃ©lÃ©phone' })}
+            {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
           </Label>
           <Controller name="phone" control={control}
             render={({ field }) => (
@@ -113,7 +113,7 @@ function QuoteForm() {
 
       <div>
         <Label htmlFor="productInterest" className="text-xs font-semibold uppercase tracking-wide">
-          {L({ en: 'Product / Service of Interest', fr: "Produit / Service d'IntÃ©rÃªt" })} *
+          {L({ en: 'Product / Service of Interest', fr: "Produit / Service d'Intérêt" })} *
         </Label>
         <Input id="productInterest" {...register('productInterest')} className="mt-1.5 rounded-sm" />
         {errors.productInterest && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
@@ -121,14 +121,14 @@ function QuoteForm() {
 
       <div>
         <Label htmlFor="quantity" className="text-xs font-semibold uppercase tracking-wide">
-          {L({ en: 'Quantity / Volume', fr: 'QuantitÃ© / Volume' })}
+          {L({ en: 'Quantity / Volume', fr: 'Quantité / Volume' })}
         </Label>
         <Input id="quantity" {...register('quantity')} className="mt-1.5 rounded-sm" />
       </div>
 
       <div>
         <Label htmlFor="message" className="text-xs font-semibold uppercase tracking-wide">
-          {L({ en: 'Additional Information', fr: 'Informations SupplÃ©mentaires' })}
+          {L({ en: 'Additional Information', fr: 'Informations Supplémentaires' })}
         </Label>
         <Textarea id="message" {...register('message')} rows={4} className="mt-1.5 rounded-sm" />
       </div>
@@ -146,15 +146,15 @@ export default function QuotePage() {
   const { L } = useLanguage();
 
   const highlights = [
-    { icon: Clock,        en: 'Response within 24 hours',       fr: 'RÃ©ponse dans les 24 heures' },
-    { icon: Shield,       en: 'Confidential & secure',           fr: 'Confidentiel & sÃ©curisÃ©' },
-    { icon: Globe2,       en: 'Global coverage â€” 30+ countries', fr: 'Couverture mondiale â€” 30+ pays' },
-    { icon: CheckCircle2, en: 'Tailored to your requirements',   fr: 'AdaptÃ© Ã  vos besoins' },
+    { icon: Clock,        en: 'Response within 24 hours',       fr: 'Réponse dans les 24 heures' },
+    { icon: Shield,       en: 'Confidential & secure',           fr: 'Confidentiel & sécurisé' },
+    { icon: Globe2,       en: 'Global coverage — 30+ countries', fr: 'Couverture mondiale — 30+ pays' },
+    { icon: CheckCircle2, en: 'Tailored to your requirements',   fr: 'Adapté à vos besoins' },
   ];
 
   return (
     <>
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative bg-sidebar py-20 sm:py-28 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1100&auto=format&fit=crop&q=45"
@@ -171,12 +171,12 @@ export default function QuotePage() {
             {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
           </motion.h1>
           <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
-            {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisÃ© pour tout besoin logistique, fourniture industrielle ou commercial.' })}
+            {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
           </motion.p>
         </motion.div>
       </section>
 
-      {/* â”€â”€ QUOTE BODY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── QUOTE BODY ──────────────────────────────────────────────────────── */}
       <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -202,10 +202,10 @@ export default function QuotePage() {
                 </p>
                 <ol className="space-y-4">
                   {[
-                    { icon: FileText,     en: 'Submit this form â€” takes less than 2 minutes.', fr: 'Soumettez ce formulaire â€” moins de 2 minutes.' },
-                    { icon: Clock,        en: 'Our team prepares a custom offer within 24â€“48 hours.', fr: 'Notre Ã©quipe prÃ©pare une offre sous 24â€“48h.' },
-                    { icon: CheckCircle2, en: 'You receive a detailed quote with pricing and timeline.', fr: 'Vous recevez un devis dÃ©taillÃ© avec prix et dÃ©lai.' },
-                    { icon: Truck,        en: 'Confirm the offer â€” we handle customs, freight, and logistics.', fr: "Confirmez l'offre â€” nous gÃ©rons les douanes, le fret et la logistique." },
+                    { icon: FileText,     en: 'Submit this form — takes less than 2 minutes.', fr: 'Soumettez ce formulaire — moins de 2 minutes.' },
+                    { icon: Clock,        en: 'Our team prepares a custom offer within 24–48 hours.', fr: 'Notre équipe prépare une offre sous 24–48h.' },
+                    { icon: CheckCircle2, en: 'You receive a detailed quote with pricing and timeline.', fr: 'Vous recevez un devis détaillé avec prix et délai.' },
+                    { icon: Truck,        en: 'Confirm the offer — we handle customs, freight, and logistics.', fr: "Confirmez l'offre — nous gérons les douanes, le fret et la logistique." },
                   ].map(({ icon: Icon, en, fr }, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <div className="w-7 h-7 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -222,10 +222,10 @@ export default function QuotePage() {
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
               className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8">
               <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em] mb-2">
-                {L({ en: 'Quote Details', fr: 'DÃ©tails du Devis' })}
+                {L({ en: 'Quote Details', fr: 'Détails du Devis' })}
               </p>
               <h2 className="font-bold text-xl mb-6">
-                {L({ en: 'Your Quote Details', fr: 'DÃ©tails de Votre Devis' })}
+                {L({ en: 'Your Quote Details', fr: 'Détails de Votre Devis' })}
               </h2>
               <Suspense>
                 <QuoteForm />

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ export default function NewsPage() {
 
   return (
     <>
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
         <Image src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
@@ -36,11 +36,11 @@ export default function NewsPage() {
             className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
             <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
-              {L({ en: 'News & Insights', fr: 'ActualitÃ©s & Analyses' })}
+              {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
             </span>
           </motion.div>
           <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
-            {L({ en: 'Industry News & Updates', fr: 'ActualitÃ©s & Mises Ã  Jour' }).split(' ').map((word, wi) => (
+            {L({ en: 'Industry News & Updates', fr: 'Actualités & Mises à Jour' }).split(' ').map((word, wi) => (
               <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
                 <motion.span
                   className="inline-block"
@@ -57,13 +57,13 @@ export default function NewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
             className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informÃ© des derniÃ¨res Ã©volutions en logistique mondiale, commerce et fournitures industrielles.' })}
+            {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informé des dernières évolutions en logistique mondiale, commerce et fournitures industrielles.' })}
           </motion.p>
         </div>
 
       </section>
 
-      {/* â”€â”€ ARTICLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── ARTICLES ────────────────────────────────────────────────────────── */}
       <section className="bg-background py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -122,7 +122,7 @@ export default function NewsPage() {
                             className="object-cover transition-transform duration-500 group-hover:scale-105" />
                           <div className="absolute top-4 left-4">
                             <span className="bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-[0.15em] px-3 py-1 rounded-full">
-                              {L({ en: 'Featured', fr: 'Ã€ la Une' })}
+                              {L({ en: 'Featured', fr: 'À la Une' })}
                             </span>
                           </div>
                         </div>

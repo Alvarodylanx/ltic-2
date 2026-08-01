@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,65 +12,65 @@ const services = [
   {
     en: 'Logistics & Transit', fr: 'Logistique & Transit',
     headlineEn: 'End-to-End Global Freight Solutions', headlineFr: 'Solutions de Fret Mondial de Bout en Bout',
-    descEn: 'LTIC SARL manages the complete logistics lifecycle â€” from freight booking and customs clearance to final-mile delivery across air, sea, and road in 30+ countries.',
-    descFr: "LTIC SARL gÃ¨re le cycle logistique complet â€” de la rÃ©servation de fret et du dÃ©douanement jusqu'Ã  la livraison finale sur les rÃ©seaux aÃ©riens, maritimes et routiers dans plus de 30 pays.",
+    descEn: 'LTIC SARL manages the complete logistics lifecycle — from freight booking and customs clearance to final-mile delivery across air, sea, and road in 30+ countries.',
+    descFr: "LTIC SARL gère le cycle logistique complet — de la réservation de fret et du dédouanement jusqu'à la livraison finale sur les réseaux aériens, maritimes et routiers dans plus de 30 pays.",
     image: '/images/logistics-transit.jpg',
     bulletsEn: ['International freight coordination (air, sea, road)', 'Cargo handling and warehousing', 'Customs clearance and documentation', 'International transit management', 'Last-mile distribution solutions', 'Real-time shipment tracking'],
-    bulletsFr: ['Coordination du fret international (air, mer, route)', 'Manutention et entreposage de marchandises', 'DÃ©douanement et documentation', 'Gestion du transit international', 'Solutions de distribution dernier kilomÃ¨tre', 'Suivi en temps rÃ©el des expÃ©ditions'],
+    bulletsFr: ['Coordination du fret international (air, mer, route)', 'Manutention et entreposage de marchandises', 'Dédouanement et documentation', 'Gestion du transit international', 'Solutions de distribution dernier kilomètre', 'Suivi en temps réel des expéditions'],
   },
   {
     en: 'Import & Export', fr: 'Import & Export',
     headlineEn: 'Seamless International Trade Facilitation', headlineFr: 'Facilitation Fluide du Commerce International',
     descEn: 'We facilitate seamless cross-border transactions with expert compliance management, strategic sourcing, and comprehensive documentation support.',
-    descFr: 'Nous facilitons des transactions transfrontaliÃ¨res fluides avec une gestion experte de la conformitÃ©, un sourcing stratÃ©gique et un support documentaire complet.',
+    descFr: 'Nous facilitons des transactions transfrontalières fluides avec une gestion experte de la conformité, un sourcing stratégique et un support documentaire complet.',
     image: '/images/import-export.webp',
     bulletsEn: ['International trade facilitation', 'Customs coordination and compliance', 'Global sourcing and procurement', 'Trade documentation management', 'Regulatory compliance advisory', 'Strategic market sourcing'],
-    bulletsFr: ['Facilitation du commerce international', 'Coordination douaniÃ¨re et conformitÃ©', 'Sourcing mondial et approvisionnement', 'Gestion de la documentation commerciale', 'Conseil en conformitÃ© rÃ©glementaire', 'Sourcing stratÃ©gique de marchÃ©'],
+    bulletsFr: ['Facilitation du commerce international', 'Coordination douanière et conformité', 'Sourcing mondial et approvisionnement', 'Gestion de la documentation commerciale', 'Conseil en conformité réglementaire', 'Sourcing stratégique de marché'],
   },
   {
     en: 'Industrial Supply', fr: 'Fourniture Industrielle',
-    headlineEn: 'Premium Industrial Products & Materials', headlineFr: 'Produits & MatÃ©riaux Industriels Premium',
+    headlineEn: 'Premium Industrial Products & Materials', headlineFr: 'Produits & Matériaux Industriels Premium',
     descEn: 'As an authorized distributor for Total, Shell and major OEM brands, we supply certified industrial products directly to your operations anywhere in the world.',
-    descFr: 'En tant que distributeur agrÃ©Ã© de Total, Shell et grandes marques OEM, nous fournissons des produits industriels certifiÃ©s directement Ã  vos opÃ©rations partout dans le monde.',
+    descFr: 'En tant que distributeur agréé de Total, Shell et grandes marques OEM, nous fournissons des produits industriels certifiés directement à vos opérations partout dans le monde.',
     image: '/images/industrial-supply-service.jpg',
-    bulletsEn: ['Industrial generators (diesel, gas, standby power)', 'Lubricants â€” Total, Shell and leading brands', 'Oil filters and air filters (OEM-grade)', 'Timber and logs (certified tropical species)', 'Heavy industrial materials and equipment', 'Custom industrial procurement'],
-    bulletsFr: ['GÃ©nÃ©rateurs industriels (diesel, gaz, secours)', 'Lubrifiants â€” Total, Shell et grandes marques', 'Filtres Ã  huile et Ã  air (qualitÃ© OEM)', 'Bois et grumes (essences tropicales certifiÃ©es)', 'MatÃ©riaux industriels lourds et Ã©quipements', 'Approvisionnement industriel sur mesure'],
+    bulletsEn: ['Industrial generators (diesel, gas, standby power)', 'Lubricants — Total, Shell and leading brands', 'Oil filters and air filters (OEM-grade)', 'Timber and logs (certified tropical species)', 'Heavy industrial materials and equipment', 'Custom industrial procurement'],
+    bulletsFr: ['Générateurs industriels (diesel, gaz, secours)', 'Lubrifiants — Total, Shell et grandes marques', 'Filtres à huile et à air (qualité OEM)', 'Bois et grumes (essences tropicales certifiées)', 'Matériaux industriels lourds et équipements', 'Approvisionnement industriel sur mesure'],
   },
   {
-    en: 'Supply Chain Consulting', fr: "Conseil en ChaÃ®ne d'Approvisionnement",
-    headlineEn: 'Strategic Logistics Optimization', headlineFr: 'Optimisation Logistique StratÃ©gique',
+    en: 'Supply Chain Consulting', fr: "Conseil en Chaîne d'Approvisionnement",
+    headlineEn: 'Strategic Logistics Optimization', headlineFr: 'Optimisation Logistique Stratégique',
     descEn: 'Our consultants bring deep expertise in logistics network design, procurement strategy, and supply chain risk management for complex market environments.',
-    descFr: "Nos consultants apportent une expertise approfondie en conception de rÃ©seaux logistiques, stratÃ©gie d'approvisionnement et gestion des risques de la chaÃ®ne logistique.",
+    descFr: "Nos consultants apportent une expertise approfondie en conception de réseaux logistiques, stratégie d'approvisionnement et gestion des risques de la chaîne logistique.",
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=70',
     bulletsEn: ['Supply chain strategy and design', 'Logistics network optimization', 'Procurement consulting', 'Cost reduction analysis', 'Risk management in trade', 'Operational efficiency consulting'],
-    bulletsFr: ["StratÃ©gie et conception de la chaÃ®ne d'approvisionnement", 'Optimisation du rÃ©seau logistique', 'Conseil en approvisionnement', 'Analyse de rÃ©duction des coÃ»ts', 'Gestion des risques commerciaux', 'Conseil en efficacitÃ© opÃ©rationnelle'],
+    bulletsFr: ["Stratégie et conception de la chaîne d'approvisionnement", 'Optimisation du réseau logistique', 'Conseil en approvisionnement', 'Analyse de réduction des coûts', 'Gestion des risques commerciaux', 'Conseil en efficacité opérationnelle'],
   },
   {
-    en: 'Commercial & Brand Representation', fr: 'ReprÃ©sentation Commerciale & de Marque',
-    headlineEn: 'Your Gateway to New Markets', headlineFr: "Votre Porte d'EntrÃ©e vers de Nouveaux MarchÃ©s",
+    en: 'Commercial & Brand Representation', fr: 'Représentation Commerciale & de Marque',
+    headlineEn: 'Your Gateway to New Markets', headlineFr: "Votre Porte d'Entrée vers de Nouveaux Marchés",
     descEn: 'We connect international brands with local market opportunities through strategic representation, joint ventures, and distribution partnerships.',
-    descFr: 'Nous connectons les marques internationales aux opportunitÃ©s de marchÃ© locales grÃ¢ce Ã  la reprÃ©sentation stratÃ©gique, aux coentreprises et aux partenariats de distribution.',
+    descFr: 'Nous connectons les marques internationales aux opportunités de marché locales grâce à la représentation stratégique, aux coentreprises et aux partenariats de distribution.',
     image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&auto=format&fit=crop&q=70',
     bulletsEn: ['Market entry strategy', 'Brand representation in target markets', 'Joint venture facilitation', 'Strategic business partnerships', 'Distribution channel development', 'Trade mission coordination'],
-    bulletsFr: ["StratÃ©gie d'entrÃ©e sur le marchÃ©", 'ReprÃ©sentation de marque sur les marchÃ©s cibles', 'Facilitation de coentreprises', 'Partenariats commerciaux stratÃ©giques', 'DÃ©veloppement de canaux de distribution', 'Coordination de missions commerciales'],
+    bulletsFr: ["Stratégie d'entrée sur le marché", 'Représentation de marque sur les marchés cibles', 'Facilitation de coentreprises', 'Partenariats commerciaux stratégiques', 'Développement de canaux de distribution', 'Coordination de missions commerciales'],
   },
   {
     en: 'Phytosanitary Treatment', fr: 'Traitement Phytosanitaire',
-    headlineEn: 'Compliance-First Treatment Services', headlineFr: 'Services de Traitement AxÃ©s sur la ConformitÃ©',
+    headlineEn: 'Compliance-First Treatment Services', headlineFr: 'Services de Traitement Axés sur la Conformité',
     descEn: 'Our certified phytosanitary and sanitation services ensure your timber, agricultural goods, and equipment meet all importing country requirements.',
-    descFr: "Nos services certifiÃ©s de traitement phytosanitaire garantissent que votre bois, vos produits agricoles et Ã©quipements rÃ©pondent Ã  toutes les exigences des pays importateurs.",
+    descFr: "Nos services certifiés de traitement phytosanitaire garantissent que votre bois, vos produits agricoles et équipements répondent à toutes les exigences des pays importateurs.",
     image: '/images/phytosanitary.jpg',
     bulletsEn: ['Phytosanitary treatment for timber and agricultural goods', 'Industrial sanitation services', 'Regulatory compliance documentation', 'Inspection coordination', 'Treatment certification'],
-    bulletsFr: ['Traitement phytosanitaire pour bois et produits agricoles', "Services d'assainissement industriel", 'Documentation de conformitÃ© rÃ©glementaire', 'Coordination des inspections', 'Certification de traitement'],
+    bulletsFr: ['Traitement phytosanitaire pour bois et produits agricoles', "Services d'assainissement industriel", 'Documentation de conformité réglementaire', 'Coordination des inspections', 'Certification de traitement'],
   },
   {
     en: 'Transportation', fr: 'Transport',
     headlineEn: 'Reliable Multimodal Transportation', headlineFr: 'Transport Multimodal Fiable',
     descEn: 'From local road freight to international sea and air cargo, LTIC SARL coordinates reliable, cost-effective transportation solutions tailored to your timeline.',
-    descFr: 'Du fret routier local au cargo maritime et aÃ©rien international, LTIC SARL coordonne des solutions de transport fiables et Ã©conomiques adaptÃ©es Ã  votre calendrier.',
+    descFr: 'Du fret routier local au cargo maritime et aérien international, LTIC SARL coordonne des solutions de transport fiables et économiques adaptées à votre calendrier.',
     image: '/images/transportation.jpg',
     bulletsEn: ['Road freight (local and regional)', 'Air freight coordination', 'Sea freight booking and management', 'Port handling and documentation', 'Fleet coordination for bulk cargo'],
-    bulletsFr: ['Fret routier (local et rÃ©gional)', 'Coordination du fret aÃ©rien', 'RÃ©servation et gestion du fret maritime', 'Manutention portuaire et documentation', 'Coordination de flotte pour fret en vrac'],
+    bulletsFr: ['Fret routier (local et régional)', 'Coordination du fret aérien', 'Réservation et gestion du fret maritime', 'Manutention portuaire et documentation', 'Coordination de flotte pour fret en vrac'],
   },
 ];
 
@@ -79,7 +79,7 @@ export default function ServicesPage() {
 
   return (
     <>
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
         <Image src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
@@ -97,7 +97,7 @@ export default function ServicesPage() {
             </span>
           </motion.div>
           <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
-            {L({ en: 'Full-Spectrum Business Solutions', fr: "Solutions d'Affaires ComplÃ¨tes" }).split(' ').map((word, wi) => (
+            {L({ en: 'Full-Spectrum Business Solutions', fr: "Solutions d'Affaires Complètes" }).split(' ').map((word, wi) => (
               <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
                 <motion.span
                   className="inline-block"
@@ -114,13 +114,13 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
             className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'From freight coordination to industrial supply and strategic consulting â€” excellence across every dimension of global commerce.', fr: "De la coordination du fret aux fournitures industrielles et au conseil stratÃ©gique â€” l'excellence dans toutes les dimensions du commerce mondial." })}
+            {L({ en: 'From freight coordination to industrial supply and strategic consulting — excellence across every dimension of global commerce.', fr: "De la coordination du fret aux fournitures industrielles et au conseil stratégique — l'excellence dans toutes les dimensions du commerce mondial." })}
           </motion.p>
         </div>
 
       </section>
 
-      {/* â”€â”€ DETAILED SERVICE SECTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── DETAILED SERVICE SECTIONS ────────────────────────────────────────── */}
       {services.map((svc, index) => {
         const isEven = index % 2 === 0;
         return (
@@ -163,23 +163,23 @@ export default function ServicesPage() {
         );
       })}
 
-      {/* â”€â”€ CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── CTA ─────────────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-16 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <h2 className="font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
-              {L({ en: 'Ready to Get Started?', fr: 'PrÃªt Ã  Commencer ?' })}
+              {L({ en: 'Ready to Get Started?', fr: 'Prêt à Commencer ?' })}
             </h2>
             <p className="text-sidebar-foreground/60 text-sm mt-2">
-              {L({ en: 'Discuss your requirements and get a tailored proposal.', fr: 'Discutez de vos besoins et obtenez une proposition personnalisÃ©e.' })}
+              {L({ en: 'Discuss your requirements and get a tailored proposal.', fr: 'Discutez de vos besoins et obtenez une proposition personnalisée.' })}
             </p>
           </motion.div>
           <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto sm:flex-shrink-0">
             <Button asChild size="lg" className="font-semibold text-sm w-full sm:w-auto justify-center">
               <Link href="/contact">
-                {L({ en: 'Contact Our Team', fr: 'Contacter Notre Ã‰quipe' })}
+                {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                 <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
               </Link>
             </Button>

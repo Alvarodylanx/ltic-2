@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Image from 'next/image';
@@ -20,8 +20,8 @@ import {
 const statDefs = [
   { key: 'stat_countries', fallback: '30+',  en: 'Countries', fr: 'Pays' },
   { key: 'stat_clients',   fallback: '500+', en: 'Clients',   fr: 'Clients' },
-  { key: 'stat_years',     fallback: '5+',   en: 'Years',     fr: 'AnnÃ©es' },
-  { key: 'stat_shipments', fallback: '10K+', en: 'Shipments', fr: 'ExpÃ©ditions' },
+  { key: 'stat_years',     fallback: '5+',   en: 'Years',     fr: 'Années' },
+  { key: 'stat_shipments', fallback: '10K+', en: 'Shipments', fr: 'Expéditions' },
 ];
 
 const mvvItems = [
@@ -29,32 +29,32 @@ const mvvItems = [
     icon: Target,
     number: '01',
     title: { en: 'Mission', fr: 'Mission' },
-    desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables qui permettent Ã  nos clients de rÃ©ussir sur les marchÃ©s mondiaux." },
+    desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables qui permettent à nos clients de réussir sur les marchés mondiaux." },
     image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=900&auto=format&fit=crop&q=70',
   },
   {
     icon: Globe2,
     number: '02',
     title: { en: 'Vision', fr: 'Vision' },
-    desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company â€” trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue Ã  l'Ã©chelle mondiale â€” de confiance pour les entreprises en Afrique, Europe, Moyen-Orient et Canada." },
+    desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company — trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue à l'échelle mondiale — de confiance pour les entreprises en Afrique, Europe, Moyen-Orient et Canada." },
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&auto=format&fit=crop&q=70',
   },
   {
     icon: ShieldCheck,
     number: '03',
     title: { en: 'Values', fr: 'Valeurs' },
-    desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration â€” the principles that guide every decision we make.', fr: 'Professionnalisme, FiabilitÃ©, IntÃ©gritÃ©, Satisfaction Client, Excellence OpÃ©rationnelle, Innovation, Collaboration Mondiale â€” les principes qui guident chacune de nos dÃ©cisions.' },
+    desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration — the principles that guide every decision we make.', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle, Innovation, Collaboration Mondiale — les principes qui guident chacune de nos décisions.' },
     image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&auto=format&fit=crop&q=70',
   },
 ];
 
 const values = [
-  { icon: ShieldCheck,  en: 'Reliability',           fr: 'FiabilitÃ©',                descEn: 'Committed to delivering on every promise â€” on time, in full, and with complete transparency.',                            descFr: 'EngagÃ©s Ã  tenir chaque promesse â€” Ã  temps, intÃ©gralement et avec une totale transparence.' },
-  { icon: Target,       en: 'Professionalism',        fr: 'Professionnalisme',         descEn: 'Maintaining the highest standards of expertise, conduct, and accountability in every business interaction.',               descFr: "Maintenir les plus hauts standards d'expertise, de conduite et de responsabilitÃ© dans chaque interaction." },
-  { icon: CheckCircle2, en: 'Integrity',              fr: 'IntÃ©gritÃ©',                 descEn: 'Operating with honesty and ethical standards across all client, partner, and supplier relationships.',                     descFr: 'Agir avec honnÃªtetÃ© et rigueur Ã©thique dans toutes les relations commerciales.' },
+  { icon: ShieldCheck,  en: 'Reliability',           fr: 'Fiabilité',                descEn: 'Committed to delivering on every promise — on time, in full, and with complete transparency.',                            descFr: 'Engagés à tenir chaque promesse — à temps, intégralement et avec une totale transparence.' },
+  { icon: Target,       en: 'Professionalism',        fr: 'Professionnalisme',         descEn: 'Maintaining the highest standards of expertise, conduct, and accountability in every business interaction.',               descFr: "Maintenir les plus hauts standards d'expertise, de conduite et de responsabilité dans chaque interaction." },
+  { icon: CheckCircle2, en: 'Integrity',              fr: 'Intégrité',                 descEn: 'Operating with honesty and ethical standards across all client, partner, and supplier relationships.',                     descFr: 'Agir avec honnêteté et rigueur éthique dans toutes les relations commerciales.' },
   { icon: Lightbulb,    en: 'Innovation',             fr: 'Innovation',                descEn: 'Continuously adopting modern technologies and methodologies to deliver smarter logistics solutions.',                       descFr: 'Adopter continuellement les technologies modernes pour des solutions logistiques plus performantes.' },
-  { icon: TrendingUp,   en: 'Operational Excellence', fr: 'Excellence OpÃ©rationnelle', descEn: 'Relentless pursuit of efficiency, quality, and continuous improvement across all our operations.',                        descFr: "Recherche constante d'efficacitÃ©, de qualitÃ© et d'amÃ©lioration continue dans toutes nos opÃ©rations." },
-  { icon: Globe2,       en: 'Global Collaboration',   fr: 'Collaboration Mondiale',    descEn: 'Building strong international partnerships to connect businesses with global markets and opportunities.',                   descFr: 'Construire des partenariats internationaux solides pour connecter les entreprises aux marchÃ©s mondiaux.' },
+  { icon: TrendingUp,   en: 'Operational Excellence', fr: 'Excellence Opérationnelle', descEn: 'Relentless pursuit of efficiency, quality, and continuous improvement across all our operations.',                        descFr: "Recherche constante d'efficacité, de qualité et d'amélioration continue dans toutes nos opérations." },
+  { icon: Globe2,       en: 'Global Collaboration',   fr: 'Collaboration Mondiale',    descEn: 'Building strong international partnerships to connect businesses with global markets and opportunities.',                   descFr: 'Construire des partenariats internationaux solides pour connecter les entreprises aux marchés mondiaux.' },
 ];
 
 export default function AboutPage() {
@@ -74,7 +74,7 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
         <Image src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
@@ -88,7 +88,7 @@ export default function AboutPage() {
             className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
             <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
-              {L({ en: 'About LTIC SARL', fr: 'Ã€ Propos de LTIC SARL' })}
+              {L({ en: 'About LTIC SARL', fr: 'À Propos de LTIC SARL' })}
             </span>
           </motion.div>
           <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
@@ -115,7 +115,7 @@ export default function AboutPage() {
 
       </section>
 
-      {/* â”€â”€ STORY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── STORY ───────────────────────────────────────────────────────────── */}
       <section className="bg-background py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -124,20 +124,20 @@ export default function AboutPage() {
                 {L({ en: 'Our Story', fr: 'Notre Histoire' })}
               </p>
               <h2 className="font-bold text-3xl sm:text-4xl tracking-tight mb-5">
-                {L({ en: 'Built for the Demands of Global Commerce', fr: 'ConÃ§u pour les Exigences du Commerce Mondial' })}
+                {L({ en: 'Built for the Demands of Global Commerce', fr: 'Conçu pour les Exigences du Commerce Mondial' })}
               </h2>
               <p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
-                {L({ en: "LTIC â€” Logistics and Transit International Company â€” was incorporated in Douala, Cameroon as a SARL to serve a critical need: a reliable partner for logistics, transit, industrial supply, commercial representation, and international trade.", fr: "LTIC â€” Logistics and Transit International Company â€” a Ã©tÃ© constituÃ©e Ã  Douala, Cameroun en SARL pour rÃ©pondre Ã  un besoin essentiel : un partenaire fiable en logistique, transit, fourniture industrielle, reprÃ©sentation commerciale et commerce international." })}
+                {L({ en: "LTIC — Logistics and Transit International Company — was incorporated in Douala, Cameroon as a SARL to serve a critical need: a reliable partner for logistics, transit, industrial supply, commercial representation, and international trade.", fr: "LTIC — Logistics and Transit International Company — a été constituée à Douala, Cameroun en SARL pour répondre à un besoin essentiel : un partenaire fiable en logistique, transit, fourniture industrielle, représentation commerciale et commerce international." })}
               </p>
               <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
-                {L({ en: 'From Douala, we operate across Africa, Europe, the Middle East, and Canada â€” delivering precision logistics, industrial supply, and strategic trade solutions.', fr: "Depuis Douala, nous opÃ©rons en Afrique, Europe, Moyen-Orient et Canada â€” logistique de prÃ©cision, fournitures industrielles et solutions commerciales stratÃ©giques." })}
+                {L({ en: 'From Douala, we operate across Africa, Europe, the Middle East, and Canada — delivering precision logistics, industrial supply, and strategic trade solutions.', fr: "Depuis Douala, nous opérons en Afrique, Europe, Moyen-Orient et Canada — logistique de précision, fournitures industrielles et solutions commerciales stratégiques." })}
               </p>
               <ul className="space-y-3">
                 {[
-                  { en: 'Active in 30+ countries across Africa, Europe, Middle East & Americas', fr: "Actif dans 30+ pays en Afrique, Europe, Moyen-Orient et AmÃ©riques" },
-                  { en: 'Specialized in industrial supply chains, timber trade & consulting', fr: "SpÃ©cialisÃ© en chaÃ®nes d'approvisionnement, commerce du bois et conseil" },
-                  { en: 'Certified partnerships with Total, Shell and major OEM brands', fr: "Partenariats certifiÃ©s avec Total, Shell et grandes marques OEM" },
-                  { en: 'Full compliance: phytosanitary treatment & customs documentation', fr: "ConformitÃ© complÃ¨te : traitement phytosanitaire et documentation douaniÃ¨re" },
+                  { en: 'Active in 30+ countries across Africa, Europe, Middle East & Americas', fr: "Actif dans 30+ pays en Afrique, Europe, Moyen-Orient et Amériques" },
+                  { en: 'Specialized in industrial supply chains, timber trade & consulting', fr: "Spécialisé en chaînes d'approvisionnement, commerce du bois et conseil" },
+                  { en: 'Certified partnerships with Total, Shell and major OEM brands', fr: "Partenariats certifiés avec Total, Shell et grandes marques OEM" },
+                  { en: 'Full compliance: phytosanitary treatment & customs documentation', fr: "Conformité complète : traitement phytosanitaire et documentation douanière" },
                 ].map((item, i) => (
                   <motion.li key={i} variants={fadeInLeft} initial="hidden" whileInView="show"
                     viewport={viewportOnce} transition={{ delay: i * 0.06 }}
@@ -161,7 +161,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* â”€â”€ STATS BAND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── STATS BAND ──────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
@@ -180,7 +180,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* â”€â”€ MISSION Â· VISION Â· VALUES â€” Style 01: Oblique Panels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
       <section className="bg-sidebar py-14 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -198,7 +198,7 @@ export default function AboutPage() {
             <div className="hidden md:block h-px flex-1 bg-white/10" />
           </motion.div>
 
-          {/* â”€â”€ DESKTOP: Oblique expanding panels â”€â”€ */}
+          {/* ── DESKTOP: Oblique expanding panels ── */}
           <motion.div
             variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="hidden md:flex h-[460px] overflow-hidden rounded-2xl border border-white/10">
@@ -220,7 +220,7 @@ export default function AboutPage() {
                   onMouseEnter={() => setActiveMVV(i)}
                   onMouseLeave={() => setActiveMVV(null)}>
 
-                  {/* Background image + overlay â€” counter-skewed */}
+                  {/* Background image + overlay — counter-skewed */}
                   <div
                     className="absolute inset-0"
                     style={{ transform: 'skewX(5deg) scaleX(1.12)', transformOrigin: 'top left' }}>
@@ -234,19 +234,19 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/40 to-transparent" />
                   </div>
 
-                  {/* Content â€” counter-skewed */}
+                  {/* Content — counter-skewed */}
                   <div
                     className="relative h-full flex flex-col justify-end pb-9 pl-10 pr-6"
                     style={{ transform: 'skewX(5deg)', transformOrigin: 'top left' }}>
 
-                    {/* Ghost number â€” top right */}
+                    {/* Ghost number — top right */}
                     <span
                       className="absolute top-6 right-10 font-black leading-none select-none pointer-events-none"
                       style={{ fontSize: 'clamp(4rem, 8vw, 7rem)', color: 'hsl(var(--sidebar-foreground) / 0.05)' }}>
                       {item.number}
                     </span>
 
-                    {/* Accent line â€” grows on hover */}
+                    {/* Accent line — grows on hover */}
                     <motion.div
                       className="bg-primary origin-left mb-4"
                       style={{ height: '2px' }}
@@ -260,7 +260,7 @@ export default function AboutPage() {
                       {L(item.title)}
                     </h3>
 
-                    {/* Description â€” fades in when panel expands */}
+                    {/* Description — fades in when panel expands */}
                     <motion.p
                       className="text-sidebar-foreground/60 text-sm leading-relaxed mt-3 max-w-[22ch]"
                       animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
@@ -273,7 +273,7 @@ export default function AboutPage() {
             })}
           </motion.div>
 
-          {/* â”€â”€ MOBILE: stacked panels, always expanded â”€â”€ */}
+          {/* ── MOBILE: stacked panels, always expanded ── */}
           <div className="md:hidden flex flex-col gap-3">
             {mvvItems.map((item, i) => (
               <div key={item.title.en} className="relative overflow-hidden rounded-2xl h-56">
@@ -296,7 +296,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* â”€â”€ CORE VALUES â€” typographic index â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── CORE VALUES — typographic index ─────────────────────────────────── */}
       <section className="bg-background border-t border-border py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -381,24 +381,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* â”€â”€ CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── CTA ─────────────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-16 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
           flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <h2 className="font-bold text-2xl sm:text-3xl text-sidebar-foreground tracking-tight">
-              {L({ en: 'Ready to Partner with LTIC SARL?', fr: 'PrÃªt Ã  Collaborer avec LTIC SARL ?' })}
+              {L({ en: 'Ready to Partner with LTIC SARL?', fr: 'Prêt à Collaborer avec LTIC SARL ?' })}
             </h2>
             <p className="text-sidebar-foreground/60 text-sm mt-2">
-              {L({ en: 'Let us show you how our global network transforms your operations.', fr: "Laissez-nous vous montrer comment notre rÃ©seau mondial transforme vos opÃ©rations." })}
+              {L({ en: 'Let us show you how our global network transforms your operations.', fr: "Laissez-nous vous montrer comment notre réseau mondial transforme vos opérations." })}
             </p>
           </motion.div>
           <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex flex-shrink-0 gap-3">
             <Button asChild size="lg" className="font-semibold text-sm">
               <Link href="/contact">
-                {L({ en: 'Contact Our Team', fr: 'Contacter Notre Ã‰quipe' })}
+                {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
             </Button>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -48,28 +48,28 @@ export default function ContactPage() {
   const onSubmit = async (data: FormData) => {
     try {
       await api.post('/api/contacts', data);
-      toast.success(L({ en: 'Message Sent!', fr: 'Message EnvoyÃ© !' }), {
-        description: L({ en: 'Thank you for reaching out. We will respond shortly.', fr: 'Merci de nous avoir contactÃ©s. Nous rÃ©pondrons sous peu.' }),
+      toast.success(L({ en: 'Message Sent!', fr: 'Message Envoyé !' }), {
+        description: L({ en: 'Thank you for reaching out. We will respond shortly.', fr: 'Merci de nous avoir contactés. Nous répondrons sous peu.' }),
       });
       reset();
     } catch {
       toast.error(L({ en: 'Something went wrong', fr: 'Une erreur est survenue' }), {
-        description: L({ en: 'Please try again or email us directly.', fr: 'Veuillez rÃ©essayer ou nous Ã©crire directement.' }),
+        description: L({ en: 'Please try again or email us directly.', fr: 'Veuillez réessayer ou nous écrire directement.' }),
       });
     }
   };
 
   const contactInfo = [
     { icon: MapPin, label: { en: 'Address',  fr: 'Adresse'    }, value: siteSettings?.company_address || 'Douala, Cameroon' },
-    { icon: Phone,  label: { en: 'Phone',    fr: 'TÃ©lÃ©phone'  }, value: siteSettings?.company_phone   || '+237 6XX XXX XXX' },
+    { icon: Phone,  label: { en: 'Phone',    fr: 'Téléphone'  }, value: siteSettings?.company_phone   || '+237 6XX XXX XXX' },
     { icon: Mail,   label: { en: 'Email',    fr: 'Email'      }, value: siteSettings?.company_email   || 'contact@lticsarl.com' },
-    { icon: Clock,  label: { en: 'Hours',    fr: 'Horaires'   }, value: 'Monday â€“ Friday, 8:00 AM â€“ 6:00 PM (WAT)' },
-    { icon: Globe2, label: { en: 'Coverage', fr: 'Couverture' }, value: L({ en: 'Global â€” 30+ countries served', fr: 'Mondial â€” 30+ pays desservis' }) },
+    { icon: Clock,  label: { en: 'Hours',    fr: 'Horaires'   }, value: 'Monday – Friday, 8:00 AM – 6:00 PM (WAT)' },
+    { icon: Globe2, label: { en: 'Coverage', fr: 'Couverture' }, value: L({ en: 'Global — 30+ countries served', fr: 'Mondial — 30+ pays desservis' }) },
   ];
 
   return (
     <>
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
         <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
@@ -87,7 +87,7 @@ export default function ContactPage() {
             </span>
           </motion.div>
           <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
-            {L({ en: 'Contact Our Team', fr: 'Contactez Notre Ã‰quipe' }).split(' ').map((word, wi) => (
+            {L({ en: 'Contact Our Team', fr: 'Contactez Notre Équipe' }).split(' ').map((word, wi) => (
               <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
                 <motion.span
                   className="inline-block"
@@ -104,18 +104,18 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
             className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'Our experts are ready to discuss your logistics and supply needs.', fr: 'Nos experts sont prÃªts Ã  discuter de vos besoins en logistique et fournitures.' })}
+            {L({ en: 'Our experts are ready to discuss your logistics and supply needs.', fr: 'Nos experts sont prêts à discuter de vos besoins en logistique et fournitures.' })}
           </motion.p>
         </div>
 
       </section>
 
-      {/* â”€â”€ CONTACT BODY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
       <section className="bg-background py-20 lg:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 items-start">
 
-            {/* LEFT â€” heading + contact info */}
+            {/* LEFT — heading + contact info */}
             <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
               className="lg:col-span-2 space-y-8">
 
@@ -129,7 +129,7 @@ export default function ContactPage() {
                   {L({ en: 'How Can We Help You?', fr: 'Comment Pouvons-Nous Vous Aider ?' })}
                 </motion.h2>
                 <motion.p variants={fadeInUp} className="text-muted-foreground text-sm leading-relaxed">
-                  {L({ en: 'Fill in the form and our team will respond within 24 hours.', fr: 'Remplissez le formulaire et notre Ã©quipe rÃ©pondra dans les 24 heures.' })}
+                  {L({ en: 'Fill in the form and our team will respond within 24 hours.', fr: 'Remplissez le formulaire et notre équipe répondra dans les 24 heures.' })}
                 </motion.p>
               </div>
 
@@ -151,7 +151,7 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            {/* RIGHT â€” form */}
+            {/* RIGHT — form */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="lg:col-span-3 bg-card border border-border rounded-2xl p-6 sm:p-8">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
@@ -162,7 +162,7 @@ export default function ContactPage() {
                   </Label>
                   <Input id="name" {...register('name')} className="mt-1.5 rounded-xl"
                     placeholder={L({ en: 'John Doe', fr: 'Jean Dupont' })} />
-                  {errors.name && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 2 characters', fr: '2 caractÃ¨res minimum' })}</p>}
+                  {errors.name && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 2 characters', fr: '2 caractères minimum' })}</p>}
                 </div>
                 <div>
                   <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wide">
@@ -184,7 +184,7 @@ export default function ContactPage() {
                   <Controller name="country" control={control}
                     render={({ field }) => (
                       <CountrySelect id="country" className="mt-1.5" value={field.value ?? ''} onChange={field.onChange}
-                        lang={language} placeholderEn="Select countryâ€¦" placeholderFr="SÃ©lectionnez votre paysâ€¦" />
+                        lang={language} placeholderEn="Select country…" placeholderFr="Sélectionnez votre pays…" />
                     )} />
                 </div>
                 <div>
@@ -192,13 +192,13 @@ export default function ContactPage() {
                     {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })}
                   </Label>
                   <Input id="company" {...register('company')} className="mt-1.5 rounded-xl"
-                    placeholder={L({ en: 'Your Company Ltd.', fr: 'Votre SociÃ©tÃ© S.A.' })} />
+                    placeholder={L({ en: 'Your Company Ltd.', fr: 'Votre Société S.A.' })} />
                 </div>
               </div>
 
               <div>
                 <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wide">
-                  {L({ en: 'Phone Number', fr: 'NumÃ©ro de TÃ©lÃ©phone' })}
+                  {L({ en: 'Phone Number', fr: 'Numéro de Téléphone' })}
                 </Label>
                 <Controller name="phone" control={control}
                   render={({ field }) => (
@@ -221,8 +221,8 @@ export default function ContactPage() {
                   {L({ en: 'Your Message', fr: 'Votre Message' })} *
                 </Label>
                 <Textarea id="message" {...register('message')} rows={5} className="mt-1.5 rounded-xl"
-                  placeholder={L({ en: 'Tell us about your logistics or supply requirementsâ€¦', fr: 'Parlez-nous de vos besoins en logistique ou fournituresâ€¦' })} />
-                {errors.message && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 10 characters', fr: '10 caractÃ¨res minimum' })}</p>}
+                  placeholder={L({ en: 'Tell us about your logistics or supply requirements…', fr: 'Parlez-nous de vos besoins en logistique ou fournitures…' })} />
+                {errors.message && <p className="text-destructive text-xs mt-1">{L({ en: 'Min 10 characters', fr: '10 caractères minimum' })}</p>}
               </div>
 
               <Button type="submit" size="lg" disabled={isSubmitting}
