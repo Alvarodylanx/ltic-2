@@ -1,11 +1,14 @@
-﻿'use client';
+'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { Package, Filter, ArrowRight, AlertCircle, RefreshCw, Search, X } from 'lucide-react';
+import {
+  Package, ArrowRight, AlertCircle, RefreshCw,
+  Search, X, ChevronDown, Check, SlidersHorizontal,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -18,11 +21,24 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [filterOpen, setFilterOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(searchInput.trim()), 350);
     return () => clearTimeout(timer);
   }, [searchInput]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setFilterOpen(false);
+      }
+    }
+    if (filterOpen) document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [filterOpen]);
 
   const { data: categories } = useQuery<any[]>({
     queryKey: ['categories'],
@@ -44,32 +60,36 @@ export default function ProductsPage() {
     staleTime: 2 * 60 * 1000,
   });
 
+  const allCategories = [{ id: undefined, nameEn: 'All Products', nameFr: 'Tous les Produits' }, ...(categories || [])];
+  const activeCat = allCategories.find(c =>
+    c.id === undefined ? !selectedCategory : c.id === selectedCategory
+  );
+  const isFiltered = !!selectedCategory || !!debouncedSearch;
+
   return (
     <>
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
-        <Image src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
+      {/* ── HERO ── */}
+      <section className="relative h-[22vh] min-h-[160px] sm:h-[30vh] sm:min-h-[210px] overflow-hidden bg-sidebar flex items-center">
+        <Image
+          src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1100&auto=format&fit=crop&q=45"
+          alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, x: -22 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center justify-center gap-2.5 mb-3">
+            className="flex items-center justify-center gap-2.5 mb-2 sm:mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
             <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
             </span>
           </motion.div>
-          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
+          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em]">
             {L({ en: 'Our Products', fr: 'Nos Produits' }).split(' ').map((word, wi) => (
               <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
-                <motion.span
-                  className="inline-block"
-                  initial={{ y: '112%' }}
-                  animate={{ y: 0 }}
+                <motion.span className="inline-block" initial={{ y: '112%' }} animate={{ y: 0 }}
                   transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
                   {word}
                 </motion.span>
@@ -77,68 +97,108 @@ export default function ProductsPage() {
             ))}
           </h1>
           <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'Premium certified industrial equipment, supplies, and materials â€” sourced globally, delivered reliably.', fr: 'Ã‰quipements industriels certifiÃ©s premium, fournitures et matÃ©riaux â€” approvisionnÃ©s mondialement, livrÃ©s de faÃ§on fiable.' })}
+            className="hidden sm:block font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto mt-3">
+            {L({ en: 'Premium certified industrial equipment, supplies, and materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés premium, fournitures et matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
           </motion.p>
         </div>
-
       </section>
 
-      {/* â”€â”€ FILTER BAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <div className="sticky top-16 z-40
-        bg-white/75 backdrop-blur-md
-        border-b border-white/60
-        shadow-[0_1px_0_0_hsl(var(--border)/0.5),0_8px_28px_-6px_hsl(var(--foreground)/0.07)]
-        py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-          <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-            <Input
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder={L({ en: 'Search productsâ€¦', fr: 'Rechercher des produitsâ€¦' })}
-              className="pl-10 pr-8 h-10 text-sm rounded-full w-60
-                bg-white/60 border-border/50
-                focus:bg-white/95 focus:border-primary/40
-                transition-colors duration-200"
-            />
-            {searchInput && (
-              <button onClick={() => setSearchInput('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Clear search">
-                <X className="h-3.5 w-3.5" />
+      {/* ── FILTER BAR ── */}
+      <div className="sticky top-16 z-40 bg-white/85 backdrop-blur-md border-b border-border/60
+        shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+          <div className="flex items-center gap-2">
+
+            {/* Search */}
+            <div className="relative flex-1 min-w-0">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+              <Input
+                value={searchInput}
+                onChange={e => setSearchInput(e.target.value)}
+                placeholder={L({ en: 'Search products…', fr: 'Rechercher…' })}
+                className="pl-8 pr-7 h-9 text-sm rounded-full w-full
+                  bg-muted/50 border-border/50
+                  focus:bg-white focus:border-primary/40
+                  transition-colors duration-200"
+              />
+              {searchInput && (
+                <button onClick={() => setSearchInput('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Clear">
+                  <X className="h-3 w-3" />
+                </button>
+              )}
+            </div>
+
+            {/* Category dropdown */}
+            <div className="relative flex-shrink-0" ref={dropdownRef}>
+              <button
+                onClick={() => setFilterOpen(v => !v)}
+                aria-expanded={filterOpen}
+                className={`flex items-center gap-1.5 h-9 pl-3 pr-2.5 rounded-full border text-sm font-semibold
+                  transition-all duration-200 whitespace-nowrap
+                  ${selectedCategory
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-muted/50 border-border/50 text-foreground hover:border-border hover:bg-white'
+                  }`}>
+                <SlidersHorizontal className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="max-w-[100px] sm:max-w-[160px] truncate">
+                  {L({ en: activeCat?.nameEn ?? 'Filter', fr: activeCat?.nameFr ?? 'Filtrer' })}
+                </span>
+                <ChevronDown className={`h-3.5 w-3.5 flex-shrink-0 transition-transform duration-200 ${filterOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              <AnimatePresence>
+                {filterOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="absolute right-0 top-[calc(100%+6px)] z-50
+                      bg-white border border-border rounded-xl shadow-xl
+                      min-w-[180px] max-h-72 overflow-y-auto py-1">
+                    {allCategories.map(cat => {
+                      const active = cat.id === undefined ? !selectedCategory : selectedCategory === cat.id;
+                      return (
+                        <button
+                          key={cat.id ?? 'all'}
+                          onClick={() => { setSelectedCategory(cat.id); setFilterOpen(false); }}
+                          className={`w-full flex items-center justify-between gap-3 px-3.5 py-2.5 text-sm text-left
+                            transition-colors duration-150
+                            ${active
+                              ? 'bg-primary/8 text-primary font-semibold'
+                              : 'text-foreground hover:bg-muted/60 font-medium'
+                            }`}>
+                          {L({ en: cat.nameEn, fr: cat.nameFr })}
+                          {active && <Check className="h-3.5 w-3.5 flex-shrink-0 text-primary" />}
+                        </button>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Clear all — only shown when filtered */}
+            {isFiltered && (
+              <button
+                onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}
+                className="flex-shrink-0 h-9 w-9 rounded-full border border-border/50
+                  bg-muted/50 hover:bg-destructive/10 hover:border-destructive/30
+                  flex items-center justify-center transition-colors duration-200"
+                aria-label="Clear all filters">
+                <X className="h-3.5 w-3.5 text-muted-foreground hover:text-destructive" />
               </button>
             )}
-          </div>
-
-          <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground/70">
-              <Filter className="h-3.5 w-3.5" />
-              {L({ en: 'Filter:', fr: 'Filtrer:' })}
-            </div>
-            {[{ id: undefined, nameEn: 'All', nameFr: 'Tous' }, ...(categories || [])].map((cat) => {
-              const active = (!selectedCategory && cat.id === undefined) || selectedCategory === cat.id;
-              return (
-                <motion.button key={cat.id ?? 'all'} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
-                    active
-                      ? 'bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/20'
-                      : 'bg-white/50 text-foreground border-border/50 hover:bg-white/90 hover:border-border hover:text-primary'
-                  }`}>
-                  {L({ en: cat.nameEn, fr: cat.nameFr })}
-                </motion.button>
-              );
-            })}
           </div>
         </div>
       </div>
 
-      {/* â”€â”€ PRODUCTS GRID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <section className="bg-background py-12">
+      {/* ── PRODUCTS GRID ── */}
+      <section className="bg-background py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading && (
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
@@ -159,10 +219,12 @@ export default function ProductsPage() {
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
               className="flex flex-col items-center justify-center py-24 gap-4">
               <AlertCircle className="h-14 w-14 text-destructive/40" />
-              <p className="text-muted-foreground font-medium">{L({ en: 'Unable to load products', fr: 'Impossible de charger les produits' })}</p>
+              <p className="text-muted-foreground font-medium">
+                {L({ en: 'Unable to load products', fr: 'Impossible de charger les produits' })}
+              </p>
               <Button variant="outline" onClick={() => refetch()} className="gap-2">
                 <RefreshCw className="h-4 w-4" />
-                {L({ en: 'Retry', fr: 'RÃ©essayer' })}
+                {L({ en: 'Retry', fr: 'Réessayer' })}
               </Button>
             </motion.div>
           )}
@@ -175,8 +237,8 @@ export default function ProductsPage() {
               </div>
               <p className="text-muted-foreground">
                 {debouncedSearch
-                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvÃ© pour "${debouncedSearch}"` })
-                  : L({ en: 'No products found in this category', fr: 'Aucun produit trouvÃ© dans cette catÃ©gorie' })}
+                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvé pour "${debouncedSearch}"` })
+                  : L({ en: 'No products found in this category', fr: 'Aucun produit trouvé dans cette catégorie' })}
               </p>
               <Button variant="outline" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}>
                 {L({ en: 'View All Products', fr: 'Voir Tous les Produits' })}
@@ -197,7 +259,8 @@ export default function ProductsPage() {
                       <div className="aspect-[4/3] relative bg-white overflow-hidden">
                         {product.imageUrl ? (
                           <Image src={product.imageUrl} alt={L({ en: product.nameEn, fr: product.nameFr })} fill
-                            className="object-contain p-2" />
+                            className="object-contain p-2"
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-muted">
                             <Package className="h-10 w-10 text-muted-foreground/30" />
@@ -215,7 +278,7 @@ export default function ProductsPage() {
                         </h3>
                         <Button asChild size="sm" className="w-full text-xs sm:text-sm h-8 sm:h-9">
                           <Link href={`/products/${product.slug}`}>
-                            {L({ en: 'View Details', fr: 'Voir les DÃ©tails' })}
+                            {L({ en: 'View Details', fr: 'Voir les Détails' })}
                             <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 ml-1 flex-shrink-0" />
                           </Link>
                         </Button>
@@ -231,4 +294,3 @@ export default function ProductsPage() {
     </>
   );
 }
-
