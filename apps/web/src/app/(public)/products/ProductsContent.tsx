@@ -115,6 +115,10 @@ export default function ProductsPage() {
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
               <Input
+                id="product-search"
+                name="product-search"
+                type="search"
+                autoComplete="off"
                 value={searchInput}
                 onChange={e => setSearchInput(e.target.value)}
                 placeholder={L({ en: 'Search products…', fr: 'Rechercher…' })}
