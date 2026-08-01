@@ -151,9 +151,10 @@ export default function AboutPage() {
 
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
               className="relative h-80 lg:h-full min-h-[420px] rounded-2xl overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=70"
-                alt="LTIC SARL operations" fill className="object-cover transition-transform duration-700 hover:scale-105" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/about-operations.jpg"
+                alt="LTIC SARL team on operations" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary" />
             </motion.div>
           </div>
