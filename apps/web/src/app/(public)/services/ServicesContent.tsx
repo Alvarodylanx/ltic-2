@@ -176,15 +176,15 @@ export default function ServicesPage() {
             </p>
           </motion.div>
           <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="flex flex-shrink-0 gap-3">
-            <Button asChild size="lg" className="font-semibold text-sm">
+            className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto sm:flex-shrink-0">
+            <Button asChild size="lg" className="font-semibold text-sm w-full sm:w-auto justify-center">
               <Link href="/contact">
                 {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
-                <ArrowRight className="h-4 w-4 ml-2" />
+                <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline"
-              className="font-semibold text-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50">
+              className="font-semibold text-sm bg-transparent border-sidebar-foreground/30 text-sidebar-foreground hover:bg-white/10 hover:text-sidebar-foreground hover:border-sidebar-foreground/50 w-full sm:w-auto justify-center">
               <Link href="/quote">
                 {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
               </Link>
