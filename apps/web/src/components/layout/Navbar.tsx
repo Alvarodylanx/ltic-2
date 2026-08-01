@@ -50,11 +50,8 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-1 flex-shrink-0" aria-label="LTIC SARL — Home">
-          <Image src="/logo.png" alt="LTIC SARL" width={62} height={62} className="object-contain translate-x-1.5 -translate-y-1" priority />
-          <span className="font-extrabold text-lg leading-tight tracking-tight hidden sm:block">
-            LTIC <span className="text-primary">SARL</span>
-          </span>
+        <Link href="/" className="flex items-center flex-shrink-0" aria-label="LTIC SARL — Home">
+          <Image src="/logo.png" alt="LTIC SARL" width={62} height={62} className="object-contain translate-x-1.5 -translate-y-1 drop-shadow-[0_4px_12px_rgba(0,0,0,0.18)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.12)]" priority />
         </Link>
 
         {/* Desktop nav */}
