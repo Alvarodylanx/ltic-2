@@ -229,7 +229,7 @@ export default function AdminProfilePage() {
               )}
             </div>
             <div>
-              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+              <input ref={fileRef} id="avatar-upload" name="avatar-upload" type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
               <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()} disabled={uploadingAvatar} className="flex items-center gap-2">
                 <Camera className="h-4 w-4" /> {L({ en: 'Change Photo', fr: 'Changer la photo' })}
               </Button>

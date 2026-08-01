@@ -119,10 +119,14 @@ export function PhoneInput({ value, onChange, syncCountry, required, className, 
               <div className="p-2 border-b">
                 <input
                   ref={searchRef}
-                  type="text"
+                  id="phone-country-search"
+                  name="phone-country-search"
+                  type="search"
+                  autoComplete="off"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="Search country or code…"
+                  aria-label="Search country or dial code"
                   className="w-full px-2.5 py-1.5 text-xs bg-muted rounded-lg outline-none placeholder:text-muted-foreground"
                 />
               </div>

@@ -91,6 +91,8 @@ export function MediaUpload({ value, onChange }: MediaUploadProps) {
         <>
           <input
             ref={fileRef}
+            id="media-upload-file"
+            name="media-upload-file"
             type="file"
             accept={ACCEPTED}
             className="hidden"
@@ -131,7 +133,10 @@ export function MediaUpload({ value, onChange }: MediaUploadProps) {
       ) : (
         <div className="flex gap-2">
           <input
+            id="media-url-input"
+            name="media-url-input"
             type="url"
+            autoComplete="off"
             value={urlDraft}
             onChange={e => setUrlDraft(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), applyUrl())}
