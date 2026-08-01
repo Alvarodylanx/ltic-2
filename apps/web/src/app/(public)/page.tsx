@@ -454,53 +454,62 @@ export default function HomePage() {
     <>
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
-        className="relative h-[82dvh] min-h-[560px] overflow-hidden bg-black"
-        style={{ borderBottomLeftRadius: '50% 450px', borderBottomRightRadius: '50% 450px' }}
+        className="relative h-[82dvh] min-h-[560px] bg-background"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* ── Animated backgrounds (crossfade + Ken Burns zoom) ── */}
-        <AnimatePresence initial={false} mode="sync">
-          <motion.div
-            key={`bg-${activeSlide}`}
-            className="absolute inset-0"
-            initial={{ opacity: 0, scale: 1.07 }}
-            animate={{ opacity: 1, scale: 1.0 }}
-            exit={{ opacity: 0, scale: 1.0 }}
-            transition={{
-              opacity: { duration: 1.0, ease: 'easeInOut' },
-              scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
-            }}
-          >
-            <Image
-              src={heroSlides[activeSlide].image}
-              alt=""
-              fill
-              className="object-cover object-center"
-              priority={activeSlide === 0}
-              sizes="100vw"
+        {/* ── Dark image panel — clips into U shape, sits 120px above section bottom ── */}
+        <div
+          className="absolute inset-x-0 top-0 overflow-hidden bg-black"
+          style={{
+            bottom: '120px',
+            borderBottomLeftRadius: '50% 450px',
+            borderBottomRightRadius: '50% 450px',
+          }}
+        >
+          {/* Animated backgrounds (crossfade + Ken Burns zoom) */}
+          <AnimatePresence initial={false} mode="sync">
+            <motion.div
+              key={`bg-${activeSlide}`}
+              className="absolute inset-0"
+              initial={{ opacity: 0, scale: 1.07 }}
+              animate={{ opacity: 1, scale: 1.0 }}
+              exit={{ opacity: 0, scale: 1.0 }}
+              transition={{
+                opacity: { duration: 1.0, ease: 'easeInOut' },
+                scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
+              }}
+            >
+              <Image
+                src={heroSlides[activeSlide].image}
+                alt=""
+                fill
+                className="object-cover object-center"
+                priority={activeSlide === 0}
+                sizes="100vw"
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Per-slide tinted overlay */}
+          <AnimatePresence initial={false} mode="sync">
+            <motion.div
+              key={`overlay-${activeSlide}`}
+              className="absolute inset-0 pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
+              style={{ background: heroSlides[activeSlide].theme.overlay }}
             />
-          </motion.div>
-        </AnimatePresence>
+          </AnimatePresence>
 
-        {/* ── Per-slide tinted overlay — crossfades to match image palette ── */}
-        <AnimatePresence initial={false} mode="sync">
-          <motion.div
-            key={`overlay-${activeSlide}`}
-            className="absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: 'easeInOut' }}
-            style={{ background: heroSlides[activeSlide].theme.overlay }}
-          />
-        </AnimatePresence>
-
-        {/* ── Bottom vignette — consistent across all slides ── */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+          {/* Bottom vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+        </div>
 
         {/* ── Main content ── */}
-        <div className="relative z-10 h-full flex items-start pt-20 pb-0">
+        <div className="relative z-10 h-full flex items-center pb-[140px] pt-16">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -591,7 +600,7 @@ export default function HomePage() {
         </div>
 
         {/* ── Bottom navigation bar ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-[55%]">
+        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-[130px] sm:pb-[140px]">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
 
             {/* Slide dots */}
