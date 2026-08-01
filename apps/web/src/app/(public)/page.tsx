@@ -268,7 +268,7 @@ const catalogStagger = {
 
 function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardProps) {
   const { L } = useLanguage();
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = useReducedMotion() ?? false;
 
   return (
     <motion.div
@@ -403,10 +403,13 @@ function ProcessStep({ icon: Icon, num, title, desc, action, href }: ProcessStep
 
 export default function HomePage() {
   const { L } = useLanguage();
-  const shouldReduce = useReducedMotion();
+  const shouldReduce = useReducedMotion() ?? false;
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
 
   const goTo = (i: number) => setActiveSlide(i);
   const prev = () => setActiveSlide(i => (i - 1 + heroSlides.length) % heroSlides.length);
@@ -776,8 +779,8 @@ export default function HomePage() {
             ))}
           </motion.div>
 
-          {/* API featured products */}
-          {(isLoading || (featuredProducts && featuredProducts.length > 0)) && (
+          {/* API featured products — mounted guard prevents server/client isLoading mismatch */}
+          {mounted && (isLoading || (featuredProducts && featuredProducts.length > 0)) && (
             <div className="mt-12">
               <p className="font-bold text-xs uppercase tracking-[0.2em]
                             text-muted-foreground mb-6">
