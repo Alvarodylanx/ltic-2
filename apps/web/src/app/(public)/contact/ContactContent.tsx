@@ -118,6 +118,20 @@ export default function ContactPage() {
             {/* FORM — order-1 on mobile so it appears first, order-2 on desktop (right col) */}
             <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
               className="lg:col-span-3 order-1 lg:order-2 bg-card border border-border rounded-2xl p-6 sm:p-8">
+
+              {/* Heading — always above the fields on every screen size */}
+              <div className="mb-6">
+                <p className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-1.5">
+                  {L({ en: 'Reach Out', fr: 'Nous Contacter' })}
+                </p>
+                <h2 className="font-bold text-xl sm:text-2xl tracking-tight mb-1.5">
+                  {L({ en: 'How Can We Help You?', fr: 'Comment Pouvons-Nous Vous Aider ?' })}
+                </h2>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {L({ en: 'Fill in the form and our team will respond within 24 hours.', fr: 'Remplissez le formulaire et notre équipe répondra dans les 24 heures.' })}
+                </p>
+              </div>
+
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -199,21 +213,7 @@ export default function ContactPage() {
 
             {/* INFO SIDEBAR — order-2 on mobile (below form), order-1 on desktop (left col) */}
             <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:col-span-2 order-2 lg:order-1 space-y-6">
-
-              <div>
-                <motion.p variants={fadeInUp}
-                  className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-2">
-                  {L({ en: 'Reach Out', fr: 'Nous Contacter' })}
-                </motion.p>
-                <motion.h2 variants={fadeInUp}
-                  className="font-bold text-xl sm:text-2xl tracking-tight mb-2">
-                  {L({ en: 'How Can We Help?', fr: 'Comment Vous Aider ?' })}
-                </motion.h2>
-                <motion.p variants={fadeInUp} className="text-muted-foreground text-sm leading-relaxed">
-                  {L({ en: 'Fill in the form and our team will respond within 24 hours.', fr: 'Remplissez le formulaire et notre équipe répondra dans les 24 heures.' })}
-                </motion.p>
-              </div>
+              className="lg:col-span-2 order-2 lg:order-1">
 
               <div className="space-y-4">
                 {contactInfo.map(({ icon: Icon, label, value }, i) => (
