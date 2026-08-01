@@ -4,8 +4,7 @@ const API_ORIGIN = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 const config = {
   output: 'standalone',
   images: {
-    formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 2592000,
+    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
