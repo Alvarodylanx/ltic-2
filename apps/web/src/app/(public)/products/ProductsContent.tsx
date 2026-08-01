@@ -88,39 +88,46 @@ export default function ProductsPage() {
       </section>
 
       {/* ── FILTER BAR ──────────────────────────────────────────────────────── */}
-      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border py-4">
+      <div className="sticky top-16 z-40
+        bg-white/75 backdrop-blur-md
+        border-b border-white/60
+        shadow-[0_1px_0_0_hsl(var(--border)/0.5),0_8px_28px_-6px_hsl(var(--foreground)/0.07)]
+        py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
           <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
             <Input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={L({ en: 'Search products…', fr: 'Rechercher des produits…' })}
-              className="pl-10 pr-8 h-10 text-sm rounded-full w-60"
+              className="pl-10 pr-8 h-10 text-sm rounded-full w-60
+                bg-white/60 border-border/50
+                focus:bg-white/95 focus:border-primary/40
+                transition-colors duration-200"
             />
             {searchInput && (
               <button onClick={() => setSearchInput('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                aria-label="Clear">
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Clear search">
                 <X className="h-3.5 w-3.5" />
               </button>
             )}
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground">
-              <Filter className="h-4 w-4" />
+            <div className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground/70">
+              <Filter className="h-3.5 w-3.5" />
               {L({ en: 'Filter:', fr: 'Filtrer:' })}
             </div>
             {[{ id: undefined, nameEn: 'All', nameFr: 'Tous' }, ...(categories || [])].map((cat) => {
               const active = (!selectedCategory && cat.id === undefined) || selectedCategory === cat.id;
               return (
-                <motion.button key={cat.id ?? 'all'} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+                <motion.button key={cat.id ?? 'all'} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
                     active
-                      ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-background text-foreground hover:bg-primary/10 hover:text-primary border-border'
+                      ? 'bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/20'
+                      : 'bg-white/50 text-foreground border-border/50 hover:bg-white/90 hover:border-border hover:text-primary'
                   }`}>
                   {L({ en: cat.nameEn, fr: cat.nameFr })}
                 </motion.button>
