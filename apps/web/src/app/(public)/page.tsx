@@ -455,7 +455,7 @@ export default function HomePage() {
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
         className="relative h-[82dvh] min-h-[560px] overflow-hidden bg-black"
-        style={{ borderBottomLeftRadius: '50% 200px', borderBottomRightRadius: '50% 200px' }}
+        style={{ borderBottomLeftRadius: '55% 240px', borderBottomRightRadius: '55% 240px' }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -500,7 +500,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
         {/* ── Main content ── */}
-        <div className="relative z-10 h-full flex items-center pb-[220px] pt-16">
+        <div className="relative z-10 h-full flex items-center pb-[260px] pt-16">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -591,7 +591,7 @@ export default function HomePage() {
         </div>
 
         {/* ── Bottom navigation bar ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-[210px] sm:pb-[220px]">
+        <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pb-[250px] sm:pb-[260px]">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
 
             {/* Slide dots */}
