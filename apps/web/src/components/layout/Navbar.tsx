@@ -51,7 +51,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0 group" aria-label="LTIC SARL — Home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="LTIC SARL" className="h-9 w-auto object-contain" />
+          <img src="/ltic-logo.png" alt="LTIC SARL" className="h-9 w-auto object-contain" />
           <span className="font-bold text-lg">
             LTIC <span className="text-primary">SARL</span>
           </span>
