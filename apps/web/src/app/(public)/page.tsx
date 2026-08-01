@@ -60,6 +60,7 @@ const heroSlides = [
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
     image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1800&auto=format&fit=crop&q=80',
+    video: '/videos/hero-borders.mp4',
     theme: {
       tag:      'text-yellow-300',
       tagBg:    'bg-yellow-300',
@@ -432,14 +433,27 @@ export default function HomePage() {
               scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
             }}
           >
-            <Image
-              src={heroSlides[activeSlide].image}
-              alt=""
-              fill
-              className="object-cover object-center"
-              priority={activeSlide === 0}
-              sizes="100vw"
-            />
+            {heroSlides[activeSlide].video ? (
+              <video
+                key={heroSlides[activeSlide].video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              >
+                <source src={heroSlides[activeSlide].video} type="video/mp4" />
+              </video>
+            ) : (
+              <Image
+                src={heroSlides[activeSlide].image}
+                alt=""
+                fill
+                className="object-cover object-center"
+                priority={activeSlide === 0}
+                sizes="100vw"
+              />
+            )}
           </motion.div>
         </AnimatePresence>
 
