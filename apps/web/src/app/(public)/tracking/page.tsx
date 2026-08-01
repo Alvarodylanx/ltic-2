@@ -90,7 +90,7 @@ function TrackingContent() {
           </motion.p>
 
           <motion.form variants={fadeInUp} onSubmit={handleTrack}
-            className="flex gap-3 sm:gap-4 max-w-lg mx-auto pl-4 sm:pl-0">
+            className="flex gap-3 sm:gap-4 max-w-lg mx-auto pl-8 sm:pl-0">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
