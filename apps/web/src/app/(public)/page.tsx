@@ -140,9 +140,9 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 24 },
+        hidden: { opacity: 0, y: 48 },
         show:   { opacity: 1, y: 0,
-                  transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] } },
+                  transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
       }}
       whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 22 } }}
       className="group bg-white border border-border rounded-2xl p-7
@@ -255,16 +255,16 @@ interface ProductCategoryCardProps {
   index: number;
 }
 
-const catalogEase = [0.22, 1, 0.36, 1] as const;
+const catalogEase = [0.16, 1, 0.3, 1] as const;
 
 const rowVariant = {
-  hidden: { opacity: 0, y: 14 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.38, ease: catalogEase } },
+  hidden: { opacity: 0, y: 48 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.65, ease: catalogEase } },
 };
 
 const catalogStagger = {
   hidden: {},
-  show:   { transition: { staggerChildren: 0.035, delayChildren: 0.05 } },
+  show:   { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
 function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardProps) {
