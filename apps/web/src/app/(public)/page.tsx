@@ -36,7 +36,7 @@ const heroSlides = [
       tagBg:    'bg-blue-400',
       headline: 'text-white',
       sub:      'text-slate-200/75',
-      overlay:  'linear-gradient(105deg,rgba(2,8,23,0.93) 0%,rgba(2,8,23,0.62) 42%,rgba(2,8,23,0.12) 100%)',
+      overlay:  'linear-gradient(105deg,rgba(2,8,23,0.80) 0%,rgba(2,8,23,0.50) 36%,rgba(2,8,23,0.08) 54%,transparent 65%)',
     },
   },
   {
@@ -51,7 +51,7 @@ const heroSlides = [
       tagBg:    'bg-amber-400',
       headline: 'text-orange-50',
       sub:      'text-orange-100/70',
-      overlay:  'linear-gradient(105deg,rgba(12,6,0,0.94) 0%,rgba(12,6,0,0.64) 42%,rgba(12,6,0,0.10) 100%)',
+      overlay:  'linear-gradient(105deg,rgba(12,6,0,0.80) 0%,rgba(12,6,0,0.50) 36%,rgba(12,6,0,0.08) 54%,transparent 65%)',
     },
   },
   {
@@ -67,7 +67,7 @@ const heroSlides = [
       tagBg:    'bg-yellow-300',
       headline: 'text-amber-50',
       sub:      'text-amber-100/70',
-      overlay:  'linear-gradient(105deg,rgba(8,5,1,0.92) 0%,rgba(8,5,1,0.60) 42%,rgba(8,5,1,0.10) 100%)',
+      overlay:  'linear-gradient(105deg,rgba(8,5,1,0.80) 0%,rgba(8,5,1,0.50) 36%,rgba(8,5,1,0.08) 54%,transparent 65%)',
     },
   },
 ];
@@ -479,32 +479,37 @@ export default function HomePage() {
           />
         </AnimatePresence>
 
-        {/* ── Bottom vignette ── */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/50 via-black/10 to-transparent pointer-events-none" />
-
-        {/* ── Left panel: deep navy gradient — text readability + premium cool tone ── */}
+        {/* ── Cinematic gradient system — left panel + bottom letterbox + top fade ── */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(to right, rgba(3,10,32,0.92) 0%, rgba(4,14,44,0.78) 18%, rgba(4,12,38,0.52) 36%, rgba(3,10,30,0.18) 55%, transparent 72%)',
+            background: [
+              'linear-gradient(110deg, rgba(5,8,20,0.96) 0%, rgba(5,8,20,0.86) 14%, rgba(5,8,20,0.60) 28%, rgba(5,8,20,0.20) 44%, rgba(5,8,20,0.03) 56%, transparent 65%)',
+              'linear-gradient(to top, rgba(5,8,20,0.96) 0%, rgba(5,8,20,0.58) 10%, rgba(5,8,20,0.14) 22%, transparent 38%)',
+              'linear-gradient(to bottom, rgba(5,8,20,0.44) 0%, rgba(5,8,20,0.06) 14%, transparent 22%)',
+            ].join(','),
           }}
         />
-        {/* ── Left panel: cool blue radial glow (adds chromatic depth) ── */}
+        {/* ── Chromatic ambience — screen-blend so it adds colour, not darkness ── */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse 55% 85% at 0% 35%, rgba(24,90,220,0.18) 0%, rgba(10,50,160,0.08) 45%, transparent 68%)',
+            mixBlendMode: 'screen',
+            background: [
+              'radial-gradient(ellipse 78% 62% at -14% 96%, rgba(218,138,20,0.28) 0%, rgba(178,98,0,0.10) 42%, transparent 66%)',
+              'radial-gradient(ellipse 46% 54% at -7% -3%, rgba(52,116,240,0.20) 0%, rgba(26,68,196,0.06) 44%, transparent 65%)',
+            ].join(','),
           }}
         />
-        {/* ── Thin left-edge accent line ── */}
+        {/* ── Film grain — micro-texture for cinematic depth ── */}
         <div
-          className="absolute top-0 bottom-0 left-0 w-[3px] pointer-events-none"
+          className="absolute inset-0 pointer-events-none opacity-[0.028] mix-blend-overlay"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, rgba(56,130,255,0.55) 25%, rgba(56,130,255,0.80) 50%, rgba(56,130,255,0.55) 75%, transparent 100%)',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")`,
+            backgroundSize: '224px 224px',
           }}
         />
-
-        {/* ── Mobile: right-side vignette (slide gradients only cover the left on mobile) ── */}
+        {/* ── Mobile: right-side vignette ── */}
         <div className="sm:hidden absolute inset-0 bg-gradient-to-l from-black/65 via-black/20 to-transparent pointer-events-none" />
 
         {/* ── Main content ── */}
