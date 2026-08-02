@@ -68,7 +68,7 @@ function TrackingContent() {
   return (
     <>
       {/* ── HERO with integrated search ─────────────────────────────────────── */}
-      <section className="relative bg-sidebar py-10 overflow-hidden">
+      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
         <motion.div
           animate={{ scale: [1, 1.12, 1], opacity: [0.2, 0.35, 0.2] }}
           transition={{ repeat: Infinity, duration: 8 }}
@@ -112,7 +112,7 @@ function TrackingContent() {
       </section>
 
       {/* ── RESULTS ──────────────────────────────────────────────────────────── */}
-      <section className="bg-background py-10 min-h-[40vh]">
+      <section className="bg-background py-3 sm:py-20 min-h-[40vh]">
         <div className="max-w-3xl mx-auto px-4">
           <AnimatePresence mode="wait">
 

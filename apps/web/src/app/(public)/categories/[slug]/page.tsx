@@ -29,7 +29,7 @@ export default function CategoryDetailPage() {
 
   return (
     <>
-      <section className="relative bg-sidebar py-10 overflow-hidden">
+      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
         {category?.imageUrl && (
           <div className="absolute inset-0">
             <Image src={category.imageUrl} alt={category ? L({ en: category.nameEn, fr: category.nameFr }) : ''} fill className="object-cover opacity-10" />
@@ -51,7 +51,7 @@ export default function CategoryDetailPage() {
         </div>
       </section>
 
-      <section className="bg-background py-10">
+      <section className="bg-background py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

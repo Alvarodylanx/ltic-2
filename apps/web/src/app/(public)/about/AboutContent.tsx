@@ -116,7 +116,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── STORY ───────────────────────────────────────────────────────────── */}
-      <section className="bg-background py-10">
+      <section className="bg-background py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>
@@ -162,7 +162,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── STATS BAND ──────────────────────────────────────────────────────── */}
-      <section className="bg-foreground py-10">
+      <section className="bg-foreground py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -181,7 +181,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
-      <section className="bg-sidebar py-10">
+      <section className="bg-sidebar py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
@@ -297,7 +297,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── CORE VALUES — typographic index ─────────────────────────────────── */}
-      <section className="bg-background border-t border-border py-10">
+      <section className="bg-background border-t border-border py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
@@ -382,7 +382,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── CTA ─────────────────────────────────────────────────────────────── */}
-      <section className="bg-foreground py-10 relative overflow-hidden">
+      <section className="bg-foreground py-3 sm:py-20 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
           flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">

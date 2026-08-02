@@ -155,7 +155,7 @@ export default function QuotePage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative bg-sidebar py-10 overflow-hidden">
+      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1100&auto=format&fit=crop&q=45"
           alt="" fill className="object-cover opacity-15" priority />
@@ -177,7 +177,7 @@ export default function QuotePage() {
       </section>
 
       {/* ── QUOTE BODY ──────────────────────────────────────────────────────── */}
-      <section className="bg-background py-10">
+      <section className="bg-background py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 

@@ -205,7 +205,7 @@ export default function ProductsPage() {
       </div>
 
       {/* ── PRODUCTS GRID ── */}
-      <section className="bg-background py-10">
+      <section className="bg-background py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {(!mounted || isLoading) && (
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">

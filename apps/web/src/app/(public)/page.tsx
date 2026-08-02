@@ -640,7 +640,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
-      <section className="bg-background py-10">
+      <section className="bg-background py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
@@ -695,7 +695,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ 3. FEATURES — editorial image+copy blocks ══════════════════════════ */}
-      <section className="bg-white py-10">
+      <section className="bg-white py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="mb-4">
@@ -715,7 +715,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ 4. PRODUCT CATALOG — compact rows ════════════════════════════════ */}
-      <section className="bg-muted/40 py-10 border-y border-border">
+      <section className="bg-muted/40 py-3 sm:py-20 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
             <motion.div
@@ -830,7 +830,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ 5. PARTNERS — light marquee band ═══════════════════════════════════ */}
-      <section className="bg-muted border-y border-border py-10 overflow-hidden relative">
+      <section className="bg-muted border-y border-border py-3 sm:py-20 overflow-hidden relative">
         <p className="text-center text-muted-foreground text-[10px] uppercase tracking-[0.3em]
                       font-bold mb-8">
           {L({ en: 'Trusted by leading brands', fr: 'Reconnu par les grandes marques' })}
@@ -850,7 +850,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ 6. PROCESS — compact 2×2 / 4-col steps ══════════════════════════ */}
-      <section className="bg-white py-10 border-y border-border">
+      <section className="bg-white py-3 sm:py-20 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header — inline, saves vertical space vs centred block */}
@@ -924,7 +924,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ 7. CTA — dark cinematic ════════════════════════════════════════════ */}
-      <section className="relative bg-sidebar py-10 overflow-hidden">
+      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&auto=format&fit=crop&q=60"
           alt=""

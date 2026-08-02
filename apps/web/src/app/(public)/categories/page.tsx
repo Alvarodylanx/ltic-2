@@ -17,7 +17,7 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <section className="relative bg-sidebar py-10 overflow-hidden">
+      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-primary font-semibold text-sm uppercase tracking-widest mb-3">{L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}</p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-sidebar-foreground mb-6">{L({ en: 'Product Categories', fr: 'Catégories de Produits' })}</h1>
@@ -27,7 +27,7 @@ export default function CategoriesPage() {
         </div>
       </section>
 
-      <section className="bg-background py-10">
+      <section className="bg-background py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
