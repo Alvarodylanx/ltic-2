@@ -161,17 +161,101 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── FIELD OPERATIONS ────────────────────────────────────────────────── */}
+      <section className="bg-muted/30 border-y border-border py-3 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            {/* Text — first in DOM (mobile reads headline before photo) */}
+            <motion.div
+              variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="lg:order-2"
+            >
+              <p className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-3">
+                {L({ en: 'On the Ground', fr: 'Sur le Terrain' })}
+              </p>
+              <h2 className="font-bold text-3xl sm:text-4xl tracking-tight mb-5 leading-tight whitespace-pre-line">
+                {L({ en: 'Where Your Cargo\nGoes, We Go Too.', fr: 'Là Où Va Votre\nCargaison, Nous Aussi.' })}
+              </h2>
+              <p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
+                {L({ en: 'LTIC SARL operates beyond the desk. Our teams are physically present on offshore supply vessels, at port facilities, and at customs checkpoints — ensuring every shipment is handled with full accountability.', fr: "LTIC SARL opère au-delà du bureau. Nos équipes sont physiquement présentes sur les navires de ravitaillement offshore, dans les installations portuaires et aux postes douaniers." })}
+              </p>
+              <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
+                {L({ en: 'From the Port of Douala to offshore hubs in the Gulf of Guinea, our on-ground presence means real oversight at every stage — not just paperwork.', fr: "Du Port de Douala aux hubs offshore du Golfe de Guinée, notre présence terrain garantit une supervision réelle à chaque étape — pas seulement de la documentation." })}
+              </p>
+              <ul className="space-y-3">
+                {[
+                  { en: 'Direct coordination with vessel crews and port authorities', fr: 'Coordination directe avec équipages et autorités portuaires' },
+                  { en: 'On-site cargo inspection and verification at every port', fr: 'Inspection et vérification de cargaison sur site à chaque port' },
+                  { en: 'Offshore supply chain management across the Gulf of Guinea', fr: "Gestion de la chaîne offshore dans le Golfe de Guinée" },
+                ].map((item, i) => (
+                  <motion.li key={i} variants={fadeInRight} initial="hidden" whileInView="show"
+                    viewport={viewportOnce} transition={{ delay: i * 0.07 }}
+                    className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-muted-foreground text-sm">{L(item)}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Photos — staggered portrait duo */}
+            <motion.div
+              variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="lg:order-1 relative pb-6"
+            >
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {/* Left: team on deck — full height */}
+                <div className="relative h-[300px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl">
+                  <Image
+                    src="/images/about-team-maritime.jpg"
+                    alt="LTIC SARL team on offshore vessel"
+                    fill
+                    className="object-cover object-center"
+                    sizes="(max-width: 1024px) 45vw, 22vw"
+                  />
+                  {/* subtle gradient at bottom for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                </div>
+                {/* Right: TAMPEN vessel — offset down for stagger effect */}
+                <div className="relative h-[300px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl mt-8 sm:mt-12">
+                  <Image
+                    src="/images/about-vessel-tampen.jpg"
+                    alt="LTIC SARL offshore supply vessel TAMPEN"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 45vw, 22vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* Floating badge — anchored bottom-centre of photo block */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2
+                              bg-primary text-primary-foreground rounded-full
+                              px-5 py-2.5 shadow-lg flex items-center gap-2.5 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/70 animate-pulse flex-shrink-0" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em]">
+                  {L({ en: 'Offshore Operations', fr: 'Opérations Offshore' })}
+                </span>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── STATS BAND ──────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center">
             {stats.map((stat, i) => (
               <motion.div key={i} variants={scaleIn} className="flex flex-col items-center">
-                <span className="font-bold text-4xl sm:text-5xl text-primary leading-none mb-2">
+                <span className="font-bold text-2xl sm:text-4xl lg:text-5xl text-primary leading-none mb-1.5 sm:mb-2">
                   {stat.value}
                 </span>
-                <span className="text-sidebar-foreground/60 text-xs uppercase tracking-widest font-medium">
+                <span className="text-sidebar-foreground/60 text-[10px] sm:text-xs uppercase tracking-widest font-medium">
                   {L(stat)}
                 </span>
               </motion.div>
