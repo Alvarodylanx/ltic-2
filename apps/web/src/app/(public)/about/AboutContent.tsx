@@ -127,7 +127,7 @@ export default function AboutPage() {
                 {L({ en: 'Built for the Demands of Global Commerce', fr: 'Conçu pour les Exigences du Commerce Mondial' })}
               </h2>
               <p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
-                {L({ en: "LTIC — Logistics and Transit International Company — was incorporated in Douala, Cameroon as a SARL to serve a critical need: a reliable partner for logistics, transit, industrial supply, commercial representation, and international trade.", fr: "LTIC — Logistics and Transit International Company — a été constituée à Douala, Cameroun en SARL pour répondre à un besoin essentiel : un partenaire fiable en logistique, transit, fourniture industrielle, représentation commerciale et commerce international." })}
+                {L({ en: "LTIC — Logistics and Transit International Company — was incorporated in Douala, Cameroon in 2019 as a SARL to serve a critical need: a reliable partner for logistics, transit, industrial supply, commercial representation, and international trade.", fr: "LTIC — Logistics and Transit International Company — a été constituée à Douala, Cameroun en 2019 en SARL pour répondre à un besoin essentiel : un partenaire fiable en logistique, transit, fourniture industrielle, représentation commerciale et commerce international." })}
               </p>
               <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
                 {L({ en: 'From Douala, we operate across Africa, Europe, the Middle East, and Canada — delivering precision logistics, industrial supply, and strategic trade solutions.', fr: "Depuis Douala, nous opérons en Afrique, Europe, Moyen-Orient et Canada — logistique de précision, fournitures industrielles et solutions commerciales stratégiques." })}
@@ -236,7 +236,7 @@ export default function AboutPage() {
                               px-5 py-2.5 shadow-lg flex items-center gap-2.5 whitespace-nowrap">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/70 animate-pulse flex-shrink-0" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.2em]">
-                  {L({ en: 'Offshore Operations', fr: 'Opérations Offshore' })}
+                  {L({ en: 'Offshore Operations · Est. 2019', fr: 'Opérations Offshore · Dep. 2019' })}
                 </span>
               </div>
             </motion.div>
