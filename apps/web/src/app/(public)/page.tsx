@@ -30,6 +30,7 @@ const heroSlides = [
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
     image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1800&auto=format&fit=crop&q=80',
+    video: '/videos/hero-shipping.mp4',
     theme: {
       tag:      'text-blue-400',
       tagBg:    'bg-blue-400',
@@ -480,6 +481,28 @@ export default function HomePage() {
 
         {/* ── Bottom vignette ── */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/50 via-black/10 to-transparent pointer-events-none" />
+
+        {/* ── Left panel: deep navy gradient — text readability + premium cool tone ── */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to right, rgba(3,10,32,0.92) 0%, rgba(4,14,44,0.78) 18%, rgba(4,12,38,0.52) 36%, rgba(3,10,30,0.18) 55%, transparent 72%)',
+          }}
+        />
+        {/* ── Left panel: cool blue radial glow (adds chromatic depth) ── */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 55% 85% at 0% 35%, rgba(24,90,220,0.18) 0%, rgba(10,50,160,0.08) 45%, transparent 68%)',
+          }}
+        />
+        {/* ── Thin left-edge accent line ── */}
+        <div
+          className="absolute top-0 bottom-0 left-0 w-[3px] pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(56,130,255,0.55) 25%, rgba(56,130,255,0.80) 50%, rgba(56,130,255,0.55) 75%, transparent 100%)',
+          }}
+        />
 
         {/* ── Mobile: right-side vignette (slide gradients only cover the left on mobile) ── */}
         <div className="sm:hidden absolute inset-0 bg-gradient-to-l from-black/65 via-black/20 to-transparent pointer-events-none" />
