@@ -30,13 +30,12 @@ const heroSlides = [
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
     image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1800&auto=format&fit=crop&q=80',
-    video: '/videos/hero-shipping.mp4',
     theme: {
       tag:      'text-blue-400',
       tagBg:    'bg-blue-400',
       headline: 'text-white',
       sub:      'text-slate-200/75',
-      overlay:  'linear-gradient(105deg,rgba(2,8,23,0.80) 0%,rgba(2,8,23,0.50) 36%,rgba(2,8,23,0.08) 54%,transparent 65%)',
+      overlay:  'linear-gradient(105deg,rgba(2,8,23,0.93) 0%,rgba(2,8,23,0.62) 42%,rgba(2,8,23,0.12) 100%)',
     },
   },
   {
@@ -51,7 +50,7 @@ const heroSlides = [
       tagBg:    'bg-amber-400',
       headline: 'text-orange-50',
       sub:      'text-orange-100/70',
-      overlay:  'linear-gradient(105deg,rgba(12,6,0,0.80) 0%,rgba(12,6,0,0.50) 36%,rgba(12,6,0,0.08) 54%,transparent 65%)',
+      overlay:  'linear-gradient(105deg,rgba(12,6,0,0.94) 0%,rgba(12,6,0,0.64) 42%,rgba(12,6,0,0.10) 100%)',
     },
   },
   {
@@ -61,13 +60,12 @@ const heroSlides = [
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
     image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1800&auto=format&fit=crop&q=80',
-    video: '/videos/hero-borders.mp4',
     theme: {
       tag:      'text-yellow-300',
       tagBg:    'bg-yellow-300',
       headline: 'text-amber-50',
       sub:      'text-amber-100/70',
-      overlay:  'linear-gradient(105deg,rgba(8,5,1,0.80) 0%,rgba(8,5,1,0.50) 36%,rgba(8,5,1,0.08) 54%,transparent 65%)',
+      overlay:  'linear-gradient(105deg,rgba(8,5,1,0.92) 0%,rgba(8,5,1,0.60) 42%,rgba(8,5,1,0.10) 100%)',
     },
   },
 ];
@@ -479,37 +477,10 @@ export default function HomePage() {
           />
         </AnimatePresence>
 
-        {/* ── Cinematic gradient system — left panel + bottom letterbox + top fade ── */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: [
-              'linear-gradient(110deg, rgba(5,8,20,0.96) 0%, rgba(5,8,20,0.86) 14%, rgba(5,8,20,0.60) 28%, rgba(5,8,20,0.20) 44%, rgba(5,8,20,0.03) 56%, transparent 65%)',
-              'linear-gradient(to top, rgba(5,8,20,0.96) 0%, rgba(5,8,20,0.58) 10%, rgba(5,8,20,0.14) 22%, transparent 38%)',
-              'linear-gradient(to bottom, rgba(5,8,20,0.44) 0%, rgba(5,8,20,0.06) 14%, transparent 22%)',
-            ].join(','),
-          }}
-        />
-        {/* ── Chromatic ambience — screen-blend so it adds colour, not darkness ── */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            mixBlendMode: 'screen',
-            background: [
-              'radial-gradient(ellipse 78% 62% at -14% 96%, rgba(218,138,20,0.28) 0%, rgba(178,98,0,0.10) 42%, transparent 66%)',
-              'radial-gradient(ellipse 46% 54% at -7% -3%, rgba(52,116,240,0.20) 0%, rgba(26,68,196,0.06) 44%, transparent 65%)',
-            ].join(','),
-          }}
-        />
-        {/* ── Film grain — micro-texture for cinematic depth ── */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.028] mix-blend-overlay"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")`,
-            backgroundSize: '224px 224px',
-          }}
-        />
-        {/* ── Mobile: right-side vignette ── */}
+        {/* ── Bottom vignette ── */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/50 via-black/10 to-transparent pointer-events-none" />
+
+        {/* ── Mobile: right-side vignette (slide gradients only cover the left on mobile) ── */}
         <div className="sm:hidden absolute inset-0 bg-gradient-to-l from-black/65 via-black/20 to-transparent pointer-events-none" />
 
         {/* ── Main content ── */}
