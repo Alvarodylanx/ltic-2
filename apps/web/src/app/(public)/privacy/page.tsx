@@ -5,13 +5,13 @@ export default function PrivacyPage() {
   const { L } = useLanguage();
   return (
     <>
-      <section className="bg-sidebar py-16">
+      <section className="bg-sidebar py-10">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold text-sidebar-foreground">{L({ en: 'Privacy Policy', fr: 'Politique de Confidentialité' })}</h1>
           <p className="text-sidebar-foreground/70 mt-2 text-sm">{L({ en: 'Last updated: May 2026', fr: 'Dernière mise à jour: Mai 2026' })}</p>
         </div>
       </section>
-      <section className="bg-background py-16">
+      <section className="bg-background py-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 prose prose-slate">
           <h2>{L({ en: '1. Data Collection', fr: '1. Collecte de Données' })}</h2>
           <p>{L({ en: 'LTIC SARL collects personal data you voluntarily provide when contacting us, requesting quotes, or using our services. This includes name, email address, phone number, company name, and communication content.', fr: 'LTIC SARL collecte les données personnelles que vous fournissez volontairement lorsque vous nous contactez, demandez des devis ou utilisez nos services.' })}</p>

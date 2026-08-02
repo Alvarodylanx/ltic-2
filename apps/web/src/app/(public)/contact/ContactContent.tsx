@@ -110,7 +110,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
-      <section className="bg-background py-10 sm:py-14 lg:py-16">
+      <section className="bg-background py-10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="bg-card border border-border rounded-2xl p-6 sm:p-8">

@@ -164,7 +164,7 @@ export default function ServicesPage() {
       })}
 
       {/* ── CTA ─────────────────────────────────────────────────────────────── */}
-      <section className="bg-foreground py-16 relative overflow-hidden">
+      <section className="bg-foreground py-10 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}>

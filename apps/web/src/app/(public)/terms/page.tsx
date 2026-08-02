@@ -5,13 +5,13 @@ export default function TermsPage() {
   const { L } = useLanguage();
   return (
     <>
-      <section className="bg-sidebar py-16">
+      <section className="bg-sidebar py-10">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold text-sidebar-foreground">{L({ en: 'Terms & Conditions', fr: 'Conditions Générales d\'Utilisation' })}</h1>
           <p className="text-sidebar-foreground/70 mt-2 text-sm">{L({ en: 'Last updated: May 2026', fr: 'Dernière mise à jour: Mai 2026' })}</p>
         </div>
       </section>
-      <section className="bg-background py-16">
+      <section className="bg-background py-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 prose prose-slate">
           <h2>{L({ en: '1. Acceptance of Terms', fr: '1. Acceptation des Conditions' })}</h2>
           <p>{L({ en: 'By accessing or using the LTIC SARL website and services, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our services.', fr: 'En accédant ou en utilisant le site web et les services de LTIC SARL, vous acceptez d\'être lié par ces Conditions Générales.' })}</p>

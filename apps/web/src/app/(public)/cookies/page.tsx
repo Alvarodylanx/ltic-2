@@ -121,7 +121,7 @@ export default function CookiesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-sidebar py-16 relative overflow-hidden">
+      <section className="bg-sidebar py-10 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-8 left-8 w-32 h-32 border border-white rounded-full" />
           <div className="absolute bottom-8 right-8 w-48 h-48 border border-white rounded-full" />
@@ -139,7 +139,7 @@ export default function CookiesPage() {
         </div>
       </section>
 
-      <section className="bg-background py-12">
+      <section className="bg-background py-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-3 gap-8">
 
