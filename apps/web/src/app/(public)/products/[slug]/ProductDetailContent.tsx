@@ -199,21 +199,19 @@ export default function ProductDetailPage({ initialProduct }: { initialProduct?:
                     <motion.div
                       key={activeIdx}
                       className="absolute inset-0"
-                      initial={{ opacity: 0, scale: 1.04 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.98 }}
-                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.35, ease: 'easeInOut' }}
                     >
                       <Image
                         src={allImages[activeIdx]}
                         alt={`${L({ en: product.nameEn, fr: product.nameFr })} — photo ${activeIdx + 1}`}
                         fill
-                        className="object-cover"
+                        className="object-contain p-3"
                         sizes="(max-width: 1024px) 100vw, 480px"
                         priority={activeIdx === 0}
                       />
-                      {/* Bottom gradient for depth */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                     </motion.div>
                   </AnimatePresence>
 
@@ -458,17 +456,16 @@ export default function ProductDetailPage({ initialProduct }: { initialProduct?:
                   <Link href={`/products/${p.slug}`}
                     className="group bg-card border border-border rounded-xl overflow-hidden
                                hover:shadow-md hover:border-primary/40 transition-all duration-200 block">
-                    <div className="aspect-[4/3] relative overflow-hidden">
+                    <div className="aspect-[4/3] relative overflow-hidden bg-sidebar">
                       {p.imageUrl ? (
                         <Image src={p.imageUrl} alt={L({ en: p.nameEn, fr: p.nameFr })} fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="object-contain p-2"
                           sizes="(max-width: 640px) 50vw, 25vw" />
                       ) : (
                         <div className="w-full h-full bg-muted flex items-center justify-center">
                           <Package className="h-8 w-8 text-muted-foreground/20" />
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     </div>
                     <div className="p-3">
                       <p className="font-semibold text-xs leading-snug group-hover:text-primary transition-colors line-clamp-2">
