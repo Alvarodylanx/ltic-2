@@ -14,7 +14,26 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
-import { fadeInUp, fadeInLeft, fadeInRight, scaleIn, stagger, viewportOnce } from '@/components/motion/variants';
+import { fadeInUp, fadeInLeft, fadeInRight, viewportOnce } from '@/components/motion/variants';
+
+const EXPO = [0.16, 1, 0.3, 1] as const;
+
+const cardGrid = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.04 } },
+};
+const cardItem = {
+  hidden: { opacity: 0, y: 44, scale: 0.93 },
+  show:   { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.55, ease: EXPO } },
+};
+const headerReveal = {
+  hidden: { opacity: 0, x: -20 },
+  show:   { opacity: 1, x: 0,  transition: { duration: 0.45, ease: EXPO } },
+};
+const lineExpand = {
+  hidden: { scaleX: 0, originX: 0 },
+  show:   { scaleX: 1, transition: { duration: 0.5, ease: EXPO, delay: 0.15 } },
+};
 
 export default function ProductsPage() {
   const { L } = useLanguage();
@@ -381,11 +400,18 @@ export default function ProductsPage() {
 
                 {groupedByCategory ? (
                   /* Grouped sections */
-                  <div className="space-y-12">
+                  <div className="space-y-14">
                     {Array.from(groupedByCategory.entries()).map(([catId, { name: catName, products: catProducts }]) => (
                       <div key={catId}>
-                        <div className="flex items-center gap-3 mb-5">
-                          <span className="w-4 h-px bg-primary shrink-0" />
+                        {/* Animated category header */}
+                        <motion.div
+                          variants={headerReveal} initial="hidden" whileInView="show"
+                          viewport={{ once: true, amount: 0.5 }}
+                          className="flex items-center gap-3 mb-6">
+                          <motion.span
+                            variants={lineExpand} initial="hidden" whileInView="show"
+                            viewport={{ once: true, amount: 0.5 }}
+                            className="h-px bg-primary block w-4 shrink-0" />
                           <h2 className="font-display font-bold text-lg text-foreground tracking-tight">{catName}</h2>
                           <button
                             onClick={() => setSelectedCategory(catId)}
@@ -393,13 +419,15 @@ export default function ProductsPage() {
                             {L({ en: 'View all', fr: 'Voir tout' })}
                             <ArrowRight className="h-3 w-3" />
                           </button>
-                        </div>
+                        </motion.div>
+                        {/* Staggered card grid */}
                         <motion.div
-                          variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
+                          variants={cardGrid} initial="hidden" whileInView="show"
+                          viewport={{ once: true, amount: 0.05 }}
                           className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
                           {catProducts.map(product => (
-                            <motion.div key={product.id} variants={scaleIn}
-                              whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                            <motion.div key={product.id} variants={cardItem}
+                              whileHover={{ y: -5, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
                               <ProductCard product={product} L={L} />
                             </motion.div>
                           ))}
@@ -410,11 +438,11 @@ export default function ProductsPage() {
                 ) : (
                   /* Flat grid */
                   <motion.div
-                    variants={stagger} initial="hidden" animate="show"
+                    variants={cardGrid} initial="hidden" animate="show"
                     className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
                     {products.map(product => (
-                      <motion.div key={product.id} variants={scaleIn}
-                        whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                      <motion.div key={product.id} variants={cardItem}
+                        whileHover={{ y: -5, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
                         <ProductCard product={product} L={L} />
                       </motion.div>
                     ))}
