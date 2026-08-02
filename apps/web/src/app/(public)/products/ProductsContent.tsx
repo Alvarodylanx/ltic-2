@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
-  Package, ArrowRight, AlertCircle, RefreshCw,
-  Search, X, ChevronDown, Check, SlidersHorizontal,
+  Package, ArrowRight, AlertCircle, RefreshCw, Search, X,
+  LayoutGrid, TreePine, Zap, Droplets, Settings2, Factory,
+  Anchor, FlaskConical, Wheat,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,14 +17,107 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
 import { fadeInUp, fadeInLeft, fadeInRight, scaleIn, stagger, viewportOnce } from '@/components/motion/variants';
 
+// Icon mapping by category id
+const CATEGORY_ICONS: Record<number, React.ComponentType<{ className?: string }>> = {
+  1: TreePine,
+  2: Zap,
+  3: Droplets,
+  4: Settings2,
+  5: Factory,
+  12: Anchor,
+  13: FlaskConical,
+  14: Wheat,
+};
+
+function ProductCard({ product, L }: { product: any; L: (o: { en: string; fr: string }) => string }) {
+  const name = L({ en: product.nameEn, fr: product.nameFr });
+  return (
+    <Link
+      href={`/products/${product.slug}`}
+      className="group relative bg-card border border-border/60 rounded-2xl overflow-hidden
+                 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/8
+                 transition-all duration-300 block focus-visible:outline-none
+                 focus-visible:ring-2 focus-visible:ring-primary">
+      {/* Image */}
+      <div className="aspect-[4/3] relative overflow-hidden bg-sidebar">
+        {product.imageUrl ? (
+          <>
+            <Image
+              src={product.imageUrl}
+              alt={name}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-106"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-muted/40">
+            <Package className="h-10 w-10 text-muted-foreground/25" />
+          </div>
+        )}
+
+        {/* Product name over image */}
+        <h3 className="absolute bottom-2.5 left-3 right-3 text-white font-bold
+                       text-xs sm:text-sm leading-tight line-clamp-2 drop-shadow-sm
+                       transition-all duration-300">
+          {name}
+        </h3>
+      </div>
+
+      {/* CTA strip */}
+      <div className="px-3 py-2.5 flex items-center justify-between">
+        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+          product.available
+            ? 'bg-green-50 text-green-700'
+            : 'bg-orange-50 text-orange-700'
+        }`}>
+          {product.available
+            ? L({ en: 'In Stock', fr: 'En Stock' })
+            : L({ en: 'On Request', fr: 'Sur Demande' })}
+        </span>
+        <span className="text-primary text-xs font-bold flex items-center gap-1
+                         group-hover:gap-1.5 transition-all duration-200">
+          {L({ en: 'Details', fr: 'Détails' })}
+          <ArrowRight className="h-3 w-3" />
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function CategorySectionHeader({
+  name, catId, Icon, onSelect, L,
+}: {
+  name: string;
+  catId: number;
+  Icon: React.ComponentType<{ className?: string }>;
+  onSelect: (id: number) => void;
+  L: (o: { en: string; fr: string }) => string;
+}) {
+  return (
+    <div className="flex items-center gap-3 mb-5">
+      <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+        <Icon className="h-4 w-4 text-primary" />
+      </div>
+      <h2 className="font-display font-bold text-xl text-foreground tracking-tight">{name}</h2>
+      <button
+        onClick={() => onSelect(catId)}
+        className="ml-auto text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+        {L({ en: 'See all', fr: 'Voir tout' })}
+        <ArrowRight className="h-3 w-3" />
+      </button>
+    </div>
+  );
+}
+
 export default function ProductsPage() {
   const { L } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [filterOpen, setFilterOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -32,41 +126,58 @@ export default function ProductsPage() {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  // Close dropdown on outside click
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setFilterOpen(false);
-      }
-    }
-    if (filterOpen) document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [filterOpen]);
-
   const { data: categories } = useQuery<any[]>({
     queryKey: ['categories'],
     queryFn: () => api.get('/api/categories'),
   });
 
-  const productsUrl = useMemo(() => {
-    const params = new URLSearchParams();
-    if (selectedCategory) params.set('categoryId', String(selectedCategory));
-    if (debouncedSearch) params.set('search', debouncedSearch);
-    const q = params.toString();
-    return `/api/products${q ? `?${q}` : ''}`;
-  }, [selectedCategory, debouncedSearch]);
-
-  const { data: products, isLoading, isError, refetch } = useQuery<any[]>({
-    queryKey: ['products', productsUrl],
-    queryFn: () => api.get(productsUrl),
+  // Always fetch ALL products for grouping; filter client-side for category tabs
+  const { data: allProductsData, isLoading, isError, refetch } = useQuery<any[]>({
+    queryKey: ['products', 'all', debouncedSearch],
+    queryFn: () => {
+      const params = new URLSearchParams();
+      if (debouncedSearch) params.set('search', debouncedSearch);
+      const q = params.toString();
+      return api.get(`/api/products${q ? `?${q}` : ''}`);
+    },
     enabled: mounted,
     retry: 2,
   });
 
-  const allCategories = [{ id: undefined, nameEn: 'All Products', nameFr: 'Tous les Produits' }, ...(categories || [])];
-  const activeCat = allCategories.find(c =>
-    c.id === undefined ? !selectedCategory : c.id === selectedCategory
+  const allCategories = useMemo(
+    () => [{ id: undefined as number | undefined, nameEn: 'All Products', nameFr: 'Tous les Produits' }, ...(categories || [])],
+    [categories]
   );
+
+  // Client-side filter for selected category
+  const products = useMemo(() => {
+    if (!allProductsData) return [];
+    if (selectedCategory) return allProductsData.filter(p => p.categoryId === selectedCategory);
+    return allProductsData;
+  }, [allProductsData, selectedCategory]);
+
+  // Group products by category when "All" is selected and no search
+  const groupedByCategory = useMemo(() => {
+    if (selectedCategory || debouncedSearch || !allProductsData) return null;
+    const map = new Map<number, { name: string; products: any[] }>();
+    allProductsData.forEach(p => {
+      if (!p.categoryId) return;
+      if (!map.has(p.categoryId)) map.set(p.categoryId, { name: p.categoryName || 'Other', products: [] });
+      map.get(p.categoryId)!.products.push(p);
+    });
+    return map;
+  }, [allProductsData, selectedCategory, debouncedSearch]);
+
+  // Category product counts
+  const categoryCounts = useMemo(() => {
+    if (!allProductsData) return {};
+    const counts: Record<number, number> = {};
+    allProductsData.forEach(p => {
+      if (p.categoryId) counts[p.categoryId] = (counts[p.categoryId] || 0) + 1;
+    });
+    return counts;
+  }, [allProductsData]);
+
   const isFiltered = !!selectedCategory || !!debouncedSearch;
 
   return (
@@ -108,16 +219,13 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* ── OIL & CONTAINER COLLECTION SPOTLIGHT ───────────────────────────── */}
+      {/* ── OIL & CONTAINER COLLECTION SPOTLIGHT ── */}
       <section className="bg-sidebar overflow-hidden py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
-
-            {/* Text — left on desktop, first on mobile */}
             <motion.div
               variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="flex-1 text-center lg:text-left"
-            >
+              className="flex-1 text-center lg:text-left">
               <p className="text-primary font-bold text-[11px] uppercase tracking-[0.32em] mb-3 flex items-center justify-center lg:justify-start gap-2.5">
                 <span className="w-5 h-px bg-primary flex-shrink-0" />
                 {L({ en: 'Consumer & Industrial Goods', fr: 'Produits Consommateurs & Industriels' })}
@@ -132,44 +240,28 @@ export default function ProductsPage() {
                 {L({ en: 'Available for export, import & commercial distribution across Africa and Europe.', fr: "Disponible pour l'export, l'import et la distribution commerciale en Afrique et en Europe." })}
               </p>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <Button asChild size="lg"
-                  className="font-semibold h-11 px-7 shadow-lg shadow-primary/25">
+                <Button asChild size="lg" className="font-semibold h-11 px-7 shadow-lg shadow-primary/25">
                   <Link href="/quote">
                     {L({ en: 'Request Supply Quote', fr: 'Demander un Devis' })}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline"
-                  className="font-semibold h-11 px-6 bg-white/6 border-white/25 text-white
-                             hover:bg-white/14 hover:border-white/50">
-                  <Link href="/contact">
-                    {L({ en: 'Contact Us', fr: 'Nous Contacter' })}
-                  </Link>
+                  className="font-semibold h-11 px-6 bg-white/6 border-white/25 text-white hover:bg-white/14 hover:border-white/50">
+                  <Link href="/contact">{L({ en: 'Contact Us', fr: 'Nous Contacter' })}</Link>
                 </Button>
               </div>
             </motion.div>
 
-            {/* Portrait video container */}
             <motion.div
               variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="relative flex-shrink-0"
-            >
-              {/* Ambient glow behind video */}
+              className="relative flex-shrink-0">
               <div className="absolute inset-0 scale-110 rounded-3xl blur-2xl bg-primary/20 pointer-events-none" />
-
-              {/* Video portrait frame */}
-              <div className="relative w-[200px] sm:w-[240px] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10"
-                style={{ aspectRatio: '9/16' }}>
-                <video
-                  autoPlay muted loop playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
-                  style={{ filter: 'contrast(1.05) saturate(1.1)' }}
-                >
+              <div className="relative w-[200px] sm:w-[240px] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10" style={{ aspectRatio: '9/16' }}>
+                <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" style={{ filter: 'contrast(1.05) saturate(1.1)' }}>
                   <source src="/videos/oils-collection.mp4" type="video/mp4" />
                 </video>
-                {/* Bottom gradient for depth */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
-                {/* Top label */}
                 <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                   <span className="text-[10px] font-bold text-white uppercase tracking-wider">
@@ -177,29 +269,24 @@ export default function ProductsPage() {
                   </span>
                 </div>
               </div>
-
-              {/* Floating "In Stock" badge below video */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2
-                              bg-primary text-primary-foreground rounded-full
-                              px-5 py-2 shadow-xl flex items-center gap-2 whitespace-nowrap">
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground rounded-full px-5 py-2 shadow-xl flex items-center gap-2 whitespace-nowrap">
                 <Package className="h-3.5 w-3.5 flex-shrink-0" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.18em]">
                   {L({ en: 'Available for Order', fr: 'Disponible à la Commande' })}
                 </span>
               </div>
             </motion.div>
-
           </div>
         </div>
       </section>
 
-      {/* ── FILTER BAR ── */}
-      <div className="sticky top-16 z-40 bg-white/85 backdrop-blur-md border-b border-border/60
+      {/* ── FILTER BAR (sticky) ── */}
+      <div className="sticky top-16 z-40 bg-white/90 backdrop-blur-md border-b border-border/60
         shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
-          <div className="flex items-center gap-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-2.5">
 
-            {/* Search */}
+          {/* Search row */}
+          <div className="flex items-center gap-2">
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
               <Input
@@ -217,96 +304,81 @@ export default function ProductsPage() {
               />
               {searchInput && (
                 <button onClick={() => setSearchInput('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Clear">
+                  aria-label="Clear"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
                   <X className="h-3 w-3" />
                 </button>
               )}
             </div>
-
-            {/* Category dropdown */}
-            <div className="relative flex-shrink-0" ref={dropdownRef}>
-              <button
-                onClick={() => setFilterOpen(v => !v)}
-                aria-expanded={filterOpen}
-                className={`flex items-center gap-1.5 h-9 pl-3 pr-2.5 rounded-full border text-sm font-semibold
-                  transition-all duration-200 whitespace-nowrap
-                  ${selectedCategory
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-muted/50 border-border/50 text-foreground hover:border-border hover:bg-white'
-                  }`}>
-                <SlidersHorizontal className="h-3.5 w-3.5 flex-shrink-0" />
-                <span className="max-w-[100px] sm:max-w-[160px] truncate">
-                  {L({ en: activeCat?.nameEn ?? 'Filter', fr: activeCat?.nameFr ?? 'Filtrer' })}
-                </span>
-                <ChevronDown className={`h-3.5 w-3.5 flex-shrink-0 transition-transform duration-200 ${filterOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              <AnimatePresence>
-                {filterOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -6, scale: 0.97 }}
-                    transition={{ duration: 0.15, ease: 'easeOut' }}
-                    className="absolute right-0 top-[calc(100%+6px)] z-50
-                      bg-white border border-border rounded-xl shadow-xl
-                      min-w-[180px] max-h-72 overflow-y-auto py-1">
-                    {allCategories.map(cat => {
-                      const active = cat.id === undefined ? !selectedCategory : selectedCategory === cat.id;
-                      return (
-                        <button
-                          key={cat.id ?? 'all'}
-                          onClick={() => { setSelectedCategory(cat.id); setFilterOpen(false); }}
-                          className={`w-full flex items-center justify-between gap-3 px-3.5 py-2.5 text-sm text-left
-                            transition-colors duration-150
-                            ${active
-                              ? 'bg-primary/8 text-primary font-semibold'
-                              : 'text-foreground hover:bg-muted/60 font-medium'
-                            }`}>
-                          {L({ en: cat.nameEn, fr: cat.nameFr })}
-                          {active && <Check className="h-3.5 w-3.5 flex-shrink-0 text-primary" />}
-                        </button>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Clear all — only shown when filtered */}
             {isFiltered && (
               <button
                 onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}
-                className="flex-shrink-0 h-9 w-9 rounded-full border border-border/50
+                className="flex-shrink-0 h-9 px-3 rounded-full border border-border/50
                   bg-muted/50 hover:bg-destructive/10 hover:border-destructive/30
-                  flex items-center justify-center transition-colors duration-200"
-                aria-label="Clear all filters">
-                <X className="h-3.5 w-3.5 text-muted-foreground hover:text-destructive" />
+                  text-xs font-semibold text-muted-foreground hover:text-destructive
+                  flex items-center gap-1.5 transition-colors duration-200">
+                <X className="h-3 w-3" />
+                {L({ en: 'Clear', fr: 'Effacer' })}
               </button>
             )}
+          </div>
+
+          {/* Category tabs */}
+          <div className="flex gap-2 overflow-x-auto pb-0.5 scrollbar-none -mx-1 px-1">
+            {allCategories.map(cat => {
+              const isAll = cat.id === undefined;
+              const active = isAll ? !selectedCategory : selectedCategory === cat.id;
+              const Icon = isAll ? LayoutGrid : (CATEGORY_ICONS[cat.id!] ?? Package);
+              const count = cat.id ? categoryCounts[cat.id] : allProductsData?.length;
+
+              return (
+                <button
+                  key={cat.id ?? 'all'}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold
+                    whitespace-nowrap transition-all duration-200 flex-shrink-0 border
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                    active
+                      ? 'bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/30'
+                      : 'bg-transparent border-border/60 text-muted-foreground hover:text-foreground hover:border-border hover:bg-muted/50'
+                  }`}
+                >
+                  <Icon className="h-3 w-3 flex-shrink-0" />
+                  <span>{L({ en: cat.nameEn, fr: cat.nameFr })}</span>
+                  {count !== undefined && (
+                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                      active ? 'bg-white/25 text-white' : 'bg-muted text-muted-foreground'
+                    }`}>
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* ── PRODUCTS GRID ── */}
-      <section className="bg-background py-3 sm:py-20">
+      {/* ── PRODUCTS SECTION ── */}
+      <section className="bg-background py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Loading skeletons */}
           {(!mounted || isLoading) && (
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
               {Array(8).fill(0).map((_, i) => (
                 <div key={i} className="border border-border rounded-2xl overflow-hidden">
                   <Skeleton className="aspect-[4/3] w-full" />
-                  <div className="p-4 space-y-2">
-                    <Skeleton className="h-3 w-16" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-9 w-full mt-2" />
+                  <div className="p-3 flex items-center justify-between">
+                    <Skeleton className="h-4 w-16 rounded-full" />
+                    <Skeleton className="h-4 w-14" />
                   </div>
                 </div>
               ))}
             </div>
           )}
 
+          {/* Error state */}
           {mounted && isError && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
               className="flex flex-col items-center justify-center py-24 gap-4">
@@ -321,63 +393,75 @@ export default function ProductsPage() {
             </motion.div>
           )}
 
-          {mounted && !isLoading && !isError && !products?.length && (
+          {/* Empty state */}
+          {mounted && !isLoading && !isError && !products.length && (
             <motion.div variants={fadeInUp} initial="hidden" animate="show"
               className="flex flex-col items-center justify-center py-24 gap-4">
-              <div className="w-14 h-14 rounded-xl bg-foreground flex items-center justify-center">
-                <Package className="h-6 w-6 text-primary" />
+              <div className="w-14 h-14 rounded-xl bg-muted flex items-center justify-center">
+                <Package className="h-6 w-6 text-muted-foreground/40" />
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 {debouncedSearch
-                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvé pour "${debouncedSearch}"` })
-                  : L({ en: 'No products found in this category', fr: 'Aucun produit trouvé dans cette catégorie' })}
+                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit pour "${debouncedSearch}"` })
+                  : L({ en: 'No products in this category', fr: 'Aucun produit dans cette catégorie' })}
               </p>
-              <Button variant="outline" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}>
+              <Button variant="outline" size="sm" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}>
                 {L({ en: 'View All Products', fr: 'Voir Tous les Produits' })}
               </Button>
             </motion.div>
           )}
 
-          {mounted && !isLoading && !isError && products && products.length > 0 && (
+          {/* Products — grouped or flat */}
+          {mounted && !isLoading && !isError && products.length > 0 && (
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${selectedCategory ?? 'all'}-${debouncedSearch}`}
-                variants={stagger} initial="hidden" animate="show"
-                className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
-                {products.map((product) => (
-                  <motion.div key={product.id} variants={scaleIn}
-                    whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                    <div className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-                      <div className="aspect-[4/3] relative bg-white overflow-hidden">
-                        {product.imageUrl ? (
-                          <Image src={product.imageUrl} alt={L({ en: product.nameEn, fr: product.nameFr })} fill
-                            className="object-contain p-2"
-                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-muted">
-                            <Package className="h-10 w-10 text-muted-foreground/30" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-2.5 sm:p-4 flex flex-col flex-1">
-                        {product.categoryName && (
-                          <span className="inline-block bg-primary/10 text-primary text-[10px] sm:text-xs font-semibold rounded-full px-2 py-0.5 mb-1.5 w-fit">
-                            {product.categoryName}
-                          </span>
-                        )}
-                        <h3 className="font-bold text-xs sm:text-sm leading-tight mb-2.5 sm:mb-3 group-hover:text-primary transition-colors flex-1 line-clamp-2">
-                          {L({ en: product.nameEn, fr: product.nameFr })}
-                        </h3>
-                        <Button asChild size="sm" className="w-full text-xs sm:text-sm h-8 sm:h-9">
-                          <Link href={`/products/${product.slug}`}>
-                            {L({ en: 'View Details', fr: 'Voir les Détails' })}
-                            <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 ml-1 flex-shrink-0" />
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}>
+
+                {/* Grouped view: "All Products" tab + no search */}
+                {groupedByCategory ? (
+                  <div className="space-y-12">
+                    {Array.from(groupedByCategory.entries()).map(([catId, { name: catName, products: catProducts }]) => {
+                      const Icon = CATEGORY_ICONS[catId] ?? Package;
+                      return (
+                        <div key={catId}>
+                          <CategorySectionHeader
+                            name={catName}
+                            catId={catId}
+                            Icon={Icon}
+                            onSelect={setSelectedCategory}
+                            L={L}
+                          />
+                          <motion.div
+                            variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
+                            className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+                            {catProducts.map(product => (
+                              <motion.div key={product.id} variants={scaleIn}
+                                whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                                <ProductCard product={product} L={L} />
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  /* Flat grid: category selected or search active */
+                  <motion.div
+                    variants={stagger} initial="hidden" animate="show"
+                    className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+                    {products.map(product => (
+                      <motion.div key={product.id} variants={scaleIn}
+                        whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                        <ProductCard product={product} L={L} />
+                      </motion.div>
+                    ))}
                   </motion.div>
-                ))}
+                )}
               </motion.div>
             </AnimatePresence>
           )}
