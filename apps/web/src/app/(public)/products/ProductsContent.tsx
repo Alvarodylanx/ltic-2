@@ -96,7 +96,7 @@ export default function ProductsPage() {
           src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1100&auto=format&fit=crop&q=45"
           alt="" fill className="object-cover object-center opacity-45" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/88 via-sidebar/55 to-sidebar/15" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/80 via-sidebar/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/30 to-transparent" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -138,9 +138,12 @@ export default function ProductsPage() {
           sizes="100vw"
           priority={false}
         />
-        {/* Dark cinematic overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+        {/* Hero blend: sidebar color bleeds down from top → seamless join */}
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-sidebar to-transparent pointer-events-none" />
+        {/* Side darkening so text stays legible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20 pointer-events-none" />
+        {/* Bottom fade */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
         {/* Amber glow behind video side */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-primary/25 rounded-full blur-[120px] pointer-events-none" />
         {/* Grain texture */}
