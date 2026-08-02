@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   Package, ArrowRight, AlertCircle, RefreshCw,
@@ -14,10 +14,123 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
-import { fadeInUp, fadeInLeft, fadeInRight, scaleIn, stagger, viewportOnce } from '@/components/motion/variants';
+import { fadeInLeft, fadeInRight, viewportOnce } from '@/components/motion/variants';
 
+/* ─── Motion Variants ─────────────────────────────────────────────────── */
+const EXPO = [0.16, 1, 0.3, 1] as const;
+
+const cardContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.055, delayChildren: 0.05 } },
+};
+const cardItem = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.52, ease: EXPO } },
+};
+const headerAnim = {
+  hidden: { opacity: 0, x: -16 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
+
+/* ─── Product Card ────────────────────────────────────────────────────── */
+function ProductCard({
+  product, L, reduced,
+}: {
+  product: any;
+  L: (o: { en: string; fr: string }) => string;
+  reduced: boolean | null;
+}) {
+  const name = L({ en: product.nameEn, fr: product.nameFr });
+  return (
+    <Link
+      href={`/products/${product.slug}`}
+      className="group flex flex-col bg-card border border-border/50 rounded-xl overflow-hidden
+                 hover:border-primary/50 hover:shadow-lg hover:shadow-black/8
+                 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+      {/* Image */}
+      <div className="aspect-square relative bg-white overflow-hidden">
+        {product.imageUrl ? (
+          <Image
+            src={product.imageUrl}
+            alt={name}
+            fill
+            className={`object-contain p-3 ${reduced ? '' : 'transition-transform duration-500 group-hover:scale-[1.04]'}`}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <Package className="h-8 w-8 text-muted-foreground/20" />
+          </div>
+        )}
+      </div>
+      {/* Info */}
+      <div className="px-3 py-2.5 flex items-start justify-between gap-2 border-t border-border/40 flex-1">
+        <div className="min-w-0">
+          {product.categoryName && (
+            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-[0.12em] mb-0.5 truncate">
+              {product.categoryName}
+            </p>
+          )}
+          <h3 className="font-bold text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-200">
+            {name}
+          </h3>
+        </div>
+        <ArrowRight
+          className={`h-3.5 w-3.5 text-primary shrink-0 mt-0.5 ${reduced ? '' : 'group-hover:translate-x-0.5 transition-transform duration-200'}`}
+        />
+      </div>
+    </Link>
+  );
+}
+
+/* ─── Category Section Divider ────────────────────────────────────────── */
+function CategoryDivider({
+  name, catId, onSelect, L,
+}: {
+  name: string;
+  catId: number;
+  onSelect: (id: number) => void;
+  L: (o: { en: string; fr: string }) => string;
+}) {
+  return (
+    <motion.div
+      variants={headerAnim}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.3 }}
+      className="flex items-center gap-3 mb-5">
+      {/* Left accent */}
+      <span className="w-5 h-px bg-primary shrink-0" />
+      {/* Category name */}
+      <h2 className="font-display font-extrabold text-sm uppercase tracking-[0.22em] text-foreground whitespace-nowrap">
+        {name}
+      </h2>
+      {/* Expanding rule */}
+      <motion.span
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: EXPO, delay: 0.12 }}
+        style={{ originX: 0 }}
+        className="h-px bg-border flex-1 block"
+      />
+      {/* See all */}
+      <button
+        onClick={() => onSelect(catId)}
+        className="text-[11px] font-bold text-primary hover:text-primary/70 transition-colors
+                   flex items-center gap-1 whitespace-nowrap shrink-0">
+        {L({ en: 'See all', fr: 'Voir tout' })}
+        <ArrowRight className="h-3 w-3" />
+      </button>
+    </motion.div>
+  );
+}
+
+/* ─── Main Page ───────────────────────────────────────────────────────── */
 export default function ProductsPage() {
   const { L } = useLanguage();
+  const reduced = useReducedMotion();
+
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -28,18 +141,17 @@ export default function ProductsPage() {
   useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedSearch(searchInput.trim()), 350);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setDebouncedSearch(searchInput.trim()), 350);
+    return () => clearTimeout(t);
   }, [searchInput]);
 
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+    const close = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node))
         setFilterOpen(false);
-      }
-    }
-    if (filterOpen) document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    };
+    if (filterOpen) document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
   }, [filterOpen]);
 
   const { data: categories } = useQuery<any[]>({
@@ -47,13 +159,12 @@ export default function ProductsPage() {
     queryFn: () => api.get('/api/categories'),
   });
 
-  // Fetch all products; filter client-side so grouped view works without extra requests
   const { data: allProducts, isLoading, isError, refetch } = useQuery<any[]>({
     queryKey: ['products', 'all', debouncedSearch],
     queryFn: () => {
-      const params = new URLSearchParams();
-      if (debouncedSearch) params.set('search', debouncedSearch);
-      const q = params.toString();
+      const p = new URLSearchParams();
+      if (debouncedSearch) p.set('search', debouncedSearch);
+      const q = p.toString();
       return api.get(`/api/products${q ? `?${q}` : ''}`);
     },
     enabled: mounted,
@@ -62,7 +173,7 @@ export default function ProductsPage() {
 
   const allCategories = useMemo(
     () => [{ id: undefined as number | undefined, nameEn: 'All Products', nameFr: 'Tous les Produits' }, ...(categories || [])],
-    [categories]
+    [categories],
   );
 
   const products = useMemo(() => {
@@ -71,37 +182,35 @@ export default function ProductsPage() {
     return allProducts;
   }, [allProducts, selectedCategory]);
 
-  // Group by category when "All Products" is selected and no search
   const groupedByCategory = useMemo(() => {
     if (selectedCategory || debouncedSearch || !allProducts) return null;
     const map = new Map<number, { name: string; products: any[] }>();
     allProducts.forEach(p => {
       if (!p.categoryId) return;
-      if (!map.has(p.categoryId)) map.set(p.categoryId, { name: p.categoryName || 'Other', products: [] });
+      if (!map.has(p.categoryId)) map.set(p.categoryId, { name: p.categoryName || '', products: [] });
       map.get(p.categoryId)!.products.push(p);
     });
     return map;
   }, [allProducts, selectedCategory, debouncedSearch]);
 
   const activeCat = allCategories.find(c =>
-    c.id === undefined ? !selectedCategory : c.id === selectedCategory
+    c.id === undefined ? !selectedCategory : c.id === selectedCategory,
   );
   const isFiltered = !!selectedCategory || !!debouncedSearch;
 
   return (
     <>
-      {/* ── HERO ── */}
+      {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative h-[22vh] min-h-[160px] sm:h-[30vh] sm:min-h-[210px] overflow-hidden bg-sidebar flex items-center">
         <Image
           src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1100&auto=format&fit=crop&q=45"
           alt="" fill className="object-cover object-center opacity-45" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/88 via-sidebar/55 to-sidebar/15" />
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/80 via-sidebar/20 to-transparent" />
-
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.45, ease: EXPO }}
             className="flex items-center justify-center gap-2.5 mb-2 sm:mb-3">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
             <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
@@ -127,12 +236,11 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* ── OIL & CONTAINER COLLECTION SPOTLIGHT ── */}
+      {/* ── OIL SPOTLIGHT ────────────────────────────────────────────────── */}
       <section className="bg-sidebar overflow-hidden py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
-            <motion.div
-              variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
+            <motion.div variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
               className="flex-1 text-center lg:text-left">
               <p className="text-primary font-bold text-[11px] uppercase tracking-[0.32em] mb-3 flex items-center justify-center lg:justify-start gap-2.5">
                 <span className="w-5 h-px bg-primary flex-shrink-0" />
@@ -160,9 +268,7 @@ export default function ProductsPage() {
                 </Button>
               </div>
             </motion.div>
-
-            <motion.div
-              variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
+            <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
               className="relative flex-shrink-0">
               <div className="absolute inset-0 scale-110 rounded-3xl blur-2xl bg-primary/20 pointer-events-none" />
               <div className="relative w-[200px] sm:w-[240px] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10" style={{ aspectRatio: '9/16' }}>
@@ -188,31 +294,23 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* ── FILTER BAR ── */}
-      <div className="sticky top-16 z-40 bg-white/85 backdrop-blur-md border-b border-border/60
-        shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)]">
+      {/* ── FILTER BAR ───────────────────────────────────────────────────── */}
+      <div className="sticky top-16 z-40 bg-white/90 backdrop-blur-md border-b border-border/60
+        shadow-[0_2px_16px_-6px_hsl(var(--foreground)/0.1)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
           <div className="flex items-center gap-2">
-
             {/* Search */}
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
               <Input
-                id="product-search"
-                name="product-search"
-                type="search"
-                autoComplete="off"
-                value={searchInput}
-                onChange={e => setSearchInput(e.target.value)}
+                id="product-search" name="product-search" type="search" autoComplete="off"
+                value={searchInput} onChange={e => setSearchInput(e.target.value)}
                 placeholder={L({ en: 'Search products…', fr: 'Rechercher…' })}
-                className="pl-8 pr-7 h-9 text-sm rounded-full w-full
-                  bg-muted/50 border-border/50
-                  focus:bg-white focus:border-primary/40
-                  transition-colors duration-200"
+                className="pl-8 pr-7 h-9 text-sm rounded-full w-full bg-muted/50 border-border/50
+                  focus:bg-white focus:border-primary/40 transition-colors duration-200"
               />
               {searchInput && (
-                <button onClick={() => setSearchInput('')}
-                  aria-label="Clear"
+                <button onClick={() => setSearchInput('')} aria-label="Clear"
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
                   <X className="h-3 w-3" />
                 </button>
@@ -228,8 +326,7 @@ export default function ProductsPage() {
                   transition-all duration-200 whitespace-nowrap
                   ${selectedCategory
                     ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-muted/50 border-border/50 text-foreground hover:border-border hover:bg-white'
-                  }`}>
+                    : 'bg-muted/50 border-border/50 text-foreground hover:border-border hover:bg-white'}`}>
                 <SlidersHorizontal className="h-3.5 w-3.5 flex-shrink-0" />
                 <span className="max-w-[100px] sm:max-w-[160px] truncate">
                   {L({ en: activeCat?.nameEn ?? 'Filter', fr: activeCat?.nameFr ?? 'Filtrer' })}
@@ -246,7 +343,7 @@ export default function ProductsPage() {
                     transition={{ duration: 0.15, ease: 'easeOut' }}
                     className="absolute right-0 top-[calc(100%+6px)] z-50
                       bg-white border border-border rounded-xl shadow-xl
-                      min-w-[200px] max-h-72 overflow-y-auto py-1">
+                      min-w-[210px] max-h-72 overflow-y-auto py-1">
                     {allCategories.map(cat => {
                       const active = cat.id === undefined ? !selectedCategory : selectedCategory === cat.id;
                       return (
@@ -255,10 +352,7 @@ export default function ProductsPage() {
                           onClick={() => { setSelectedCategory(cat.id); setFilterOpen(false); }}
                           className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 text-sm text-left
                             transition-colors duration-150
-                            ${active
-                              ? 'bg-primary/8 text-primary font-semibold'
-                              : 'text-foreground hover:bg-muted/60 font-medium'
-                            }`}>
+                            ${active ? 'bg-primary/8 text-primary font-semibold' : 'text-foreground hover:bg-muted/60 font-medium'}`}>
                           {L({ en: cat.nameEn, fr: cat.nameFr })}
                           {active && <Check className="h-3.5 w-3.5 flex-shrink-0 text-primary" />}
                         </button>
@@ -269,14 +363,14 @@ export default function ProductsPage() {
               </AnimatePresence>
             </div>
 
-            {/* Clear filter */}
+            {/* Clear */}
             {isFiltered && (
               <button
                 onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}
+                aria-label="Clear filters"
                 className="flex-shrink-0 h-9 w-9 rounded-full border border-border/50
                   bg-muted/50 hover:bg-destructive/10 hover:border-destructive/30
-                  flex items-center justify-center transition-colors duration-200"
-                aria-label="Clear all filters">
+                  flex items-center justify-center transition-colors duration-200">
                 <X className="h-3.5 w-3.5 text-muted-foreground" />
               </button>
             )}
@@ -284,20 +378,20 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      {/* ── PRODUCTS ── */}
-      <section className="bg-background py-8 sm:py-12">
+      {/* ── PRODUCTS CATALOG ─────────────────────────────────────────────── */}
+      <section className="bg-background py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Skeletons */}
+          {/* Skeleton */}
           {(!mounted || isLoading) && (
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
-              {Array(8).fill(0).map((_, i) => (
-                <div key={i} className="border border-border rounded-2xl overflow-hidden">
-                  <Skeleton className="aspect-[4/3] w-full" />
-                  <div className="p-4 space-y-2">
-                    <Skeleton className="h-3 w-16" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-9 w-full mt-2" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
+              {Array(10).fill(0).map((_, i) => (
+                <div key={i} className="rounded-xl border border-border overflow-hidden">
+                  <Skeleton className="aspect-square w-full" />
+                  <div className="px-3 py-2.5 space-y-1.5">
+                    <Skeleton className="h-2.5 w-12" />
+                    <Skeleton className="h-3.5 w-full" />
+                    <Skeleton className="h-3.5 w-3/4" />
                   </div>
                 </div>
               ))}
@@ -306,9 +400,9 @@ export default function ProductsPage() {
 
           {/* Error */}
           {mounted && isError && (
-            <motion.div variants={fadeInUp} initial="hidden" animate="show"
-              className="flex flex-col items-center justify-center py-24 gap-4">
-              <AlertCircle className="h-14 w-14 text-destructive/40" />
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center py-24 gap-4">
+              <AlertCircle className="h-12 w-12 text-destructive/40" />
               <p className="text-muted-foreground font-medium">
                 {L({ en: 'Unable to load products', fr: 'Impossible de charger les produits' })}
               </p>
@@ -321,54 +415,50 @@ export default function ProductsPage() {
 
           {/* Empty */}
           {mounted && !isLoading && !isError && !products.length && (
-            <motion.div variants={fadeInUp} initial="hidden" animate="show"
-              className="flex flex-col items-center justify-center py-24 gap-4">
-              <div className="w-14 h-14 rounded-xl bg-foreground flex items-center justify-center">
-                <Package className="h-6 w-6 text-primary" />
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center py-24 gap-4">
+              <div className="w-14 h-14 rounded-xl bg-muted flex items-center justify-center">
+                <Package className="h-6 w-6 text-muted-foreground/40" />
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 {debouncedSearch
-                  ? L({ en: `No products found for "${debouncedSearch}"`, fr: `Aucun produit trouvé pour "${debouncedSearch}"` })
-                  : L({ en: 'No products found in this category', fr: 'Aucun produit trouvé dans cette catégorie' })}
+                  ? L({ en: `No results for "${debouncedSearch}"`, fr: `Aucun résultat pour "${debouncedSearch}"` })
+                  : L({ en: 'No products in this category', fr: 'Aucun produit dans cette catégorie' })}
               </p>
-              <Button variant="outline" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}>
+              <Button variant="outline" size="sm" onClick={() => { setSelectedCategory(undefined); setSearchInput(''); }}>
                 {L({ en: 'View All Products', fr: 'Voir Tous les Produits' })}
               </Button>
             </motion.div>
           )}
 
-          {/* Products — grouped when "All", flat when filtered */}
+          {/* Products */}
           {mounted && !isLoading && !isError && products.length > 0 && (
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${selectedCategory ?? 'all'}-${debouncedSearch}`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}>
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.18 }}>
 
+                {/* ── Grouped: category sections ── */}
                 {groupedByCategory ? (
-                  /* Grouped sections */
-                  <div className="space-y-12">
-                    {Array.from(groupedByCategory.entries()).map(([catId, { name: catName, products: catProducts }]) => (
+                  <div className="space-y-14">
+                    {Array.from(groupedByCategory.entries()).map(([catId, { name: catName, products: catProds }]) => (
                       <div key={catId}>
-                        <div className="flex items-center gap-3 mb-5">
-                          <span className="w-4 h-px bg-primary shrink-0" />
-                          <h2 className="font-display font-bold text-lg text-foreground tracking-tight">{catName}</h2>
-                          <button
-                            onClick={() => setSelectedCategory(catId)}
-                            className="ml-auto text-xs font-semibold text-primary hover:underline flex items-center gap-1">
-                            {L({ en: 'View all', fr: 'Voir tout' })}
-                            <ArrowRight className="h-3 w-3" />
-                          </button>
-                        </div>
+                        <CategoryDivider
+                          name={catName} catId={catId}
+                          onSelect={setSelectedCategory} L={L}
+                        />
                         <motion.div
-                          variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-                          className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
-                          {catProducts.map(product => (
-                            <motion.div key={product.id} variants={scaleIn}
-                              whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                              <ProductCard product={product} L={L} />
+                          variants={reduced ? {} : cardContainer}
+                          initial="hidden"
+                          whileInView="show"
+                          viewport={{ once: true, amount: 0.05 }}
+                          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
+                          {catProds.map(p => (
+                            <motion.div key={p.id} variants={reduced ? {} : cardItem}
+                              whileHover={reduced ? {} : { y: -5 }}
+                              transition={{ type: 'spring', stiffness: 320, damping: 22 }}>
+                              <ProductCard product={p} L={L} reduced={reduced} />
                             </motion.div>
                           ))}
                         </motion.div>
@@ -376,17 +466,31 @@ export default function ProductsPage() {
                     ))}
                   </div>
                 ) : (
-                  /* Flat grid */
-                  <motion.div
-                    variants={stagger} initial="hidden" animate="show"
-                    className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
-                    {products.map(product => (
-                      <motion.div key={product.id} variants={scaleIn}
-                        whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                        <ProductCard product={product} L={L} />
-                      </motion.div>
-                    ))}
-                  </motion.div>
+                  /* ── Flat grid ── */
+                  <>
+                    {/* Result count */}
+                    <motion.p
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                      className="text-xs text-muted-foreground mb-6 font-medium">
+                      {products.length} {L({ en: 'products', fr: 'produits' })}
+                      {activeCat?.nameEn && activeCat.id && (
+                        <span className="text-primary font-semibold"> · {L({ en: activeCat.nameEn, fr: activeCat.nameFr ?? '' })}</span>
+                      )}
+                    </motion.p>
+                    <motion.div
+                      variants={reduced ? {} : cardContainer}
+                      initial="hidden"
+                      animate="show"
+                      className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
+                      {products.map(p => (
+                        <motion.div key={p.id} variants={reduced ? {} : cardItem}
+                          whileHover={reduced ? {} : { y: -5 }}
+                          transition={{ type: 'spring', stiffness: 320, damping: 22 }}>
+                          <ProductCard product={p} L={L} reduced={reduced} />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </>
                 )}
               </motion.div>
             </AnimatePresence>
@@ -394,43 +498,5 @@ export default function ProductsPage() {
         </div>
       </section>
     </>
-  );
-}
-
-function ProductCard({ product, L }: { product: any; L: (o: { en: string; fr: string }) => string }) {
-  return (
-    <div className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-      <div className="aspect-[4/3] relative bg-white overflow-hidden">
-        {product.imageUrl ? (
-          <Image
-            src={product.imageUrl}
-            alt={L({ en: product.nameEn, fr: product.nameFr })}
-            fill
-            className="object-contain p-2"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted">
-            <Package className="h-10 w-10 text-muted-foreground/30" />
-          </div>
-        )}
-      </div>
-      <div className="p-2.5 sm:p-4 flex flex-col flex-1">
-        {product.categoryName && (
-          <span className="inline-block bg-primary/10 text-primary text-[10px] sm:text-xs font-semibold rounded-full px-2 py-0.5 mb-1.5 w-fit">
-            {product.categoryName}
-          </span>
-        )}
-        <h3 className="font-bold text-xs sm:text-sm leading-tight mb-2.5 sm:mb-3 group-hover:text-primary transition-colors flex-1 line-clamp-2">
-          {L({ en: product.nameEn, fr: product.nameFr })}
-        </h3>
-        <Button asChild size="sm" className="w-full text-xs sm:text-sm h-8 sm:h-9">
-          <Link href={`/products/${product.slug}`}>
-            {L({ en: 'View Details', fr: 'Voir les Détails' })}
-            <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 ml-1 flex-shrink-0" />
-          </Link>
-        </Button>
-      </div>
-    </div>
   );
 }
