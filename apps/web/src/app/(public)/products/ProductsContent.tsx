@@ -421,7 +421,7 @@ function ProductCard({ product, L }: { product: any; L: (o: { en: string; fr: st
             {product.categoryName}
           </span>
         )}
-        <h3 className="font-bold text-xs sm:text-sm leading-tight mb-2.5 sm:mb-3 group-hover:text-primary transition-colors flex-1 line-clamp-2">
+        <h3 className="font-medium text-xs sm:text-sm leading-snug mb-2.5 sm:mb-3 group-hover:text-primary transition-colors flex-1 line-clamp-2 text-foreground/90">
           {L({ en: product.nameEn, fr: product.nameFr })}
         </h3>
         <Button asChild size="sm" className="w-full text-xs sm:text-sm h-8 sm:h-9">
