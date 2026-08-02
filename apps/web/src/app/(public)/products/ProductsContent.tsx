@@ -71,7 +71,7 @@ function ProductCard({
               {product.categoryName}
             </p>
           )}
-          <h3 className="font-bold text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-200">
+          <h3 className="font-display font-medium text-sm sm:text-[15px] leading-snug line-clamp-2 text-foreground/80 group-hover:text-primary transition-colors duration-200">
             {name}
           </h3>
         </div>
