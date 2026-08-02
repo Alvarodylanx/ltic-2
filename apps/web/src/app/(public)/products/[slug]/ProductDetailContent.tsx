@@ -27,7 +27,13 @@ const WhatsAppIcon = () => (
 function parseImages(raw: unknown): string[] {
   if (Array.isArray(raw)) return raw.filter(Boolean);
   if (typeof raw === 'string') {
-    try { const p = JSON.parse(raw); return Array.isArray(p) ? p.filter(Boolean) : []; } catch { return []; }
+    try {
+      const p = JSON.parse(raw);
+      return Array.isArray(p) ? p.filter(Boolean) : [];
+    } catch {
+      // Plain URL string (not JSON) — treat as single image
+      return raw ? [raw] : [];
+    }
   }
   return [];
 }
