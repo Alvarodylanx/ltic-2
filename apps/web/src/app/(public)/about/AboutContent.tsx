@@ -202,29 +202,29 @@ export default function AboutPage() {
             {/* Photos — staggered portrait duo */}
             <motion.div
               variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:order-1 relative pb-6 md:pb-8 lg:pb-6"
+              className="lg:order-1 relative pb-6"
             >
-              <div className="grid grid-cols-2 md:grid-cols-1 gap-3 sm:gap-4">
-                {/* Left / Top: team on deck */}
-                <div className="relative h-[300px] sm:h-[420px] md:h-auto md:aspect-[16/9] lg:aspect-auto lg:h-[480px] rounded-2xl overflow-hidden shadow-xl">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {/* Left: team on deck — full height */}
+                <div className="relative h-[300px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl">
                   <Image
                     src="/images/about-team-maritime.jpg"
                     alt="LTIC SARL team on offshore vessel"
                     fill
                     className="object-cover object-center"
-                    sizes="(max-width: 768px) 45vw, (max-width: 1024px) 92vw, 22vw"
+                    sizes="(max-width: 1024px) 45vw, 22vw"
                   />
                   {/* subtle gradient at bottom for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                 </div>
-                {/* Right / Bottom: TAMPEN vessel */}
-                <div className="relative h-[300px] sm:h-[420px] md:h-auto md:aspect-[16/9] lg:aspect-auto lg:h-[480px] rounded-2xl overflow-hidden shadow-xl mt-8 sm:mt-12 md:mt-0 lg:mt-12">
+                {/* Right: TAMPEN vessel — offset down for stagger effect */}
+                <div className="relative h-[300px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl mt-8 sm:mt-12">
                   <Image
                     src="/images/about-vessel-tampen.jpg"
                     alt="LTIC SARL offshore supply vessel TAMPEN"
                     fill
-                    className="object-cover object-top md:object-center lg:object-top"
-                    sizes="(max-width: 768px) 45vw, (max-width: 1024px) 92vw, 22vw"
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 45vw, 22vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
                 </div>
