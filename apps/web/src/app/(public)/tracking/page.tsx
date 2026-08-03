@@ -69,47 +69,47 @@ function TrackingContent() {
     <>
       {/* ── HERO with integrated search ─────────────────────────────────────── */}
       <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
+        <div className="absolute inset-0 backdrop-blur-sm bg-sidebar/40" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
         <motion.div
           animate={{ scale: [1, 1.12, 1], opacity: [0.2, 0.35, 0.2] }}
           transition={{ repeat: Infinity, duration: 8 }}
           className="absolute left-1/4 top-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
         <motion.div variants={stagger} initial="hidden" animate="show"
-          className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white/[0.07] backdrop-blur-md border border-white/[0.13] rounded-2xl px-8 py-10 shadow-2xl shadow-black/20">
-            <motion.p variants={fadeInUp}
-              className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-              {L({ en: 'Real-Time Tracking', fr: 'Suivi en Temps Réel' })}
-            </motion.p>
-            <motion.h1 variants={fadeInUp}
-              className="font-display font-bold text-section text-sidebar-foreground leading-none mb-4">
-              {L({ en: 'Track Your Shipment', fr: 'Suivre Votre Expédition' })}
-            </motion.h1>
-            <motion.p variants={fadeInUp}
-              className="text-sidebar-foreground/70 text-base sm:text-lg mb-8 max-w-md mx-auto leading-relaxed">
-              {L({ en: 'Enter your tracking number to get real-time updates on your cargo.', fr: 'Entrez votre numéro de suivi pour obtenir des mises à jour en temps réel.' })}
-            </motion.p>
+          className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.p variants={fadeInUp}
+            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            {L({ en: 'Real-Time Tracking', fr: 'Suivi en Temps Réel' })}
+          </motion.p>
+          <motion.h1 variants={fadeInUp}
+            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-4">
+            {L({ en: 'Track Your Shipment', fr: 'Suivre Votre Expédition' })}
+          </motion.h1>
+          <motion.p variants={fadeInUp}
+            className="text-sidebar-foreground/70 text-base sm:text-lg mb-10 max-w-md mx-auto leading-relaxed">
+            {L({ en: 'Enter your tracking number to get real-time updates on your cargo.', fr: 'Entrez votre numéro de suivi pour obtenir des mises à jour en temps réel.' })}
+          </motion.p>
 
-            <motion.form variants={fadeInUp} onSubmit={handleTrack}
-              className="flex gap-3 max-w-lg mx-auto">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  value={trackingNumber}
-                  onChange={(e) => setTrackingNumber(e.target.value)}
-                  placeholder={L({ en: 'Enter tracking number (e.g., LTIC2605001234)', fr: 'Entrez le numéro de suivi (ex: LTIC2605001234)' })}
-                  className="pl-10 h-12 text-foreground bg-background border-border" />
-              </div>
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                <Button type="submit" size="lg" disabled={isLoading || !trackingNumber.trim()}
-                  className="h-12 font-display font-semibold">
-                  {isLoading
-                    ? <Loader2 className="h-4 w-4 animate-spin" />
-                    : L({ en: 'Track', fr: 'Suivre' })}
-                </Button>
-              </motion.div>
-            </motion.form>
-          </div>
+          <motion.form variants={fadeInUp} onSubmit={handleTrack}
+            className="flex gap-3 max-w-lg mx-auto px-2 sm:px-0">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                value={trackingNumber}
+                onChange={(e) => setTrackingNumber(e.target.value)}
+                placeholder={L({ en: 'Enter tracking number (e.g., LTIC2605001234)', fr: 'Entrez le numéro de suivi (ex: LTIC2605001234)' })}
+                className="pl-10 h-12 text-foreground bg-background border-border" />
+            </div>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Button type="submit" size="lg" disabled={isLoading || !trackingNumber.trim()}
+                className="h-12 font-display font-semibold">
+                {isLoading
+                  ? <Loader2 className="h-4 w-4 animate-spin" />
+                  : L({ en: 'Track', fr: 'Suivre' })}
+              </Button>
+            </motion.div>
+          </motion.form>
         </motion.div>
       </section>
 

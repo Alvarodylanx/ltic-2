@@ -71,43 +71,42 @@ export default function ContactPage() {
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-end pb-0">
-        <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
+        <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-55" priority />
+        <div className="absolute inset-0 backdrop-blur-md bg-sidebar/48" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/70 via-sidebar/15 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-20 sm:pb-24">
-          <div className="max-w-2xl mx-auto bg-white/[0.07] backdrop-blur-md border border-white/[0.13] rounded-2xl px-8 py-8 shadow-2xl shadow-black/20">
-            <motion.div
-              initial={{ opacity: 0, x: -22 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center justify-center gap-2.5 mb-3">
-              <span className="w-6 h-px bg-primary flex-shrink-0" />
-              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
-                {L({ en: 'Get In Touch', fr: 'Prendre Contact' })}
+          <motion.div
+            initial={{ opacity: 0, x: -22 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center justify-center gap-2.5 mb-3">
+            <span className="w-6 h-px bg-primary flex-shrink-0" />
+            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+              {L({ en: 'Get In Touch', fr: 'Prendre Contact' })}
+            </span>
+          </motion.div>
+          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
+            {L({ en: 'Contact Our Team', fr: 'Contactez Notre Équipe' }).split(' ').map((word, wi) => (
+              <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: '112%' }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
+                  {word}
+                </motion.span>
               </span>
-            </motion.div>
-            <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
-              {L({ en: 'Contact Our Team', fr: 'Contactez Notre Équipe' }).split(' ').map((word, wi) => (
-                <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
-                  <motion.span
-                    className="inline-block"
-                    initial={{ y: '112%' }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
-                    {word}
-                  </motion.span>
-                </span>
-              ))}
-            </h1>
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-              className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-              {L({ en: 'Our experts are ready to discuss your logistics and supply needs.', fr: 'Nos experts sont prêts à discuter de vos besoins en logistique et fournitures.' })}
-            </motion.p>
-          </div>
+            ))}
+          </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
+            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
+            {L({ en: 'Our experts are ready to discuss your logistics and supply needs.', fr: 'Nos experts sont prêts à discuter de vos besoins en logistique et fournitures.' })}
+          </motion.p>
         </div>
 
       </section>

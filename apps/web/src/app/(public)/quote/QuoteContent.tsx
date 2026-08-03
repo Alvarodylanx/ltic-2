@@ -158,23 +158,23 @@ export default function QuotePage() {
       <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1100&auto=format&fit=crop&q=45"
-          alt="" fill className="object-cover opacity-15" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/60" />
+          alt="" fill className="object-cover opacity-40" priority />
+        <div className="absolute inset-0 backdrop-blur-md bg-sidebar/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/60 via-transparent to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-xl bg-white/[0.07] backdrop-blur-md border border-white/[0.13] rounded-2xl px-8 py-8 shadow-2xl shadow-black/20">
-            <motion.p variants={fadeInUp}
-              className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-              {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
-            </motion.p>
-            <motion.h1 variants={fadeInUp}
-              className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5">
-              {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-            </motion.h1>
-            <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg leading-relaxed">
-              {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
-            </motion.p>
-          </div>
+          <motion.p variants={fadeInUp}
+            className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+            {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
+          </motion.p>
+          <motion.h1 variants={fadeInUp}
+            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
+            {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
+            {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
+          </motion.p>
         </motion.div>
       </section>
 

@@ -464,6 +464,9 @@ export default function HomePage() {
           </motion.div>
         </AnimatePresence>
 
+        {/* ── Glass frost layer ── */}
+        <div className="absolute inset-0 backdrop-blur-[2px] bg-black/10 pointer-events-none" />
+
         {/* ── Per-slide tinted overlay ── */}
         <AnimatePresence initial={false} mode="sync">
           <motion.div
@@ -486,11 +489,11 @@ export default function HomePage() {
         {/* ── Main content ── */}
         <div className="relative z-10 h-full flex items-center pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-24">
           <div className="max-w-7xl mx-auto w-full pl-4 pr-2 sm:px-6 lg:px-8">
-            <div className="max-w-[640px] xl:max-w-[720px] bg-white/[0.06] backdrop-blur-md border border-white/[0.11] rounded-2xl p-6 sm:p-10 shadow-2xl shadow-black/30">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSlide}
                 exit={{ opacity: 0, y: -20, transition: { duration: 0.2, ease: 'easeIn' } }}
+                className="max-w-[640px] xl:max-w-[780px]"
               >
                 {/* Tag label */}
                 <motion.div
@@ -576,7 +579,6 @@ export default function HomePage() {
                 </motion.div>
               </motion.div>
             </AnimatePresence>
-            </div>
           </div>
         </div>
 
