@@ -285,8 +285,8 @@ export default function AboutPage() {
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {[
-              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  domain: 'bourbon-marine.com' },
-              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: 'inyanga-maritime.com' },
+              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  domain: 'bourbon-online.com' },
+              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '' },
               { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '' },
               { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          domain: 'bollore.com' },
               { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'maersk.com' },
@@ -309,7 +309,8 @@ export default function AboutPage() {
                       className="w-7 h-7 object-contain"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling?.removeAttribute('style');
+                        const fb = e.currentTarget.nextElementSibling as HTMLElement | null;
+                        if (fb) fb.classList.remove('hidden');
                       }}
                     />
                   ) : null}
