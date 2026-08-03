@@ -467,7 +467,7 @@ function ProductCard({ product, L }: { product: any; L: (o: { en: string; fr: st
             src={product.imageUrl}
             alt={L({ en: product.nameEn, fr: product.nameFr })}
             fill
-            className="object-cover"
+            className="object-contain"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/wAARCAABAAEDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AJQAB/9k="
