@@ -932,12 +932,15 @@ export default function HomePage() {
           src="/images/world-map.svg"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-[0.55]"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-80"
         />
 
-        {/* Radial vignette — darkens centre so text stays readable, edges reveal map */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,hsl(var(--sidebar)/0.75)_0%,hsl(var(--sidebar)/0.15)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-sidebar/50 via-transparent to-sidebar/50" />
+        {/* Blue colour wash — gives the map a vivid indigo tone */}
+        <div className="absolute inset-0 bg-primary/10 mix-blend-screen pointer-events-none" />
+
+        {/* Soft centre vignette — keeps headline legible without crushing the map */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_55%_at_50%_50%,hsl(var(--sidebar)/0.68)_0%,hsl(var(--sidebar)/0.08)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-sidebar/40 via-transparent to-sidebar/40" />
 
         {/* Decorative animated pins — purely visual, no business association */}
         {([
