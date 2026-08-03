@@ -285,16 +285,16 @@ export default function AboutPage() {
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {[
-              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  domain: 'bourbon-online.com', logo: '' },
-              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '',                    logo: '/images/inyanga-logo.png' },
-              { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '',                    logo: '' },
-              { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          domain: 'bollore.com',         logo: '' },
-              { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'maersk.com',          logo: '' },
-              { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'msc.com',             logo: '' },
-              { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           domain: '',                    logo: '' },
-              { name: 'NEO INDUSTRY S.A',         sector: { en: 'Industry',          fr: 'Industrie' },           domain: '',                    logo: '' },
-              { name: 'MOVIS S.A',                sector: { en: 'Logistics',         fr: 'Logistique' },          domain: '',                    logo: '' },
-              { name: 'SOLENA SARL',              sector: { en: 'Industry',          fr: 'Industrie' },           domain: '',                    logo: '' },
+              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  domain: '',            logo: '/images/bourbon-logo.png' },
+              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '',            logo: '/images/inyanga-logo.png' },
+              { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            domain: 'alphamarinegroup.net', logo: '' },
+              { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          domain: 'bollore.com', logo: '' },
+              { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'maersk.com',  logo: '' },
+              { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'msc.com',     logo: '' },
+              { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           domain: '',            logo: '/images/pasta-logo.png' },
+              { name: 'NEO INDUSTRY S.A',         sector: { en: 'Industry',          fr: 'Industrie' },           domain: '',            logo: '/images/neo-industry-logo.png' },
+              { name: 'MOVIS S.A',                sector: { en: 'Logistics',         fr: 'Logistique' },          domain: '',            logo: '/images/movis-logo.svg' },
+              { name: 'SOLENA SARL',              sector: { en: 'Industry',          fr: 'Industrie' },           domain: 'solena-cm.net', logo: '' },
             ].map((client) => (
               <motion.div key={client.name} variants={scaleIn}
                 className="flex flex-col items-center gap-3 bg-card border border-border rounded-2xl p-4 sm:p-5
@@ -302,7 +302,7 @@ export default function AboutPage() {
                 <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                   {client.logo ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={client.logo} alt={client.name} width={36} height={36} className="w-9 h-9 object-contain" />
+                    <img src={client.logo} alt={client.name} width={40} height={40} className="w-10 h-10 object-contain p-0.5" />
                   ) : client.domain ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
