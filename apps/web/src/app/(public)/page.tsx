@@ -302,7 +302,7 @@ function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardP
         </span>
 
         {/* Name */}
-        <span className="font-display font-semibold text-base text-foreground/75 group-hover:text-primary transition-colors duration-200 flex-1 leading-tight">
+        <span className="font-sans font-medium text-sm text-foreground/65 group-hover:text-primary transition-colors duration-200 flex-1 leading-tight">
           {L({ en, fr })}
         </span>
 
