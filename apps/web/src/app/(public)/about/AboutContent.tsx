@@ -202,29 +202,28 @@ export default function AboutPage() {
             {/* Photos — staggered portrait duo */}
             <motion.div
               variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:order-1 relative pb-14 sm:pb-16 lg:pb-6"
+              className="lg:order-1 relative pb-10 sm:pb-12 lg:pb-8"
             >
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {/* Left: team on deck — full height */}
-                <div className="relative h-[260px] sm:h-[360px] md:h-[400px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl">
+              <div className="flex flex-col gap-3 sm:gap-4">
+                {/* Top: team on deck — landscape */}
+                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-xl">
                   <Image
                     src="/images/about-team-maritime.jpg"
                     alt="LTIC SARL team on offshore vessel"
                     fill
                     className="object-cover object-center"
-                    sizes="(max-width: 1024px) 45vw, 22vw"
+                    sizes="(max-width: 1024px) 90vw, 44vw"
                   />
-                  {/* subtle gradient at bottom for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                 </div>
-                {/* Right: TAMPEN vessel — offset down for stagger effect */}
-                <div className="relative h-[260px] sm:h-[360px] md:h-[400px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl mt-6 sm:mt-10 lg:mt-12">
+                {/* Bottom: TAMPEN vessel — landscape */}
+                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-xl">
                   <Image
                     src="/images/about-vessel-tampen.jpg"
                     alt="LTIC SARL offshore supply vessel TAMPEN"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 45vw, 22vw"
+                    sizes="(max-width: 1024px) 90vw, 44vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
                 </div>
