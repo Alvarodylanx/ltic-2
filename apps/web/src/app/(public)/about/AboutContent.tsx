@@ -322,7 +322,7 @@ export default function AboutPage() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-medium text-xs sm:text-sm leading-snug text-foreground/75 group-hover:text-primary transition-colors">
+                  <p className="font-bold text-xs sm:text-sm leading-snug text-foreground/75 group-hover:text-primary transition-colors">
                     {client.name}
                   </p>
                   <span className="inline-block bg-primary/10 text-primary text-[10px] font-semibold rounded-full px-2 py-0.5 mt-1 w-fit mx-auto">

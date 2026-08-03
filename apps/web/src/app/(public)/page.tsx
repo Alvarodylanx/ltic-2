@@ -814,7 +814,7 @@ export default function HomePage() {
                                 {product.categoryName}
                               </span>
                             )}
-                            <h3 className="font-medium text-xs leading-snug text-foreground/75
+                            <h3 className="font-bold text-xs leading-snug text-foreground/75
                                            group-hover:text-primary transition-colors duration-150">
                               {L({ en: product.nameEn, fr: product.nameFr })}
                             </h3>
