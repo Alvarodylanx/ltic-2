@@ -932,12 +932,12 @@ export default function HomePage() {
           src="/images/world-map.svg"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-[0.18]"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-[0.55]"
         />
 
         {/* Radial vignette — darkens centre so text stays readable, edges reveal map */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_65%_at_50%_50%,hsl(var(--sidebar)/0.88)_0%,hsl(var(--sidebar)/0.35)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-sidebar/75 via-transparent to-sidebar/75" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,hsl(var(--sidebar)/0.75)_0%,hsl(var(--sidebar)/0.15)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-sidebar/50 via-transparent to-sidebar/50" />
 
         {/* Decorative animated pins — purely visual, no business association */}
         {([
