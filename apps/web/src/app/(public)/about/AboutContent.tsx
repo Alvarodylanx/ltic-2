@@ -264,6 +264,73 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── OUR CLIENTS ─────────────────────────────────────────────────────── */}
+      <section className="bg-background py-12 sm:py-20 border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="text-center mb-10">
+            <p className="text-primary font-bold text-[11px] uppercase tracking-[0.32em] mb-2 flex items-center justify-center gap-2.5">
+              <span className="w-5 h-px bg-primary" />
+              {L({ en: 'Who We Serve', fr: 'Qui Nous Servons' })}
+              <span className="w-5 h-px bg-primary" />
+            </p>
+            <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-tight">
+              {L({ en: 'Trusted by Industry Leaders', fr: 'La Confiance des Leaders Industriels' })}
+            </h2>
+            <p className="text-muted-foreground text-sm mt-2 max-w-lg mx-auto leading-relaxed">
+              {L({ en: 'From global shipping giants to regional industrial companies — our clients span the maritime, logistics, and industrial sectors.', fr: 'Des géants mondiaux du transport maritime aux entreprises industrielles régionales — nos clients couvrent les secteurs maritime, logistique et industriel.' })}
+            </p>
+          </motion.div>
+
+          <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            {[
+              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  domain: 'bourbon-marine.com' },
+              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: 'inyanga-maritime.com' },
+              { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '' },
+              { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          domain: 'bollore.com' },
+              { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'maersk.com' },
+              { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'msc.com' },
+              { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           domain: '' },
+              { name: 'NEO INDUSTRY S.A',         sector: { en: 'Industry',          fr: 'Industrie' },           domain: '' },
+              { name: 'MOVIS S.A',                sector: { en: 'Logistics',         fr: 'Logistique' },          domain: '' },
+              { name: 'SOLENA SARL',              sector: { en: 'Industry',          fr: 'Industrie' },           domain: '' },
+            ].map((client) => (
+              <motion.div key={client.name} variants={scaleIn}
+                className="flex flex-col items-center gap-3 bg-card border border-border rounded-2xl p-4 sm:p-5
+                           hover:border-primary/40 hover:shadow-md transition-all duration-200 group text-center">
+                <div className="w-11 h-11 rounded-xl bg-primary/8 border border-primary/15 flex items-center justify-center overflow-hidden flex-shrink-0">
+                  {client.domain ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={`https://www.google.com/s2/favicons?domain=${client.domain}&sz=128`}
+                      alt={client.name}
+                      width={28} height={28}
+                      className="w-7 h-7 object-contain"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.removeAttribute('style');
+                      }}
+                    />
+                  ) : null}
+                  <span className={`text-[11px] font-black text-primary leading-none ${client.domain ? 'hidden' : ''}`}>
+                    {client.name.slice(0, 2).toUpperCase()}
+                  </span>
+                </div>
+                <div>
+                  <p className="font-semibold text-xs sm:text-sm leading-snug text-foreground group-hover:text-primary transition-colors">
+                    {client.name}
+                  </p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5 uppercase tracking-wide font-medium">
+                    {L(client.sector)}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
       <section className="bg-sidebar py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
