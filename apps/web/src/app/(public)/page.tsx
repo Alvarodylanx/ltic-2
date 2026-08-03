@@ -399,16 +399,18 @@ export default function HomePage() {
   });
 
   const staticBrands: Partner[] = [
-    { id: 101, name: 'Bourbon Offshore Marine', sectorEn: 'Marine',    sectorFr: 'Maritime',           logoUrl: 'https://www.google.com/s2/favicons?domain=bourbon-marine.com&sz=128' },
-    { id: 102, name: 'Inyanga Maritime',         sectorEn: 'Maritime',  sectorFr: 'Maritime',           logoUrl: 'https://www.google.com/s2/favicons?domain=inyanga-maritime.com&sz=128' },
-    { id: 103, name: 'Alpha Marine',             sectorEn: 'Maritime',  sectorFr: 'Maritime',           logoUrl: '' },
-    { id: 104, name: 'Bolloré Africa',           sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=bollore.com&sz=128' },
-    { id: 105, name: 'Maersk',                   sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=maersk.com&sz=128' },
-    { id: 106, name: 'MSC',                      sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=msc.com&sz=128' },
-    { id: 107, name: 'PASTA S.A',                sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: '' },
-    { id: 108, name: 'NEO INDUSTRY S.A',         sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: '' },
-    { id: 109, name: 'MOVIS S.A',                sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: '' },
-    { id: 110, name: 'SOLENA SARL',              sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: '' },
+    { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=totalenergies.com&sz=128' },
+    { id: 102, name: 'Shell',             sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=shell.com&sz=128' },
+    { id: 103, name: 'CMA CGM',           sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=cma-cgm.com&sz=128' },
+    { id: 104, name: 'DHL',               sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=dhl.com&sz=128' },
+    { id: 105, name: 'Bolloré Logistics', sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=bollore.com&sz=128' },
+    { id: 106, name: 'Maersk',            sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=maersk.com&sz=128' },
+    { id: 107, name: 'MSC',               sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=msc.com&sz=128' },
+    { id: 108, name: 'Camair-Co',         sectorEn: 'Aviation',  sectorFr: 'Aviation',           logoUrl: '' },
+    { id: 109, name: 'Port de Douala',    sectorEn: 'Port',      sectorFr: 'Port',               logoUrl: '' },
+    { id: 110, name: 'CFAO',              sectorEn: 'Trade',     sectorFr: 'Commerce',           logoUrl: 'https://www.google.com/s2/favicons?domain=cfao.com&sz=128' },
+    { id: 111, name: 'Ciments Cameroun',  sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: '' },
+    { id: 112, name: 'Orange Cameroun',   sectorEn: 'Telecom',   sectorFr: 'Télécoms',           logoUrl: 'https://www.google.com/s2/favicons?domain=orange.cm&sz=128' },
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
@@ -830,7 +832,7 @@ export default function HomePage() {
       <section className="bg-muted border-y border-border py-3 sm:py-20 overflow-hidden relative">
         <p className="text-center text-muted-foreground text-[10px] uppercase tracking-[0.3em]
                       font-bold mb-8">
-          {L({ en: 'Trusted by our clients', fr: 'Nos clients nous font confiance' })}
+          {L({ en: 'Trusted by leading brands', fr: 'Reconnu par les grandes marques' })}
         </p>
         <div className="marquee-wrap space-y-3 select-none">
           <div className="flex w-max marquee-left">
