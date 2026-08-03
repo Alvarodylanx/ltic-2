@@ -1,7 +1,21 @@
 {
-  "version": "1.36.0",
-  "releaseDate": "2026-07-17",
+  "version": "1.37.0",
+  "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.37.0",
+      "date": "2026-08-03",
+      "type": "minor",
+      "summary": "Interactive shipment location map — admin pins location on map, customers see it live on tracking page",
+      "changes": [
+        "Admin orders page: new Set Location button (map pin icon) on each order row — opens an interactive map dialog where admin clicks anywhere to drop a pin",
+        "Admin location dialog: optional location label input (e.g. 'Port of Hamburg'), live coordinates display, Save and Clear buttons",
+        "Customer tracking page: when a location is set, a Leaflet/OpenStreetMap map card appears between order details and the timeline showing the exact pin",
+        "DB schema: added current_lat, current_lng, current_location_label columns to orders table",
+        "Fully bilingual EN/FR — all new labels translated",
+        "Map uses OpenStreetMap tiles (free, no API key) with a custom branded blue pin matching the site's primary color"
+      ]
+    },
     {
       "version": "1.36.0",
       "date": "2026-07-17",

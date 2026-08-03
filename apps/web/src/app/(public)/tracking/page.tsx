@@ -11,6 +11,12 @@ import { format } from 'date-fns';
 import { useSearchParams } from 'next/navigation';
 import { fadeInUp, scaleIn, stagger } from '@/components/motion/variants';
 import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+
+const TrackingMap = dynamic(
+  () => import('@/components/map/TrackingMap').then((m) => m.TrackingMap),
+  { ssr: false, loading: () => <div className="h-[300px] w-full bg-muted animate-pulse" /> }
+);
 
 const statusColors: Record<string, string> = {
   processing:        'bg-blue-100 text-blue-700 border-blue-200',
@@ -180,6 +186,27 @@ function TrackingContent() {
                       </div>
                     ))}
                   </div>
+
+                  {order.currentLat && order.currentLng && (
+                    <div className="mb-5 border border-border rounded-sm overflow-hidden">
+                      <div className="px-4 py-2.5 border-b border-border bg-muted/30 flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                          <span className="font-display font-semibold text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                            {L({ en: 'Current Location', fr: 'Position Actuelle' })}
+                          </span>
+                        </div>
+                        {order.currentLocationLabel && (
+                          <span className="text-sm font-medium text-foreground">{order.currentLocationLabel}</span>
+                        )}
+                      </div>
+                      <TrackingMap
+                        lat={Number(order.currentLat)}
+                        lng={Number(order.currentLng)}
+                        label={order.currentLocationLabel}
+                      />
+                    </div>
+                  )}
 
                   {order.timeline && order.timeline.length > 0 && (
                     <div className="border-t border-border pt-5">

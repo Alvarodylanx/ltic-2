@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, MapPin, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,6 +14,12 @@ import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { api } from '@/lib/api';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { format } from 'date-fns';
+import dynamic from 'next/dynamic';
+
+const LocationPickerMap = dynamic(
+  () => import('@/components/map/LocationPickerMap').then((m) => m.LocationPickerMap),
+  { ssr: false, loading: () => <div className="h-[380px] w-full bg-muted animate-pulse rounded-sm" /> }
+);
 
 const STATUSES = [
   { value: 'processing',      en: 'Processing',       fr: 'En traitement' },
@@ -37,6 +43,10 @@ export default function AdminOrdersPage() {
   const [showAdd, setShowAdd] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+
+  const [locationOrder, setLocationOrder] = useState<any | null>(null);
+  const [locationCoords, setLocationCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationLabel, setLocationLabel] = useState('');
 
   const { data: orders, isLoading } = useQuery<any[]>({
     queryKey: ['admin-orders'],
@@ -74,6 +84,46 @@ export default function AdminOrdersPage() {
     },
     onError: () => toast.error(L({ en: 'Failed to delete', fr: 'Échec de la suppression' })),
   });
+
+  const locationMutation = useMutation({
+    mutationFn: ({ id, body }: { id: number; body: any }) => api.patch(`/api/orders/${id}`, body),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-orders'] });
+      toast.success(L({ en: 'Location saved', fr: 'Position enregistrée' }));
+      setLocationOrder(null);
+    },
+    onError: () => toast.error(L({ en: 'Failed to save location', fr: "Échec de l'enregistrement" })),
+  });
+
+  function openLocationPicker(order: any) {
+    setLocationOrder(order);
+    setLocationCoords(
+      order.currentLat && order.currentLng
+        ? { lat: Number(order.currentLat), lng: Number(order.currentLng) }
+        : null
+    );
+    setLocationLabel(order.currentLocationLabel || '');
+  }
+
+  function saveLocation() {
+    if (!locationOrder || !locationCoords) return;
+    locationMutation.mutate({
+      id: locationOrder.id,
+      body: {
+        currentLat: String(locationCoords.lat),
+        currentLng: String(locationCoords.lng),
+        currentLocationLabel: locationLabel || null,
+      },
+    });
+  }
+
+  function clearLocation() {
+    if (!locationOrder) return;
+    locationMutation.mutate({
+      id: locationOrder.id,
+      body: { currentLat: null, currentLng: null, currentLocationLabel: null },
+    });
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -151,10 +201,20 @@ export default function AdminOrdersPage() {
                   <td className="px-4 py-3 text-sm text-muted-foreground">{order.estimatedDelivery || '—'}</td>
                   <td className="px-4 py-3 text-xs text-muted-foreground">{format(new Date(order.createdAt), 'dd MMM yyyy')}</td>
                   <td className="px-4 py-3">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive"
-                      onClick={() => setDeleteId(order.id)}>
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        variant="ghost" size="icon"
+                        className={`h-8 w-8 ${order.currentLat ? 'text-primary' : 'text-muted-foreground'} hover:text-primary`}
+                        onClick={() => openLocationPicker(order)}
+                        title={L({ en: 'Set location', fr: 'Définir la position' })}
+                      >
+                        <MapPin className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive"
+                        onClick={() => setDeleteId(order.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -256,6 +316,77 @@ export default function AdminOrdersPage() {
         onConfirm={() => deleteId !== null && deleteMutation.mutate(deleteId)}
         loading={deleteMutation.isPending}
       />
+
+      {/* Set Location Dialog */}
+      <Dialog open={!!locationOrder} onOpenChange={(open) => { if (!open) setLocationOrder(null); }}>
+        <DialogContent className="max-w-2xl p-0 overflow-hidden">
+          <DialogHeader className="px-6 pt-5 pb-4 border-b border-border">
+            <DialogTitle className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              {L({ en: 'Set Shipment Location', fr: "Définir la position de l'expédition" })}
+            </DialogTitle>
+            {locationOrder && (
+              <p className="text-xs text-muted-foreground font-mono mt-0.5">{locationOrder.trackingNumber}</p>
+            )}
+          </DialogHeader>
+
+          <div className="px-6 pb-2 pt-4">
+            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
+              {L({ en: 'Location Label (optional)', fr: 'Nom du lieu (optionnel)' })}
+            </Label>
+            <Input
+              className="mt-1.5 mb-4"
+              placeholder={L({ en: 'e.g. Port of Hamburg, Germany', fr: 'ex. Port de Hambourg, Allemagne' })}
+              value={locationLabel}
+              onChange={(e) => setLocationLabel(e.target.value)}
+            />
+          </div>
+
+          <div className="px-6">
+            {locationCoords && (
+              <p className="text-xs text-muted-foreground mb-2 font-mono">
+                {L({ en: 'Pin', fr: 'Épingle' })}: {locationCoords.lat.toFixed(5)}, {locationCoords.lng.toFixed(5)}
+              </p>
+            )}
+            {!locationCoords && (
+              <p className="text-xs text-muted-foreground mb-2">
+                {L({ en: 'Click on the map to drop a pin at the shipment\'s current location.', fr: 'Cliquez sur la carte pour placer une épingle à la position actuelle de l\'expédition.' })}
+              </p>
+            )}
+            <LocationPickerMap
+              initial={locationCoords}
+              onChange={setLocationCoords}
+            />
+          </div>
+
+          <DialogFooter className="px-6 py-4 border-t border-border mt-4 flex-row justify-between">
+            <Button
+              type="button" variant="ghost" size="sm"
+              className="text-destructive hover:text-destructive text-xs"
+              onClick={clearLocation}
+              disabled={!locationOrder?.currentLat || locationMutation.isPending}
+            >
+              <X className="h-3.5 w-3.5 mr-1.5" />
+              {L({ en: 'Clear Location', fr: 'Effacer la position' })}
+            </Button>
+            <div className="flex gap-2">
+              <Button type="button" variant="outline" size="sm" onClick={() => setLocationOrder(null)}>
+                {L({ en: 'Cancel', fr: 'Annuler' })}
+              </Button>
+              <Button
+                type="button" size="sm"
+                onClick={saveLocation}
+                disabled={!locationCoords || locationMutation.isPending}
+              >
+                <MapPin className="h-3.5 w-3.5 mr-1.5" />
+                {locationMutation.isPending
+                  ? L({ en: 'Saving…', fr: 'Enregistrement…' })
+                  : L({ en: 'Save Location', fr: 'Enregistrer la position' })}
+              </Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

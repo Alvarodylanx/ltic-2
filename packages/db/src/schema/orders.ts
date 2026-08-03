@@ -19,6 +19,9 @@ export const orders = pgTable("orders", {
   status: text("status").notNull().default("processing"),
   estimatedDelivery: text("estimated_delivery"),
   timeline: jsonb("timeline").$type<OrderTimelineItem[]>().default([]),
+  currentLat: text("current_lat"),
+  currentLng: text("current_lng"),
+  currentLocationLabel: text("current_location_label"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
