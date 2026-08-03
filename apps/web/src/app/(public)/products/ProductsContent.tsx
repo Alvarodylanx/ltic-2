@@ -341,7 +341,7 @@ export default function ProductsPage() {
 
           {/* Skeletons */}
           {(!mounted || isLoading) && (
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
               {Array(8).fill(0).map((_, i) => (
                 <div key={i} className="border border-border rounded-2xl overflow-hidden">
                   <Skeleton className="aspect-[4/3] w-full" />
@@ -425,7 +425,7 @@ export default function ProductsPage() {
                         <motion.div
                           variants={cardGrid} initial="hidden" whileInView="show"
                           viewport={{ once: true, amount: 0.05 }}
-                          className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+                          className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
                           {catProducts.map(product => (
                             <motion.div key={product.id} variants={cardItem}
                               whileHover={{ y: -5, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
@@ -440,7 +440,7 @@ export default function ProductsPage() {
                   /* Flat grid */
                   <motion.div
                     variants={cardGrid} initial="hidden" animate="show"
-                    className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+                    className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
                     {products.map(product => (
                       <motion.div key={product.id} variants={cardItem}
                         whileHover={{ y: -5, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
