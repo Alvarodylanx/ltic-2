@@ -957,17 +957,31 @@ export default function HomePage() {
             className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
             style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
           >
+            {/* outer ring — wide slow spread */}
             <motion.div
-              className="absolute -inset-2 rounded-full border border-primary/50"
-              animate={{ scale: [1, 3], opacity: [0.6, 0] }}
-              transition={{ repeat: Infinity, duration: 2.6, ease: 'easeOut', delay: pin.delay }}
+              className="absolute -inset-2 rounded-full border-2 border-primary/70"
+              animate={{ scale: [1, 5.5], opacity: [1, 0] }}
+              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay }}
             />
+            {/* mid ring */}
             <motion.div
-              className="absolute -inset-2 rounded-full border border-primary/25"
-              animate={{ scale: [1, 1.9], opacity: [0.4, 0] }}
-              transition={{ repeat: Infinity, duration: 2.6, ease: 'easeOut', delay: pin.delay + 0.4 }}
+              className="absolute -inset-2 rounded-full border-2 border-primary/50"
+              animate={{ scale: [1, 3.5], opacity: [0.85, 0] }}
+              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay + 0.3 }}
             />
-            <div className="w-1.5 h-1.5 rounded-full bg-primary/80 shadow-[0_0_10px_3px_hsl(var(--primary)/0.4)]" />
+            {/* inner ring — tight fast burst */}
+            <motion.div
+              className="absolute -inset-2 rounded-full border border-primary/40"
+              animate={{ scale: [1, 2.2], opacity: [0.7, 0] }}
+              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay + 0.6 }}
+            />
+            {/* filled inner flash */}
+            <motion.div
+              className="absolute -inset-1 rounded-full bg-primary/30"
+              animate={{ scale: [1, 2], opacity: [0.6, 0] }}
+              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay }}
+            />
+            <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_18px_7px_hsl(var(--primary)/0.7)]" />
           </div>
         ))}
 
