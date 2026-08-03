@@ -723,11 +723,11 @@ export default function HomePage() {
             >
               <motion.p
                 variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: catalogEase } } }}
-                className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1"
+                className="text-primary/70 font-semibold text-[11px] uppercase tracking-[0.28em] mb-1"
               >
                 {L({ en: 'Our Catalog', fr: 'Notre Catalogue' })}
               </motion.p>
-              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight overflow-hidden">
+              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground/75 leading-tight overflow-hidden">
                 {L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' }).split(' ').map((word, wi) => (
                   <span key={wi} className="inline-block overflow-hidden mr-[0.2em] last:mr-0">
                     <motion.span
