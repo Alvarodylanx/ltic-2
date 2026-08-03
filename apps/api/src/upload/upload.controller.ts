@@ -8,6 +8,7 @@ import { diskStorage } from "multer";
 import * as path from "path";
 import * as fs from "fs";
 import { fromFile } from "file-type";
+import sharp from "sharp";
 import { AuthGuard } from "../auth/auth.guard";
 
 const MEDIA_DIR = path.join(__dirname, "../../../../apps/web/public/uploads/media");
@@ -58,6 +59,18 @@ export class UploadController {
       throw new BadRequestException(
         `Invalid file content. Detected type: ${detected?.mime ?? 'unknown'}. Only images and videos are allowed.`
       );
+    }
+
+    // Compress images to WebP — skip videos
+    if (detected.mime.startsWith('image/')) {
+      const webpName = path.basename(file.path, path.extname(file.path)) + '.webp';
+      const webpPath = path.join(MEDIA_DIR, webpName);
+      await sharp(file.path)
+        .resize({ width: 1400, withoutEnlargement: true })
+        .webp({ quality: 82 })
+        .toFile(webpPath);
+      fs.unlinkSync(file.path);
+      return { url: `/uploads/media/${webpName}` };
     }
 
     return { url: `/uploads/media/${file.filename}` };
