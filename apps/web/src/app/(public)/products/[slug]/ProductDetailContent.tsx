@@ -331,7 +331,7 @@ export default function ProductDetailPage({ initialProduct }: { initialProduct?:
             </div>
 
             {/* Product name */}
-            <h1 className="font-display font-bold text-2xl sm:text-3xl lg:text-[2.2rem] tracking-tight leading-tight
+            <h1 className="font-sans font-medium text-2xl sm:text-3xl lg:text-[2.2rem] tracking-tight leading-tight text-foreground/75
                            border-l-[3px] border-primary pl-4 mb-5">
               {L({ en: product.nameEn, fr: product.nameFr })}
             </h1>
@@ -471,7 +471,7 @@ export default function ProductDetailPage({ initialProduct }: { initialProduct?:
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     </div>
                     <div className="p-3">
-                      <p className="font-semibold text-xs leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                      <p className="font-sans font-medium text-xs leading-snug text-foreground/65 group-hover:text-primary transition-colors line-clamp-2">
                         {L({ en: p.nameEn, fr: p.nameFr })}
                       </p>
                     </div>
