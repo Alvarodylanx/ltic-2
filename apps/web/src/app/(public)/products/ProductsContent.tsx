@@ -344,7 +344,7 @@ export default function ProductsPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
               {Array(8).fill(0).map((_, i) => (
                 <div key={i} className="border border-border rounded-2xl overflow-hidden">
-                  <Skeleton className="aspect-[4/3] w-full" />
+                  <Skeleton className="aspect-square w-full" />
                   <div className="p-4 space-y-2">
                     <Skeleton className="h-3 w-16" />
                     <Skeleton className="h-4 w-full" />
@@ -461,13 +461,13 @@ export default function ProductsPage() {
 function ProductCard({ product, L }: { product: any; L: (o: { en: string; fr: string }) => string }) {
   return (
     <div className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-      <div className="aspect-[4/3] relative bg-white overflow-hidden">
+      <div className="aspect-square relative bg-muted/30 overflow-hidden">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
             alt={L({ en: product.nameEn, fr: product.nameFr })}
             fill
-            className="object-contain"
+            className="object-contain p-3 sm:p-4"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/wAARCAABAAEDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AJQAB/9k="
