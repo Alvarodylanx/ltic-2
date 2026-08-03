@@ -926,91 +926,45 @@ export default function HomePage() {
       {/* ══ 7. CTA — world map ══════════════════════════════════════════════════ */}
       <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
 
-        {/* ── Inline SVG world map ─────────────────────────────────────────────── */}
-        <svg
-          viewBox="0 0 1000 500"
-          className="absolute inset-0 w-full h-full pointer-events-none select-none"
+        {/* ── World map image (Natural Earth 110m land, generated from TopoJSON) ── */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/world-map.svg"
+          alt=""
           aria-hidden="true"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <g fill="white" fillOpacity="0.07" stroke="white" strokeOpacity="0.04" strokeWidth="0.8">
-            {/* Africa */}
-            <path d="M486,148 L510,135 L535,140 L555,155 L572,170 L595,178 L615,195 L640,210 L648,228 L645,252 L630,268 L610,278 L595,300 L575,335 L555,370 L535,388 L515,392 L500,385 L480,368 L465,342 L458,310 L455,278 L460,252 L465,235 L470,220 L462,210 L468,198 Z"/>
-            {/* Madagascar */}
-            <path d="M578,298 L585,282 L592,290 L595,312 L588,332 L580,325 Z"/>
-            {/* Europe mainland */}
-            <path d="M468,148 L485,130 L510,120 L545,115 L575,110 L605,112 L630,122 L645,138 L640,155 L620,165 L595,170 L572,168 L555,155 L535,148 L510,152 L495,160 L480,162 L468,155 Z"/>
-            {/* Iberian Peninsula */}
-            <path d="M448,152 L468,148 L468,168 L455,178 L442,172 Z"/>
-            {/* UK & Ireland */}
-            <path d="M455,115 L468,105 L482,104 L490,118 L482,132 L465,135 L455,128 Z M 440,120 L 448,112 L 455,118 L 450,128 L 440,128 Z"/>
-            {/* Scandinavia */}
-            <path d="M490,90 L510,72 L530,65 L558,68 L572,85 L565,108 L548,118 L530,122 L510,118 L496,108 Z"/>
-            {/* Asia */}
-            <path d="M575,110 L650,98 L720,92 L800,92 L862,98 L912,112 L940,132 L938,158 L920,175 L902,190 L880,202 L852,215 L822,228 L800,240 L780,245 L760,250 L742,260 L724,268 L705,278 L688,280 L668,272 L650,265 L645,250 L648,228 L640,210 L630,195 L630,178 L645,155 L640,138 L630,122 L645,110 Z"/>
-            {/* Indian subcontinent */}
-            <path d="M650,215 L688,215 L725,225 L740,248 L728,268 L710,285 L690,298 L672,290 L658,278 L648,262 L648,240 L650,222 Z"/>
-            {/* SE Asia / Indochina */}
-            <path d="M760,250 L792,238 L820,242 L838,258 L832,278 L812,285 L795,278 L778,262 Z"/>
-            {/* Japan */}
-            <path d="M876,132 L890,120 L904,126 L910,142 L902,158 L890,162 L878,154 Z"/>
-            {/* Philippines hint */}
-            <path d="M830,218 L838,208 L848,215 L845,228 L835,232 Z"/>
-            {/* North America */}
-            <path d="M38,55 L95,42 L148,38 L192,35 L242,38 L290,45 L312,52 L344,48 L368,54 L344,68 L312,72 L302,88 L320,100 L328,118 L320,140 L306,162 L290,185 L270,202 L248,215 L228,218 L208,210 L185,198 L165,182 L148,160 L138,138 L132,115 L135,92 L148,72 L168,60 L148,55 L120,50 L90,52 L62,52 Z"/>
-            {/* Alaska */}
-            <path d="M0,72 L22,62 L38,68 L42,82 L30,92 L10,90 Z"/>
-            {/* Greenland */}
-            <path d="M295,28 L352,18 L410,18 L452,28 L464,46 L450,64 L416,74 L375,76 L338,68 L308,55 Z"/>
-            {/* Mexico */}
-            <path d="M208,215 L248,218 L255,235 L248,252 L235,258 L218,255 L208,242 Z"/>
-            {/* Central America hint */}
-            <path d="M235,258 L248,252 L260,260 L255,272 L242,275 L235,268 Z"/>
-            {/* Caribbean */}
-            <path d="M262,218 L275,215 L282,222 L278,230 L265,230 Z"/>
-            {/* South America */}
-            <path d="M235,272 L262,258 L298,240 L328,248 L358,258 L392,262 L420,272 L430,292 L420,318 L400,345 L375,370 L350,394 L326,414 L305,420 L282,406 L262,382 L248,356 L238,324 L232,295 Z"/>
-            {/* Australia */}
-            <path d="M778,292 L835,278 L890,282 L924,298 L936,318 L932,348 L918,372 L892,386 L858,390 L828,382 L802,365 L782,342 L772,318 Z"/>
-            {/* New Zealand */}
-            <path d="M944,362 L954,348 L962,358 L956,374 L946,376 Z M 950,380 L 958,372 L 966,380 L 960,394 L 950,395 Z"/>
-          </g>
-        </svg>
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-[0.18]"
+        />
 
         {/* Radial vignette — darkens centre so text stays readable, edges reveal map */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_65%_at_50%_50%,hsl(var(--sidebar)/0.88)_0%,hsl(var(--sidebar)/0.35)_100%)]" />
         <div className="absolute inset-0 bg-gradient-to-b from-sidebar/75 via-transparent to-sidebar/75" />
 
-        {/* Animated location pins */}
+        {/* Decorative animated pins — purely visual, no business association */}
         {([
-          { label: 'Douala',   x: 52.7, y: 47.8, primary: true,  delay: 0   },
-          { label: 'Dubai',    x: 65.4, y: 36.0, primary: false, delay: 0.6 },
-          { label: 'Paris',    x: 50.6, y: 22.8, primary: false, delay: 1.1 },
-          { label: 'Montreal', x: 29.6, y: 24.8, primary: false, delay: 0.3 },
-          { label: 'Lagos',    x: 50.9, y: 46.4, primary: false, delay: 0.9 },
-          { label: 'Shanghai', x: 83.8, y: 32.7, primary: false, delay: 1.4 },
-        ] as const).map(pin => (
+          { x: 28.0, y: 33.0, delay: 0.0 },
+          { x: 49.5, y: 21.5, delay: 0.5 },
+          { x: 52.5, y: 47.5, delay: 1.0 },
+          { x: 65.5, y: 35.5, delay: 0.3 },
+          { x: 80.0, y: 55.0, delay: 0.8 },
+          { x: 35.0, y: 65.0, delay: 1.3 },
+          { x: 83.5, y: 32.5, delay: 0.6 },
+        ] as const).map((pin, i) => (
           <div
-            key={pin.label}
+            key={i}
             className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
             style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
           >
             <motion.div
-              className={`absolute -inset-2 rounded-full border ${pin.primary ? 'border-primary/70' : 'border-white/25'}`}
-              animate={{ scale: [1, 3.2], opacity: [0.7, 0] }}
-              transition={{ repeat: Infinity, duration: pin.primary ? 2.2 : 2.8, ease: 'easeOut', delay: pin.delay }}
+              className="absolute -inset-2 rounded-full border border-primary/50"
+              animate={{ scale: [1, 3], opacity: [0.6, 0] }}
+              transition={{ repeat: Infinity, duration: 2.6, ease: 'easeOut', delay: pin.delay }}
             />
             <motion.div
-              className={`absolute -inset-2 rounded-full border ${pin.primary ? 'border-primary/40' : 'border-white/12'}`}
-              animate={{ scale: [1, 2], opacity: [0.45, 0] }}
-              transition={{ repeat: Infinity, duration: pin.primary ? 2.2 : 2.8, ease: 'easeOut', delay: pin.delay + 0.35 }}
+              className="absolute -inset-2 rounded-full border border-primary/25"
+              animate={{ scale: [1, 1.9], opacity: [0.4, 0] }}
+              transition={{ repeat: Infinity, duration: 2.6, ease: 'easeOut', delay: pin.delay + 0.4 }}
             />
-            <div className={`w-2 h-2 rounded-full ${pin.primary ? 'bg-primary shadow-[0_0_14px_4px_hsl(var(--primary)/0.55)]' : 'bg-white/45'}`} />
-            {pin.primary && (
-              <span className="absolute left-3 top-0 text-[9px] font-sans font-medium text-primary/70 whitespace-nowrap tracking-wide">
-                {pin.label}
-              </span>
-            )}
+            <div className="w-1.5 h-1.5 rounded-full bg-primary/80 shadow-[0_0_10px_3px_hsl(var(--primary)/0.4)]" />
           </div>
         ))}
 
