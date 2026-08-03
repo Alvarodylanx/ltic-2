@@ -325,9 +325,9 @@ export default function AboutPage() {
                   <p className="font-semibold text-xs sm:text-sm leading-snug text-foreground group-hover:text-primary transition-colors">
                     {client.name}
                   </p>
-                  <p className="text-[10px] text-muted-foreground mt-0.5 uppercase tracking-wide font-medium">
+                  <span className="inline-block bg-primary/10 text-primary text-[10px] font-semibold rounded-full px-2 py-0.5 mt-1 w-fit mx-auto">
                     {L(client.sector)}
-                  </p>
+                  </span>
                 </div>
               </motion.div>
             ))}
