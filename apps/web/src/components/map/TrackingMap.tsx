@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import 'leaflet/dist/leaflet.css';
 
 const PIN_SVG = `
   <div style="width:28px;height:36px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))">
