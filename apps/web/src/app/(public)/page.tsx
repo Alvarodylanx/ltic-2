@@ -486,19 +486,19 @@ export default function HomePage() {
 
         {/* ── Main content ── */}
         <div className="relative z-10 h-full flex items-center pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-24">
-          <div className="max-w-7xl mx-auto w-full pl-4 pr-2 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSlide}
                 exit={{ opacity: 0, y: -20, transition: { duration: 0.2, ease: 'easeIn' } }}
-                className="max-w-[640px] xl:max-w-[780px]"
+                className="max-w-[640px] xl:max-w-[780px] mx-auto sm:mx-0 text-center sm:text-left"
               >
                 {/* Tag label */}
                 <motion.div
                   initial={{ opacity: 0, x: -24 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-                  className="flex items-center gap-3 mb-4 sm:mb-8"
+                  className="flex items-center gap-3 mb-4 sm:mb-8 justify-center sm:justify-start"
                 >
                   <span className={`h-px w-8 flex-shrink-0 ${heroSlides[activeSlide].theme.tagBg}`} />
                   <span className={`font-bold text-[10px] uppercase tracking-[0.38em] ${heroSlides[activeSlide].theme.tag}`}>
@@ -547,7 +547,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 }}
-                  className={`text-[0.82rem] sm:text-[1.05rem] leading-[1.6] sm:leading-[1.7] mb-5 sm:mb-10 max-w-[36ch] sm:max-w-[42ch] line-clamp-2 sm:line-clamp-none ${heroSlides[activeSlide].theme.sub}`}
+                  className={`text-[0.82rem] sm:text-[1.05rem] leading-[1.6] sm:leading-[1.7] mb-5 sm:mb-10 max-w-[36ch] sm:max-w-[42ch] line-clamp-2 sm:line-clamp-none mx-auto sm:mx-0 ${heroSlides[activeSlide].theme.sub}`}
                 >
                   {L(heroSlides[activeSlide].sub)}
                 </motion.p>
@@ -557,7 +557,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, ease: 'easeOut', delay: 0.66 }}
-                  className="flex flex-row gap-2 sm:gap-3"
+                  className="flex flex-row gap-2 sm:gap-3 justify-center sm:justify-start"
                 >
                   <Button asChild size="lg"
                     className="font-semibold h-9 px-4 sm:h-12 sm:px-8 shadow-lg shadow-black/40 text-xs sm:text-base w-auto justify-center">
