@@ -31,7 +31,7 @@ const headerReveal = {
   show:   { opacity: 1, x: 0,  transition: { duration: 0.45, ease: EXPO } },
 };
 const lineExpand = {
-  hidden: { scaleX: 0, originX: 0 },
+  hidden: { scaleX: 0 },
   show:   { scaleX: 1, transition: { duration: 0.5, ease: EXPO, delay: 0.15 } },
 };
 
@@ -411,6 +411,7 @@ export default function ProductsPage() {
                           <motion.span
                             variants={lineExpand} initial="hidden" whileInView="show"
                             viewport={{ once: true, amount: 0.5 }}
+                            style={{ originX: 0 }}
                             className="h-px bg-primary block w-4 shrink-0" />
                           <h2 className="font-display font-bold text-lg text-foreground tracking-tight">{catName}</h2>
                           <button
