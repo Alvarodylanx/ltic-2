@@ -771,7 +771,7 @@ export default function HomePage() {
           {/* API featured products — mounted guard prevents server/client isLoading mismatch */}
           {mounted && (isLoading || (featuredProducts && featuredProducts.length > 0)) && (
             <div className="mt-12">
-              <p className="font-bold text-xs uppercase tracking-[0.2em]
+              <p className="font-medium text-xs uppercase tracking-[0.2em]
                             text-muted-foreground mb-6">
                 {L({ en: 'Featured This Week', fr: 'En Vedette Cette Semaine' })}
               </p>
@@ -810,11 +810,11 @@ export default function HomePage() {
                           <div className="p-3">
                             {product.categoryName && (
                               <span className="inline-block bg-primary/10 text-primary text-[9px]
-                                               px-1.5 py-0.5 mb-1 font-bold uppercase tracking-wide rounded-full">
+                                               px-1.5 py-0.5 mb-1 font-semibold rounded-full">
                                 {product.categoryName}
                               </span>
                             )}
-                            <h3 className="font-bold text-xs leading-snug
+                            <h3 className="font-medium text-xs leading-snug text-foreground/75
                                            group-hover:text-primary transition-colors duration-150">
                               {L({ en: product.nameEn, fr: product.nameFr })}
                             </h3>
