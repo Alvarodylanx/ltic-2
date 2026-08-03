@@ -3,9 +3,12 @@ const API_ORIGIN = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 const config = {
   output: 'standalone',
+  compress: true,
   images: {
-    formats: ['image/webp'],
+    formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 2592000,
+    deviceSizes: [640, 750, 828, 1080, 1280, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
@@ -54,6 +57,24 @@ const config = {
         source: '/uploads/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' },
+        ],
+      },
+      {
+        source: '/fonts/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=2592000' },
+        ],
+      },
+      {
+        source: '/videos/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=2592000' },
         ],
       },
     ];

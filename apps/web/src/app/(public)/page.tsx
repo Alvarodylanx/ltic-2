@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
@@ -415,9 +415,6 @@ export default function HomePage() {
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
-  // All brands in each row, ×4 so single-set width (~3.4k px) always exceeds any viewport
-  const brandsRow1 = [...partners, ...partners, ...partners, ...partners];
-  const brandsRow2 = [...partners, ...partners, ...partners, ...partners];
 
   return (
     <>
@@ -835,12 +832,13 @@ export default function HomePage() {
                       font-bold mb-8">
           {L({ en: 'Trusted by leading brands', fr: 'Reconnu par les grandes marques' })}
         </p>
+        {/* Each row is partners×2 — the CSS -50% translateX loops seamlessly */}
         <div className="marquee-wrap space-y-3 select-none">
           <div className="flex w-max marquee-left">
-            {[...brandsRow1, ...brandsRow1].map((b, i) => <PartnerCard key={i} b={b} />)}
+            {[...partners, ...partners].map((b, i) => <PartnerCard key={i} b={b} />)}
           </div>
           <div className="flex w-max marquee-right">
-            {[...brandsRow2, ...brandsRow2].map((b, i) => <PartnerCard key={i} b={b} />)}
+            {[...partners, ...partners].map((b, i) => <PartnerCard key={i} b={b} />)}
           </div>
         </div>
         <div className="pointer-events-none absolute left-0 top-0 h-full w-20
@@ -942,7 +940,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_55%_at_50%_50%,hsl(var(--sidebar)/0.68)_0%,hsl(var(--sidebar)/0.08)_100%)]" />
         <div className="absolute inset-0 bg-gradient-to-b from-sidebar/40 via-transparent to-sidebar/40" />
 
-        {/* Decorative animated pins — purely visual, no business association */}
+        {/* Decorative animated pins — purely CSS (compositor thread, no JS overhead) */}
         {([
           { x: 28.0, y: 33.0, delay: 0.0 },
           { x: 49.5, y: 21.5, delay: 0.5 },
@@ -957,30 +955,14 @@ export default function HomePage() {
             className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
             style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
           >
-            {/* outer ring — wide slow spread */}
-            <motion.div
-              className="absolute -inset-2 rounded-full border-2 border-primary/70"
-              animate={{ scale: [1, 5.5], opacity: [1, 0] }}
-              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay }}
-            />
-            {/* mid ring */}
-            <motion.div
-              className="absolute -inset-2 rounded-full border-2 border-primary/50"
-              animate={{ scale: [1, 3.5], opacity: [0.85, 0] }}
-              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay + 0.3 }}
-            />
-            {/* inner ring — tight fast burst */}
-            <motion.div
-              className="absolute -inset-2 rounded-full border border-primary/40"
-              animate={{ scale: [1, 2.2], opacity: [0.7, 0] }}
-              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay + 0.6 }}
-            />
-            {/* filled inner flash */}
-            <motion.div
-              className="absolute -inset-1 rounded-full bg-primary/30"
-              animate={{ scale: [1, 2], opacity: [0.6, 0] }}
-              transition={{ repeat: Infinity, duration: 2.0, ease: 'easeOut', delay: pin.delay }}
-            />
+            <div className="absolute -inset-2 rounded-full border-2 border-primary/70 pin-ring-outer"
+                 style={{ animationDelay: `${pin.delay}s` }} />
+            <div className="absolute -inset-2 rounded-full border-2 border-primary/50 pin-ring-mid"
+                 style={{ animationDelay: `${pin.delay + 0.3}s` }} />
+            <div className="absolute -inset-2 rounded-full border border-primary/40 pin-ring-inner"
+                 style={{ animationDelay: `${pin.delay + 0.6}s` }} />
+            <div className="absolute -inset-1 rounded-full bg-primary/30 pin-ring-fill"
+                 style={{ animationDelay: `${pin.delay}s` }} />
             <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_18px_7px_hsl(var(--primary)/0.7)]" />
           </div>
         ))}

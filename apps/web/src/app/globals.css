@@ -111,6 +111,21 @@ p, li, a, label, button, input, textarea, select, td, th {
 .marquee-wrap:hover .marquee-left,
 .marquee-wrap:hover .marquee-right { animation-play-state: paused; }
 
+/* CTA section — world-map animated ping rings (compositor-only, no JS) */
+@keyframes map-ping-outer { 0% { transform: scale(1); opacity: 1; }   100% { transform: scale(5.5); opacity: 0; } }
+@keyframes map-ping-mid   { 0% { transform: scale(1); opacity: 0.85; } 100% { transform: scale(3.5); opacity: 0; } }
+@keyframes map-ping-inner { 0% { transform: scale(1); opacity: 0.7; }  100% { transform: scale(2.2); opacity: 0; } }
+@keyframes map-ping-fill  { 0% { transform: scale(1); opacity: 0.6; }  100% { transform: scale(2);   opacity: 0; } }
+
+.pin-ring-outer { animation: map-ping-outer 2s ease-out infinite; }
+.pin-ring-mid   { animation: map-ping-mid   2s ease-out infinite; }
+.pin-ring-inner { animation: map-ping-inner 2s ease-out infinite; }
+.pin-ring-fill  { animation: map-ping-fill  2s ease-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pin-ring-outer, .pin-ring-mid, .pin-ring-inner, .pin-ring-fill { display: none; }
+}
+
 /* Accessibility */
 :focus-visible {
   outline: 2px solid hsl(var(--ring));

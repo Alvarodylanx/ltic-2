@@ -1,7 +1,23 @@
 {
-  "version": "1.37.0",
+  "version": "1.38.0",
   "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.38.0",
+      "date": "2026-08-03",
+      "type": "minor",
+      "summary": "Performance: AVIF images, font preload reduction, CSS compositor animations, marquee DOM fix",
+      "changes": [
+        "next.config.mjs: added AVIF as primary image format (30-50% smaller than WebP), enabled server-side compression (gzip/brotli), tuned device/image size breakpoints",
+        "next.config.mjs: added immutable 1-year cache header for /fonts/*, 7-day stale-while-revalidate for /images/* and /videos/*",
+        "layout.tsx: reduced font preload from 10 files to 4 critical files (barlow-700, barlow-800, jakarta-400, jakarta-500) — other weights load on-demand via browser font matching; saves 6 blocking HTTP requests on first visit",
+        "layout.tsx: added dns-prefetch for tile.openstreetmap.org (map tiles)",
+        "globals.css: CTA world-map animated pins converted from 28 Framer Motion JS animations to 4 CSS @keyframes classes — animations now run entirely on the compositor thread with zero JS involvement",
+        "globals.css: prefers-reduced-motion hides pin rings entirely for accessibility",
+        "page.tsx: marquee DOM count reduced from 192 nodes to 24 (was partners×8 due to double-expansion bug; now partners×2 which is correct for the CSS -50% translateX loop)",
+        "page.tsx: removed unused useInView import from framer-motion"
+      ]
+    },
     {
       "version": "1.37.0",
       "date": "2026-08-03",

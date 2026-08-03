@@ -3,6 +3,8 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { Providers } from './providers';
 
+// Only the two heaviest Barlow weights are preloaded — they appear above-the-fold
+// in the hero headline. Lighter weights load on demand via browser font matching.
 const barlow = localFont({
   src: [
     { path: '../../public/fonts/barlow-400.woff2', weight: '400', style: 'normal' },
@@ -13,8 +15,10 @@ const barlow = localFont({
   ],
   variable: '--font-display',
   display: 'swap',
+  preload: false,
 });
 
+// Same for Jakarta: 400 + 500 are manually preloaded below; rest load on demand.
 const jakarta = localFont({
   src: [
     { path: '../../public/fonts/jakarta-300.woff2', weight: '300', style: 'normal' },
@@ -26,6 +30,7 @@ const jakarta = localFont({
   ],
   variable: '--font-body',
   display: 'swap',
+  preload: false,
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lticsarl.com';
@@ -76,9 +81,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Manually preload the 4 above-the-fold critical fonts only */}
+        <link rel="preload" href="/fonts/barlow-700.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/barlow-800.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/jakarta-400.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/jakarta-500.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        {/* Warm up connections used at load time */}
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
+        <link rel="dns-prefetch" href="https://tile.openstreetmap.org" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
