@@ -703,27 +703,87 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ 3. FEATURES — editorial image+copy blocks ══════════════════════════ */}
-      <section className="bg-white py-3 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="mb-4">
-            <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
-              {L({ en: 'Products & Commerce', fr: 'Produits & Commerce' })}
-            </p>
-            <h2 className="font-extrabold text-section text-foreground
-                           [text-wrap:balance] max-w-2xl whitespace-pre-line">
-              {L({ en: 'A Wide Range of Products,\nDelivered Anywhere.', fr: 'Une Large Gamme de Produits,\nLivrée Partout.' })}
-            </h2>
-          </motion.div>
+      {/* ══ 3. FEATURED THIS WEEK ════════════════════════════════════════════ */}
+      {mounted && (isLoading || (featuredProducts && featuredProducts.length > 0)) && (
+        <section className="bg-background py-3 sm:py-20 border-y border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between mb-8">
+              <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
+                <p className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1">
+                  {L({ en: 'Products', fr: 'Produits' })}
+                </p>
+                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
+                  {L({ en: 'Featured This Week', fr: 'En Vedette Cette Semaine' })}
+                </h2>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.38, ease: catalogEase, delay: 0.2 }}
+              >
+                <Button asChild variant="outline" size="sm"
+                  className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary rounded-full">
+                  <Link href="/products">
+                    {L({ en: 'View All', fr: 'Tout Voir' })}
+                    <ChevronRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={viewportOnce}
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
+            >
+              {isLoading
+                ? Array(6).fill(0).map((_, i) => (
+                    <div key={i} className="bg-white border border-border rounded-xl overflow-hidden">
+                      <Skeleton className="aspect-square w-full" />
+                      <div className="p-2.5 space-y-1.5">
+                        <Skeleton className="h-2.5 w-10" />
+                        <Skeleton className="h-3 w-full" />
+                      </div>
+                    </div>
+                  ))
+                : featuredProducts?.slice(0, 6).map(product => (
+                    <motion.div key={product.id} variants={scaleIn}
+                      whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
+                      <Link href={`/products/${product.slug}`}
+                        className="group bg-white border border-border rounded-xl overflow-hidden
+                                   hover:border-primary/40 hover:shadow-md transition-all duration-200 block">
+                        <div className="aspect-square relative bg-white overflow-hidden">
+                          {product.imageUrl && (
+                            <Image src={product.imageUrl}
+                              alt={L({ en: product.nameEn, fr: product.nameFr })}
+                              fill className="object-contain p-2"
+                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                            />
+                          )}
+                        </div>
+                        <div className="p-3">
+                          {product.categoryName && (
+                            <span className="inline-block bg-primary/10 text-primary text-[9px]
+                                             px-1.5 py-0.5 mb-1 font-semibold rounded-full">
+                              {product.categoryName}
+                            </span>
+                          )}
+                          <p className="font-sans font-medium text-xs leading-snug text-foreground/65
+                                         group-hover:text-primary transition-colors duration-150">
+                            {L({ en: product.nameEn, fr: product.nameFr })}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+            </motion.div>
+          </div>
+        </section>
+      )}
 
-          {features.map((feat, i) => (
-            <FeatureBlock key={feat.label.en} {...feat} reverse={i % 2 === 1} />
-          ))}
-        </div>
-      </section>
-
-      {/* ══ 4. PRODUCT CATALOG — compact rows ════════════════════════════════ */}
+      {/* ══ 4. PRODUCT CATALOG — Browse by Category ══════════════════════════ */}
       <section className="bg-muted/40 py-3 sm:py-20 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
@@ -777,68 +837,30 @@ export default function HomePage() {
               <ProductCategoryCard key={cat.en} {...cat} index={i} />
             ))}
           </motion.div>
-
-          {/* API featured products — mounted guard prevents server/client isLoading mismatch */}
-          {mounted && (isLoading || (featuredProducts && featuredProducts.length > 0)) && (
-            <div className="mt-12">
-              <p className="font-medium text-xs uppercase tracking-[0.2em]
-                            text-muted-foreground mb-6">
-                {L({ en: 'Featured This Week', fr: 'En Vedette Cette Semaine' })}
-              </p>
-              <motion.div
-                variants={stagger}
-                initial="hidden"
-                whileInView="show"
-                viewport={viewportOnce}
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
-              >
-                {isLoading
-                  ? Array(6).fill(0).map((_, i) => (
-                      <div key={i} className="bg-white border border-border rounded-xl overflow-hidden">
-                        <Skeleton className="aspect-square w-full" />
-                        <div className="p-2.5 space-y-1.5">
-                          <Skeleton className="h-2.5 w-10" />
-                          <Skeleton className="h-3 w-full" />
-                        </div>
-                      </div>
-                    ))
-                  : featuredProducts?.slice(0, 6).map(product => (
-                      <motion.div key={product.id} variants={scaleIn}
-                        whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
-                        <Link href={`/products/${product.slug}`}
-                          className="group bg-white border border-border rounded-xl overflow-hidden
-                                     hover:border-primary/40 hover:shadow-md transition-all duration-200 block">
-                          <div className="aspect-square relative bg-white overflow-hidden">
-                            {product.imageUrl && (
-                              <Image src={product.imageUrl}
-                                alt={L({ en: product.nameEn, fr: product.nameFr })}
-                                fill className="object-contain p-2"
-                                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                              />
-                            )}
-                          </div>
-                          <div className="p-3">
-                            {product.categoryName && (
-                              <span className="inline-block bg-primary/10 text-primary text-[9px]
-                                               px-1.5 py-0.5 mb-1 font-semibold rounded-full">
-                                {product.categoryName}
-                              </span>
-                            )}
-                            <p className="font-sans font-medium text-xs leading-snug text-foreground/65
-                                           group-hover:text-primary transition-colors duration-150">
-                              {L({ en: product.nameEn, fr: product.nameFr })}
-                            </p>
-                          </div>
-                        </Link>
-                      </motion.div>
-                    ))}
-              </motion.div>
-            </div>
-          )}
         </div>
       </section>
 
-      {/* ══ 5. PARTNERS — light marquee band ═══════════════════════════════════ */}
+      {/* ══ 5. FEATURES — editorial image+copy blocks ══════════════════════════ */}
+      <section className="bg-white py-3 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="mb-4">
+            <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
+              {L({ en: 'Products & Commerce', fr: 'Produits & Commerce' })}
+            </p>
+            <h2 className="font-extrabold text-section text-foreground
+                           [text-wrap:balance] max-w-2xl whitespace-pre-line">
+              {L({ en: 'A Wide Range of Products,\nDelivered Anywhere.', fr: 'Une Large Gamme de Produits,\nLivrée Partout.' })}
+            </h2>
+          </motion.div>
+
+          {features.map((feat, i) => (
+            <FeatureBlock key={feat.label.en} {...feat} reverse={i % 2 === 1} />
+          ))}
+        </div>
+      </section>
+
+      {/* ══ 6. PARTNERS — light marquee band ═══════════════════════════════════ */}
       <section className="bg-muted border-y border-border py-3 sm:py-20 overflow-hidden relative">
         <p className="text-center text-muted-foreground text-[10px] uppercase tracking-[0.3em]
                       font-bold mb-8">
@@ -859,7 +881,7 @@ export default function HomePage() {
                         bg-gradient-to-l from-muted to-transparent z-10" />
       </section>
 
-      {/* ══ 6. PROCESS — compact 2×2 / 4-col steps ══════════════════════════ */}
+      {/* ══ 7. PROCESS — compact 2×2 / 4-col steps ══════════════════════════ */}
       <section className="bg-white py-3 sm:py-20 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -933,7 +955,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ 7. CTA — world map ══════════════════════════════════════════════════ */}
+      {/* ══ 8. CTA — world map ══════════════════════════════════════════════════ */}
       <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
 
         {/* ── World map image (Natural Earth 110m land, generated from TopoJSON) ── */}
