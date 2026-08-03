@@ -60,6 +60,7 @@ const heroSlides = [
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
     image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1800&auto=format&fit=crop&q=80',
+    video: '/videos/hero-borders.mp4',
     theme: {
       tag:      'text-yellow-300',
       tagBg:    'bg-yellow-300',
