@@ -118,31 +118,33 @@ export default function ProductsPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/30 to-transparent" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center justify-center gap-2.5 mb-2 sm:mb-3">
-            <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
-              {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
-            </span>
-          </motion.div>
-          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em]">
-            {L({ en: 'Our Products', fr: 'Nos Produits' }).split(' ').map((word, wi) => (
-              <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
-                <motion.span className="inline-block" initial={{ y: '112%' }} animate={{ y: 0 }}
-                  transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
-                  {word}
-                </motion.span>
+          <div className="max-w-2xl mx-auto bg-white/[0.07] backdrop-blur-md border border-white/[0.13] rounded-2xl px-6 py-6 shadow-2xl shadow-black/20">
+            <motion.div
+              initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center justify-center gap-2.5 mb-2 sm:mb-3">
+              <span className="w-6 h-px bg-primary flex-shrink-0" />
+              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+                {L({ en: 'Industrial Catalog', fr: 'Catalogue Industriel' })}
               </span>
-            ))}
-          </h1>
-          <motion.p
-            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-            className="font-sans text-sidebar-foreground/80 text-[12px] sm:text-[15px] leading-relaxed max-w-xl mx-auto mt-2 sm:mt-3">
-            {L({ en: 'Certified industrial equipment, supplies & materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés, fournitures & matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
-          </motion.p>
+            </motion.div>
+            <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em]">
+              {L({ en: 'Our Products', fr: 'Nos Produits' }).split(' ').map((word, wi) => (
+                <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
+                  <motion.span className="inline-block" initial={{ y: '112%' }} animate={{ y: 0 }}
+                    transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
+            <motion.p
+              initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
+              className="font-sans text-sidebar-foreground/80 text-[12px] sm:text-[15px] leading-relaxed max-w-xl mx-auto mt-2 sm:mt-3">
+              {L({ en: 'Certified industrial equipment, supplies & materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés, fournitures & matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
+            </motion.p>
+          </div>
         </div>
       </section>
 

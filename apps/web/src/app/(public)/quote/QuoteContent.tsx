@@ -162,17 +162,19 @@ export default function QuotePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/60" />
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.p variants={fadeInUp}
-            className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-            {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
-          </motion.p>
-          <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
-            {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
-            {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
-          </motion.p>
+          <div className="max-w-xl bg-white/[0.07] backdrop-blur-md border border-white/[0.13] rounded-2xl px-8 py-8 shadow-2xl shadow-black/20">
+            <motion.p variants={fadeInUp}
+              className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+              {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
+            </motion.p>
+            <motion.h1 variants={fadeInUp}
+              className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5">
+              {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+            </motion.h1>
+            <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg leading-relaxed">
+              {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
+            </motion.p>
+          </div>
         </motion.div>
       </section>
 
