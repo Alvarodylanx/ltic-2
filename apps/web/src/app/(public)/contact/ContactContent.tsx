@@ -71,10 +71,9 @@ export default function ContactPage() {
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-end pb-0">
-        <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-55" priority />
-        <div className="absolute inset-0 backdrop-blur-md bg-sidebar/48" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/70 via-sidebar/15 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
+        <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-20 sm:pb-24">
           <motion.div

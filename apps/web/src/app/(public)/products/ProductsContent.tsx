@@ -113,10 +113,9 @@ export default function ProductsPage() {
       <section className="relative h-[22vh] min-h-[160px] sm:h-[30vh] sm:min-h-[210px] overflow-hidden bg-sidebar flex items-center">
         <Image
           src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1100&auto=format&fit=crop&q=45"
-          alt="" fill className="object-cover object-center opacity-60" priority />
-        <div className="absolute inset-0 backdrop-blur-md bg-sidebar/48" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/70 via-sidebar/15 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
+          alt="" fill className="object-cover object-center opacity-45" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/88 via-sidebar/55 to-sidebar/15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/30 to-transparent" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div

@@ -158,10 +158,8 @@ export default function QuotePage() {
       <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1100&auto=format&fit=crop&q=45"
-          alt="" fill className="object-cover opacity-40" priority />
-        <div className="absolute inset-0 backdrop-blur-md bg-sidebar/55" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/60 via-transparent to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
+          alt="" fill className="object-cover opacity-15" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/60" />
         <motion.div variants={stagger} initial="hidden" animate="show"
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.p variants={fadeInUp}

@@ -69,8 +69,6 @@ function TrackingContent() {
     <>
       {/* ── HERO with integrated search ─────────────────────────────────────── */}
       <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
-        <div className="absolute inset-0 backdrop-blur-sm bg-sidebar/40" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
         <motion.div
           animate={{ scale: [1, 1.12, 1], opacity: [0.2, 0.35, 0.2] }}
           transition={{ repeat: Infinity, duration: 8 }}

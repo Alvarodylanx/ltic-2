@@ -464,9 +464,6 @@ export default function HomePage() {
           </motion.div>
         </AnimatePresence>
 
-        {/* ── Glass frost layer ── */}
-        <div className="absolute inset-0 backdrop-blur-[2px] bg-black/10 pointer-events-none" />
-
         {/* ── Per-slide tinted overlay ── */}
         <AnimatePresence initial={false} mode="sync">
           <motion.div
