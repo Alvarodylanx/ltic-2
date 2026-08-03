@@ -22,6 +22,16 @@ import {
 
 const HERO_INTERVAL = 5500;
 
+// Per-slide Ken Burns: each slide gets a unique zoom + pan direction
+const kenBurns = [
+  // Slide 0 — zoom out, drift from top-right to centre
+  { initial: { scale: 1.14, x: '2.5%', y: '1.5%' },  animate: { scale: 1.0, x: '0%', y: '0%' } },
+  // Slide 1 — zoom in, drift from bottom-left to centre
+  { initial: { scale: 1.0,  x: '-2%',  y: '1%' },     animate: { scale: 1.12, x: '0%', y: '0%' } },
+  // Slide 2 — gentle zoom out, slow upward drift
+  { initial: { scale: 1.1,  x: '0%',   y: '2%' },     animate: { scale: 1.0, x: '0%', y: '0%' } },
+] as const;
+
 const heroSlides = [
   {
     tag:   { en: 'Logistics & Transit',  fr: 'Logistique & Transit' },
@@ -430,12 +440,14 @@ export default function HomePage() {
             key={`bg-${activeSlide}`}
             className="absolute inset-0"
             style={{ willChange: 'transform, opacity' }}
-            initial={{ opacity: 0, scale: isMobile ? 1.0 : 1.05 }}
-            animate={{ opacity: 1, scale: 1.0 }}
-            exit={{ opacity: 0, scale: 1.0 }}
+            initial={{ opacity: 0, scale: kenBurns[activeSlide].initial.scale, x: kenBurns[activeSlide].initial.x, y: kenBurns[activeSlide].initial.y }}
+            animate={{ opacity: 1, scale: kenBurns[activeSlide].animate.scale, x: kenBurns[activeSlide].animate.x, y: kenBurns[activeSlide].animate.y }}
+            exit={{ opacity: 0, transition: { duration: 1.0, ease: 'easeInOut' } }}
             transition={{
-              opacity: { duration: isMobile ? 0.5 : 1.0, ease: 'easeInOut' },
-              scale: { duration: HERO_INTERVAL / 1000 + 2, ease: 'linear' },
+              opacity: { duration: 1.2, ease: 'easeInOut' },
+              scale: { duration: HERO_INTERVAL / 1000 + 2.5, ease: [0.25, 0.46, 0.45, 0.94] },
+              x:     { duration: HERO_INTERVAL / 1000 + 2.5, ease: [0.25, 0.46, 0.45, 0.94] },
+              y:     { duration: HERO_INTERVAL / 1000 + 2.5, ease: [0.25, 0.46, 0.45, 0.94] },
             }}
           >
             {heroSlides[activeSlide].video ? (
