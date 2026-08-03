@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, Pencil, Trash2, Package, Loader2, Search, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { Plus, Pencil, Trash2, Package, Loader2, Search, ChevronLeft, ChevronRight, Sparkles, Images, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -33,6 +33,8 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
   const [translating, setTranslating] = useState(false);
   const [categoryError, setCategoryError] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showGallery, setShowGallery] = useState(!!(product?.images?.length));
+  const [galleryImages, setGalleryImages] = useState<string[]>(product?.images?.length ? product.images : ['']);
 
   const srcLang = language as 'en' | 'fr';
   const dstLang = language === 'en' ? 'fr' : 'en';
@@ -110,11 +112,13 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
       setTranslating(false);
     }
     try {
+      const filledImages = showGallery ? galleryImages.filter(u => u.trim()) : [];
+      const payload = { ...data, images: filledImages };
       if (product) {
-        await api.patch(`/api/products/${product.id}`, data);
+        await api.patch(`/api/products/${product.id}`, payload);
         toast.success(L({ en: 'Product updated', fr: 'Produit mis à jour' }));
       } else {
-        await api.post('/api/products', data);
+        await api.post('/api/products', payload);
         toast.success(L({ en: 'Product created', fr: 'Produit créé' }));
       }
       qc.invalidateQueries({ queryKey: ['admin-products'] });
@@ -179,6 +183,66 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
         <div className="mt-1">
           <MediaUpload value={watch('imageUrl') || ''} onChange={v => setValue('imageUrl', v)} />
         </div>
+      </div>
+
+      {/* Product Gallery / Catalog */}
+      <div className="border border-border rounded-xl overflow-hidden">
+        <button
+          type="button"
+          onClick={() => { setShowGallery(v => !v); if (!showGallery && galleryImages.every(u => !u)) setGalleryImages(['']); }}
+          className="w-full flex items-center justify-between px-4 py-3 bg-muted/40 hover:bg-muted/70 transition-colors text-left"
+        >
+          <div className="flex items-center gap-2.5">
+            <Images className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium">{L({ en: 'Product Gallery / Catalog', fr: 'Galerie Produit / Catalogue' })}</span>
+            <span className="text-xs text-muted-foreground">
+              {L({ en: '(optional — adds a photo gallery on the product page)', fr: '(optionnel — ajoute une galerie sur la fiche produit)' })}
+            </span>
+          </div>
+          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full transition-colors ${showGallery ? 'bg-primary/15 text-primary' : 'bg-muted text-muted-foreground'}`}>
+            {showGallery ? L({ en: 'ON', fr: 'ON' }) : L({ en: 'OFF', fr: 'OFF' })}
+          </span>
+        </button>
+
+        {showGallery && (
+          <div className="p-4 space-y-3">
+            <p className="text-xs text-muted-foreground">
+              {L({ en: 'Upload multiple images to create a swipeable gallery. Customers can browse all photos on the product page.', fr: 'Téléchargez plusieurs images pour créer une galerie. Les clients peuvent parcourir toutes les photos.' })}
+            </p>
+            <div className="space-y-3">
+              {galleryImages.map((url, idx) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <div className="flex-1">
+                    <MediaUpload
+                      value={url}
+                      onChange={v => setGalleryImages(imgs => imgs.map((u, i) => i === idx ? v : u))}
+                    />
+                  </div>
+                  {galleryImages.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setGalleryImages(imgs => imgs.filter((_, i) => i !== idx))}
+                      className="mt-2 p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors flex-shrink-0"
+                      title={L({ en: 'Remove image', fr: 'Supprimer l\'image' })}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+            {galleryImages.length < 10 && (
+              <button
+                type="button"
+                onClick={() => setGalleryImages(imgs => [...imgs, ''])}
+                className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+              >
+                <Plus className="h-4 w-4" />
+                {L({ en: 'Add another image', fr: 'Ajouter une image' })}
+              </button>
+            )}
+          </div>
+        )}
       </div>
       <div>
         <Label>{language === 'en' ? 'Description (English)' : 'Description (Français)'}</Label>
