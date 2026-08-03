@@ -104,8 +104,8 @@ p, li, a, label, button, input, textarea, select, td, th {
 /* Marquee */
 @keyframes marquee-left  { from { transform: translateX(0) }    to { transform: translateX(-50%) } }
 @keyframes marquee-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
-.marquee-left  { animation: marquee-left  60s linear infinite; will-change: transform; }
-.marquee-right { animation: marquee-right 65s linear infinite; will-change: transform; }
+.marquee-left  { animation: marquee-left  90s linear infinite; will-change: transform; }
+.marquee-right { animation: marquee-right 100s linear infinite; will-change: transform; }
 .marquee-wrap:hover .marquee-left,
 .marquee-wrap:hover .marquee-right { animation-play-state: paused; }
 

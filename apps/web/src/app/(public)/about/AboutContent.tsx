@@ -286,7 +286,7 @@ export default function AboutPage() {
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {[
               { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  domain: 'bourbon-online.com' },
-              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '' },
+              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: 'inyangamarineprojects.com' },
               { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '' },
               { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          domain: 'bollore.com' },
               { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'maersk.com' },
@@ -299,7 +299,7 @@ export default function AboutPage() {
               <motion.div key={client.name} variants={scaleIn}
                 className="flex flex-col items-center gap-3 bg-card border border-border rounded-2xl p-4 sm:p-5
                            hover:border-primary/40 hover:shadow-md transition-all duration-200 group text-center">
-                <div className="w-11 h-11 rounded-xl bg-primary/8 border border-primary/15 flex items-center justify-center overflow-hidden flex-shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                   {client.domain ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -314,7 +314,7 @@ export default function AboutPage() {
                       }}
                     />
                   ) : null}
-                  <span className={`text-[11px] font-black text-primary leading-none ${client.domain ? 'hidden' : ''}`}>
+                  <span className={`text-[12px] font-black text-primary leading-none tracking-wide ${client.domain ? 'hidden' : ''}`}>
                     {client.name.slice(0, 2).toUpperCase()}
                   </span>
                 </div>
