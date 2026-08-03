@@ -4,6 +4,7 @@ import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { CookieConsent } from '@/components/CookieConsent';
 import { BackToTop } from '@/components/BackToTop';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { PageTransition } from '@/components/PageTransition';
 
 // Minimal placeholder that preserves navbar height so the page doesn't jump
 function NavbarFallback() {
@@ -27,7 +28,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
       {/* Page content isolated — a crash here keeps Navbar/Footer alive */}
       <ErrorBoundary>
-        <main id="main-content">{children}</main>
+        <main id="main-content">
+          <PageTransition>{children}</PageTransition>
+        </main>
       </ErrorBoundary>
 
       {/* Footer isolated */}
