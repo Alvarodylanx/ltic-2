@@ -70,12 +70,12 @@ export default function ContactPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
+      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-end pb-0">
         <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-20 sm:pb-24">
           <motion.div
             initial={{ opacity: 0, x: -22 }}
             animate={{ opacity: 1, x: 0 }}
@@ -111,13 +111,13 @@ export default function ContactPage() {
       </section>
 
       {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
-      <section className="bg-background py-10 sm:py-14 lg:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 bg-background pb-10 sm:pb-14 lg:pb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
 
             {/* FORM — order-1 on mobile so it appears first, order-2 on desktop (right col) */}
             <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:col-span-3 order-1 lg:order-2 bg-card border border-border rounded-2xl p-6 sm:p-8">
+              className="lg:col-span-3 order-1 lg:order-2 bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/10">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -199,7 +199,7 @@ export default function ContactPage() {
 
             {/* INFO SIDEBAR — order-2 on mobile (below form), order-1 on desktop (left col) */}
             <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:col-span-2 order-2 lg:order-1 space-y-6">
+              className="lg:col-span-2 order-2 lg:order-1 space-y-6 bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/10">
 
               <div>
                 <motion.p variants={fadeInUp}
