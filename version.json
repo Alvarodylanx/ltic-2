@@ -1,7 +1,19 @@
 {
-  "version": "1.41.0",
+  "version": "1.42.0",
   "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.42.0",
+      "date": "2026-08-03",
+      "type": "minor",
+      "summary": "Spotlight: smoother exit animation — opacity + y drift replaces top clip-path",
+      "changes": [
+        "page.tsx: replaced clip-from-top exit with opacity (1→0) + translateY (0→-56px) — GPU-composited, no hard edges",
+        "page.tsx: exit spring stiffness 90/damping 28/mass 0.8 — snappy but smooth trailing physics",
+        "page.tsx: entrance spring tuned heavier (stiffness 70/damping 24/mass 1.1) — drawer feels like a real weighted panel",
+        "page.tsx: exit opacity eases out early (45% through exit scroll range) so fade leads the drift — more premium feel"
+      ]
+    },
     {
       "version": "1.41.0",
       "date": "2026-08-03",

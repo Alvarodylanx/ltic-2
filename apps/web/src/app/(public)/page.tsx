@@ -426,24 +426,28 @@ export default function HomePage() {
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
 
-  // ── Spotlight: scroll-driven clip-path (reveal ↓ + retract ↑) ────────────
+  // ── Spotlight animations ─────────────────────────────────────────────────
   const spotlightRef = useRef<HTMLElement>(null);
+
+  // ENTRANCE — heavy spring so the drawer feels like a real weighted panel
   const { scrollY } = useScroll();
+  const rawBottomClip = useTransform(scrollY, [0, 580], [100, 0], { clamp: true });
+  const smoothBottomClip = useSpring(rawBottomClip, {
+    stiffness: 70, damping: 24, mass: 1.1, restDelta: 0.001,
+  });
+  // clip-path reveals the section top-to-bottom (drawer pulling down)
+  const spotlightClipPath = useMotionTemplate`inset(0% 0% ${smoothBottomClip}% 0%)`;
 
-  // Bottom clip — reveals section top-to-bottom as user scrolls down from hero
-  const rawBottomClip = useTransform(scrollY, [0, 620], [100, 0], { clamp: true });
-  const smoothBottomClip = useSpring(rawBottomClip, { stiffness: 52, damping: 17, mass: 0.85, restDelta: 0.01 });
-
-  // Top clip — retracts section upward as user scrolls past it toward services
-  const { scrollYProgress: exitProgress } = useScroll({
+  // EXIT — opacity fade + upward drift as section scrolls past the viewport
+  // (much more elegant than clipping from top)
+  const { scrollYProgress: exitProg } = useScroll({
     target: spotlightRef,
     offset: ['start start', 'end start'],
   });
-  const rawTopClip = useTransform(exitProgress, [0, 1], [0, 100], { clamp: true });
-  const smoothTopClip = useSpring(rawTopClip, { stiffness: 58, damping: 18, mass: 0.75, restDelta: 0.01 });
-
-  // Combined: both clips compose into a single inset() value
-  const spotlightClipPath = useMotionTemplate`inset(${smoothTopClip}% 0% ${smoothBottomClip}% 0%)`;
+  const rawExitOpacity = useTransform(exitProg, [0, 0.45, 1], [1, 0.3, 0], { clamp: true });
+  const rawExitY       = useTransform(exitProg, [0, 1], [0, -56], { clamp: true });
+  const smoothExitOpacity = useSpring(rawExitOpacity, { stiffness: 90, damping: 28, mass: 0.8, restDelta: 0.001 });
+  const smoothExitY       = useSpring(rawExitY,       { stiffness: 90, damping: 28, mass: 0.8, restDelta: 0.001 });
 
   return (
     <>
@@ -670,7 +674,11 @@ export default function HomePage() {
       {/* ══ PRODUCT SPOTLIGHT — Premium Oils & Container Supply ═══════════════ */}
       <motion.section
         ref={spotlightRef}
-        style={shouldReduce ? {} : { clipPath: spotlightClipPath }}
+        style={shouldReduce ? {} : {
+          clipPath: spotlightClipPath,
+          opacity: smoothExitOpacity,
+          y: smoothExitY,
+        }}
         className="relative overflow-hidden bg-[#070f1a] border-t border-b border-white/[0.09]">
 
         {/* ── Background: atmospheric lubricants / oils texture ── */}
