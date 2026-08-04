@@ -1,7 +1,19 @@
 {
-  "version": "1.43.0",
+  "version": "1.44.0",
   "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.44.0",
+      "date": "2026-08-03",
+      "type": "minor",
+      "summary": "Edge middleware: always prompt login before any admin route",
+      "changes": [
+        "Added src/middleware.ts — Next.js edge middleware that intercepts all /admin/* requests",
+        "Redirects to /auth/login?redirect=<path> if admin_token cookie is absent",
+        "Runs before any React render so there is no flash of admin content for unauthenticated users",
+        "Existing client-side checkAuth in AdminSidebar is kept as a secondary defence"
+      ]
+    },
     {
       "version": "1.43.0",
       "date": "2026-08-03",
