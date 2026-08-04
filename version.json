@@ -1,7 +1,22 @@
 {
-  "version": "1.38.0",
+  "version": "1.39.0",
   "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.39.0",
+      "date": "2026-08-03",
+      "type": "minor",
+      "summary": "Product Spotlight: scroll-driven drawer animation, glassmorphism background, removed bottom fade",
+      "changes": [
+        "page.tsx: converted spotlight section to motion.section with scroll-driven clip-path — reveals top-to-bottom as user scrolls (drawer effect), reverses on scroll-up",
+        "page.tsx: useScroll + useTransform [0,620] → clip [100%→0%] + useSpring (stiffness 52, damping 17, mass 0.85) for physics-based silky reveal",
+        "page.tsx: useMotionTemplate composites spring value into inset() clip-path string at every animation frame with zero jank",
+        "page.tsx: prefers-reduced-motion respected — animation skipped, section remains fully visible",
+        "page.tsx: replaced flat bg-sidebar with glassmorphism (from-[#0d1829] to-sidebar gradient + backdrop-blur-2xl + border-t/b border-white/9%)",
+        "page.tsx: added hairline glass shine overlay at top edge via-white/30 gradient",
+        "page.tsx: removed bottom fade gradient and engineering grid overlay"
+      ]
+    },
     {
       "version": "1.38.0",
       "date": "2026-08-03",

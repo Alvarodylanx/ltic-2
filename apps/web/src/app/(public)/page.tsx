@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring, useMotionTemplate } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
@@ -426,6 +426,12 @@ export default function HomePage() {
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
 
+  // ── Spotlight drawer: scroll-driven clip-path (top→bottom reveal) ──────────
+  const { scrollY } = useScroll();
+  const rawClip = useTransform(scrollY, [0, 620], [100, 0], { clamp: true });
+  const smoothClip = useSpring(rawClip, { stiffness: 52, damping: 17, mass: 0.85, restDelta: 0.01 });
+  const spotlightClipPath = useMotionTemplate`inset(0% 0% ${smoothClip}% 0%)`;
+
   return (
     <>
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
@@ -649,15 +655,19 @@ export default function HomePage() {
       </section>
 
       {/* ══ PRODUCT SPOTLIGHT — Premium Oils & Container Supply ═══════════════ */}
-      <section className="bg-sidebar relative overflow-hidden">
-        {/* Engineering grid overlay */}
-        <div className="absolute inset-0 grid-bg opacity-[0.055] pointer-events-none" />
-        {/* Right glow behind the video panel */}
+      <motion.section
+        style={shouldReduce ? {} : { clipPath: spotlightClipPath }}
+        className="relative overflow-hidden
+                   bg-gradient-to-b from-[#0d1829] to-sidebar
+                   backdrop-blur-2xl
+                   border-t border-b border-white/[0.09]">
+        {/* Glass shine — hairline at the very top edge */}
+        <div className="absolute inset-x-0 top-0 h-px
+                        bg-gradient-to-r from-transparent via-white/30 to-transparent
+                        pointer-events-none" />
+        {/* Right ambient glow */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[480px] h-[480px]
                         bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-        {/* Soft fade into the services section below */}
-        <div className="absolute inset-x-0 bottom-0 h-20
-                        bg-gradient-to-t from-background to-transparent pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
@@ -777,7 +787,7 @@ export default function HomePage() {
 
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
       <section className="bg-background py-3 sm:py-20">
