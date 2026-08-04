@@ -206,7 +206,7 @@ export default function AboutPage() {
             >
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {/* Left: team on deck — full height */}
-                <div className="relative h-[300px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl">
+                <div className="relative h-[300px] sm:h-[420px] md:h-auto md:aspect-[9/16] lg:aspect-auto lg:h-[480px] rounded-2xl overflow-hidden shadow-xl">
                   <Image
                     src="/images/about-team-maritime.jpg"
                     alt="LTIC SARL team on offshore vessel"
@@ -218,7 +218,7 @@ export default function AboutPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                 </div>
                 {/* Right: TAMPEN vessel — offset down for stagger effect */}
-                <div className="relative h-[300px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden shadow-xl mt-8 sm:mt-12">
+                <div className="relative h-[300px] sm:h-[420px] md:h-auto md:aspect-[35/54] lg:aspect-auto lg:h-[480px] rounded-2xl overflow-hidden shadow-xl mt-8 sm:mt-12">
                   <Image
                     src="/images/about-vessel-tampen.jpg"
                     alt="LTIC SARL offshore supply vessel TAMPEN"
