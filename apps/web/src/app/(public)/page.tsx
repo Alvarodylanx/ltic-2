@@ -648,6 +648,137 @@ export default function HomePage() {
 
       </section>
 
+      {/* ══ PRODUCT SPOTLIGHT — Premium Oils & Container Supply ═══════════════ */}
+      <section className="bg-sidebar relative overflow-hidden">
+        {/* Engineering grid overlay */}
+        <div className="absolute inset-0 grid-bg opacity-[0.055] pointer-events-none" />
+        {/* Right glow behind the video panel */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[480px] h-[480px]
+                        bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+        {/* Soft fade into the services section below */}
+        <div className="absolute inset-x-0 bottom-0 h-20
+                        bg-gradient-to-t from-background to-transparent pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+
+            {/* ── Left: text ── */}
+            <motion.div
+              variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="flex-1 text-center lg:text-left">
+
+              {/* "Featured Product" live pill */}
+              <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30
+                              rounded-full px-4 py-1.5 mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse flex-shrink-0" />
+                <span className="text-primary font-bold text-[10px] uppercase tracking-[0.32em]">
+                  {L({ en: 'Featured Product', fr: 'Produit Vedette' })}
+                </span>
+              </div>
+
+              {/* Category */}
+              <p className="text-sidebar-foreground/40 text-[11px] uppercase tracking-[0.28em] font-semibold mb-3">
+                {L({ en: 'Consumer & Industrial Goods', fr: 'Produits Consommateurs & Industriels' })}
+              </p>
+
+              {/* Headline */}
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl
+                             text-sidebar-foreground leading-[0.95] tracking-tight mb-5">
+                {L({ en: 'Premium Oils &\nContainer Supply.', fr: 'Huiles Premium &\nFourniture de Contenants.' })
+                  .split('\n').map((line, i) => <span key={i} className="block">{line}</span>)}
+              </h2>
+
+              {/* Blue rule */}
+              <div className="w-10 h-0.5 bg-primary mx-auto lg:mx-0 mb-5 rounded-full" />
+
+              {/* Body */}
+              <p className="text-sidebar-foreground/60 text-sm sm:text-base leading-relaxed
+                            mb-3 max-w-md mx-auto lg:mx-0">
+                {L({
+                  en: 'From premium sunflower and edible oils to a full range of industrial containers — sourced directly from certified producers, available for bulk or unit supply.',
+                  fr: "Des huiles de tournesol et alimentaires premium à une gamme complète de contenants industriels — approvisionnés directement auprès de producteurs certifiés.",
+                })}
+              </p>
+              <p className="text-sidebar-foreground/30 text-xs leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
+                {L({
+                  en: 'Available for export, import & commercial distribution across Africa and Europe.',
+                  fr: "Disponible pour l'export, l'import et la distribution commerciale en Afrique et en Europe.",
+                })}
+              </p>
+
+              {/* Tag chips */}
+              <div className="flex flex-wrap gap-2 mb-8 justify-center lg:justify-start">
+                {([
+                  { en: 'Bulk & Unit Orders',  fr: 'Commandes Vrac & Unité' },
+                  { en: 'Export Ready',        fr: "Prêt à l'Export" },
+                  { en: 'Africa & Europe',     fr: 'Afrique & Europe' },
+                ] as const).map(tag => (
+                  <span key={tag.en}
+                    className="inline-flex items-center gap-1.5 bg-white/6 border border-white/10
+                               rounded-full px-3 py-1 text-sidebar-foreground/55 text-[11px] font-medium">
+                    <span className="w-1 h-1 rounded-full bg-primary flex-shrink-0" />
+                    {L(tag)}
+                  </span>
+                ))}
+              </div>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+                <Button asChild size="lg"
+                  className="font-semibold h-11 px-7 shadow-lg shadow-primary/30">
+                  <Link href="/quote">
+                    {L({ en: 'Request Supply Quote', fr: 'Demander un Devis' })}
+                    <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline"
+                  className="font-semibold h-11 px-6 bg-white/8 border-white/20 text-white
+                             hover:bg-white/16 hover:border-white/40 backdrop-blur-sm">
+                  <Link href="/contact">{L({ en: 'Contact Us', fr: 'Nous Contacter' })}</Link>
+                </Button>
+              </div>
+            </motion.div>
+
+            {/* ── Right: video ── */}
+            <motion.div
+              variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="relative flex-shrink-0 pb-7">
+              {/* Outer ambient glow */}
+              <div className="absolute -inset-6 rounded-[32px] bg-primary/20 blur-3xl pointer-events-none" />
+              {/* Gradient ring */}
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-b from-primary/30 to-transparent pointer-events-none" />
+              {/* Phone-style video */}
+              <div className="relative w-[175px] sm:w-[205px] rounded-[22px] overflow-hidden shadow-2xl ring-1 ring-white/15"
+                   style={{ aspectRatio: '9/16' }}>
+                <video autoPlay muted loop playsInline
+                       className="absolute inset-0 w-full h-full object-cover"
+                       style={{ filter: 'contrast(1.06) saturate(1.12) brightness(0.95)' }}>
+                  <source src="/videos/oils-collection.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 pointer-events-none" />
+                {/* Live badge */}
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/55 backdrop-blur-sm rounded-full px-3 py-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  <span className="text-[10px] font-bold text-white uppercase tracking-wider">
+                    {L({ en: 'Live Stock', fr: 'Stock Actuel' })}
+                  </span>
+                </div>
+              </div>
+              {/* Available for Order pill */}
+              <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2
+                              bg-primary text-primary-foreground rounded-full px-5 py-2
+                              shadow-xl shadow-primary/30 flex items-center gap-2 whitespace-nowrap">
+                <Package className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em]">
+                  {L({ en: 'Available for Order', fr: 'Disponible à la Commande' })}
+                </span>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
       <section className="bg-background py-3 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
