@@ -1,7 +1,20 @@
 {
-  "version": "1.42.0",
+  "version": "1.43.0",
   "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.43.0",
+      "date": "2026-08-03",
+      "type": "patch",
+      "summary": "Spotlight GPU performance — smooth animation on iPad landscape and all devices",
+      "changes": [
+        "page.tsx: added willChange: 'clip-path, transform, opacity' on motion.section — promotes element to its own GPU compositor layer",
+        "page.tsx: removed mix-blend-luminosity from background image — eliminated extra compositing context that caused main-thread paint on each frame",
+        "page.tsx: backdrop-blur-2xl (40px) → backdrop-blur-md (12px) on glass card — 11x cheaper blur, major GPU budget saving on iPad",
+        "page.tsx: right bloom reduced 580×580 blur-160 → 320×320 blur-90; left glow reduced 340×340 blur-110 → 200×200 blur-70",
+        "page.tsx: card corner bloom reduced w-44 blur-3xl → w-28 blur-2xl"
+      ]
+    },
     {
       "version": "1.42.0",
       "date": "2026-08-03",

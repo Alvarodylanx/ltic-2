@@ -677,6 +677,7 @@ export default function HomePage() {
           clipPath: spotlightClipPath,
           opacity: smoothExitOpacity,
           y: smoothExitY,
+          willChange: 'clip-path, transform, opacity',
         }}
         className="relative overflow-hidden bg-[#070f1a] border-t border-b border-white/[0.09]">
 
@@ -686,19 +687,19 @@ export default function HomePage() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-[0.38] mix-blend-luminosity select-none pointer-events-none"
+          className="object-cover object-center opacity-[0.38] scale-[1.02] select-none pointer-events-none"
         />
         {/* Deep overlay — keeps text legible over the image */}
         <div className="absolute inset-0 bg-gradient-to-br
                         from-[#070f1a]/88 via-[#0d1829]/70 to-[#070f1a]/84
                         pointer-events-none" />
-        {/* Right blue bloom */}
+        {/* Right blue bloom — smaller blur radius for iPad GPU budget */}
         <div className="absolute right-[4%] top-1/2 -translate-y-1/2
-                        w-[580px] h-[580px] bg-primary/16 rounded-full blur-[160px]
+                        w-[320px] h-[320px] bg-primary/18 rounded-full blur-[90px]
                         pointer-events-none" />
         {/* Left cool glow */}
-        <div className="absolute -left-20 top-1/2 -translate-y-1/2
-                        w-[340px] h-[340px] bg-sky-900/20 rounded-full blur-[110px]
+        <div className="absolute -left-16 top-1/2 -translate-y-1/2
+                        w-[200px] h-[200px] bg-sky-900/22 rounded-full blur-[70px]
                         pointer-events-none" />
         {/* Top hairline shine */}
         <div className="absolute inset-x-0 top-0 h-px
@@ -715,7 +716,7 @@ export default function HomePage() {
 
               {/* Glass card */}
               <div className="relative overflow-hidden text-center lg:text-left
-                              bg-white/[0.06] backdrop-blur-2xl
+                              bg-white/[0.07] backdrop-blur-md
                               border border-white/[0.14]
                               rounded-2xl p-8 lg:p-10
                               shadow-[0_8px_60px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.08)]">
@@ -724,8 +725,8 @@ export default function HomePage() {
                                 bg-gradient-to-r from-transparent via-white/22 to-transparent
                                 pointer-events-none" />
                 {/* Blue bloom inside the card — top-left corner depth */}
-                <div className="absolute -top-14 -left-14 w-44 h-44
-                                bg-primary/22 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -top-10 -left-10 w-28 h-28
+                                bg-primary/20 rounded-full blur-2xl pointer-events-none" />
 
               {/* "Featured Product" live pill */}
               <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30
