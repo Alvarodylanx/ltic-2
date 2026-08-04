@@ -426,11 +426,24 @@ export default function HomePage() {
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
 
-  // ── Spotlight drawer: scroll-driven clip-path (top→bottom reveal) ──────────
+  // ── Spotlight: scroll-driven clip-path (reveal ↓ + retract ↑) ────────────
+  const spotlightRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
-  const rawClip = useTransform(scrollY, [0, 620], [100, 0], { clamp: true });
-  const smoothClip = useSpring(rawClip, { stiffness: 52, damping: 17, mass: 0.85, restDelta: 0.01 });
-  const spotlightClipPath = useMotionTemplate`inset(0% 0% ${smoothClip}% 0%)`;
+
+  // Bottom clip — reveals section top-to-bottom as user scrolls down from hero
+  const rawBottomClip = useTransform(scrollY, [0, 620], [100, 0], { clamp: true });
+  const smoothBottomClip = useSpring(rawBottomClip, { stiffness: 52, damping: 17, mass: 0.85, restDelta: 0.01 });
+
+  // Top clip — retracts section upward as user scrolls past it toward services
+  const { scrollYProgress: exitProgress } = useScroll({
+    target: spotlightRef,
+    offset: ['start start', 'end start'],
+  });
+  const rawTopClip = useTransform(exitProgress, [0, 1], [0, 100], { clamp: true });
+  const smoothTopClip = useSpring(rawTopClip, { stiffness: 58, damping: 18, mass: 0.75, restDelta: 0.01 });
+
+  // Combined: both clips compose into a single inset() value
+  const spotlightClipPath = useMotionTemplate`inset(${smoothTopClip}% 0% ${smoothBottomClip}% 0%)`;
 
   return (
     <>
@@ -656,6 +669,7 @@ export default function HomePage() {
 
       {/* ══ PRODUCT SPOTLIGHT — Premium Oils & Container Supply ═══════════════ */}
       <motion.section
+        ref={spotlightRef}
         style={shouldReduce ? {} : { clipPath: spotlightClipPath }}
         className="relative overflow-hidden bg-[#070f1a] border-t border-b border-white/[0.09]">
 
@@ -665,11 +679,11 @@ export default function HomePage() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-[0.22] mix-blend-luminosity select-none pointer-events-none"
+          className="object-cover object-center opacity-[0.38] mix-blend-luminosity select-none pointer-events-none"
         />
         {/* Deep overlay — keeps text legible over the image */}
         <div className="absolute inset-0 bg-gradient-to-br
-                        from-[#070f1a]/95 via-[#0d1829]/80 to-[#070f1a]/92
+                        from-[#070f1a]/88 via-[#0d1829]/70 to-[#070f1a]/84
                         pointer-events-none" />
         {/* Right blue bloom */}
         <div className="absolute right-[4%] top-1/2 -translate-y-1/2

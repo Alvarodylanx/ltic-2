@@ -1,7 +1,20 @@
 {
-  "version": "1.40.0",
+  "version": "1.41.0",
   "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.41.0",
+      "date": "2026-08-03",
+      "type": "minor",
+      "summary": "Spotlight: bidirectional clip (reveal + retract), stronger background image",
+      "changes": [
+        "page.tsx: added exit/retract animation — section clips from TOP as user scrolls past it toward services (useScroll target on section ref, offset start→end start)",
+        "page.tsx: combined top clip + bottom clip into single inset(top% 0% bottom% 0%) via useMotionTemplate — both directions share spring physics",
+        "page.tsx: exit spring slightly stiffer (58/18/0.75) so retraction feels snappy vs the softer reveal",
+        "page.tsx: background image opacity raised 0.22 → 0.38 for more visible oil/container texture",
+        "page.tsx: gradient overlay lightened (from-/88 via-/70) to let the image breathe through"
+      ]
+    },
     {
       "version": "1.40.0",
       "date": "2026-08-03",
