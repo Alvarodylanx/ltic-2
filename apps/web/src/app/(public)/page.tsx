@@ -429,25 +429,24 @@ export default function HomePage() {
   // ── Spotlight animations ─────────────────────────────────────────────────
   const spotlightRef = useRef<HTMLElement>(null);
 
-  // ENTRANCE — heavy spring so the drawer feels like a real weighted panel
+  // ENTRANCE (scroll down) — drawer pulls in; retract (scroll up) uses same spring reversed
+  // Lower mass = faster retraction back toward hero
   const { scrollY } = useScroll();
   const rawBottomClip = useTransform(scrollY, [0, 580], [100, 0], { clamp: true });
   const smoothBottomClip = useSpring(rawBottomClip, {
-    stiffness: 70, damping: 24, mass: 1.1, restDelta: 0.001,
+    stiffness: 105, damping: 26, mass: 0.65, restDelta: 0.001,
   });
-  // clip-path reveals the section top-to-bottom (drawer pulling down)
   const spotlightClipPath = useMotionTemplate`inset(0% 0% ${smoothBottomClip}% 0%)`;
 
-  // EXIT — opacity fade + upward drift as section scrolls past the viewport
-  // (much more elegant than clipping from top)
+  // EXIT (scroll down past section) — fade + upward drift
   const { scrollYProgress: exitProg } = useScroll({
     target: spotlightRef,
     offset: ['start start', 'end start'],
   });
   const rawExitOpacity = useTransform(exitProg, [0, 0.45, 1], [1, 0.3, 0], { clamp: true });
   const rawExitY       = useTransform(exitProg, [0, 1], [0, -56], { clamp: true });
-  const smoothExitOpacity = useSpring(rawExitOpacity, { stiffness: 90, damping: 28, mass: 0.8, restDelta: 0.001 });
-  const smoothExitY       = useSpring(rawExitY,       { stiffness: 90, damping: 28, mass: 0.8, restDelta: 0.001 });
+  const smoothExitOpacity = useSpring(rawExitOpacity, { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
+  const smoothExitY       = useSpring(rawExitY,       { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
 
   return (
     <>
