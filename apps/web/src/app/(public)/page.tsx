@@ -740,21 +740,22 @@ export default function HomePage() {
             >
               {isLoading
                 ? Array(6).fill(0).map((_, i) => (
-                    <div key={i} className="bg-white border border-border rounded-xl overflow-hidden">
-                      <Skeleton className="aspect-square w-full" />
-                      <div className="p-2.5 space-y-1.5">
+                    <div key={i} className="bg-white border border-border rounded-xl overflow-hidden flex flex-col">
+                      <Skeleton className="aspect-square w-full flex-shrink-0" />
+                      <div className="p-2.5 space-y-1.5 flex-1">
                         <Skeleton className="h-2.5 w-10" />
                         <Skeleton className="h-3 w-full" />
                       </div>
                     </div>
                   ))
                 : featuredProducts?.slice(0, 6).map(product => (
-                    <motion.div key={product.id} variants={scaleIn}
+                    <motion.div key={product.id} variants={scaleIn} className="h-full"
                       whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
                       <Link href={`/products/${product.slug}`}
                         className="group bg-white border border-border rounded-xl overflow-hidden
-                                   hover:border-primary/40 hover:shadow-md transition-all duration-200 block">
-                        <div className="aspect-square relative bg-white overflow-hidden">
+                                   hover:border-primary/40 hover:shadow-md transition-all duration-200
+                                   flex flex-col h-full">
+                        <div className="aspect-square relative bg-white overflow-hidden flex-shrink-0">
                           {product.imageUrl && (
                             <Image src={product.imageUrl}
                               alt={L({ en: product.nameEn, fr: product.nameFr })}
@@ -763,15 +764,16 @@ export default function HomePage() {
                             />
                           )}
                         </div>
-                        <div className="p-3">
+                        <div className="p-3 flex flex-col flex-1">
                           {product.categoryName && (
                             <span className="inline-block bg-primary/10 text-primary text-[9px]
-                                             px-1.5 py-0.5 mb-1 font-semibold rounded-full">
+                                             px-1.5 py-0.5 mb-1.5 font-semibold rounded-full w-fit">
                               {product.categoryName}
                             </span>
                           )}
                           <p className="font-sans font-medium text-xs leading-snug text-foreground/65
-                                         group-hover:text-primary transition-colors duration-150">
+                                         group-hover:text-primary transition-colors duration-150
+                                         line-clamp-2 flex-1">
                             {L({ en: product.nameEn, fr: product.nameFr })}
                           </p>
                         </div>
