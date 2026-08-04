@@ -1,7 +1,21 @@
 {
-  "version": "1.39.0",
+  "version": "1.40.0",
   "releaseDate": "2026-08-03",
   "changelog": [
+    {
+      "version": "1.40.0",
+      "date": "2026-08-03",
+      "type": "minor",
+      "summary": "Spotlight section: atmospheric background image + layered glassmorphism card",
+      "changes": [
+        "page.tsx: added /images/lubricants-oils.jpg as atmospheric background at 22% opacity with mix-blend-luminosity — ties the section visually to its product category",
+        "page.tsx: layered dark gradient overlay (from-[#070f1a]/95 → via-[#0d1829]/80) over the image for legibility",
+        "page.tsx: added right blue bloom + left cool sky glow for depth",
+        "page.tsx: wrapped left text panel in a frosted glass card (bg-white/6 backdrop-blur-2xl border-white/14 rounded-2xl) with inner shine and blue corner bloom",
+        "page.tsx: brightened category, body, and export text for better readability inside the glass card",
+        "page.tsx: upgraded tag chips to bg-white/10 border-white/20 with backdrop-blur-sm"
+      ]
+    },
     {
       "version": "1.39.0",
       "date": "2026-08-03",

@@ -657,25 +657,54 @@ export default function HomePage() {
       {/* ══ PRODUCT SPOTLIGHT — Premium Oils & Container Supply ═══════════════ */}
       <motion.section
         style={shouldReduce ? {} : { clipPath: spotlightClipPath }}
-        className="relative overflow-hidden
-                   bg-gradient-to-b from-[#0d1829] to-sidebar
-                   backdrop-blur-2xl
-                   border-t border-b border-white/[0.09]">
-        {/* Glass shine — hairline at the very top edge */}
-        <div className="absolute inset-x-0 top-0 h-px
-                        bg-gradient-to-r from-transparent via-white/30 to-transparent
+        className="relative overflow-hidden bg-[#070f1a] border-t border-b border-white/[0.09]">
+
+        {/* ── Background: atmospheric lubricants / oils texture ── */}
+        <Image
+          src="/images/lubricants-oils.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-[0.22] mix-blend-luminosity select-none pointer-events-none"
+        />
+        {/* Deep overlay — keeps text legible over the image */}
+        <div className="absolute inset-0 bg-gradient-to-br
+                        from-[#070f1a]/95 via-[#0d1829]/80 to-[#070f1a]/92
                         pointer-events-none" />
-        {/* Right ambient glow */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[480px] h-[480px]
-                        bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+        {/* Right blue bloom */}
+        <div className="absolute right-[4%] top-1/2 -translate-y-1/2
+                        w-[580px] h-[580px] bg-primary/16 rounded-full blur-[160px]
+                        pointer-events-none" />
+        {/* Left cool glow */}
+        <div className="absolute -left-20 top-1/2 -translate-y-1/2
+                        w-[340px] h-[340px] bg-sky-900/20 rounded-full blur-[110px]
+                        pointer-events-none" />
+        {/* Top hairline shine */}
+        <div className="absolute inset-x-0 top-0 h-px
+                        bg-gradient-to-r from-transparent via-white/28 to-transparent
+                        pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
-            {/* ── Left: text ── */}
+            {/* ── Left: text inside glass card ── */}
             <motion.div
               variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="flex-1 text-center lg:text-left">
+              className="flex-1">
+
+              {/* Glass card */}
+              <div className="relative overflow-hidden text-center lg:text-left
+                              bg-white/[0.06] backdrop-blur-2xl
+                              border border-white/[0.14]
+                              rounded-2xl p-8 lg:p-10
+                              shadow-[0_8px_60px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.08)]">
+                {/* Card inner shine at top */}
+                <div className="absolute inset-x-0 top-0 h-px
+                                bg-gradient-to-r from-transparent via-white/22 to-transparent
+                                pointer-events-none" />
+                {/* Blue bloom inside the card — top-left corner depth */}
+                <div className="absolute -top-14 -left-14 w-44 h-44
+                                bg-primary/22 rounded-full blur-3xl pointer-events-none" />
 
               {/* "Featured Product" live pill */}
               <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30
@@ -687,7 +716,7 @@ export default function HomePage() {
               </div>
 
               {/* Category */}
-              <p className="text-sidebar-foreground/40 text-[11px] uppercase tracking-[0.28em] font-semibold mb-3">
+              <p className="text-sidebar-foreground/55 text-[11px] uppercase tracking-[0.28em] font-semibold mb-3">
                 {L({ en: 'Consumer & Industrial Goods', fr: 'Produits Consommateurs & Industriels' })}
               </p>
 
@@ -702,14 +731,14 @@ export default function HomePage() {
               <div className="w-10 h-0.5 bg-primary mx-auto lg:mx-0 mb-5 rounded-full" />
 
               {/* Body */}
-              <p className="text-sidebar-foreground/60 text-sm sm:text-base leading-relaxed
+              <p className="text-sidebar-foreground/72 text-sm sm:text-base leading-relaxed
                             mb-3 max-w-md mx-auto lg:mx-0">
                 {L({
                   en: 'From premium sunflower and edible oils to a full range of industrial containers — sourced directly from certified producers, available for bulk or unit supply.',
                   fr: "Des huiles de tournesol et alimentaires premium à une gamme complète de contenants industriels — approvisionnés directement auprès de producteurs certifiés.",
                 })}
               </p>
-              <p className="text-sidebar-foreground/30 text-xs leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
+              <p className="text-sidebar-foreground/48 text-xs leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
                 {L({
                   en: 'Available for export, import & commercial distribution across Africa and Europe.',
                   fr: "Disponible pour l'export, l'import et la distribution commerciale en Afrique et en Europe.",
@@ -724,8 +753,9 @@ export default function HomePage() {
                   { en: 'Africa & Europe',     fr: 'Afrique & Europe' },
                 ] as const).map(tag => (
                   <span key={tag.en}
-                    className="inline-flex items-center gap-1.5 bg-white/6 border border-white/10
-                               rounded-full px-3 py-1 text-sidebar-foreground/55 text-[11px] font-medium">
+                    className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20
+                               rounded-full px-3 py-1 text-sidebar-foreground/80 text-[11px] font-medium
+                               backdrop-blur-sm">
                     <span className="w-1 h-1 rounded-full bg-primary flex-shrink-0" />
                     {L(tag)}
                   </span>
@@ -747,6 +777,8 @@ export default function HomePage() {
                   <Link href="/contact">{L({ en: 'Contact Us', fr: 'Nous Contacter' })}</Link>
                 </Button>
               </div>
+
+              </div>{/* end glass card */}
             </motion.div>
 
             {/* ── Right: video ── */}
