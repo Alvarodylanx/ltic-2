@@ -1221,18 +1221,20 @@ export default function HomePage() {
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}>
             <motion.p variants={fadeInUp}
-              className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-6">
+              className="text-white font-bold text-xs uppercase tracking-[0.3em] mb-6
+                         drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]">
               {L({ en: 'Ready to Start?', fr: 'Prêt à Commencer ?' })}
             </motion.p>
 
             <motion.h2 variants={fadeInUp}
-              className="font-extrabold text-sidebar-foreground
-                         text-hero mb-6 [text-wrap:balance] whitespace-pre-line">
+              className="font-extrabold text-white
+                         text-hero mb-6 [text-wrap:balance] whitespace-pre-line
+                         drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
               {L({ en: "Let's Move Your\nBusiness Forward.", fr: 'Faisons Avancer\nVotre Business.' })}
             </motion.h2>
 
             <motion.p variants={fadeInUp}
-              className="text-sidebar-foreground/65 text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+              className="text-white/90 text-lg max-w-lg mx-auto mb-10 leading-relaxed">
               {L({
                 en: 'One partner for freight, industrial supply and general commerce — across 30+ countries.',
                 fr: 'Un partenaire pour le fret, la fourniture industrielle et le commerce général — dans 30+ pays.',
