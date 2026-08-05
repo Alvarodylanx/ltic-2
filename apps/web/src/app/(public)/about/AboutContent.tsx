@@ -452,11 +452,11 @@ export default function AboutPage() {
       </section>
 
       {/* ── CORE VALUES — typographic index ─────────────────────────────────── */}
-      <section className="bg-background border-t border-border py-3 sm:py-20">
+      <section className="bg-background border-t border-border py-3 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
             <div>
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
@@ -503,7 +503,7 @@ export default function AboutPage() {
                 }}
                 className="group relative border-b border-border first:border-t"
               >
-                <div className="relative flex items-start lg:items-center gap-5 lg:gap-10 py-6 lg:py-7 pl-5">
+                <div className="relative flex items-start lg:items-center gap-5 lg:gap-10 py-3 lg:py-4 pl-5">
                   {/* Left accent bar */}
                   <span
                     aria-hidden="true"
