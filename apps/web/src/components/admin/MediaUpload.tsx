@@ -7,6 +7,9 @@ import { toast } from 'sonner';
 
 const ACCEPTED = 'image/jpeg,image/png,image/gif,image/webp,image/svg+xml,video/mp4,video/quicktime,video/x-msvideo,video/webm,video/x-matroska';
 
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+const VIDEO_TYPES = ['video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm', 'video/x-matroska'];
+
 type Tab = 'upload' | 'url';
 
 const isVideo = (url: string) => /\.(mp4|mov|avi|mkv|webm)(\?.*)?$/i.test(url);
@@ -14,16 +17,40 @@ const isVideo = (url: string) => /\.(mp4|mov|avi|mkv|webm)(\?.*)?$/i.test(url);
 interface MediaUploadProps {
   value: string;
   onChange: (url: string) => void;
+  maxImageMB?: number;  // default 5
+  maxVideoMB?: number;  // default 50
 }
 
-export function MediaUpload({ value, onChange }: MediaUploadProps) {
+export function MediaUpload({ value, onChange, maxImageMB = 5, maxVideoMB = 50 }: MediaUploadProps) {
   const [tab, setTab] = useState<Tab>('upload');
   const [urlDraft, setUrlDraft] = useState('');
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const validate = (file: File): string | null => {
+    const isImg = IMAGE_TYPES.includes(file.type);
+    const isVid = VIDEO_TYPES.includes(file.type);
+    if (!isImg && !isVid) {
+      return `Unsupported file type "${file.type}". Use JPG, PNG, WebP, GIF, SVG, MP4, MOV, WebM or AVI.`;
+    }
+    const sizeMB = file.size / (1024 * 1024);
+    if (isImg && sizeMB > maxImageMB) {
+      return `Image is too large (${sizeMB.toFixed(1)} MB). Maximum allowed: ${maxImageMB} MB.`;
+    }
+    if (isVid && sizeMB > maxVideoMB) {
+      return `Video is too large (${sizeMB.toFixed(1)} MB). Maximum allowed: ${maxVideoMB} MB. Please compress it first.`;
+    }
+    return null;
+  };
+
   const uploadFile = async (file: File) => {
+    const error = validate(file);
+    if (error) {
+      toast.error(error, { duration: 6000 });
+      if (fileRef.current) fileRef.current.value = '';
+      return;
+    }
     setUploading(true);
     try {
       const fd = new FormData();
@@ -124,7 +151,9 @@ export function MediaUpload({ value, onChange }: MediaUploadProps) {
                   <p className="text-xs text-muted-foreground mt-1">
                     Images: JPG, PNG, GIF, WebP, SVG &nbsp;·&nbsp; Videos: MP4, MOV, WebM, AVI
                   </p>
-                  <p className="text-xs text-muted-foreground">Max 100 MB</p>
+                  <p className="text-xs text-muted-foreground">
+                    Images: max {maxImageMB} MB &nbsp;·&nbsp; Videos: max {maxVideoMB} MB
+                  </p>
                 </div>
               </div>
             )}

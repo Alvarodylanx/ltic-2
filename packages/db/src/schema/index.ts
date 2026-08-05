@@ -8,3 +8,4 @@ export * from "./settings";
 export * from "./customers";
 export * from "./admin_profile";
 export * from "./partners";
+export * from "./spotlight";

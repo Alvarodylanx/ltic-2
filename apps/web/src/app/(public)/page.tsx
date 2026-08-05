@@ -371,7 +371,7 @@ function PartnerCard({ b }: { b: Partner }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
-  const { L } = useLanguage();
+  const { L, language } = useLanguage();
   const shouldReduce = useReducedMotion() ?? false;
 
   const [activeSlide, setActiveSlide] = useState(0);
@@ -402,6 +402,11 @@ export default function HomePage() {
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
+  });
+  const { data: spotlightData } = useQuery<any>({
+    queryKey: ['spotlight'],
+    queryFn: () => api.get('/api/spotlight'),
+    staleTime: 60 * 1000,
   });
   const { data: apiPartners = [] } = useQuery<Partner[]>({
     queryKey: ['partners'],
@@ -670,7 +675,8 @@ export default function HomePage() {
 
       </section>
 
-      {/* ══ PRODUCT SPOTLIGHT — Premium Oils & Container Supply ═══════════════ */}
+      {/* ══ PRODUCT SPOTLIGHT — admin-editable ═══════════════════════════════ */}
+      {(spotlightData?.isActive !== false) && (
       <motion.section
         ref={spotlightRef}
         style={shouldReduce ? {} : {
@@ -681,9 +687,9 @@ export default function HomePage() {
         }}
         className="relative overflow-hidden bg-[#070f1a] border-t border-b border-white/[0.09]">
 
-        {/* ── Background: atmospheric lubricants / oils texture ── */}
+        {/* ── Background: atmospheric texture (admin-editable) ── */}
         <Image
-          src="/images/lubricants-oils.jpg"
+          src={spotlightData?.bgImageUrl || '/images/lubricants-oils.jpg'}
           alt=""
           fill
           sizes="100vw"
@@ -739,14 +745,16 @@ export default function HomePage() {
 
               {/* Category */}
               <p className="text-sidebar-foreground/55 text-[11px] uppercase tracking-[0.28em] font-semibold mb-3">
-                {L({ en: 'Consumer & Industrial Goods', fr: 'Produits Consommateurs & Industriels' })}
+                {spotlightData?.label || L({ en: 'Consumer & Industrial Goods', fr: 'Produits Consommateurs & Industriels' })}
               </p>
 
               {/* Headline */}
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl
                              text-sidebar-foreground leading-[0.95] tracking-tight mb-5">
-                {L({ en: 'Premium Oils &\nContainer Supply.', fr: 'Huiles Premium &\nFourniture de Contenants.' })
-                  .split('\n').map((line, i) => <span key={i} className="block">{line}</span>)}
+                {(spotlightData
+                  ? (language === 'fr' ? spotlightData.headlineFr : spotlightData.headlineEn)
+                  : L({ en: 'Premium Oils &\nContainer Supply.', fr: 'Huiles Premium &\nFourniture de Contenants.' })
+                ).split('\n').map((line: string, i: number) => <span key={i} className="block">{line}</span>)}
               </h2>
 
               {/* Blue rule */}
@@ -755,16 +763,22 @@ export default function HomePage() {
               {/* Body */}
               <p className="text-sidebar-foreground/72 text-sm sm:text-base leading-relaxed
                             mb-3 max-w-md mx-auto lg:mx-0">
-                {L({
-                  en: 'From premium sunflower and edible oils to a full range of industrial containers — sourced directly from certified producers, available for bulk or unit supply.',
-                  fr: "Des huiles de tournesol et alimentaires premium à une gamme complète de contenants industriels — approvisionnés directement auprès de producteurs certifiés.",
-                })}
+                {spotlightData
+                  ? (language === 'fr' ? spotlightData.bodyFr : spotlightData.bodyEn)
+                  : L({
+                      en: 'From premium sunflower and edible oils to a full range of industrial containers — sourced directly from certified producers, available for bulk or unit supply.',
+                      fr: "Des huiles de tournesol et alimentaires premium à une gamme complète de contenants industriels — approvisionnés directement auprès de producteurs certifiés.",
+                    })
+                }
               </p>
               <p className="text-sidebar-foreground/48 text-xs leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
-                {L({
-                  en: 'Available for export, import & commercial distribution across Africa and Europe.',
-                  fr: "Disponible pour l'export, l'import et la distribution commerciale en Afrique et en Europe.",
-                })}
+                {spotlightData
+                  ? (language === 'fr' ? spotlightData.subBodyFr : spotlightData.subBodyEn)
+                  : L({
+                      en: 'Available for export, import & commercial distribution across Africa and Europe.',
+                      fr: "Disponible pour l'export, l'import et la distribution commerciale en Afrique et en Europe.",
+                    })
+                }
               </p>
 
               {/* Tag chips */}
@@ -788,15 +802,23 @@ export default function HomePage() {
               <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
                 <Button asChild size="lg"
                   className="font-semibold h-11 px-7 shadow-lg shadow-primary/30">
-                  <Link href="/quote">
-                    {L({ en: 'Request Supply Quote', fr: 'Demander un Devis' })}
+                  <Link href={spotlightData?.cta1Href || '/quote'}>
+                    {spotlightData
+                      ? (language === 'fr' ? spotlightData.cta1LabelFr : spotlightData.cta1LabelEn)
+                      : L({ en: 'Request Supply Quote', fr: 'Demander un Devis' })
+                    }
                     <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline"
                   className="font-semibold h-11 px-6 bg-white/8 border-white/20 text-white
                              hover:bg-white/16 hover:border-white/40 backdrop-blur-sm">
-                  <Link href="/contact">{L({ en: 'Contact Us', fr: 'Nous Contacter' })}</Link>
+                  <Link href={spotlightData?.cta2Href || '/contact'}>
+                    {spotlightData
+                      ? (language === 'fr' ? spotlightData.cta2LabelFr : spotlightData.cta2LabelEn)
+                      : L({ en: 'Contact Us', fr: 'Nous Contacter' })
+                    }
+                  </Link>
                 </Button>
               </div>
 
@@ -811,14 +833,23 @@ export default function HomePage() {
               <div className="absolute -inset-6 rounded-[32px] bg-primary/20 blur-3xl pointer-events-none" />
               {/* Gradient ring */}
               <div className="absolute -inset-1 rounded-3xl bg-gradient-to-b from-primary/30 to-transparent pointer-events-none" />
-              {/* Phone-style video */}
+              {/* Phone-style media */}
               <div className="relative w-[175px] sm:w-[205px] rounded-[22px] overflow-hidden shadow-2xl ring-1 ring-white/15"
                    style={{ aspectRatio: '9/16' }}>
-                <video autoPlay muted loop playsInline
-                       className="absolute inset-0 w-full h-full object-cover"
-                       style={{ filter: 'contrast(1.06) saturate(1.12) brightness(0.95)' }}>
-                  <source src="/videos/oils-collection.mp4" type="video/mp4" />
-                </video>
+                {(!spotlightData || spotlightData.mediaType === 'video') ? (
+                  <video autoPlay muted loop playsInline
+                         className="absolute inset-0 w-full h-full object-cover"
+                         style={{ filter: 'contrast(1.06) saturate(1.12) brightness(0.95)' }}>
+                    <source src={spotlightData?.mediaUrl || '/videos/oils-collection.mp4'} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img
+                    src={spotlightData.mediaUrl}
+                    alt="Spotlight product"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ filter: 'contrast(1.06) saturate(1.12) brightness(0.95)' }}
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 pointer-events-none" />
                 {/* Live badge */}
                 <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/55 backdrop-blur-sm rounded-full px-3 py-1">
@@ -842,6 +873,7 @@ export default function HomePage() {
           </div>
         </div>
       </motion.section>
+      )}
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
       <section className="bg-background py-3 sm:py-20">

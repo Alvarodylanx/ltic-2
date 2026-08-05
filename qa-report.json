@@ -1,0 +1,207 @@
+[
+  {
+    "status": "PASS",
+    "test": "Homepage loads (200)",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Hero heading present",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Nav links present (8 found)",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "Nav links",
+    "notes": "LTIC SARL, About, Services, Products, Tracking, News, Contact, Request Quote"
+  },
+  {
+    "status": "PASS",
+    "test": "CTA buttons found: Contact, Request Quote, Get a Free Quote",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Products page loads",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "Product cards/items detected: 61",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Product cards render",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "About page loads",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Contact page loads",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "Contact form inputs: 7",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Contact form has enough fields",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Quote page loads",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "News page loads",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "404 page returns correct HTTP 404",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "404 body content visible",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Admin route redirects unauthenticated user to login",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Login form fields present",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Login shows error on bad credentials",
+    "notes": ""
+  },
+  {
+    "status": "WARN",
+    "test": "Login redirect not to admin, ended at: http://localhost:3000/auth/login",
+    "notes": ""
+  },
+  {
+    "status": "WARN",
+    "test": "Skipping admin page checks — could not log in",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Mobile hamburger/menu toggle present",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Tablet viewport renders",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "Time-to-load (onload): 1679ms",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Page load fast: 1679ms",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "LCP estimate: 892ms",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "LCP good: 892ms",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "Resources: {\"link\":18,\"script\":8,\"css\":8,\"img\":11}",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "Total transfer: 4041KB",
+    "notes": ""
+  },
+  {
+    "status": "WARN",
+    "test": "Page weight heavy: 4041KB",
+    "notes": ""
+  },
+  {
+    "status": "WARN",
+    "test": "3 images missing alt text",
+    "notes": "format%26fit%3Dcrop%26q%3D80&w=1920&q=75, images%2Flubricants-oils.jpg&w=1920&q=75, tp://localhost:3000/images/world-map.svg"
+  },
+  {
+    "status": "PASS",
+    "test": "Exactly one h1 per page (homepage)",
+    "notes": ""
+  },
+  {
+    "status": "WARN",
+    "test": "No skip-to-content link found",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "html lang attribute set: \"en\"",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "<title> present: \"LTIC SARL — Global Logistics & Industrial Solutions\"",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Meta description present (224 chars)",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "og:title present",
+    "notes": ""
+  },
+  {
+    "status": "PASS",
+    "test": "Canonical URL: https://www.lticsarl.com/",
+    "notes": ""
+  },
+  {
+    "status": "WARN",
+    "test": "Console error",
+    "notes": "[404] Failed to load resource: the server responded with a status of 404 (Not Found)"
+  },
+  {
+    "status": "PASS",
+    "test": "Contact form fields fillable",
+    "notes": ""
+  },
+  {
+    "status": "INFO",
+    "test": "Contact form submit NOT clicked — avoiding real submission during QA",
+    "notes": ""
+  }
+]
