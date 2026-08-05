@@ -1,0 +1,37 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Apache .htaccess — api.lticsarl.com
+# Place this file in:  /home/USERNAME/api.lticsarl.com/.htaccess
+#
+# Proxies all requests to the NestJS API running on port 4000.
+# Also handles Server-Sent Events (SSE) used for real-time notifications.
+# ─────────────────────────────────────────────────────────────────────────────
+
+Options -MultiViews -Indexes
+RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# SSE — disable buffering so notifications arrive in real time
+<LocationMatch "/api/notifications/stream">
+    ProxyPass http://127.0.0.1:4000/api/notifications/stream flushpackets=on
+    ProxyPassReverse / http://127.0.0.1:4000/
+    RequestHeader set X-Forwarded-Proto "https"
+    Header set Cache-Control "no-cache"
+    Header set X-Accel-Buffering "no"
+</LocationMatch>
+
+# Proxy all other requests to NestJS on port 4000
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ http://127.0.0.1:4000/$1 [P,L]
+
+ProxyPassReverse / http://127.0.0.1:4000/
+
+# Forward real client IP to NestJS
+RequestHeader set X-Forwarded-Proto "https"
+RequestHeader set X-Real-IP %{REMOTE_ADDR}s
+
+# Security headers
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"

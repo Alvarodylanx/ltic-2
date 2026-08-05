@@ -1,7 +1,21 @@
 {
-  "version": "1.45.0",
+  "version": "1.46.0",
   "releaseDate": "2026-08-04",
   "changelog": [
+    {
+      "version": "1.46.0",
+      "date": "2026-08-04",
+      "type": "chore",
+      "summary": "o2switch deployment configuration — PM2, Apache .htaccess, install and deploy scripts",
+      "changes": [
+        "ecosystem.config.cjs: PM2 config for ltic-web (port 3000) and ltic-api (port 4000) with auto-restart and log files",
+        "o2switch/web.htaccess: Apache reverse proxy for www.lticsarl.com → Next.js, HTTPS redirect, static asset caching",
+        "o2switch/api.htaccess: Apache reverse proxy for api.lticsarl.com → NestJS, SSE streaming support, IP forwarding",
+        "o2switch/first-install.sh: one-time setup — NVM, Node 20, pnpm, PM2, clone, build, migrate, start, crontab auto-start",
+        "o2switch/deploy.sh: update script — pull, build, copy statics, pm2 reload with zero downtime",
+        "o2switch/.env.production.example: all required environment variables with descriptions"
+      ]
+    },
     {
       "version": "1.45.0",
       "date": "2026-08-04",
