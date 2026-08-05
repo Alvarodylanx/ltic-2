@@ -19,6 +19,8 @@ const config = {
   },
   async rewrites() {
     return [
+      { source: '/favicon.ico',                     destination: '/ltic-logo.png' },
+      { source: '/apple-touch-icon-precomposed.png', destination: '/apple-touch-icon.png' },
       {
         source: '/api/:path*',
         destination: 'http://localhost:4000/api/:path*',

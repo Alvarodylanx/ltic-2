@@ -37,22 +37,26 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lticsarl.com';
 
 export const metadata: Metadata = {
   title: 'LTIC SARL — Global Logistics & Industrial Solutions',
-  description: 'LTIC SARL (Logistics and Transit International) is a Cameroonian multinational company specializing in logistics, transit, industrial supply, import/export facilitation, and international trade services across 30+ countries.',
+  description: 'LTIC SARL — Cameroonian logistics & industrial supply company. Reliable transit, import/export & international trade solutions across 30+ countries.',
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: '/' },
+  icons: {
+    icon: '/ltic-logo.png',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'LTIC SARL — Global Logistics & Industrial Solutions',
     description: 'Reliable logistics, transit, industrial supply, and international trade services for modern businesses and global markets.',
     type: 'website',
     url: SITE_URL,
     siteName: 'LTIC SARL',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'LTIC SARL — Global Logistics' }],
+    images: [{ url: '/ltic-logo.png', width: 512, height: 512, alt: 'LTIC SARL — Global Logistics' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'LTIC SARL — Global Logistics & Industrial Solutions',
     description: 'Reliable logistics, transit, industrial supply, and international trade services for modern businesses and global markets.',
-    images: ['/og-image.png'],
+    images: ['/ltic-logo.png'],
   },
 };
 
@@ -61,7 +65,7 @@ const organizationJsonLd = {
   '@type': 'Organization',
   name: 'LTIC SARL',
   url: 'https://www.lticsarl.com',
-  logo: 'https://www.lticsarl.com/logo.png',
+  logo: 'https://www.lticsarl.com/ltic-logo.png',
   description: 'Logistics and Transit International SARL — based in Cameroon, providing logistics, transit, industrial supply, import/export, and international trade solutions across 30+ countries.',
   address: {
     '@type': 'PostalAddress',
@@ -91,6 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://tile.openstreetmap.org" />
+        <link rel="manifest" href="/manifest.json" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

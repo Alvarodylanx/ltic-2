@@ -1,0 +1,13 @@
+{
+  "name": "LTIC SARL",
+  "short_name": "LTIC SARL",
+  "description": "Global Logistics & Industrial Solutions",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#070f1a",
+  "theme_color": "#070f1a",
+  "icons": [
+    { "src": "/ltic-logo.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

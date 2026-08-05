@@ -1,7 +1,27 @@
 {
-  "version": "1.44.0",
-  "releaseDate": "2026-08-03",
+  "version": "1.45.0",
+  "releaseDate": "2026-08-04",
   "changelog": [
+    {
+      "version": "1.45.0",
+      "date": "2026-08-04",
+      "type": "minor",
+      "summary": "Full QA pass — 12 issues fixed across auth, SEO, accessibility, assets, and UX",
+      "changes": [
+        "auth/login: changed email placeholder from admin@ltic-sarl.com to generic 'Enter your email address'",
+        "CookieConsent: banner no longer shows on /auth/* or /admin/* pages — prevents blocking the Sign In button",
+        "not-found: 404 page now includes full header with nav links and quick-access grid for mobile",
+        "layout.tsx: meta description shortened from 224 to 128 chars (Google truncates at 155)",
+        "layout.tsx: added icons metadata (icon + apple-touch-icon), fixed og:image from missing /og-image.png to /ltic-logo.png",
+        "layout.tsx: fixed JSON-LD logo from /logo.png (missing) to /ltic-logo.png",
+        "layout.tsx: added manifest.json link tag",
+        "next.config.mjs: added rewrites for /favicon.ico and /apple-touch-icon-precomposed.png",
+        "public: added apple-touch-icon.png, logo.png, manifest.json — eliminates 4 browser 404s",
+        "Footer: phone row hidden when company_phone is empty or placeholder (no more +237 6XX XXX XXX)",
+        "Footer: company email falls back to contact@lticsarl.com when admin has a personal Gmail set",
+        "ProductsContent: added 'Loading product catalog…' text above skeleton grid so loading state looks intentional"
+      ]
+    },
     {
       "version": "1.44.0",
       "date": "2026-08-03",

@@ -248,17 +248,22 @@ export default function ProductsPage() {
 
           {/* Skeletons */}
           {(!mounted || isLoading) && (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
-              {Array(8).fill(0).map((_, i) => (
-                <div key={i} className="border border-border rounded-2xl overflow-hidden">
-                  <Skeleton className="aspect-square w-full" />
-                  <div className="p-4 space-y-2">
-                    <Skeleton className="h-3 w-16" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-9 w-full mt-2" />
+            <div>
+              <p className="text-center text-sm text-muted-foreground mb-6 animate-pulse">
+                Loading product catalog…
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+                {Array(8).fill(0).map((_, i) => (
+                  <div key={i} className="border border-border rounded-2xl overflow-hidden">
+                    <Skeleton className="aspect-square w-full" />
+                    <div className="p-4 space-y-2">
+                      <Skeleton className="h-3 w-16" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-9 w-full mt-2" />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
 

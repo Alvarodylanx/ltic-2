@@ -142,23 +142,28 @@ export function Footer() {
                   {settings?.company_address || 'Douala, Cameroon / International Operations'}
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <a
-                  href={`tel:${settings?.company_phone || ''}`}
-                  className="text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors"
-                >
-                  {settings?.company_phone || '+237 6XX XXX XXX'}
-                </a>
-              </li>
+              {settings?.company_phone && !settings.company_phone.includes('XX') && (
+                <li className="flex items-center gap-3">
+                  <Phone className="h-4 w-4 text-primary flex-shrink-0" />
+                  <a
+                    href={`tel:${settings.company_phone}`}
+                    className="text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors"
+                  >
+                    {settings.company_phone}
+                  </a>
+                </li>
+              )}
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <a
-                  href={`mailto:${settings?.company_email || 'contact@lticsarl.com'}`}
-                  className="text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors"
-                >
-                  {settings?.company_email || 'contact@lticsarl.com'}
-                </a>
+                {(() => {
+                  const raw = settings?.company_email;
+                  const email = raw && !raw.includes('@gmail.com') ? raw : 'contact@lticsarl.com';
+                  return (
+                    <a href={`mailto:${email}`} className="text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors">
+                      {email}
+                    </a>
+                  );
+                })()}
               </li>
               <li className="flex items-center gap-3">
                 <Globe className="h-4 w-4 text-primary flex-shrink-0" />

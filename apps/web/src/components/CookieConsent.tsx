@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -217,6 +218,8 @@ function PreferencesModal({
 /* ─── main banner ──────────────────────────────────────────────── */
 export function CookieConsent() {
   const { L } = useLanguage();
+  const pathname = usePathname();
+  const isAuthPage = pathname?.startsWith('/auth') || pathname?.startsWith('/admin');
   const [showBanner, setShowBanner] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showFloating, setShowFloating] = useState(false);
@@ -224,9 +227,10 @@ export function CookieConsent() {
 
   useEffect(() => {
     const decided = hasDecided();
-    setShowBanner(!decided);
+    // Never show the full banner on login / admin pages — it covers interactive elements
+    setShowBanner(!decided && !isAuthPage);
     setShowFloating(decided);
-  }, []);
+  }, [isAuthPage]);
 
   const handleAcceptAll = () => {
     acceptAll();
