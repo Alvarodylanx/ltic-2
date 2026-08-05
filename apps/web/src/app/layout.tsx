@@ -36,49 +36,125 @@ const jakarta = localFont({
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lticsarl.com';
 
 export const metadata: Metadata = {
-  title: 'LTIC SARL — Global Logistics & Industrial Solutions',
-  description: 'LTIC SARL — Cameroonian logistics & industrial supply company. Reliable transit, import/export & international trade solutions across 30+ countries.',
   metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'LTIC SARL — Logistics, Transit & Industrial Supply | Cameroon',
+    template: '%s | LTIC SARL',
+  },
+  description: 'LTIC SARL delivers end-to-end freight forwarding, customs clearance, industrial equipment supply and international trade solutions across 30+ countries from Douala, Cameroon.',
+  keywords: [
+    'logistics cameroon', 'freight forwarding africa', 'industrial supply douala',
+    'transit cameroon', 'import export africa', 'timber export cameroon',
+    'customs clearance cameroon', 'supply chain africa', 'industrial equipment africa',
+    'offshore logistics guinea', 'LTIC SARL', 'freight forwarder douala',
+  ],
+  authors: [{ name: 'LTIC SARL', url: SITE_URL }],
+  creator: 'LTIC SARL',
+  publisher: 'LTIC SARL',
+  applicationName: 'LTIC SARL',
+  category: 'logistics',
   alternates: { canonical: '/' },
   icons: {
     icon: '/ltic-logo.png',
     apple: '/apple-touch-icon.png',
   },
   openGraph: {
-    title: 'LTIC SARL — Global Logistics & Industrial Solutions',
-    description: 'Reliable logistics, transit, industrial supply, and international trade services for modern businesses and global markets.',
+    title: 'LTIC SARL — Logistics, Transit & Industrial Supply | Cameroon',
+    description: 'End-to-end freight forwarding, customs clearance, industrial supply and international trade across 30+ countries — based in Douala, Cameroon.',
     type: 'website',
     url: SITE_URL,
     siteName: 'LTIC SARL',
-    images: [{ url: '/ltic-logo.png', width: 512, height: 512, alt: 'LTIC SARL — Global Logistics' }],
+    locale: 'en_US',
+    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: 'LTIC SARL — Global Logistics & Industrial Solutions' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LTIC SARL — Global Logistics & Industrial Solutions',
-    description: 'Reliable logistics, transit, industrial supply, and international trade services for modern businesses and global markets.',
-    images: ['/ltic-logo.png'],
+    site: '@lticsarl',
+    title: 'LTIC SARL — Logistics, Transit & Industrial Supply | Cameroon',
+    description: 'End-to-end freight forwarding, customs clearance, industrial supply and international trade across 30+ countries — based in Douala, Cameroon.',
+    images: [`${SITE_URL}/og-image.png`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? undefined,
   },
 };
 
-const organizationJsonLd = {
+const siteJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'LTIC SARL',
-  url: 'https://www.lticsarl.com',
-  logo: 'https://www.lticsarl.com/ltic-logo.png',
-  description: 'Logistics and Transit International SARL — based in Cameroon, providing logistics, transit, industrial supply, import/export, and international trade solutions across 30+ countries.',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Douala',
-    addressCountry: 'CM',
-  },
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'customer service',
-    email: 'contact@lticsarl.com',
-    availableLanguage: ['English', 'French'],
-  },
-  sameAs: [],
+  '@graph': [
+    {
+      '@type': ['Organization', 'Corporation'],
+      '@id': `${SITE_URL}/#organization`,
+      name: 'LTIC SARL',
+      alternateName: ['Logistics and Transit International', 'LTIC Cameroon'],
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        '@id': `${SITE_URL}/#logo`,
+        url: `${SITE_URL}/ltic-logo.png`,
+        width: 512,
+        height: 512,
+        caption: 'LTIC SARL',
+      },
+      image: { '@id': `${SITE_URL}/#logo` },
+      description: 'LTIC SARL (Logistics and Transit International) is a Cameroonian multinational providing freight forwarding, customs clearance, industrial supply, import/export, and international trade services across 30+ countries.',
+      foundingDate: '2019',
+      foundingLocation: 'Douala, Cameroon',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Douala',
+        addressRegion: 'Littoral',
+        addressCountry: 'CM',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: 'contact@lticsarl.com',
+        availableLanguage: ['English', 'French'],
+      },
+      areaServed: [
+        { '@type': 'Country', 'name': 'Cameroon' },
+        { '@type': 'Country', 'name': 'Nigeria' },
+        { '@type': 'Country', 'name': 'Ghana' },
+        { '@type': 'Country', 'name': 'Côte d\'Ivoire' },
+        { '@type': 'Country', 'name': 'France' },
+        { '@type': 'Country', 'name': 'China' },
+        { '@type': 'Country', 'name': 'United States' },
+      ],
+      knowsAbout: [
+        'Freight Forwarding', 'International Logistics', 'Customs Clearance',
+        'Industrial Supply', 'Timber Export', 'Import Export Africa',
+        'Supply Chain Management', 'Offshore Logistics', 'Gulf of Guinea',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'LTIC SARL Industrial Products & Logistics Services',
+      },
+      sameAs: [],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'LTIC SARL',
+      description: 'Global Logistics & Industrial Solutions from Cameroon',
+      inLanguage: ['en', 'fr'],
+      publisher: { '@id': `${SITE_URL}/#organization` },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${SITE_URL}/products?search={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -98,7 +174,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="manifest" href="/manifest.json" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
       </head>
       <body className={`${barlow.variable} ${jakarta.variable}`} suppressHydrationWarning>
