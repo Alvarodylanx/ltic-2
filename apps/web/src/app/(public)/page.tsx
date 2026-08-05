@@ -937,10 +937,10 @@ export default function HomePage() {
                                 bg-primary/20 rounded-full blur-2xl pointer-events-none" />
 
               {/* "Featured Product" live pill */}
-              <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30
+              <div className="inline-flex items-center gap-2 bg-primary/25 border border-primary/60
                               rounded-full px-4 py-1.5 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse flex-shrink-0" />
-                <span className="text-primary font-bold text-[10px] uppercase tracking-[0.32em]">
+                <span className="text-white font-bold text-[11px] uppercase tracking-[0.32em]">
                   {L({ en: 'Featured Product', fr: 'Produit Vedette' })}
                 </span>
               </div>
