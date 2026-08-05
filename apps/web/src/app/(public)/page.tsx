@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring, useMotionTemplate } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
@@ -431,19 +431,8 @@ export default function HomePage() {
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
 
-  // ── Spotlight animations ─────────────────────────────────────────────────
+  // ── Spotlight exit animation (element-relative, works at any scroll position) ──
   const spotlightRef = useRef<HTMLElement>(null);
-
-  // ENTRANCE (scroll down) — drawer pulls in; retract (scroll up) uses same spring reversed
-  // Lower mass = faster retraction back toward hero
-  const { scrollY } = useScroll();
-  const rawBottomClip = useTransform(scrollY, [0, 580], [100, 0], { clamp: true });
-  const smoothBottomClip = useSpring(rawBottomClip, {
-    stiffness: 105, damping: 26, mass: 0.65, restDelta: 0.001,
-  });
-  const spotlightClipPath = useMotionTemplate`inset(0% 0% ${smoothBottomClip}% 0%)`;
-
-  // EXIT (scroll down past section) — fade + upward drift
   const { scrollYProgress: exitProg } = useScroll({
     target: spotlightRef,
     offset: ['start start', 'end start'],
@@ -894,10 +883,9 @@ export default function HomePage() {
       <motion.section
         ref={spotlightRef}
         style={shouldReduce ? {} : {
-          clipPath: spotlightClipPath,
           opacity: smoothExitOpacity,
           y: smoothExitY,
-          willChange: 'clip-path, transform, opacity',
+          willChange: 'transform, opacity',
         }}
         className="relative overflow-hidden bg-[#070f1a] border-t border-b border-white/[0.09]">
 
@@ -975,7 +963,7 @@ export default function HomePage() {
               <div className="w-10 h-0.5 bg-primary mx-auto lg:mx-0 mb-5 rounded-full" />
 
               {/* Body */}
-              <p className="text-sidebar-foreground/72 text-sm sm:text-base leading-relaxed
+              <p className="text-sidebar-foreground text-sm sm:text-base leading-relaxed
                             mb-3 max-w-md mx-auto lg:mx-0">
                 {spotlightData
                   ? (language === 'fr' ? spotlightData.bodyFr : spotlightData.bodyEn)
@@ -985,7 +973,7 @@ export default function HomePage() {
                     })
                 }
               </p>
-              <p className="text-sidebar-foreground/48 text-xs leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
+              <p className="text-sidebar-foreground/80 text-sm leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
                 {spotlightData
                   ? (language === 'fr' ? spotlightData.subBodyFr : spotlightData.subBodyEn)
                   : L({
