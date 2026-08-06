@@ -586,14 +586,14 @@ export default function HomePage() {
                   className="flex flex-row gap-2 sm:gap-3"
                 >
                   <Button asChild size="lg"
-                    className="font-semibold h-9 px-4 sm:h-12 sm:px-8 shadow-lg shadow-black/40 text-xs sm:text-base w-auto justify-center">
+                    className="font-semibold h-11 px-4 sm:h-12 sm:px-8 shadow-lg shadow-black/40 text-xs sm:text-base w-auto justify-center">
                     <Link href={heroSlides[activeSlide].cta1.href}>
                       {L(heroSlides[activeSlide].cta1.label)}
                       <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 ml-1.5 sm:ml-2 flex-shrink-0" />
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline"
-                    className="font-semibold h-9 px-4 sm:h-12 sm:px-8 text-xs sm:text-base bg-white/8
+                    className="font-semibold h-11 px-4 sm:h-12 sm:px-8 text-xs sm:text-base bg-white/8
                                border-white/35 text-white hover:bg-white/18 hover:border-white/60
                                w-auto justify-center">
                     <Link href={heroSlides[activeSlide].cta2.href}>
