@@ -244,7 +244,7 @@ function FeatureBlock({ label, heading, body, image, tag, href, reverse }: Featu
         <Link
           href={href}
           className="inline-flex items-center gap-2 text-primary font-semibold text-sm
-                     hover:gap-4 transition-all duration-200 w-fit group"
+                     hover:gap-4 transition-all duration-200 w-fit group py-3"
         >
           {L({ en: 'View products', fr: 'Voir les produits' })}
           <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5

@@ -307,15 +307,15 @@ export function CookieConsent() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
-                  <Button onClick={handleAcceptAll} size="sm" className="flex items-center gap-1.5">
+                  <Button onClick={handleAcceptAll} className="flex items-center gap-1.5 h-11 px-4">
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     {L({ en: 'Accept All', fr: 'Tout Accepter' })}
                   </Button>
-                  <Button onClick={handleRejectAll} variant="outline" size="sm" className="flex items-center gap-1.5">
+                  <Button onClick={handleRejectAll} variant="outline" className="flex items-center gap-1.5 h-11 px-4">
                     <XCircle className="h-3.5 w-3.5" />
                     {L({ en: 'Reject All', fr: 'Tout Refuser' })}
                   </Button>
-                  <Button onClick={handleOpenModal} variant="ghost" size="sm" className="flex items-center gap-1.5">
+                  <Button onClick={handleOpenModal} variant="ghost" className="flex items-center gap-1.5 h-11 px-4">
                     <Settings2 className="h-3.5 w-3.5" />
                     {L({ en: 'Manage Preferences', fr: 'Gérer les préférences' })}
                   </Button>
