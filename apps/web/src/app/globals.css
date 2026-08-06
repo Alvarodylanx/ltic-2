@@ -142,6 +142,12 @@ footer a[target="_blank"][aria-label] {
   align-items: center;
   justify-content: center;
 }
+footer ul li a {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+}
 
 /* Accessibility */
 :focus-visible {

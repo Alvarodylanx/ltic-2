@@ -328,7 +328,7 @@ export default function ProductsPage() {
                           <h2 className="font-display font-bold text-lg text-foreground tracking-tight">{catName}</h2>
                           <button
                             onClick={() => setSelectedCategory(catId)}
-                            className="ml-auto text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                            className="ml-auto text-xs font-semibold text-primary hover:underline flex items-center gap-1 py-[14px]">
                             {L({ en: 'View all', fr: 'Voir tout' })}
                             <ArrowRight className="h-3 w-3" />
                           </button>

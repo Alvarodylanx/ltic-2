@@ -740,7 +740,7 @@ export default function HomePage() {
                 transition={{ duration: 0.38, ease: catalogEase, delay: 0.2 }}
               >
                 <Button asChild variant="outline" size="sm"
-                  className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary rounded-full">
+                  className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary rounded-full h-11">
                   <Link href="/products">
                     {L({ en: 'View All', fr: 'Tout Voir' })}
                     <ChevronRight className="h-4 w-4 ml-1" />
