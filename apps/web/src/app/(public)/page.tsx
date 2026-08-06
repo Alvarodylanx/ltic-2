@@ -766,13 +766,12 @@ export default function HomePage() {
                       initial={{ opacity: 0, scale: 0.92, y: 16 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: idx * 0.07 }}
-                      className="h-full"
                       whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
                       <Link href={`/products/${product.slug}`}
                         className="group bg-white border border-border rounded-xl overflow-hidden
                                    hover:border-primary/40 hover:shadow-md transition-all duration-200
-                                   flex flex-col h-full">
-                        <div className="aspect-square relative bg-white overflow-hidden flex-shrink-0">
+                                   flex flex-col">
+                        <div className="aspect-square relative bg-muted/40 overflow-hidden">
                           {product.imageUrl && (
                             <Image src={product.imageUrl}
                               alt={L({ en: product.nameEn, fr: product.nameFr })}
@@ -781,7 +780,7 @@ export default function HomePage() {
                             />
                           )}
                         </div>
-                        <div className="p-3 flex flex-col flex-1">
+                        <div className="p-3">
                           {product.categoryName && (
                             <span className="inline-block bg-primary/10 text-primary text-[9px]
                                              px-1.5 py-0.5 mb-1.5 font-semibold rounded-full w-fit">
@@ -790,7 +789,7 @@ export default function HomePage() {
                           )}
                           <p className="font-sans font-medium text-xs leading-snug text-foreground/65
                                          group-hover:text-primary transition-colors duration-150
-                                         line-clamp-2 flex-1">
+                                         line-clamp-2">
                             {L({ en: product.nameEn, fr: product.nameFr })}
                           </p>
                         </div>
