@@ -98,7 +98,7 @@ export function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden p-2 rounded-sm hover:bg-muted transition-colors"
+          className="lg:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-sm hover:bg-muted transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
