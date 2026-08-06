@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   // Only guard /admin routes; the login page itself is at /auth/login (public)
   if (!pathname.startsWith('/admin')) return NextResponse.next();
 
-  const token = request.cookies.get('admin_token')?.value;
+  const token = request.cookies.get('admin_jwt')?.value;
   if (token) return NextResponse.next();
 
   // No token — redirect to login, preserving the intended destination
