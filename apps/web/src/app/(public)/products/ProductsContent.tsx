@@ -23,8 +23,8 @@ const cardGrid = {
   show: { transition: { staggerChildren: 0.07, delayChildren: 0.04 } },
 };
 const cardItem = {
-  hidden: { opacity: 0, y: 44, scale: 0.93 },
-  show:   { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.55, ease: EXPO } },
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: EXPO } },
 };
 const headerReveal = {
   hidden: { opacity: 0, x: -20 },
