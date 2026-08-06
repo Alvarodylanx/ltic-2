@@ -40,6 +40,7 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { AppModule } from "./app.module";
 import * as fs from "fs";
 import cookieParser from "cookie-parser";
+import compression from "compression";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -47,6 +48,7 @@ async function bootstrap() {
   });
 
   app.setGlobalPrefix("api");
+  app.use(compression());
   app.use(cookieParser());
 
   // Security headers
