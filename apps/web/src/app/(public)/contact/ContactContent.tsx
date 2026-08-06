@@ -110,56 +110,9 @@ export default function ContactPage() {
 
       </section>
 
-      {/* ── TRUST BRIDGE ────────────────────────────────────────────────────── */}
-      <div className="relative bg-sidebar overflow-hidden">
-        {/* Gradient fade: dark navy → white background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-sidebar via-sidebar/80 to-background pointer-events-none" />
-        {/* Top hairline accent */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
-
-        <motion.div
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
-          className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14
-                     grid grid-cols-2 lg:grid-cols-4 gap-px
-                     bg-white/[0.06] rounded-none divide-x-0"
-        >
-          {([
-            { value: '30+',  label: { en: 'Countries Served',   fr: 'Pays Desservis'      } },
-            { value: '5+',   label: { en: 'Years of Expertise', fr: 'Années d\'Expertise'  } },
-            { value: '500+', label: { en: 'Shipments Handled',  fr: 'Expéditions Traitées' } },
-            { value: '24h',  label: { en: 'Response Time',      fr: 'Délai de Réponse'     } },
-          ] as const).map(({ value, label }) => (
-            <motion.div
-              key={value}
-              variants={{
-                hidden: { opacity: 0, y: 18 },
-                show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 90, damping: 20 } },
-              }}
-              className="flex flex-col items-center gap-1.5 py-6 px-4
-                         border border-white/[0.08] rounded-2xl mx-1.5 my-1.5
-                         bg-white/[0.04] backdrop-blur-sm"
-            >
-              <span className="font-display font-extrabold text-3xl sm:text-4xl text-primary
-                               leading-none tracking-tight tabular-nums">
-                {value}
-              </span>
-              <span className="text-sidebar-foreground/70 text-[11px] font-semibold uppercase tracking-[0.22em] text-center">
-                {L(label)}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Bottom fade continues into the form section */}
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-background pointer-events-none" />
-      </div>
-
       {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
       <section className="relative z-10 bg-background pb-10 sm:pb-14 lg:pb-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
 
             {/* FORM — order-1 on mobile so it appears first, order-2 on desktop (right col) */}
