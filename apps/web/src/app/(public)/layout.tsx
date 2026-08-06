@@ -5,6 +5,7 @@ import { CookieConsent } from '@/components/CookieConsent';
 import { BackToTop } from '@/components/BackToTop';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { PageTransition } from '@/components/PageTransition';
+import { NavigationProgress } from '@/components/NavigationProgress';
 
 // Minimal placeholder that preserves navbar height so the page doesn't jump
 function NavbarFallback() {
@@ -14,6 +15,7 @@ function NavbarFallback() {
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <NavigationProgress />
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:font-medium"
