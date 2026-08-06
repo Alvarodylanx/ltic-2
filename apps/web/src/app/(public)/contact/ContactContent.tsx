@@ -70,12 +70,12 @@ export default function ContactPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-end pb-0">
+      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
         <Image src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-20 sm:pb-24">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, x: -22 }}
             animate={{ opacity: 1, x: 0 }}
