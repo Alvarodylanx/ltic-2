@@ -771,13 +771,18 @@ export default function HomePage() {
                         className="group bg-white border border-border rounded-xl overflow-hidden
                                    hover:border-primary/40 hover:shadow-md transition-all duration-200
                                    flex flex-col">
-                        <div className="aspect-square relative bg-muted/40 overflow-hidden">
-                          {product.imageUrl && (
+                        <div className="w-full bg-muted/40">
+                          {product.imageUrl ? (
                             <Image src={product.imageUrl}
                               alt={L({ en: product.nameEn, fr: product.nameFr })}
-                              fill className="object-contain p-2"
+                              width={300} height={300}
+                              className="w-full aspect-square object-contain p-2"
                               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                             />
+                          ) : (
+                            <div className="w-full aspect-square flex items-center justify-center">
+                              <Package className="h-8 w-8 text-muted-foreground/30" />
+                            </div>
                           )}
                         </div>
                         <div className="p-3">
