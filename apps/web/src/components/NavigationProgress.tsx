@@ -14,7 +14,6 @@ export function NavigationProgress() {
       const bar = barRef.current;
       if (!bar) return;
       clearTimeout(timerRef.current);
-      cancelAnimationFrame(rafRef.current!);
       // Reset without transition
       bar.style.transition = 'none';
       bar.style.width = '0%';
