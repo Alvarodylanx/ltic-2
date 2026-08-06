@@ -99,7 +99,7 @@ export function PhoneInput({ value, onChange, syncCountry, required, className, 
         <button
           type="button"
           onClick={() => setOpen(v => !v)}
-          className="h-10 px-2.5 flex items-center gap-1 border border-r-0 rounded-l-md bg-background hover:bg-muted transition-colors text-sm font-medium min-w-[80px]"
+          className="h-11 px-2.5 flex items-center gap-1 border border-r-0 rounded-l-md bg-background hover:bg-muted transition-colors text-sm font-medium min-w-[80px]"
         >
           <FlagImg code={selected.code} />
           <span className="text-muted-foreground text-xs">{selected.dial}</span>

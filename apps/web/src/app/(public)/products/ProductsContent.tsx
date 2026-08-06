@@ -182,7 +182,7 @@ export default function ProductsPage() {
               <button
                 onClick={() => setFilterOpen(v => !v)}
                 aria-expanded={filterOpen}
-                className={`flex items-center gap-1.5 h-9 pl-3 pr-2.5 rounded-full border text-sm font-semibold
+                className={`flex items-center gap-1.5 h-11 pl-3 pr-2.5 rounded-full border text-sm font-semibold
                   transition-all duration-200 whitespace-nowrap
                   ${selectedCategory
                     ? 'bg-primary text-primary-foreground border-primary'

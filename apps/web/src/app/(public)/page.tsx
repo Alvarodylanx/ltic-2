@@ -181,7 +181,7 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
       <Link
         href="/services"
         className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold
-                   group-hover:gap-3 transition-all duration-200 w-fit"
+                   group-hover:gap-3 transition-all duration-200 w-fit py-3"
       >
         {L({ en: 'Learn more', fr: 'En savoir plus' })}
         <ArrowRight className="h-3.5 w-3.5 flex-shrink-0" />

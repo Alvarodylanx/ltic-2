@@ -135,6 +135,13 @@ button[aria-label="Toggle menu"] {
   min-height: 44px;
   min-width: 44px;
 }
+footer a[target="_blank"][aria-label] {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* Accessibility */
 :focus-visible {
