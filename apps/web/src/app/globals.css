@@ -152,8 +152,15 @@ footer a[href="/privacy"],
 footer a[href="/terms"],
 footer a[href="/cookies"] {
   min-height: 44px;
+  min-width: 44px;
   display: inline-flex;
   align-items: center;
+}
+a[href^="/products/"]:not([href="/products"]):not([href="/products/"]) {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Accessibility */
