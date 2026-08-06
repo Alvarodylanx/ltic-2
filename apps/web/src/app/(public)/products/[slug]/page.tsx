@@ -1,10 +1,11 @@
+import { cache } from 'react';
 import { Metadata } from 'next';
 import ProductDetailContent from './ProductDetailContent';
 
 const SITE_URL = 'https://www.lticsarl.com';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
-async function fetchProduct(slug: string) {
+const fetchProduct = cache(async (slug: string) => {
   try {
     const res = await fetch(`${API_URL}/api/products/${encodeURIComponent(slug)}`, {
       next: { revalidate: 3600 },
@@ -13,7 +14,7 @@ async function fetchProduct(slug: string) {
   } catch {
     return null;
   }
-}
+});
 
 function absoluteImageUrl(url: string | undefined): string | undefined {
   if (!url) return undefined;
