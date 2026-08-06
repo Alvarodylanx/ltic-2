@@ -399,7 +399,7 @@ function ProductCard({ product, L }: { product: any; L: (o: { en: string; fr: st
         <h3 className="font-sans font-medium text-xs sm:text-sm leading-snug mb-2.5 sm:mb-3 group-hover:text-primary transition-colors flex-1 line-clamp-2 text-foreground/65">
           {L({ en: product.nameEn, fr: product.nameFr })}
         </h3>
-        <Button asChild size="sm" className="w-full text-xs sm:text-sm h-8 sm:h-9">
+        <Button asChild size="sm" className="w-full text-xs sm:text-sm h-11 sm:h-9">
           <Link href={`/products/${product.slug}`}>
             {L({ en: 'View Details', fr: 'Voir les Détails' })}
             <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 ml-1 flex-shrink-0" />

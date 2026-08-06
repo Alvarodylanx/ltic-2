@@ -148,6 +148,13 @@ footer ul li a {
   display: flex;
   align-items: center;
 }
+footer a[href="/privacy"],
+footer a[href="/terms"],
+footer a[href="/cookies"] {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
 
 /* Accessibility */
 :focus-visible {
