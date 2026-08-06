@@ -336,7 +336,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
-      <section className="bg-sidebar py-3 sm:py-20">
+      <section className="bg-sidebar py-3 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
@@ -452,7 +452,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── CORE VALUES — typographic index ─────────────────────────────────── */}
-      <section className="bg-background border-t border-border py-3 sm:py-12">
+      <section className="bg-background border-t border-border py-3 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
