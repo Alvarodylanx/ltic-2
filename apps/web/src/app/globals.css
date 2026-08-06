@@ -167,6 +167,11 @@ a[href^="/products/"]:not([href="/products"]):not([href="/products/"]) {
 div.fixed.bottom-0.left-0.right-0 button {
   min-height: 44px;
 }
+/* Back to top button */
+button[aria-label="Back to top"] {
+  min-width: 44px;
+  min-height: 44px;
+}
 
 /* Accessibility */
 :focus-visible {
