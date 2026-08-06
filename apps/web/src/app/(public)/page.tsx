@@ -749,13 +749,7 @@ export default function HomePage() {
                 </Button>
               </motion.div>
             </div>
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={viewportOnce}
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {isLoading
                 ? Array(6).fill(0).map((_, i) => (
                     <div key={i} className="bg-white border border-border rounded-xl overflow-hidden flex flex-col">
@@ -766,8 +760,13 @@ export default function HomePage() {
                       </div>
                     </div>
                   ))
-                : featuredProducts?.slice(0, 6).map(product => (
-                    <motion.div key={product.id} variants={scaleIn} className="h-full"
+                : featuredProducts?.slice(0, 6).map((product, idx) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, scale: 0.92, y: 16 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: idx * 0.07 }}
+                      className="h-full"
                       whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
                       <Link href={`/products/${product.slug}`}
                         className="group bg-white border border-border rounded-xl overflow-hidden
@@ -798,7 +797,7 @@ export default function HomePage() {
                       </Link>
                     </motion.div>
                   ))}
-            </motion.div>
+            </div>
           </div>
         </section>
       )}
