@@ -688,7 +688,7 @@ export default function HomePage() {
               variants={{ hidden: { opacity: 0, x: 22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } } }}
               className="flex-shrink-0">
               <Button asChild variant="outline"
-                className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary">
+                className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary h-11">
                 <Link href="/services">
                   {L({ en: 'All Services', fr: 'Tous les Services' })}
                   <ChevronRight className="h-4 w-4 ml-1" />

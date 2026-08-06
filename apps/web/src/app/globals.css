@@ -131,6 +131,10 @@ a[aria-label="LTIC SARL — Home"] {
   padding-top: 4px;
   padding-bottom: 4px;
 }
+button[aria-label="Toggle menu"] {
+  min-height: 44px;
+  min-width: 44px;
+}
 
 /* Accessibility */
 :focus-visible {
