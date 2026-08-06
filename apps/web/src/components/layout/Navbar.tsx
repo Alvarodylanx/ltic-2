@@ -49,7 +49,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0 group" aria-label="LTIC SARL — Home">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0 group min-h-[44px]" aria-label="LTIC SARL — Home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/ltic-logo.png" alt="LTIC SARL" className="h-9 w-auto object-contain translate-x-2" />
           <span className="font-bold text-lg">

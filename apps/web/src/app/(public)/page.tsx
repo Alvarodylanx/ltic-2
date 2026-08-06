@@ -439,8 +439,9 @@ export default function HomePage() {
   });
   const rawExitOpacity = useTransform(exitProg, [0, 0.45, 1], [1, 0.3, 0], { clamp: true });
   const rawExitY       = useTransform(exitProg, [0, 1], [0, -56], { clamp: true });
-  const smoothExitOpacity = useSpring(rawExitOpacity, { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
-  const smoothExitY       = useSpring(rawExitY,       { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
+  // Skip spring physics on mobile — too CPU-heavy; use raw motion values directly
+  const smoothExitOpacity = useSpring(rawExitOpacity, isMobile ? { stiffness: 1000, damping: 100 } : { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
+  const smoothExitY       = useSpring(rawExitY,       isMobile ? { stiffness: 1000, damping: 100 } : { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
 
   return (
     <>
@@ -455,12 +456,12 @@ export default function HomePage() {
           <motion.div
             key={`bg-${activeSlide}`}
             className="absolute inset-0"
-            style={{ willChange: 'transform, opacity' }}
-            initial={{ opacity: 0, scale: kenBurns[activeSlide].initial.scale, x: kenBurns[activeSlide].initial.x, y: kenBurns[activeSlide].initial.y }}
-            animate={{ opacity: 1, scale: kenBurns[activeSlide].animate.scale, x: kenBurns[activeSlide].animate.x, y: kenBurns[activeSlide].animate.y }}
-            exit={{ opacity: 0, transition: { duration: 1.0, ease: 'easeInOut' } }}
+            style={isMobile ? undefined : { willChange: 'transform, opacity' }}
+            initial={{ opacity: 0, ...(isMobile ? {} : { scale: kenBurns[activeSlide].initial.scale, x: kenBurns[activeSlide].initial.x, y: kenBurns[activeSlide].initial.y }) }}
+            animate={{ opacity: 1, ...(isMobile ? {} : { scale: kenBurns[activeSlide].animate.scale, x: kenBurns[activeSlide].animate.x, y: kenBurns[activeSlide].animate.y }) }}
+            exit={{ opacity: 0, transition: { duration: isMobile ? 0.5 : 1.0, ease: 'easeInOut' } }}
             transition={{
-              opacity: { duration: 1.2, ease: 'easeInOut' },
+              opacity: { duration: isMobile ? 0.6 : 1.2, ease: 'easeInOut' },
               scale: { duration: HERO_INTERVAL / 1000 + 2.5, ease: [0.25, 0.46, 0.45, 0.94] },
               x:     { duration: HERO_INTERVAL / 1000 + 2.5, ease: [0.25, 0.46, 0.45, 0.94] },
               y:     { duration: HERO_INTERVAL / 1000 + 2.5, ease: [0.25, 0.46, 0.45, 0.94] },
