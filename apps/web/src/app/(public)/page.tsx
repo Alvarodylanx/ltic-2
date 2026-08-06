@@ -402,6 +402,7 @@ export default function HomePage() {
   const { data: featuredProducts, isLoading } = useQuery<any[]>({
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
+    staleTime: 5 * 60 * 1000,
   });
   const { data: spotlightData } = useQuery<any>({
     queryKey: ['spotlight'],
@@ -722,7 +723,7 @@ export default function HomePage() {
 
       {/* ══ 3. FEATURED THIS WEEK ════════════════════════════════════════════ */}
       {mounted && (isLoading || (featuredProducts && featuredProducts.length > 0)) && (
-        <section className="bg-background py-3 sm:py-20 border-y border-border">
+        <section className="bg-background py-10 sm:py-20 border-y border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-8">
               <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
