@@ -7,7 +7,6 @@ export function NavigationProgress() {
   const pathname = usePathname();
   const barRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
-  const rafRef = useRef<number>();
 
   // Show bar on any internal link click — fires immediately, before React commits
   useEffect(() => {
@@ -16,16 +15,15 @@ export function NavigationProgress() {
       if (!bar) return;
       clearTimeout(timerRef.current);
       cancelAnimationFrame(rafRef.current!);
+      // Reset without transition
       bar.style.transition = 'none';
       bar.style.width = '0%';
       bar.style.opacity = '1';
-      // Two rAFs: first resets width without transition, second animates to 70%
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = requestAnimationFrame(() => {
-          bar.style.transition = 'width 1.2s cubic-bezier(0.1, 0.6, 0.4, 1)';
-          bar.style.width = '70%';
-        });
-      });
+      // Force synchronous reflow so the browser registers the reset before animating
+      void bar.getBoundingClientRect();
+      // Now animate — visible within the same paint cycle
+      bar.style.transition = 'width 1.4s cubic-bezier(0.05, 0.6, 0.4, 1)';
+      bar.style.width = '75%';
     };
 
     const onClick = (e: MouseEvent) => {
@@ -45,7 +43,6 @@ export function NavigationProgress() {
   useEffect(() => {
     const bar = barRef.current;
     if (!bar) return;
-    cancelAnimationFrame(rafRef.current!);
     bar.style.transition = 'width 0.2s ease-out, opacity 0.3s ease-out 0.15s';
     bar.style.width = '100%';
     timerRef.current = setTimeout(() => {
