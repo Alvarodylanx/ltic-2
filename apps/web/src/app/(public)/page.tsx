@@ -619,7 +619,7 @@ export default function HomePage() {
                   aria-selected={i === activeSlide}
                   aria-label={`Slide ${i + 1}`}
                   onClick={() => goTo(i)}
-                  className="flex items-center justify-center p-3 sm:p-0 -m-3 sm:m-0"
+                  className="flex items-center justify-center py-5 px-3 sm:p-0 -my-5 -mx-3 sm:m-0"
                 >
                   <span className={`block rounded-full transition-all duration-300 ${
                     i === activeSlide
