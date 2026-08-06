@@ -190,3 +190,19 @@ button, a, [role="button"] {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Featured This Week — 2 cols on mobile, 3 on desktop */
+.grid-cols-2-mobile {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+@media (min-width: 768px) {
+  .grid-cols-2-mobile {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* Featured card hover */
+.featured-card:hover {
+  box-shadow: 0 8px 32px rgba(15,23,42,0.14) !important;
+  border-color: #bfdbfe !important;
+}
