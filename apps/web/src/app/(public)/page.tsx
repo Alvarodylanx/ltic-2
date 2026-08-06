@@ -1116,9 +1116,9 @@ export default function HomePage() {
                 {L({ en: 'From Request to Delivery.', fr: 'De la Demande à la Livraison.' })}
               </h2>
             </div>
-            <Button asChild size="sm" variant="outline"
+            <Button asChild variant="outline"
               className="self-start sm:self-auto border-border font-semibold text-xs
-                         hover:border-primary/50 hover:text-primary flex-shrink-0">
+                         hover:border-primary/50 hover:text-primary flex-shrink-0 h-11 px-4">
               <Link href="/quote">
                 {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
                 <ArrowRight className="h-3 w-3 ml-1.5" />

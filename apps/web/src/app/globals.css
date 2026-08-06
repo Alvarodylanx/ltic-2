@@ -158,6 +158,7 @@ footer a[href="/cookies"] {
 }
 a[href^="/products/"]:not([href="/products"]):not([href="/products/"]) {
   min-height: 44px !important;
+  height: 44px !important;
   display: flex;
   align-items: center;
   justify-content: center;
