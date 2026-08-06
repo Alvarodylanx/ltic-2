@@ -111,8 +111,8 @@ export default function ContactPage() {
       </section>
 
       {/* ── CONTACT BODY ────────────────────────────────────────────────────── */}
-      <section className="relative z-10 bg-background pb-10 sm:pb-14 lg:pb-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20">
+      <section className="relative z-10 bg-background pt-10 sm:pt-16 pb-10 sm:pb-14 lg:pb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
 
             {/* FORM — order-1 on mobile so it appears first, order-2 on desktop (right col) */}
