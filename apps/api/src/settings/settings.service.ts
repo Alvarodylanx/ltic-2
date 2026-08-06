@@ -7,10 +7,14 @@ import { settings } from '@ltic/db';
 export class SettingsService {
   constructor(@Inject(DB_TOKEN) private db: Db) {}
 
+  private static PRIVATE_KEYS = /(_api_key|_secret|_key|_token|password)$/i;
+
   async findAll(): Promise<Record<string, string>> {
     const rows = await this.db.select().from(settings);
     return rows.reduce((acc: Record<string, string>, row: any) => {
-      acc[row.key] = row.value ?? '';
+      if (!SettingsService.PRIVATE_KEYS.test(row.key)) {
+        acc[row.key] = row.value ?? '';
+      }
       return acc;
     }, {});
   }

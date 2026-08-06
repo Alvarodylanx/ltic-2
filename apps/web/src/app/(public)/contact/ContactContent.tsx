@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
 import { useQuery } from '@tanstack/react-query';
-import { MapPin, Phone, Mail, Clock, Globe2, Loader2, Send } from 'lucide-react';
+import { MapPin, Phone, PhoneCall, Mail, Clock, Globe2, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -60,11 +60,12 @@ export default function ContactPage() {
   };
 
   const contactInfo = [
-    { icon: MapPin, label: { en: 'Address',  fr: 'Adresse'    }, value: siteSettings?.company_address || 'Douala, Cameroon' },
-    { icon: Phone,  label: { en: 'Phone',    fr: 'Téléphone'  }, value: siteSettings?.company_phone   || '+237 6XX XXX XXX' },
-    { icon: Mail,   label: { en: 'Email',    fr: 'Email'      }, value: siteSettings?.company_email   || 'contact@lticsarl.com' },
-    { icon: Clock,  label: { en: 'Hours',    fr: 'Horaires'   }, value: 'Monday – Friday, 8:00 AM – 6:00 PM (WAT)' },
-    { icon: Globe2, label: { en: 'Coverage', fr: 'Couverture' }, value: L({ en: 'Global — 30+ countries served', fr: 'Mondial — 30+ pays desservis' }) },
+    { icon: MapPin,    label: { en: 'Address',     fr: 'Adresse'       }, value: siteSettings?.company_address || 'Douala, Cameroon' },
+    { icon: Phone,     label: { en: 'Phone',       fr: 'Téléphone'     }, value: siteSettings?.company_phone   || '+237 6XX XXX XXX' },
+    ...(siteSettings?.company_phone_2 ? [{ icon: PhoneCall, label: { en: 'Direct Line', fr: 'Ligne Directe' }, value: siteSettings.company_phone_2 }] : []),
+    { icon: Mail,      label: { en: 'Email',       fr: 'Email'         }, value: siteSettings?.company_email   || 'contact@lticsarl.com' },
+    { icon: Clock,     label: { en: 'Hours',       fr: 'Horaires'      }, value: 'Monday – Friday, 8:00 AM – 6:00 PM (WAT)' },
+    { icon: Globe2,    label: { en: 'Coverage',    fr: 'Couverture'    }, value: L({ en: 'Global — 30+ countries served', fr: 'Mondial — 30+ pays desservis' }) },
   ];
 
   return (
