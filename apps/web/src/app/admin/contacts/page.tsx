@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { api } from '@/lib/api';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { format } from 'date-fns';
-import { ChevronDown, ChevronUp, Reply } from 'lucide-react';
+import { ChevronDown, ChevronUp, Reply, Trash2 } from 'lucide-react';
 
 export default function AdminContactsPage() {
   const [expanded, setExpanded] = useState<number | null>(null);
@@ -30,6 +30,21 @@ export default function AdminContactsPage() {
     mutationFn: ({ id, read }: { id: number; read: boolean }) => api.patch(`/api/contacts/${id}`, { read }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-contacts'] }),
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => api.delete(`/api/contacts/${id}`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-contacts'] });
+      toast.success(L({ en: 'Contact deleted', fr: 'Message supprimé' }));
+    },
+    onError: () => toast.error(L({ en: 'Failed to delete contact', fr: 'Échec de la suppression' })),
+  });
+
+  function handleDelete(contact: any, e: React.MouseEvent) {
+    e.stopPropagation();
+    if (!confirm(L({ en: `Delete message from ${contact.name}? This cannot be undone.`, fr: `Supprimer le message de ${contact.name} ? Cette action est irréversible.` }))) return;
+    deleteMutation.mutate(contact.id);
+  }
 
   async function handleReply(e: React.FormEvent) {
     e.preventDefault();
@@ -120,6 +135,15 @@ export default function AdminContactsPage() {
                     >
                       <Reply className="h-3.5 w-3.5" />
                       {L({ en: 'Reply by Email', fr: 'Répondre par email' })}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 gap-1.5 text-xs text-muted-foreground hover:text-destructive"
+                      onClick={(e) => handleDelete(contact, e)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                      {L({ en: 'Delete', fr: 'Supprimer' })}
                     </Button>
                   </div>
                 </div>

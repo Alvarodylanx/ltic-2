@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { QuotesService } from './quotes.service';
 import { NewQuote, Quote } from '@ltic/db';
@@ -26,6 +26,10 @@ export class QuotesController {
   @Patch(':id')
   @UseGuards(AuthGuard)
   update(@Param('id', ParseIntPipe) id: number, @Body() body: Partial<Quote>) { return this.svc.update(id, body); }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  delete(@Param('id', ParseIntPipe) id: number) { return this.svc.delete(id); }
 
   @Post(':id/reply')
   @UseGuards(AuthGuard)

@@ -12,6 +12,10 @@ export class SettingsController {
   @Header('Cache-Control', 'public, max-age=300, stale-while-revalidate=3600')
   findAll() { return this.svc.findAll(); }
 
+  @Get('admin')
+  @UseGuards(AuthGuard)
+  findAllAdmin() { return this.svc.findAllAdmin(); }
+
   @Patch()
   @UseGuards(AuthGuard)
   update(@Body() body: Record<string, string>) { return this.svc.update(body); }

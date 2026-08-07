@@ -49,6 +49,12 @@ export class QuotesService {
     return q;
   }
 
+  async delete(id: number) {
+    const [q] = await this.db.delete(quotes).where(eq(quotes.id, id)).returning();
+    if (!q) throw new NotFoundException('Quote not found');
+    return q;
+  }
+
   async update(id: number, data: Partial<Quote>) {
     const [q] = await this.db.update(quotes).set({ ...data, updatedAt: new Date() })
       .where(eq(quotes.id, id)).returning();

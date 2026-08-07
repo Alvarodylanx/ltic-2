@@ -3,12 +3,14 @@ import { eq, desc, sql } from 'drizzle-orm';
 import { DB_TOKEN, Db } from '../db/db.module';
 import { orders, Order, OrderTimelineItem } from '@ltic/db';
 import { MailService } from '../mail/mail.service';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @Inject(DB_TOKEN) private db: Db,
     private mail: MailService,
+    private notifications: NotificationsService,
   ) {}
 
   private generateTrackingNumber(): string {
@@ -48,6 +50,13 @@ export class OrdersService {
       status: data.status || 'processing',
       estimatedDelivery: data.estimatedDelivery,
     }).returning();
+
+    this.notifications.create({
+      type: 'order',
+      title: `New order created for ${data.clientName}`,
+      message: `${order.trackingNumber}${data.description ? ' · ' + data.description : ''}`,
+      link: '/admin/orders',
+    }).catch(() => {});
 
     if (order.clientEmail) {
       this.mail.send(
@@ -126,9 +135,35 @@ export class OrdersService {
   }
 
   async update(id: number, data: Partial<Order>) {
+    const [before] = await this.db.select({ status: orders.status, clientEmail: orders.clientEmail, clientName: orders.clientName, trackingNumber: orders.trackingNumber, description: orders.description })
+      .from(orders).where(eq(orders.id, id));
+
     const [order] = await this.db.update(orders).set({ ...data, updatedAt: new Date() })
       .where(eq(orders.id, id)).returning();
     if (!order) throw new NotFoundException('Order not found');
+
+    if (before && data.status && data.status !== before.status) {
+      this.notifications.create({
+        type: 'order',
+        title: `Order status updated: ${order.trackingNumber}`,
+        message: `${before.clientName} — ${before.status} → ${data.status}`,
+        link: '/admin/orders',
+      }).catch(() => {});
+
+      if (before.clientEmail) {
+        this.mail.send(
+          before.clientEmail,
+          `Shipment Update: ${before.trackingNumber} — LTIC SARL`,
+          this.mail.orderStatusEmail({
+            clientName: before.clientName,
+            trackingNumber: before.trackingNumber,
+            status: data.status,
+            description: before.description ?? undefined,
+          }),
+        );
+      }
+    }
+
     return order;
   }
 }

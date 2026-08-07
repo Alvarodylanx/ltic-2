@@ -1,33 +1,78 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Inject, OnModuleInit } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
+import { DB_TOKEN, Db } from '../db/db.module';
+import { settings } from '@ltic/db';
 
 @Injectable()
-export class MailService {
+export class MailService implements OnModuleInit {
   private readonly logger = new Logger(MailService.name);
   private transporter: nodemailer.Transporter | null = null;
+  private fromAddress = '';
 
-  constructor() {
+  constructor(@Inject(DB_TOKEN) private db: Db) {
     const host = process.env.MAIL_HOST;
     const user = process.env.MAIL_USER;
     const pass = process.env.MAIL_PASS;
-
     if (host && user && pass) {
+      this.fromAddress = process.env.MAIL_FROM || user;
       this.transporter = nodemailer.createTransport({
         host,
         port: Number(process.env.MAIL_PORT || 587),
         secure: process.env.MAIL_SECURE === 'true',
         auth: { user, pass },
       });
-    } else {
-      this.logger.warn('Email not configured — set MAIL_HOST, MAIL_USER, MAIL_PASS to enable email notifications');
+      this.logger.log('Email configured from environment variables');
     }
+  }
+
+  async onModuleInit() {
+    if (!this.transporter) await this.loadFromDb();
+  }
+
+  private async loadFromDb(): Promise<void> {
+    try {
+      const rows = await this.db.select().from(settings);
+      const m: Record<string, string> = {};
+      for (const r of rows) if (r.key.startsWith('smtp_') && r.value) m[r.key] = r.value;
+      if (m.smtp_host && m.smtp_user && m.smtp_password) {
+        this.configure({
+          host: m.smtp_host,
+          port: Number(m.smtp_port || 587),
+          user: m.smtp_user,
+          pass: m.smtp_password,
+          from: m.smtp_from,
+          secure: m.smtp_secure === 'true',
+        });
+        this.logger.log('Email configured from database settings');
+      } else {
+        this.logger.warn('Email not configured — set SMTP credentials in Admin → Settings or in .env');
+      }
+    } catch {
+      this.logger.warn('Could not load SMTP settings from database');
+    }
+  }
+
+  configure(config: { host: string; port: number; user: string; pass: string; from?: string; secure?: boolean }) {
+    this.fromAddress = config.from || config.user;
+    this.transporter = nodemailer.createTransport({
+      host: config.host,
+      port: config.port,
+      secure: config.secure ?? false,
+      auth: { user: config.user, pass: config.pass },
+    });
+  }
+
+  async reinitialize() {
+    if (process.env.MAIL_HOST && process.env.MAIL_USER && process.env.MAIL_PASS) return;
+    this.transporter = null;
+    this.fromAddress = '';
+    await this.loadFromDb();
   }
 
   async send(to: string, subject: string, html: string): Promise<void> {
     if (!this.transporter) return;
-    const from = process.env.MAIL_FROM || process.env.MAIL_USER;
     try {
-      await this.transporter.sendMail({ from: `"LTIC SARL" <${from}>`, to, subject, html });
+      await this.transporter.sendMail({ from: `"LTIC SARL" <${this.fromAddress}>`, to, subject, html });
     } catch (err: any) {
       this.logger.error(`Failed to send email to ${to}: ${err.message}`);
     }
@@ -35,9 +80,8 @@ export class MailService {
 
   async sendWithResult(to: string, subject: string, html: string): Promise<{ sent: boolean; error?: string }> {
     if (!this.transporter) return { sent: false, error: 'Email not configured on this server' };
-    const from = process.env.MAIL_FROM || process.env.MAIL_USER;
     try {
-      await this.transporter.sendMail({ from: `"LTIC SARL" <${from}>`, to, subject, html });
+      await this.transporter.sendMail({ from: `"LTIC SARL" <${this.fromAddress}>`, to, subject, html });
       return { sent: true };
     } catch (err: any) {
       this.logger.error(`Failed to send email to ${to}: ${err.message}`);
@@ -47,18 +91,19 @@ export class MailService {
 
   async sendAdminNotification(subject: string, html: string): Promise<void> {
     if (!this.transporter) return;
-    const to = process.env.ADMIN_EMAIL || process.env.MAIL_USER;
-    const from = process.env.MAIL_FROM || process.env.MAIL_USER;
+    const to = process.env.ADMIN_EMAIL || this.fromAddress;
     try {
-      await this.transporter.sendMail({ from: `"LTIC SARL" <${from}>`, to, subject, html });
+      await this.transporter.sendMail({ from: `"LTIC SARL" <${this.fromAddress}>`, to, subject, html });
     } catch (err: any) {
-      this.logger.error(`Failed to send email: ${err.message}`);
+      this.logger.error(`Failed to send admin email: ${err.message}`);
     }
   }
 
   private siteUrl(): string {
     return process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
   }
+
+  // ─── Templates ───────────────────────────────────────────────────────────────
 
   quoteConfirmationEmail(quote: { contactName: string; productInterest: string; email: string }): string {
     return `
@@ -130,9 +175,9 @@ export class MailService {
   }): string {
     const trackUrl = `${this.siteUrl()}/tracking?id=${order.trackingNumber}`;
     const rows = [
-      order.description      ? `<tr><td style="padding:6px 0;color:#6b7280;width:160px">Description</td><td style="padding:6px 0">${order.description}</td></tr>` : '',
-      order.origin           ? `<tr><td style="padding:6px 0;color:#6b7280">Origin / Origine</td><td style="padding:6px 0">${order.origin}</td></tr>` : '',
-      order.destination      ? `<tr><td style="padding:6px 0;color:#6b7280">Destination</td><td style="padding:6px 0">${order.destination}</td></tr>` : '',
+      order.description       ? `<tr><td style="padding:6px 0;color:#6b7280;width:160px">Description</td><td style="padding:6px 0">${order.description}</td></tr>` : '',
+      order.origin            ? `<tr><td style="padding:6px 0;color:#6b7280">Origin / Origine</td><td style="padding:6px 0">${order.origin}</td></tr>` : '',
+      order.destination       ? `<tr><td style="padding:6px 0;color:#6b7280">Destination</td><td style="padding:6px 0">${order.destination}</td></tr>` : '',
       order.estimatedDelivery ? `<tr><td style="padding:6px 0;color:#6b7280">Est. Delivery / Livraison</td><td style="padding:6px 0">${order.estimatedDelivery}</td></tr>` : '',
     ].filter(Boolean).join('');
     return `
@@ -150,6 +195,41 @@ export class MailService {
           <a href="${trackUrl}" style="background:#1a56db;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600">Track My Shipment / Suivre mon expédition</a>
         </p>
         <p style="margin-top:24px;color:#6b7280;font-size:13px">If you have any questions, please reply to this email or visit our website.<br><em>Si vous avez des questions, répondez à cet e-mail ou visitez notre site web.</em></p>
+        <p style="color:#6b7280">LTIC SARL — International Logistics & Trade</p>
+      </div>`;
+  }
+
+  orderStatusEmail(order: {
+    clientName: string;
+    trackingNumber: string;
+    status: string;
+    description?: string;
+  }): string {
+    const trackUrl = `${this.siteUrl()}/tracking?id=${order.trackingNumber}`;
+    const statusLabels: Record<string, { en: string; fr: string; color: string }> = {
+      processing:      { en: 'Processing',       fr: 'En traitement',  color: '#6366f1' },
+      'customs-cleared': { en: 'Customs Cleared', fr: 'Dédouané',       color: '#0ea5e9' },
+      shipped:         { en: 'Shipped',           fr: 'Expédié',        color: '#f59e0b' },
+      'in-transit':    { en: 'In Transit',        fr: 'En transit',     color: '#3b82f6' },
+      delivered:       { en: 'Delivered',         fr: 'Livré',          color: '#22c55e' },
+      cancelled:       { en: 'Cancelled',         fr: 'Annulé',         color: '#ef4444' },
+    };
+    const label = statusLabels[order.status] ?? { en: order.status, fr: order.status, color: '#6b7280' };
+    return `
+      <div style="font-family:sans-serif;max-width:600px;margin:auto">
+        <h2 style="color:#1a56db">Shipment Status Update — LTIC SARL</h2>
+        <p>Dear ${order.clientName},</p>
+        <p>Your shipment status has been updated.</p>
+        <div style="background:#f3f4f6;border-radius:8px;padding:20px;text-align:center;margin:24px 0">
+          <p style="margin:0 0 8px;color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:0.05em">Tracking / Numéro de Suivi</p>
+          <p style="margin:0 0 16px;font-size:20px;font-weight:700;font-family:monospace;color:#111827">${order.trackingNumber}</p>
+          <span style="display:inline-block;background:${label.color}1a;color:${label.color};border:1px solid ${label.color}40;padding:6px 18px;border-radius:999px;font-weight:700;font-size:15px">${label.en} / ${label.fr}</span>
+        </div>
+        ${order.description ? `<p style="color:#6b7280;font-size:13px">Description: ${order.description}</p>` : ''}
+        <p style="margin-top:24px">
+          <a href="${trackUrl}" style="background:#1a56db;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600">Track My Shipment / Suivre mon expédition</a>
+        </p>
+        <p style="margin-top:24px;color:#6b7280;font-size:13px">If you have any questions, please contact us.<br><em>Pour toute question, veuillez nous contacter.</em></p>
         <p style="color:#6b7280">LTIC SARL — International Logistics & Trade</p>
       </div>`;
   }

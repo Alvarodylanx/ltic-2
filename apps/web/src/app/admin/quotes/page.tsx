@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { PackagePlus, Reply, AlertTriangle } from 'lucide-react';
+import { PackagePlus, Reply, AlertTriangle, Trash2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -64,6 +64,20 @@ export default function AdminQuotesPage() {
     mutationFn: ({ id, status }: { id: number; status: string }) => api.patch(`/api/quotes/${id}`, { status }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-quotes'] }),
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => api.delete(`/api/quotes/${id}`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-quotes'] });
+      toast.success(L({ en: 'Quote deleted', fr: 'Devis supprimé' }));
+    },
+    onError: () => toast.error(L({ en: 'Failed to delete quote', fr: 'Échec de la suppression' })),
+  });
+
+  function handleDelete(quote: any) {
+    if (!confirm(L({ en: `Delete quote from ${quote.companyName}? This cannot be undone.`, fr: `Supprimer le devis de ${quote.companyName} ? Cette action est irréversible.` }))) return;
+    deleteMutation.mutate(quote.id);
+  }
 
   function openConvert(quote: any) {
     const description = [
@@ -219,6 +233,15 @@ export default function AdminQuotesPage() {
                         {quote.status === 'responded' && <AlertTriangle className="h-3 w-3" />}
                         {quote.status !== 'responded' && <PackagePlus className="h-3.5 w-3.5" />}
                         {L({ en: 'Convert', fr: 'Convertir' })}
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive"
+                        onClick={() => handleDelete(quote)}
+                        title={L({ en: 'Delete quote', fr: 'Supprimer le devis' })}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </td>

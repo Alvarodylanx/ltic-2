@@ -42,6 +42,12 @@ export class ContactsService {
     return c;
   }
 
+  async delete(id: number) {
+    const [c] = await this.db.delete(contacts).where(eq(contacts.id, id)).returning();
+    if (!c) throw new NotFoundException('Contact not found');
+    return c;
+  }
+
   async update(id: number, data: Partial<Contact>) {
     const [c] = await this.db.update(contacts).set(data).where(eq(contacts.id, id)).returning();
     if (!c) throw new NotFoundException('Contact not found');
