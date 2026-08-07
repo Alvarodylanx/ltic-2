@@ -94,6 +94,7 @@ export class MailService implements OnModuleInit {
     const to = process.env.ADMIN_EMAIL || this.fromAddress;
     try {
       await this.transporter.sendMail({ from: `"LTIC SARL" <${this.fromAddress}>`, to, subject, html });
+      this.logger.log(`Admin notification sent to ${to}: ${subject}`);
     } catch (err: any) {
       this.logger.error(`Failed to send admin email: ${err.message}`);
     }
