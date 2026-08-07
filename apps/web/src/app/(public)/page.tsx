@@ -118,15 +118,15 @@ const features = [
 ];
 
 const productCategories = [
-  { en: 'Power Generators',    fr: 'Groupes Électrogènes',  descEn: 'Diesel, gas & standby power units', descFr: 'Groupes diesel, gaz et secours',             image: '/images/power-generators.jpg', tag: { en: 'Industrial', fr: 'Industriel' } },
-  { en: 'Lubricants & Oils',  fr: 'Lubrifiants & Huiles',   descEn: 'Total, Shell and OEM-grade lubricants', descFr: 'Lubrifiants Total, Shell et marques OEM', image: '/images/lubricants-oils.jpg', tag: { en: 'Supply', fr: 'Fourniture' } },
-  { en: 'Timber & Logs',      fr: 'Bois & Grumes',           descEn: 'Certified tropical species for export', descFr: 'Essences tropicales certifiées',           image: '/images/timber-logs.jpg', tag: { en: 'Trade', fr: 'Commerce' } },
-  { en: 'Filters & Parts',    fr: 'Filtres & Pièces',        descEn: 'OEM-grade filters for all machinery', descFr: 'Filtres OEM pour toutes machines',           image: '/images/filters-parts.jpg', tag: { en: 'Industrial', fr: 'Industriel' } },
-  { en: 'Heavy Equipment',    fr: 'Équipements Lourds',      descEn: 'Machinery, tools and structural materials', descFr: 'Machines, outils et matériaux',        image: '/images/heavy-equipment.jpg', tag: { en: 'Supply', fr: 'Fourniture' } },
-  { en: 'General Merchandise',fr: 'Marchandises Générales',  descEn: 'Wide range of consumer and trade goods', descFr: 'Large gamme de biens de consommation',   image: '/images/general-merchandise.jpg', tag: { en: 'Commerce', fr: 'Commerce' } },
-  { en: 'Marine & Maintenance Chemicals', fr: 'Produits Chimiques Marins & Entretien', descEn: 'Tank cleaners, degreasers & MARPOL-compliant marine chemicals', descFr: 'Nettoyants de réservoirs, dégraissants et produits chimiques marins conformes MARPOL', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=75', tag: { en: 'Marine', fr: 'Marine' } },
-  { en: 'Industrial Chemicals & Raw Materials', fr: 'Produits Chimiques Industriels & Matières Premières', descEn: 'Sulfur, acids, solvents and bulk industrial minerals', descFr: 'Soufre, acides, solvants et minéraux industriels en vrac', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&auto=format&fit=crop&q=75', tag: { en: 'Chemicals', fr: 'Chimique' } },
-  { en: 'Food & Agricultural Products', fr: 'Produits Alimentaires & Agricoles', descEn: 'Cocoa, coffee, palm oil, spices & agri-food exports', descFr: 'Cacao, café, huile de palme, épices et exports agro-alimentaires', image: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=600&auto=format&fit=crop&q=75', tag: { en: 'Agri-Food', fr: 'Agro-Alimentaire' } },
+  { en: 'Power Generators',    fr: 'Groupes Électrogènes',  descEn: 'Diesel, gas & standby power units', descFr: 'Groupes diesel, gaz et secours',             image: '/images/power-generators.jpg', tag: { en: 'Industrial', fr: 'Industriel' }, slug: 'generators' },
+  { en: 'Lubricants & Oils',  fr: 'Lubrifiants & Huiles',   descEn: 'Total, Shell and OEM-grade lubricants', descFr: 'Lubrifiants Total, Shell et marques OEM', image: '/images/lubricants-oils.jpg', tag: { en: 'Supply', fr: 'Fourniture' }, slug: 'lubricants-oils' },
+  { en: 'Timber & Logs',      fr: 'Bois & Grumes',           descEn: 'Certified tropical species for export', descFr: 'Essences tropicales certifiées',           image: '/images/timber-logs.jpg', tag: { en: 'Trade', fr: 'Commerce' }, slug: 'timber-logs' },
+  { en: 'Filters & Parts',    fr: 'Filtres & Pièces',        descEn: 'OEM-grade filters for all machinery', descFr: 'Filtres OEM pour toutes machines',           image: '/images/filters-parts.jpg', tag: { en: 'Industrial', fr: 'Industriel' }, slug: 'filters-parts' },
+  { en: 'Heavy Equipment',    fr: 'Équipements Lourds',      descEn: 'Machinery, tools and structural materials', descFr: 'Machines, outils et matériaux',        image: '/images/heavy-equipment.jpg', tag: { en: 'Supply', fr: 'Fourniture' }, slug: 'general-industrial' },
+  { en: 'General Merchandise',fr: 'Marchandises Générales',  descEn: 'Wide range of consumer and trade goods', descFr: 'Large gamme de biens de consommation',   image: '/images/general-merchandise.jpg', tag: { en: 'Commerce', fr: 'Commerce' }, slug: 'general-industrial' },
+  { en: 'Marine & Maintenance Chemicals', fr: 'Produits Chimiques Marins & Entretien', descEn: 'Tank cleaners, degreasers & MARPOL-compliant marine chemicals', descFr: 'Nettoyants de réservoirs, dégraissants et produits chimiques marins conformes MARPOL', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=75', tag: { en: 'Marine', fr: 'Marine' }, slug: 'marine-maintenance-chemicals' },
+  { en: 'Industrial Chemicals & Raw Materials', fr: 'Produits Chimiques Industriels & Matières Premières', descEn: 'Sulfur, acids, solvents and bulk industrial minerals', descFr: 'Soufre, acides, solvants et minéraux industriels en vrac', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&auto=format&fit=crop&q=75', tag: { en: 'Chemicals', fr: 'Chimique' }, slug: 'industrial-chemicals-raw-materials' },
+  { en: 'Food & Agricultural Products', fr: 'Produits Alimentaires & Agricoles', descEn: 'Cocoa, coffee, palm oil, spices & agri-food exports', descFr: 'Cacao, café, huile de palme, épices et exports agro-alimentaires', image: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=600&auto=format&fit=crop&q=75', tag: { en: 'Agri-Food', fr: 'Agro-Alimentaire' }, slug: 'food-agricultural-products' },
 ];
 
 const orderSteps = [
@@ -262,6 +262,7 @@ interface ProductCategoryCardProps {
   descEn: string; descFr: string;
   image: string;
   tag: { en: string; fr: string };
+  slug: string;
   index: number;
 }
 
@@ -277,7 +278,7 @@ const catalogStagger = {
   show:   { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
-function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardProps) {
+function ProductCategoryCard({ en, fr, image, tag, slug, index }: ProductCategoryCardProps) {
   const { L } = useLanguage();
   const prefersReduced = useReducedMotion() ?? false;
 
@@ -288,7 +289,7 @@ function ProductCategoryCard({ en, fr, image, tag, index }: ProductCategoryCardP
       transition={{ duration: 0.18, ease: 'easeOut' }}
     >
       <Link
-        href="/products"
+        href={`/products?category=${slug}`}
         className="group flex items-center gap-3 px-3 py-2.5 rounded-xl
                    border-l-2 border-l-transparent border border-border
                    hover:border-l-primary hover:border-primary/30 hover:bg-primary/[0.04]

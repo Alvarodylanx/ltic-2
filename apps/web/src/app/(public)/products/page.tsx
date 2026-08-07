@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import ProductsContent from './ProductsContent';
 
 const SITE_URL = 'https://www.lticsarl.com';
@@ -56,7 +57,9 @@ export default function ProductsPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageLd) }} />
-      <ProductsContent />
+      <Suspense>
+        <ProductsContent />
+      </Suspense>
     </>
   );
 }

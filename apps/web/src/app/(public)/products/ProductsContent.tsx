@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -37,6 +38,7 @@ const lineExpand = {
 
 export default function ProductsPage() {
   const { L } = useLanguage();
+  const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -65,6 +67,17 @@ export default function ProductsPage() {
     queryKey: ['categories'],
     queryFn: () => api.get('/api/categories'),
   });
+
+  // Initialize category filter from URL param (?category=<slug> or ?category=<id>)
+  useEffect(() => {
+    if (!categories) return;
+    const param = searchParams.get('category');
+    if (!param) return;
+    const byId = categories.find(c => String(c.id) === param);
+    const bySlug = categories.find(c => c.slug === param);
+    const match = byId ?? bySlug;
+    if (match) setSelectedCategory(match.id);
+  }, [categories, searchParams]);
 
   // Fetch all products; filter client-side so grouped view works without extra requests
   const { data: allProducts, isLoading, isError, refetch } = useQuery<any[]>({
