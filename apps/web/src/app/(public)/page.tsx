@@ -769,9 +769,10 @@ export default function HomePage() {
                 : featuredProducts!.slice(0, 7).map((product, idx) => (
                     <motion.div
                       key={product.id}
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.38, delay: idx * 0.055, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.15 }}
+                      transition={{ duration: 0.42, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
                       whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
                       style={{ height: '100%' }}
                     >
