@@ -28,10 +28,8 @@ const contactFields = [
 
 const socialFields = [
   { key: 'social_facebook',  label: 'Facebook',          placeholder: 'https://facebook.com/lticsarl',         color: 'text-blue-600' },
-  { key: 'social_twitter',   label: 'X / Twitter',       placeholder: 'https://twitter.com/lticsarl',          color: 'text-sky-500' },
   { key: 'social_linkedin',  label: 'LinkedIn',          placeholder: 'https://linkedin.com/company/lticsarl', color: 'text-blue-700' },
   { key: 'social_instagram', label: 'Instagram',         placeholder: 'https://instagram.com/lticsarl',        color: 'text-pink-500' },
-  { key: 'social_youtube',   label: 'YouTube',           placeholder: 'https://youtube.com/@lticsarl',         color: 'text-red-500' },
   { key: 'social_whatsapp',  label: 'WhatsApp Business', placeholder: 'https://wa.me/2376XXXXXXXX',            color: 'text-green-500' },
   { key: 'social_tiktok',    label: 'TikTok',            placeholder: 'https://tiktok.com/@lticsarl',          color: 'text-foreground' },
 ];

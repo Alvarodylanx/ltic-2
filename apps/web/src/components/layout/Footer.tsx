@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Globe, Facebook, Twitter, Linkedin, Instagram, Youtube, Music2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe, Facebook, Linkedin, Instagram, Music2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
@@ -17,10 +17,8 @@ export function Footer() {
 
   const socialLinks = [
     { key: 'social_facebook',  icon: Facebook,  label: 'Facebook' },
-    { key: 'social_twitter',   icon: Twitter,   label: 'Twitter / X' },
     { key: 'social_linkedin',  icon: Linkedin,  label: 'LinkedIn' },
     { key: 'social_instagram', icon: Instagram, label: 'Instagram' },
-    { key: 'social_youtube',   icon: Youtube,   label: 'YouTube' },
     { key: 'social_tiktok',    icon: Music2,    label: 'TikTok' },
   ];
 

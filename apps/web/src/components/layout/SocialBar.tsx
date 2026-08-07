@@ -2,15 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { Facebook, Twitter, Linkedin, Instagram, Youtube, Music2 } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, Music2 } from 'lucide-react';
 import { api } from '@/lib/api';
 
 const PLATFORMS = [
   { key: 'social_facebook',  Icon: Facebook,  label: 'Facebook',  color: 'hover:text-blue-400' },
-  { key: 'social_twitter',   Icon: Twitter,   label: 'X / Twitter', color: 'hover:text-sky-400' },
   { key: 'social_linkedin',  Icon: Linkedin,  label: 'LinkedIn',  color: 'hover:text-blue-500' },
   { key: 'social_instagram', Icon: Instagram, label: 'Instagram', color: 'hover:text-pink-400' },
-  { key: 'social_youtube',   Icon: Youtube,   label: 'YouTube',   color: 'hover:text-red-400'  },
   { key: 'social_tiktok',    Icon: Music2,    label: 'TikTok',    color: 'hover:text-white'    },
 ];
 
