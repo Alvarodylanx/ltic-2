@@ -773,12 +773,15 @@ export default function HomePage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.38, delay: idx * 0.055, ease: [0.16, 1, 0.3, 1] }}
                       whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
+                      style={{ height: '100%' }}
                     >
                       <Link
                         href={`/products/${product.slug}`}
                         className="group"
                         style={{
-                          display: 'block',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          height: '100%',
                           background: '#ffffff',
                           borderRadius: '10px',
                           border: '1px solid #e8ecf0',
@@ -810,7 +813,7 @@ export default function HomePage() {
                         </div>
 
                         {/* Info */}
-                        <div style={{ padding: '10px 12px' }}>
+                        <div style={{ padding: '10px 12px', flex: 1 }}>
                           {product.categoryName && (
                             <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--primary))', marginBottom: '4px' }}>
                               {product.categoryName}
