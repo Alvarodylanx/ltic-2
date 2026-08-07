@@ -723,7 +723,7 @@ export default function HomePage() {
 
       {/* ══ 3. FEATURED THIS WEEK ════════════════════════════════════════════ */}
       {mounted && (isLoading || (featuredProducts && featuredProducts.length > 0)) && (
-        <section className="bg-background py-3 sm:py-20 border-y border-border">
+        <section className="bg-background py-10 sm:py-20 border-y border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-8">
               <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
@@ -749,13 +749,7 @@ export default function HomePage() {
                 </Button>
               </motion.div>
             </div>
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={viewportOnce}
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {isLoading
                 ? Array(6).fill(0).map((_, i) => (
                     <div key={i} className="bg-white border border-border rounded-xl overflow-hidden flex flex-col">
@@ -766,23 +760,32 @@ export default function HomePage() {
                       </div>
                     </div>
                   ))
-                : featuredProducts?.slice(0, 6).map(product => (
-                    <motion.div key={product.id} variants={scaleIn} className="h-full"
+                : featuredProducts?.slice(0, 6).map((product, idx) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, scale: 0.92, y: 16 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: idx * 0.07 }}
                       whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
                       <Link href={`/products/${product.slug}`}
                         className="group bg-white border border-border rounded-xl overflow-hidden
                                    hover:border-primary/40 hover:shadow-md transition-all duration-200
-                                   flex flex-col h-full">
-                        <div className="aspect-square relative bg-white overflow-hidden flex-shrink-0">
-                          {product.imageUrl && (
+                                   flex flex-col">
+                        <div className="w-full bg-muted/40">
+                          {product.imageUrl ? (
                             <Image src={product.imageUrl}
                               alt={L({ en: product.nameEn, fr: product.nameFr })}
-                              fill className="object-contain p-2"
+                              width={300} height={300}
+                              className="w-full aspect-square object-contain p-2"
                               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                             />
+                          ) : (
+                            <div className="w-full aspect-square flex items-center justify-center">
+                              <Package className="h-8 w-8 text-muted-foreground/30" />
+                            </div>
                           )}
                         </div>
-                        <div className="p-3 flex flex-col flex-1">
+                        <div className="p-3">
                           {product.categoryName && (
                             <span className="inline-block bg-primary/10 text-primary text-[9px]
                                              px-1.5 py-0.5 mb-1.5 font-semibold rounded-full w-fit">
@@ -791,14 +794,14 @@ export default function HomePage() {
                           )}
                           <p className="font-sans font-medium text-xs leading-snug text-foreground/65
                                          group-hover:text-primary transition-colors duration-150
-                                         line-clamp-2 flex-1">
+                                         line-clamp-2">
                             {L({ en: product.nameEn, fr: product.nameFr })}
                           </p>
                         </div>
                       </Link>
                     </motion.div>
                   ))}
-            </motion.div>
+            </div>
           </div>
         </section>
       )}
