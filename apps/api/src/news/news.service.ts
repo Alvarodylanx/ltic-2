@@ -29,9 +29,10 @@ export class NewsService {
   }
 
   async update(id: number, data: Partial<NewsArticle>) {
-    const allowed = ['titleEn','titleFr','slug','summaryEn','summaryFr','contentEn','contentFr','imageUrl','category','published','publishedAt'] as const;
+    const stringFields = ['titleEn','titleFr','slug','summaryEn','summaryFr','contentEn','contentFr','imageUrl','category'] as const;
     const safe: Record<string, unknown> = {};
-    for (const key of allowed) if ((data as any)[key] !== undefined) safe[key] = (data as any)[key];
+    for (const key of stringFields) if ((data as any)[key] !== undefined) safe[key] = (data as any)[key];
+    if ((data as any).published !== undefined) safe.published = Boolean((data as any).published);
     const [article] = await this.db.update(news).set(safe as any).where(eq(news.id, id)).returning();
     if (!article) throw new NotFoundException('Article not found');
     return article;
