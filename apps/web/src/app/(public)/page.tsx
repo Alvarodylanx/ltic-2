@@ -755,7 +755,7 @@ export default function HomePage() {
             </motion.div>
 
             {/* Grid — uniform height cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
               {featuredLoading
                 ? Array(8).fill(0).map((_, i) => (
                     <div key={i} className="rounded-xl overflow-hidden bg-white border border-border">
