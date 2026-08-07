@@ -787,8 +787,7 @@ export default function HomePage() {
                             <img
                               src={product.imageUrl}
                               alt={product.nameEn || product.nameFr || ''}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                              className="group-hover:scale-105 transition-transform duration-500"
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '12px' }}
                             />
                           ) : (
                             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
