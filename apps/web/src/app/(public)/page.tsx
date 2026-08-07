@@ -723,82 +723,164 @@ export default function HomePage() {
 
       {/* ══ 3. FEATURED THIS WEEK ════════════════════════════════════════════ */}
       {mounted && (isLoading || (featuredProducts && featuredProducts.length > 0)) && (
-        <section className="bg-background py-3 sm:py-20 border-y border-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
-              <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
-                <p className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1">
-                  {L({ en: 'Products', fr: 'Produits' })}
-                </p>
-                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
+        <section style={{ background: '#f8fafc', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '64px 24px' }}>
+
+            {/* ── Header row ── */}
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '40px' }}>
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <span style={{ display: 'block', width: '24px', height: '2px', background: '#2563eb', flexShrink: 0 }} />
+                  <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#2563eb' }}>
+                    {L({ en: 'Products', fr: 'Produits' })}
+                  </span>
+                </div>
+                <h2 style={{ fontFamily: 'var(--font-display, sans-serif)', fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 800, color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
                   {L({ en: 'Featured This Week', fr: 'En Vedette Cette Semaine' })}
                 </h2>
               </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.38, ease: catalogEase, delay: 0.2 }}
-              >
-                <Button asChild variant="outline"
-                  className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary rounded-full h-11 px-4">
-                  <Link href="/products">
-                    {L({ en: 'View All', fr: 'Tout Voir' })}
-                    <ChevronRight className="h-4 w-4 ml-1" />
-                  </Link>
-                </Button>
-              </motion.div>
+
+              <Button asChild variant="outline"
+                className="hidden sm:flex border-border font-semibold text-sm hover:border-primary/50
+                           hover:text-primary rounded-full h-11 px-5">
+                <Link href="/products">
+                  {L({ en: 'View All', fr: 'Tout Voir' })}
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Link>
+              </Button>
             </div>
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={viewportOnce}
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
-            >
+
+            {/* ── Product grid ── */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}
+                 className="grid-cols-2-mobile">
               {isLoading
                 ? Array(6).fill(0).map((_, i) => (
-                    <div key={i} className="bg-white border border-border rounded-xl overflow-hidden flex flex-col">
-                      <Skeleton className="aspect-square w-full flex-shrink-0" />
-                      <div className="p-2.5 space-y-1.5 flex-1">
-                        <Skeleton className="h-2.5 w-10" />
-                        <Skeleton className="h-3 w-full" />
+                    <div key={i} style={{ borderRadius: '16px', overflow: 'hidden', background: '#fff', border: '1px solid #e2e8f0' }}>
+                      <div style={{ height: '200px', background: '#f1f5f9' }} />
+                      <div style={{ padding: '16px' }}>
+                        <Skeleton className="h-2.5 w-16 mb-2" />
+                        <Skeleton className="h-4 w-full mb-1" />
+                        <Skeleton className="h-4 w-3/4" />
                       </div>
                     </div>
                   ))
-                : featuredProducts?.slice(0, 6).map(product => (
-                    <motion.div key={product.id} variants={scaleIn} className="h-full"
-                      whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}>
-                      <Link href={`/products/${product.slug}`}
-                        className="group bg-white border border-border rounded-xl overflow-hidden
-                                   hover:border-primary/40 hover:shadow-md transition-all duration-200
-                                   flex flex-col h-full">
-                        <div className="aspect-square relative bg-white overflow-hidden flex-shrink-0">
-                          {product.imageUrl && (
-                            <Image src={product.imageUrl}
-                              alt={L({ en: product.nameEn, fr: product.nameFr })}
-                              fill className="object-contain p-2"
-                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                : featuredProducts?.slice(0, 6).map((product, idx) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.44, ease: [0.16, 1, 0.3, 1], delay: idx * 0.07 }}
+                      whileHover={{ y: -6, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
+                      style={{ display: 'block' }}
+                    >
+                      <Link
+                        href={`/products/${product.slug}`}
+                        style={{
+                          display: 'block',
+                          background: '#ffffff',
+                          borderRadius: '16px',
+                          border: '1px solid #e2e8f0',
+                          overflow: 'hidden',
+                          textDecoration: 'none',
+                          boxShadow: '0 2px 8px rgba(15,23,42,0.06)',
+                          transition: 'box-shadow 0.25s ease, border-color 0.25s ease',
+                        }}
+                        className="group featured-card"
+                      >
+                        {/* Image — fully inline, no Tailwind */}
+                        <div style={{
+                          width: '100%',
+                          height: '200px',
+                          background: '#f1f5f9',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          overflow: 'hidden',
+                          flexShrink: 0,
+                        }}>
+                          {product.imageUrl ? (
+                            <img
+                              src={product.imageUrl}
+                              alt={product.nameEn || product.nameFr || ''}
+                              style={{
+                                maxWidth: '100%',
+                                maxHeight: '100%',
+                                width: 'auto',
+                                height: 'auto',
+                                objectFit: 'contain',
+                                padding: '16px',
+                                display: 'block',
+                              }}
+                              loading="lazy"
                             />
+                          ) : (
+                            <Package style={{ width: '40px', height: '40px', color: '#94a3b8' }} />
                           )}
                         </div>
-                        <div className="p-3 flex flex-col flex-1">
+
+                        {/* Info */}
+                        <div style={{ padding: '16px', borderTop: '1px solid #f1f5f9' }}>
                           {product.categoryName && (
-                            <span className="inline-block bg-primary/10 text-primary text-[9px]
-                                             px-1.5 py-0.5 mb-1.5 font-semibold rounded-full w-fit">
+                            <span style={{
+                              display: 'inline-block',
+                              fontSize: '10px',
+                              fontWeight: 700,
+                              letterSpacing: '0.16em',
+                              textTransform: 'uppercase',
+                              color: '#2563eb',
+                              background: '#eff6ff',
+                              borderRadius: '99px',
+                              padding: '2px 8px',
+                              marginBottom: '8px',
+                            }}>
                               {product.categoryName}
                             </span>
                           )}
-                          <p className="font-sans font-medium text-xs leading-snug text-foreground/65
-                                         group-hover:text-primary transition-colors duration-150
-                                         line-clamp-2 flex-1">
+                          <p style={{
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            color: '#0f172a',
+                            lineHeight: 1.45,
+                            margin: '0 0 12px 0',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }}>
                             {L({ en: product.nameEn, fr: product.nameFr })}
                           </p>
+                          <span style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#2563eb',
+                          }}>
+                            {L({ en: 'View product', fr: 'Voir le produit' })}
+                            <ArrowRight style={{ width: '13px', height: '13px' }} />
+                          </span>
                         </div>
                       </Link>
                     </motion.div>
                   ))}
-            </motion.div>
+            </div>
+
+            {/* Mobile View All */}
+            <div className="mt-8 flex justify-center sm:hidden">
+              <Button asChild variant="outline" className="rounded-full h-11 px-6 font-semibold">
+                <Link href="/products">
+                  {L({ en: 'View All Products', fr: 'Voir Tous les Produits' })}
+                  <ChevronRight className="h-4 w-4 ml-1.5" />
+                </Link>
+              </Button>
+            </div>
+
           </div>
         </section>
       )}
