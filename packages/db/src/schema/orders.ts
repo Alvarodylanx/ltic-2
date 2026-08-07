@@ -11,6 +11,7 @@ export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   trackingNumber: text("tracking_number").notNull().unique(),
   customerId: integer("customer_id"),
+  quoteId: integer("quote_id").unique(),
   clientName: text("client_name").notNull(),
   clientEmail: text("client_email"),
   origin: text("origin"),

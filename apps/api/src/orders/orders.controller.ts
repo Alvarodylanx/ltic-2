@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { OrdersService } from './orders.service';
-import { Order } from '@ltic/db';
+import { Order, OrderTimelineItem } from '@ltic/db';
 import { AuthGuard } from '../auth/auth.guard';
 
 @SkipThrottle({ login: true, form: true })
@@ -37,4 +37,19 @@ export class OrdersController {
   @Delete(':id')
   @UseGuards(AuthGuard)
   delete(@Param('id', ParseIntPipe) id: number) { return this.svc.delete(id); }
+
+  @Post(':id/timeline')
+  @UseGuards(AuthGuard)
+  addTimeline(@Param('id', ParseIntPipe) id: number, @Body() body: OrderTimelineItem) {
+    return this.svc.addTimelineEvent(id, body);
+  }
+
+  @Delete(':id/timeline/:index')
+  @UseGuards(AuthGuard)
+  removeTimeline(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('index', ParseIntPipe) index: number,
+  ) {
+    return this.svc.removeTimelineEvent(id, index);
+  }
 }

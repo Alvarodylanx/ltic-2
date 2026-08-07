@@ -26,4 +26,10 @@ export class QuotesController {
   @Patch(':id')
   @UseGuards(AuthGuard)
   update(@Param('id', ParseIntPipe) id: number, @Body() body: Partial<Quote>) { return this.svc.update(id, body); }
+
+  @Post(':id/reply')
+  @UseGuards(AuthGuard)
+  reply(@Param('id', ParseIntPipe) id: number, @Body('message') message: string) {
+    return this.svc.reply(id, message);
+  }
 }

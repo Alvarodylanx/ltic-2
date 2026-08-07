@@ -47,4 +47,21 @@ export class ContactsService {
     if (!c) throw new NotFoundException('Contact not found');
     return c;
   }
+
+  async reply(id: number, message: string) {
+    const [c] = await this.db.select().from(contacts).where(eq(contacts.id, id));
+    if (!c) throw new NotFoundException('Contact not found');
+    if (!c.email) throw new NotFoundException('Contact has no email address');
+
+    const result = await this.mail.sendWithResult(
+      c.email,
+      `Re: ${c.subject || 'Your enquiry'} — LTIC SARL`,
+      this.mail.adminReplyEmail({
+        recipientName: c.name ?? 'Customer',
+        originalSubject: c.subject ?? 'Your enquiry',
+        replyMessage: message,
+      }),
+    );
+    return result;
+  }
 }

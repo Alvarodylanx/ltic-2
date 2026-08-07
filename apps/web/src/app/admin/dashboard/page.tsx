@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { Package, FileText, Truck, MessageSquare, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,7 +27,7 @@ export default function DashboardPage() {
   const statCards = [
     { label: L({ en: 'Total Products', fr: 'Produits totaux' }), icon: Package, value: stats?.totalProducts, color: 'text-foreground' },
     { label: L({ en: 'Pending Quotes', fr: 'Devis en attente' }), icon: FileText, value: stats?.pendingQuotes, color: 'text-primary' },
-    { label: L({ en: 'Active Orders', fr: 'Commandes actives' }), icon: Truck, value: stats?.totalOrders, color: 'text-foreground' },
+    { label: L({ en: 'Active Orders', fr: 'Commandes actives' }), icon: Truck, value: stats?.activeOrders, color: 'text-foreground' },
     { label: L({ en: 'Unread Inquiries', fr: 'Messages non lus' }), icon: MessageSquare, value: stats?.unreadContacts, color: 'text-primary' },
   ];
 
@@ -64,16 +65,23 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Recent Quotes */}
         <Card>
-          <CardHeader>
+          <CardHeader className="flex flex-row items-center justify-between pb-3">
             <CardTitle className="text-lg">{L({ en: 'Recent Quotes', fr: 'Devis récents' })}</CardTitle>
+            <Link href="/admin/quotes" className="text-xs text-primary hover:underline font-medium">
+              {L({ en: 'View all', fr: 'Voir tout' })}
+            </Link>
           </CardHeader>
           <CardContent>
             {isLoading ? (
               <div className="space-y-3">{Array(5).fill(0).map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}</div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-1">
                 {stats?.recentQuotes?.map((quote: any) => (
-                  <div key={quote.id} className="flex items-center justify-between py-2 border-b last:border-0">
+                  <Link
+                    key={quote.id}
+                    href="/admin/quotes"
+                    className="flex items-center justify-between py-2.5 px-2 rounded-md -mx-2 border-b last:border-0 hover:bg-muted/40 transition-colors"
+                  >
                     <div>
                       <p className="font-medium text-sm">{quote.companyName}</p>
                       <p className="text-xs text-muted-foreground">{format(new Date(quote.createdAt), 'dd MMM yyyy')}</p>
@@ -81,7 +89,7 @@ export default function DashboardPage() {
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${statusColors[quote.status] || 'bg-gray-100 text-gray-700'}`}>
                       {quote.status}
                     </span>
-                  </div>
+                  </Link>
                 )) || <p className="text-muted-foreground text-sm">{L({ en: 'No quotes yet', fr: 'Aucun devis pour l\'instant' })}</p>}
               </div>
             )}
@@ -90,16 +98,23 @@ export default function DashboardPage() {
 
         {/* Recent Contacts */}
         <Card>
-          <CardHeader>
+          <CardHeader className="flex flex-row items-center justify-between pb-3">
             <CardTitle className="text-lg">{L({ en: 'Recent Contacts', fr: 'Contacts récents' })}</CardTitle>
+            <Link href="/admin/contacts" className="text-xs text-primary hover:underline font-medium">
+              {L({ en: 'View all', fr: 'Voir tout' })}
+            </Link>
           </CardHeader>
           <CardContent>
             {isLoading ? (
               <div className="space-y-3">{Array(5).fill(0).map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}</div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-1">
                 {stats?.recentContacts?.map((contact: any) => (
-                  <div key={contact.id} className="flex items-center justify-between py-2 border-b last:border-0">
+                  <Link
+                    key={contact.id}
+                    href="/admin/contacts"
+                    className="flex items-center justify-between py-2.5 px-2 rounded-md -mx-2 border-b last:border-0 hover:bg-muted/40 transition-colors"
+                  >
                     <div>
                       <p className="font-medium text-sm">{contact.name}</p>
                       <p className="text-xs text-muted-foreground">{contact.subject}</p>
@@ -108,7 +123,7 @@ export default function DashboardPage() {
                       <span className="text-xs text-muted-foreground">{format(new Date(contact.createdAt), 'dd MMM')}</span>
                       {!contact.read && <div className="w-2 h-2 rounded-full bg-primary" />}
                     </div>
-                  </div>
+                  </Link>
                 )) || <p className="text-muted-foreground text-sm">{L({ en: 'No contacts yet', fr: 'Aucun contact pour l\'instant' })}</p>}
               </div>
             )}

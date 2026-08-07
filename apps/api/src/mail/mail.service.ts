@@ -33,6 +33,18 @@ export class MailService {
     }
   }
 
+  async sendWithResult(to: string, subject: string, html: string): Promise<{ sent: boolean; error?: string }> {
+    if (!this.transporter) return { sent: false, error: 'Email not configured on this server' };
+    const from = process.env.MAIL_FROM || process.env.MAIL_USER;
+    try {
+      await this.transporter.sendMail({ from: `"LTIC SARL" <${from}>`, to, subject, html });
+      return { sent: true };
+    } catch (err: any) {
+      this.logger.error(`Failed to send email to ${to}: ${err.message}`);
+      return { sent: false, error: err.message };
+    }
+  }
+
   async sendAdminNotification(subject: string, html: string): Promise<void> {
     if (!this.transporter) return;
     const to = process.env.ADMIN_EMAIL || process.env.MAIL_USER;
@@ -138,6 +150,21 @@ export class MailService {
         </p>
         <p style="margin-top:24px;color:#6b7280;font-size:13px">If you have any questions, please reply to this email or visit our website.<br><em>Si vous avez des questions, répondez à cet e-mail ou visitez notre site web.</em></p>
         <p style="color:#6b7280">LTIC SARL — International Logistics & Trade</p>
+      </div>`;
+  }
+
+  adminReplyEmail(opts: { recipientName: string; originalSubject: string; replyMessage: string }): string {
+    return `
+      <div style="font-family:sans-serif;max-width:600px;margin:auto">
+        <h2 style="color:#1a56db">Reply from LTIC SARL</h2>
+        <p>Dear ${opts.recipientName},</p>
+        <p>Thank you for reaching out to us regarding <strong>"${opts.originalSubject}"</strong>. Here is our response:</p>
+        <div style="background:#f3f4f6;border-left:4px solid #1a56db;padding:16px 20px;margin:20px 0;border-radius:0 6px 6px 0">
+          <p style="margin:0;white-space:pre-wrap;line-height:1.6">${opts.replyMessage}</p>
+        </div>
+        <p>If you have further questions, please don't hesitate to contact us again.</p>
+        <p style="color:#6b7280;font-size:13px"><em>Cher(e) ${opts.recipientName}, merci de nous avoir contactés. Si vous avez d'autres questions, n'hésitez pas à nous contacter à nouveau.</em></p>
+        <p style="margin-top:24px;color:#6b7280">LTIC SARL — International Logistics & Trade</p>
       </div>`;
   }
 

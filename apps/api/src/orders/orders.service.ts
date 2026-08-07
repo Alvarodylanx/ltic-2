@@ -1,7 +1,7 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-import { eq, desc } from 'drizzle-orm';
+import { Injectable, Inject, NotFoundException, ConflictException } from '@nestjs/common';
+import { eq, desc, not, inArray, sql } from 'drizzle-orm';
 import { DB_TOKEN, Db } from '../db/db.module';
-import { orders, Order } from '@ltic/db';
+import { orders, Order, OrderTimelineItem } from '@ltic/db';
 import { MailService } from '../mail/mail.service';
 
 @Injectable()
@@ -22,18 +22,26 @@ export class OrdersService {
     clientName: string;
     clientEmail?: string;
     customerId?: number;
+    quoteId?: number;
     origin?: string;
     destination?: string;
     description?: string;
     status?: string;
     estimatedDelivery?: string;
   }) {
-    const trackingNumber = data['trackingNumber'] || this.generateTrackingNumber();
+    if (data.quoteId) {
+      const [existing] = await this.db.select({ id: orders.id })
+        .from(orders).where(eq(orders.quoteId, data.quoteId));
+      if (existing) throw new ConflictException('An order already exists for this quote');
+    }
+
+    const trackingNumber = (data as any)['trackingNumber'] || this.generateTrackingNumber();
     const [order] = await this.db.insert(orders).values({
       trackingNumber,
       clientName: data.clientName,
       clientEmail: data.clientEmail,
       customerId: data.customerId || null,
+      quoteId: data.quoteId || null,
       origin: data.origin,
       destination: data.destination,
       description: data.description,
@@ -52,6 +60,34 @@ export class OrdersService {
     return order;
   }
 
+  async addTimelineEvent(id: number, event: OrderTimelineItem) {
+    const [order] = await this.db.select().from(orders).where(eq(orders.id, id));
+    if (!order) throw new NotFoundException('Order not found');
+
+    const timeline: OrderTimelineItem[] = Array.isArray(order.timeline) ? [...order.timeline] : [];
+    timeline.push(event);
+
+    const [updated] = await this.db.update(orders)
+      .set({ timeline, updatedAt: new Date() })
+      .where(eq(orders.id, id))
+      .returning();
+    return updated;
+  }
+
+  async removeTimelineEvent(id: number, index: number) {
+    const [order] = await this.db.select().from(orders).where(eq(orders.id, id));
+    if (!order) throw new NotFoundException('Order not found');
+
+    const timeline: OrderTimelineItem[] = Array.isArray(order.timeline) ? [...order.timeline] : [];
+    timeline.splice(index, 1);
+
+    const [updated] = await this.db.update(orders)
+      .set({ timeline, updatedAt: new Date() })
+      .where(eq(orders.id, id))
+      .returning();
+    return updated;
+  }
+
   async track(trackingNumber: string) {
     const [order] = await this.db.select().from(orders).where(eq(orders.trackingNumber, trackingNumber));
     if (!order) throw new NotFoundException('Order not found');
@@ -63,6 +99,13 @@ export class OrdersService {
       return this.db.select().from(orders).where(eq(orders.status, opts.status))
         .orderBy(desc(orders.createdAt)).limit(opts.limit).offset(opts.offset);
     return this.db.select().from(orders).orderBy(desc(orders.createdAt)).limit(opts.limit).offset(opts.offset);
+  }
+
+  async countActive() {
+    const [{ count }] = await this.db.select({ count: sql<number>`count(*)` })
+      .from(orders)
+      .where(not(inArray(orders.status, ['delivered', 'cancelled'])));
+    return Number(count);
   }
 
   async findOne(id: number) {

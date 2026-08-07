@@ -55,4 +55,21 @@ export class QuotesService {
     if (!q) throw new NotFoundException('Quote not found');
     return q;
   }
+
+  async reply(id: number, message: string) {
+    const [q] = await this.db.select().from(quotes).where(eq(quotes.id, id));
+    if (!q) throw new NotFoundException('Quote not found');
+    if (!q.email) throw new NotFoundException('Quote has no email address');
+
+    const result = await this.mail.sendWithResult(
+      q.email,
+      `Re: Your Quote Request — LTIC SARL`,
+      this.mail.adminReplyEmail({
+        recipientName: q.contactName ?? q.companyName ?? 'Customer',
+        originalSubject: q.productInterest ?? 'Your quote request',
+        replyMessage: message,
+      }),
+    );
+    return result;
+  }
 }

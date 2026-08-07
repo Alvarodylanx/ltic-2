@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { PackagePlus } from 'lucide-react';
+import { PackagePlus, Reply, AlertTriangle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -44,6 +44,11 @@ export default function AdminQuotesPage() {
 
   const [convertQuote, setConvertQuote] = useState<any | null>(null);
   const [form, setForm] = useState<OrderForm>(EMPTY_FORM);
+  const [submitting, setSubmitting] = useState(false);
+
+  const [replyQuote, setReplyQuote] = useState<any | null>(null);
+  const [replyMessage, setReplyMessage] = useState('');
+  const [replying, setReplying] = useState(false);
 
   const { data: quotes, isLoading } = useQuery<any[]>({
     queryKey: ['admin-quotes'],
@@ -54,8 +59,6 @@ export default function AdminQuotesPage() {
     queryKey: ['admin-customers'],
     queryFn: () => api.get('/api/customers'),
   });
-
-  const [submitting, setSubmitting] = useState(false);
 
   const updateStatusMutation = useMutation({
     mutationFn: ({ id, status }: { id: number; status: string }) => api.patch(`/api/quotes/${id}`, { status }),
@@ -90,6 +93,7 @@ export default function AdminQuotesPage() {
         description:       form.description || undefined,
         status:            form.status,
         estimatedDelivery: form.estimatedDelivery || undefined,
+        quoteId:           convertQuote.id,
       };
       if (form.customerId && form.customerId !== 'none') body.customerId = Number(form.customerId);
 
@@ -102,9 +106,38 @@ export default function AdminQuotesPage() {
       setConvertQuote(null);
       setForm(EMPTY_FORM);
     } catch (err: any) {
-      toast.error(err.message || L({ en: 'Failed to create order', fr: 'Échec de la création' }));
+      const msg = err.message || '';
+      if (msg.includes('already exists') || err.status === 409) {
+        toast.error(L({ en: 'An order already exists for this quote', fr: 'Une commande existe déjà pour ce devis' }));
+      } else {
+        toast.error(msg || L({ en: 'Failed to create order', fr: 'Échec de la création' }));
+      }
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function handleReply(e: React.FormEvent) {
+    e.preventDefault();
+    if (!replyQuote || !replyMessage.trim()) return;
+    setReplying(true);
+    try {
+      const result: any = await api.post(`/api/quotes/${replyQuote.id}/reply`, { message: replyMessage });
+      if (result.sent) {
+        toast.success(L({ en: 'Reply sent successfully', fr: 'Réponse envoyée avec succès' }));
+        setReplyQuote(null);
+        setReplyMessage('');
+      } else {
+        toast.warning(
+          result.error === 'Email not configured on this server'
+            ? L({ en: 'Email not configured — message not sent', fr: 'Email non configuré — message non envoyé' })
+            : (result.error || L({ en: 'Failed to send email', fr: "Échec de l'envoi" }))
+        );
+      }
+    } catch {
+      toast.error(L({ en: 'Failed to send reply', fr: "Échec de l'envoi" }));
+    } finally {
+      setReplying(false);
     }
   }
 
@@ -130,7 +163,7 @@ export default function AdminQuotesPage() {
         <div className="space-y-3">{Array(8).fill(0).map((_, i) => <Skeleton key={i} className="h-16 w-full" />)}</div>
       ) : (
         <div className="bg-card border rounded-xl overflow-hidden overflow-x-auto">
-          <table className="w-full min-w-[1000px]">
+          <table className="w-full min-w-[1100px]">
             <thead className="bg-muted/50 border-b">
               <tr>
                 {headers.map((h, i) => (
@@ -145,7 +178,7 @@ export default function AdminQuotesPage() {
                   <td className="px-4 py-3 font-medium text-sm">{quote.companyName}</td>
                   <td className="px-4 py-3 text-sm">{quote.contactName}</td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">{quote.email}</td>
-                  <td className="px-4 py-3 text-sm max-w-[180px] truncate">{quote.productInterest}</td>
+                  <td className="px-4 py-3 text-sm max-w-[160px] truncate">{quote.productInterest}</td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">{quote.quantity || '—'}</td>
                   <td className="px-4 py-3">
                     <Select value={quote.status} onValueChange={(val) => updateStatusMutation.mutate({ id: quote.id, status: val })}>
@@ -161,15 +194,33 @@ export default function AdminQuotesPage() {
                     </Select>
                   </td>
                   <td className="px-4 py-3">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="h-8 gap-1.5 text-xs whitespace-nowrap border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground"
-                      onClick={() => openConvert(quote)}
-                    >
-                      <PackagePlus className="h-3.5 w-3.5" />
-                      {L({ en: 'Convert to Order', fr: 'Créer commande' })}
-                    </Button>
+                    <div className="flex items-center gap-1.5">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-8 gap-1 text-xs text-muted-foreground hover:text-foreground"
+                        onClick={() => { setReplyQuote(quote); setReplyMessage(''); }}
+                        title={L({ en: 'Reply by email', fr: 'Répondre par email' })}
+                      >
+                        <Reply className="h-3.5 w-3.5" />
+                        {L({ en: 'Reply', fr: 'Répondre' })}
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className={`h-8 gap-1.5 text-xs whitespace-nowrap ${
+                          quote.status === 'responded'
+                            ? 'border-border text-muted-foreground'
+                            : 'border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground'
+                        }`}
+                        onClick={() => openConvert(quote)}
+                        title={quote.status === 'responded' ? L({ en: 'Already converted — will create a duplicate', fr: 'Déjà converti — créera un doublon' }) : undefined}
+                      >
+                        {quote.status === 'responded' && <AlertTriangle className="h-3 w-3" />}
+                        {quote.status !== 'responded' && <PackagePlus className="h-3.5 w-3.5" />}
+                        {L({ en: 'Convert', fr: 'Convertir' })}
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -181,6 +232,49 @@ export default function AdminQuotesPage() {
         </div>
       )}
 
+      {/* Reply Dialog */}
+      <Dialog open={!!replyQuote} onOpenChange={(open) => { if (!open) { setReplyQuote(null); setReplyMessage(''); } }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Reply className="h-4 w-4 text-primary" />
+              {L({ en: 'Reply to Quote Request', fr: 'Répondre à la demande de devis' })}
+            </DialogTitle>
+          </DialogHeader>
+
+          {replyQuote && (
+            <div className="bg-muted/50 border rounded-lg px-4 py-3 text-xs text-muted-foreground">
+              <p><span className="font-semibold text-foreground">{L({ en: 'To:', fr: 'À :' })}</span> {replyQuote.contactName} &lt;{replyQuote.email}&gt;</p>
+              <p className="mt-1"><span className="font-semibold text-foreground">{L({ en: 'Re:', fr: 'Objet :' })}</span> {replyQuote.productInterest}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleReply} className="space-y-3">
+            <div>
+              <Label>{L({ en: 'Message', fr: 'Message' })} *</Label>
+              <textarea
+                value={replyMessage}
+                onChange={(e) => setReplyMessage(e.target.value)}
+                placeholder={L({ en: 'Write your reply here…', fr: 'Écrivez votre réponse ici…' })}
+                required
+                rows={6}
+                className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => { setReplyQuote(null); setReplyMessage(''); }}>
+                {L({ en: 'Cancel', fr: 'Annuler' })}
+              </Button>
+              <Button type="submit" disabled={replying || !replyMessage.trim()}>
+                {replying
+                  ? L({ en: 'Sending…', fr: 'Envoi…' })
+                  : L({ en: 'Send Reply', fr: 'Envoyer la réponse' })}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
       {/* Convert to Order Dialog */}
       <Dialog open={!!convertQuote} onOpenChange={(open) => { if (!open) { setConvertQuote(null); setForm(EMPTY_FORM); } }}>
         <DialogContent className="max-w-lg">
@@ -191,8 +285,15 @@ export default function AdminQuotesPage() {
             </DialogTitle>
           </DialogHeader>
 
+          {convertQuote?.status === 'responded' && (
+            <div className="flex items-start gap-2 bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-3 text-xs text-yellow-800">
+              <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+              <p>{L({ en: 'This quote was already responded to. Proceeding will attempt to create a new order — the server will block it if one already exists.', fr: 'Ce devis a déjà reçu une réponse. Continuer tentera de créer une commande — le serveur bloquera si une commande existe déjà.' })}</p>
+            </div>
+          )}
+
           {convertQuote && (
-            <div className="bg-muted/50 border rounded-lg px-4 py-3 text-xs text-muted-foreground mb-2">
+            <div className="bg-muted/50 border rounded-lg px-4 py-3 text-xs text-muted-foreground">
               <span className="font-semibold text-foreground">{L({ en: 'Quote:', fr: 'Devis :' })}</span>{' '}
               {convertQuote.productInterest}{convertQuote.quantity ? ` × ${convertQuote.quantity}` : ''}{' '}
               — {convertQuote.companyName}

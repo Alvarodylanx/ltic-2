@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Plus, Trash2, MapPin, X } from 'lucide-react';
+import { Plus, Trash2, MapPin, X, Clock, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -36,6 +36,13 @@ const EMPTY_FORM = {
   status: 'processing', estimatedDelivery: '',
 };
 
+const EMPTY_TIMELINE_EVENT = {
+  status: 'processing',
+  date: new Date().toISOString().slice(0, 16),
+  description: '',
+  location: '',
+};
+
 export default function AdminOrdersPage() {
   const qc = useQueryClient();
   const { L } = useLanguage();
@@ -47,6 +54,10 @@ export default function AdminOrdersPage() {
   const [locationOrder, setLocationOrder] = useState<any | null>(null);
   const [locationCoords, setLocationCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [locationLabel, setLocationLabel] = useState('');
+
+  const [timelineOrder, setTimelineOrder] = useState<any | null>(null);
+  const [timelineEvent, setTimelineEvent] = useState(EMPTY_TIMELINE_EVENT);
+  const [deleteTimelineIdx, setDeleteTimelineIdx] = useState<number | null>(null);
 
   const { data: orders, isLoading } = useQuery<any[]>({
     queryKey: ['admin-orders'],
@@ -95,6 +106,28 @@ export default function AdminOrdersPage() {
     onError: () => toast.error(L({ en: 'Failed to save location', fr: "Échec de l'enregistrement" })),
   });
 
+  const addTimelineMutation = useMutation({
+    mutationFn: ({ id, event }: { id: number; event: any }) => api.post(`/api/orders/${id}/timeline`, event),
+    onSuccess: (data) => {
+      qc.invalidateQueries({ queryKey: ['admin-orders'] });
+      setTimelineOrder(data);
+      setTimelineEvent(EMPTY_TIMELINE_EVENT);
+      toast.success(L({ en: 'Timeline event added', fr: 'Événement ajouté' }));
+    },
+    onError: () => toast.error(L({ en: 'Failed to add event', fr: "Échec de l'ajout" })),
+  });
+
+  const removeTimelineMutation = useMutation({
+    mutationFn: ({ id, index }: { id: number; index: number }) => api.delete(`/api/orders/${id}/timeline/${index}`),
+    onSuccess: (data) => {
+      qc.invalidateQueries({ queryKey: ['admin-orders'] });
+      setTimelineOrder(data);
+      setDeleteTimelineIdx(null);
+      toast.success(L({ en: 'Event removed', fr: 'Événement supprimé' }));
+    },
+    onError: () => toast.error(L({ en: 'Failed to remove event', fr: 'Échec de la suppression' })),
+  });
+
   function openLocationPicker(order: any) {
     setLocationOrder(order);
     setLocationCoords(
@@ -138,6 +171,20 @@ export default function AdminOrdersPage() {
     };
     if (form.customerId) body.customerId = Number(form.customerId);
     createMutation.mutate(body);
+  }
+
+  function addTimelineEvent(e: React.FormEvent) {
+    e.preventDefault();
+    if (!timelineOrder) return;
+    addTimelineMutation.mutate({
+      id: timelineOrder.id,
+      event: {
+        status: timelineEvent.status,
+        date: timelineEvent.date,
+        description: timelineEvent.description,
+        location: timelineEvent.location || undefined,
+      },
+    });
   }
 
   const headers = [
@@ -202,6 +249,14 @@ export default function AdminOrdersPage() {
                   <td className="px-4 py-3 text-xs text-muted-foreground">{format(new Date(order.createdAt), 'dd MMM yyyy')}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
+                      <Button
+                        variant="ghost" size="icon"
+                        className="h-8 w-8 text-muted-foreground hover:text-primary"
+                        onClick={() => { setTimelineOrder(order); setTimelineEvent(EMPTY_TIMELINE_EVENT); }}
+                        title={L({ en: 'Manage timeline', fr: 'Gérer la chronologie' })}
+                      >
+                        <Clock className="h-4 w-4" />
+                      </Button>
                       <Button
                         variant="ghost" size="icon"
                         className={`h-8 w-8 ${order.currentLat ? 'text-primary' : 'text-muted-foreground'} hover:text-primary`}
@@ -385,6 +440,124 @@ export default function AdminOrdersPage() {
               </Button>
             </div>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Timeline Management Dialog */}
+      <Dialog open={!!timelineOrder} onOpenChange={(open) => { if (!open) { setTimelineOrder(null); setDeleteTimelineIdx(null); } }}>
+        <DialogContent className="max-w-xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-primary" />
+              {L({ en: 'Shipment Timeline', fr: 'Chronologie de l\'expédition' })}
+            </DialogTitle>
+            {timelineOrder && (
+              <p className="text-xs text-muted-foreground font-mono">{timelineOrder.trackingNumber} — {timelineOrder.clientName}</p>
+            )}
+          </DialogHeader>
+
+          {/* Existing events */}
+          <div className="max-h-60 overflow-y-auto">
+            {(!timelineOrder?.timeline || timelineOrder.timeline.length === 0) ? (
+              <p className="text-sm text-muted-foreground text-center py-6">
+                {L({ en: 'No timeline events yet. Add the first one below.', fr: 'Aucun événement. Ajoutez-en un ci-dessous.' })}
+              </p>
+            ) : (
+              <div className="space-y-2 pr-1">
+                {[...(timelineOrder?.timeline || [])].reverse().map((event: any, revIdx: number) => {
+                  const realIdx = (timelineOrder?.timeline?.length ?? 0) - 1 - revIdx;
+                  return (
+                    <div key={realIdx} className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg border">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-semibold text-primary uppercase tracking-wide">{event.status}</span>
+                          <span className="text-xs text-muted-foreground">{event.date ? new Date(event.date).toLocaleString() : ''}</span>
+                        </div>
+                        <p className="text-sm">{event.description}</p>
+                        {event.location && <p className="text-xs text-muted-foreground mt-0.5">{event.location}</p>}
+                      </div>
+                      <Button
+                        variant="ghost" size="icon"
+                        className="h-7 w-7 text-destructive/70 hover:text-destructive flex-shrink-0"
+                        onClick={() => {
+                          if (timelineOrder) {
+                            removeTimelineMutation.mutate({ id: timelineOrder.id, index: realIdx });
+                          }
+                        }}
+                        disabled={removeTimelineMutation.isPending}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Add new event form */}
+          <div className="border-t pt-4 mt-2">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+              {L({ en: 'Add Event', fr: 'Ajouter un événement' })}
+            </p>
+            <form onSubmit={addTimelineEvent} className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label className="text-xs">{L({ en: 'Status', fr: 'Statut' })} *</Label>
+                  <Select value={timelineEvent.status} onValueChange={(v) => setTimelineEvent({ ...timelineEvent, status: v })}>
+                    <SelectTrigger className="mt-1 h-8 text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STATUSES.map((s) => (
+                        <SelectItem key={s.value} value={s.value}>{L({ en: s.en, fr: s.fr })}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-xs">{L({ en: 'Date & Time', fr: 'Date et heure' })} *</Label>
+                  <Input
+                    type="datetime-local"
+                    value={timelineEvent.date}
+                    onChange={(e) => setTimelineEvent({ ...timelineEvent, date: e.target.value })}
+                    className="mt-1 h-8 text-xs"
+                    required
+                  />
+                </div>
+                <div className="col-span-2">
+                  <Label className="text-xs">{L({ en: 'Description', fr: 'Description' })} *</Label>
+                  <Input
+                    value={timelineEvent.description}
+                    onChange={(e) => setTimelineEvent({ ...timelineEvent, description: e.target.value })}
+                    placeholder={L({ en: 'e.g. Shipment cleared customs', fr: 'ex. Expédition dédouanée' })}
+                    className="mt-1 h-8 text-xs"
+                    required
+                  />
+                </div>
+                <div className="col-span-2">
+                  <Label className="text-xs">{L({ en: 'Location (optional)', fr: 'Lieu (optionnel)' })}</Label>
+                  <Input
+                    value={timelineEvent.location}
+                    onChange={(e) => setTimelineEvent({ ...timelineEvent, location: e.target.value })}
+                    placeholder={L({ en: 'e.g. Port of Douala, Cameroon', fr: 'ex. Port de Douala, Cameroun' })}
+                    className="mt-1 h-8 text-xs"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button type="button" variant="outline" size="sm" onClick={() => setTimelineOrder(null)}>
+                  {L({ en: 'Close', fr: 'Fermer' })}
+                </Button>
+                <Button type="submit" size="sm" disabled={addTimelineMutation.isPending}>
+                  <PlusCircle className="h-3.5 w-3.5 mr-1.5" />
+                  {addTimelineMutation.isPending
+                    ? L({ en: 'Adding…', fr: 'Ajout…' })
+                    : L({ en: 'Add Event', fr: 'Ajouter' })}
+                </Button>
+              </div>
+            </form>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
