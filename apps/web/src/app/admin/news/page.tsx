@@ -86,6 +86,7 @@ function NewsForm({ article, onSuccess }: { article?: any; onSuccess: () => void
       <div>
         <Label>{L({ en: 'Image / Video', fr: 'Image / Vidéo' })}</Label>
         <div className="mt-1">
+          <input type="hidden" {...register('imageUrl')} />
           <MediaUpload value={watch('imageUrl') || ''} onChange={v => setValue('imageUrl', v)} />
         </div>
       </div>
@@ -102,7 +103,7 @@ function NewsForm({ article, onSuccess }: { article?: any; onSuccess: () => void
         <Textarea {...register(contentField)} rows={5} className="mt-1" />
       </div>
       <label className="flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" {...register('published')} defaultChecked className="w-4 h-4" />
+        <input type="checkbox" {...register('published')} defaultChecked={article?.published ?? true} className="w-4 h-4" />
         <span className="text-sm">{L({ en: 'Published', fr: 'Publié' })}</span>
       </label>
       <Button type="submit" disabled={busy} className="w-full">
@@ -127,7 +128,7 @@ export default function AdminNewsPage() {
 
   const { data: articles, isLoading } = useQuery<any[]>({
     queryKey: ['admin-news'],
-    queryFn: () => api.get('/api/news?limit=100'),
+    queryFn: () => api.get('/api/news/admin?limit=100'),
   });
 
   const deleteMutation = useMutation({

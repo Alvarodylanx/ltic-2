@@ -14,6 +14,12 @@ export class NewsController {
     return this.svc.findAll({ limit: limit ? Number(limit) : 20, offset: offset ? Number(offset) : 0 });
   }
 
+  @Get('admin')
+  @UseGuards(AuthGuard)
+  findAllAdmin(@Query('limit') limit?: string, @Query('offset') offset?: string) {
+    return this.svc.findAllAdmin({ limit: limit ? Number(limit) : 100, offset: offset ? Number(offset) : 0 });
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) { return this.svc.findOne(id); }
 

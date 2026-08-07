@@ -12,6 +12,11 @@ export class NewsService {
       .orderBy(desc(news.publishedAt)).limit(opts.limit).offset(opts.offset);
   }
 
+  async findAllAdmin(opts: { limit: number; offset: number }) {
+    return this.db.select().from(news)
+      .orderBy(desc(news.publishedAt)).limit(opts.limit).offset(opts.offset);
+  }
+
   async findOne(id: number) {
     const [article] = await this.db.select().from(news).where(eq(news.id, id));
     if (!article) throw new NotFoundException('Article not found');
@@ -24,7 +29,10 @@ export class NewsService {
   }
 
   async update(id: number, data: Partial<NewsArticle>) {
-    const [article] = await this.db.update(news).set(data).where(eq(news.id, id)).returning();
+    const allowed = ['titleEn','titleFr','slug','summaryEn','summaryFr','contentEn','contentFr','imageUrl','category','published','publishedAt'] as const;
+    const safe: Record<string, unknown> = {};
+    for (const key of allowed) if ((data as any)[key] !== undefined) safe[key] = (data as any)[key];
+    const [article] = await this.db.update(news).set(safe as any).where(eq(news.id, id)).returning();
     if (!article) throw new NotFoundException('Article not found');
     return article;
   }
