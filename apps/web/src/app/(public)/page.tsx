@@ -759,7 +759,7 @@ export default function HomePage() {
               {featuredLoading
                 ? Array(7).fill(0).map((_, i) => (
                     <div key={i} className="rounded-xl overflow-hidden bg-white border border-border">
-                      <Skeleton style={{ height: '200px', display: 'block', width: '100%' }} />
+                      <Skeleton style={{ height: '140px', display: 'block', width: '100%' }} />
                       <div className="p-3 space-y-2">
                         <Skeleton className="h-2.5 w-1/2" />
                         <Skeleton className="h-3.5 w-full" />
@@ -781,7 +781,7 @@ export default function HomePage() {
                         className="group hover:border-primary/40 hover:shadow-md"
                       >
                         {/* Image — fixed height, same across all cards */}
-                        <div style={{ height: '200px', flexShrink: 0, overflow: 'hidden', position: 'relative', backgroundColor: '#f8fafc' }}>
+                        <div style={{ height: '140px', flexShrink: 0, overflow: 'hidden', position: 'relative', backgroundColor: '#f8fafc' }}>
                           {product.imageUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
