@@ -80,6 +80,12 @@ export class UnifiedAuthService {
 
   async forgotPassword(email: string): Promise<void> {
     const normalized = email.trim().toLowerCase();
+
+    // Admin accounts cannot use the self-service password reset flow.
+    // They must update their password from Admin → Profile while logged in.
+    const adminRows = await this.db.select({ email: adminProfile.email }).from(adminProfile).limit(1);
+    if (adminRows.length > 0 && adminRows[0].email.toLowerCase() === normalized) return;
+
     const [customer] = await this.db.select().from(customers).where(eq(customers.email, normalized)).limit(1);
     if (!customer) return; // don't leak whether email exists
 

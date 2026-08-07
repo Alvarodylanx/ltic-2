@@ -1,5 +1,5 @@
 import { Injectable, Inject, NotFoundException, ConflictException } from '@nestjs/common';
-import { eq, desc, not, inArray, sql } from 'drizzle-orm';
+import { eq, desc, sql } from 'drizzle-orm';
 import { DB_TOKEN, Db } from '../db/db.module';
 import { orders, Order, OrderTimelineItem } from '@ltic/db';
 import { MailService } from '../mail/mail.service';
@@ -102,9 +102,9 @@ export class OrdersService {
   }
 
   async countActive() {
-    const [{ count }] = await this.db.select({ count: sql<number>`count(*)` })
-      .from(orders)
-      .where(not(inArray(orders.status, ['delivered', 'cancelled'])));
+    const [{ count }] = await this.db.select({
+      count: sql<number>`count(*) filter (where status not in ('delivered','cancelled'))`,
+    }).from(orders);
     return Number(count);
   }
 

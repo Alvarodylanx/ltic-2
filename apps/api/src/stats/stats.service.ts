@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { eq, sql, desc, not, inArray } from 'drizzle-orm';
+import { eq, sql, desc } from 'drizzle-orm';
 import { DB_TOKEN, Db } from '../db/db.module';
 import { products, quotes, orders, contacts } from '@ltic/db';
 
@@ -14,8 +14,7 @@ export class StatsService {
       this.db.select({ total: sql<number>`count(*)` }).from(products),
       this.db.select({ total: sql<number>`count(*)` }).from(quotes),
       this.db.select({ total: sql<number>`count(*)` }).from(quotes).where(eq(quotes.status, 'pending')),
-      this.db.select({ total: sql<number>`count(*)` }).from(orders)
-        .where(not(inArray(orders.status, ['delivered', 'cancelled']))),
+      this.db.select({ total: sql<number>`count(*) filter (where status not in ('delivered','cancelled'))` }).from(orders),
       this.db.select({ total: sql<number>`count(*)` }).from(contacts).where(eq(contacts.read, false)),
       this.db.select().from(quotes).orderBy(desc(quotes.createdAt)).limit(5),
       this.db.select().from(contacts).orderBy(desc(contacts.createdAt)).limit(5),

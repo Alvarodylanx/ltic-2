@@ -107,12 +107,13 @@ export class MailService {
       <div style="font-family:sans-serif;max-width:600px;margin:auto">
         <h2 style="color:#1a56db">New Quote Request — LTIC SARL</h2>
         <table style="width:100%;border-collapse:collapse">
-          <tr><td style="padding:6px 0;color:#6b7280">Name</td><td style="padding:6px 0;font-weight:600">${quote.name ?? '—'}</td></tr>
-          <tr><td style="padding:6px 0;color:#6b7280">Company</td><td style="padding:6px 0">${quote.company ?? '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Name</td><td style="padding:6px 0;font-weight:600">${quote.contactName ?? quote.name ?? '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Company</td><td style="padding:6px 0">${quote.companyName ?? quote.company ?? '—'}</td></tr>
           <tr><td style="padding:6px 0;color:#6b7280">Email</td><td style="padding:6px 0">${quote.email ?? '—'}</td></tr>
           <tr><td style="padding:6px 0;color:#6b7280">Phone</td><td style="padding:6px 0">${quote.phone ?? '—'}</td></tr>
           <tr><td style="padding:6px 0;color:#6b7280">Country</td><td style="padding:6px 0">${quote.country ?? '—'}</td></tr>
-          <tr><td style="padding:6px 0;color:#6b7280">Service</td><td style="padding:6px 0">${quote.serviceType ?? '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Product Interest</td><td style="padding:6px 0">${quote.productInterest ?? quote.serviceType ?? '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Quantity</td><td style="padding:6px 0">${quote.quantity ?? '—'}</td></tr>
           <tr><td style="padding:6px 0;color:#6b7280">Message</td><td style="padding:6px 0">${quote.message ?? '—'}</td></tr>
         </table>
         <p style="margin-top:24px"><a href="${process.env.NEXT_PUBLIC_API_URL?.replace(':4000', ':3000') ?? 'http://localhost:3000'}/admin/quotes" style="background:#1a56db;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none">View in Admin Panel</a></p>
