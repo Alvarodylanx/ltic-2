@@ -758,54 +758,65 @@ export default function HomePage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
               {featuredLoading
                 ? Array(7).fill(0).map((_, i) => (
-                    <div key={i} className="rounded-xl overflow-hidden bg-white border border-border">
-                      <Skeleton style={{ height: '140px', display: 'block', width: '100%' }} />
-                      <div className="p-3 space-y-2">
-                        <Skeleton className="h-2.5 w-1/2" />
-                        <Skeleton className="h-3.5 w-full" />
+                    <div key={i} style={{ background: '#fff', borderRadius: '10px', border: '1px solid #e8ecf0', overflow: 'hidden' }}>
+                      <Skeleton style={{ height: '130px', display: 'block', width: '100%', background: '#f1f5f9' }} />
+                      <div style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <Skeleton style={{ height: '8px', width: '50%', background: '#f1f5f9', borderRadius: '4px' }} />
+                        <Skeleton style={{ height: '11px', width: '90%', background: '#f1f5f9', borderRadius: '4px' }} />
                       </div>
                     </div>
                   ))
                 : featuredProducts!.slice(0, 7).map((product, idx) => (
                     <motion.div
                       key={product.id}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                      whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
-                      style={{ display: 'flex', flexDirection: 'column' }}
+                      transition={{ duration: 0.38, delay: idx * 0.055, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
                     >
                       <Link
                         href={`/products/${product.slug}`}
-                        style={{ display: 'flex', flexDirection: 'column', flex: 1, borderRadius: '12px', overflow: 'hidden', textDecoration: 'none', background: '#fff', border: '1px solid hsl(var(--border))', transition: 'box-shadow 0.2s, border-color 0.2s' }}
-                        className="group hover:border-primary/40 hover:shadow-md"
+                        className="group"
+                        style={{
+                          display: 'block',
+                          background: '#ffffff',
+                          borderRadius: '10px',
+                          border: '1px solid #e8ecf0',
+                          overflow: 'hidden',
+                          textDecoration: 'none',
+                          transition: 'border-color 0.18s, box-shadow 0.18s',
+                        }}
+                        onMouseEnter={e => {
+                          (e.currentTarget as HTMLElement).style.borderColor = 'hsl(var(--primary) / 0.45)';
+                          (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)';
+                        }}
+                        onMouseLeave={e => {
+                          (e.currentTarget as HTMLElement).style.borderColor = '#e8ecf0';
+                          (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                        }}
                       >
-                        {/* Image — fixed height, same across all cards */}
-                        <div style={{ height: '140px', flexShrink: 0, overflow: 'hidden', position: 'relative', backgroundColor: '#f8fafc' }}>
+                        {/* Image */}
+                        <div style={{ height: '130px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderBottom: '1px solid #f1f5f9' }}>
                           {product.imageUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                               src={product.imageUrl}
                               alt={product.nameEn || product.nameFr || ''}
-                              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '12px' }}
+                              style={{ maxWidth: '85%', maxHeight: '85%', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }}
                             />
                           ) : (
-                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                              <Package className="h-10 w-10 text-muted-foreground/30" />
-                            </div>
-                          )}
-                          {product.categoryName && (
-                            <span className="absolute bottom-2 left-2 bg-primary text-white text-[9px]
-                                             font-bold uppercase tracking-wider px-1.5 py-0.5 rounded">
-                              {product.categoryName}
-                            </span>
+                            <Package className="h-8 w-8 text-slate-300" />
                           )}
                         </div>
 
-                        {/* Name */}
-                        <div className="p-3 flex-1">
-                          <p className="text-foreground text-xs font-semibold leading-snug line-clamp-2
-                                         group-hover:text-primary transition-colors duration-150">
+                        {/* Info */}
+                        <div style={{ padding: '10px 12px' }}>
+                          {product.categoryName && (
+                            <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--primary))', marginBottom: '4px' }}>
+                              {product.categoryName}
+                            </p>
+                          )}
+                          <p style={{ fontSize: '11px', fontWeight: 600, color: '#1e293b', lineHeight: 1.4, margin: 0, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                             {L({ en: product.nameEn, fr: product.nameFr })}
                           </p>
                         </div>
