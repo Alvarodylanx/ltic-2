@@ -409,6 +409,11 @@ export default function HomePage() {
     queryFn: () => api.get('/api/partners'),
     staleTime: 5 * 60 * 1000,
   });
+  const { data: featuredProducts, isLoading: featuredLoading } = useQuery<any[]>({
+    queryKey: ['products', 'featured'],
+    queryFn: () => api.get('/api/products/featured'),
+    staleTime: 5 * 60 * 1000,
+  });
 
 
   const staticBrands: Partner[] = [
@@ -717,6 +722,104 @@ export default function HomePage() {
         </div>
       </section>
 
+
+      {/* ══ 3. FEATURED THIS WEEK ════════════════════════════════════════════ */}
+      {(featuredLoading || (featuredProducts && featuredProducts.length > 0)) && (
+        <section className="bg-sidebar relative py-12 sm:py-16 overflow-hidden">
+          <div className="dot-grid absolute inset-0 opacity-25 pointer-events-none" />
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-end justify-between gap-4 mb-10"
+            >
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-5 h-px bg-primary flex-shrink-0" />
+                  <span className="text-primary font-bold text-[10px] uppercase tracking-[0.3em]">
+                    {L({ en: 'Featured This Week', fr: 'En Vedette Cette Semaine' })}
+                  </span>
+                </div>
+                <h2 className="font-extrabold text-2xl sm:text-3xl text-sidebar-foreground leading-tight">
+                  {L({ en: 'Products We Recommend', fr: 'Produits que Nous Recommandons' })}
+                </h2>
+              </div>
+              <Link href="/products"
+                className="flex items-center gap-1.5 text-sm font-semibold text-sidebar-foreground/60
+                           hover:text-sidebar-foreground transition-colors duration-150 shrink-0">
+                {L({ en: 'View All', fr: 'Voir Tout' })}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </motion.div>
+
+            {/* Grid — 6 compact cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+              {featuredLoading
+                ? Array(6).fill(0).map((_, i) => (
+                    <div key={i} className="rounded-xl overflow-hidden border border-sidebar-border">
+                      <Skeleton className="bg-white/10" style={{ height: '120px', display: 'block', width: '100%' }} />
+                      <div className="p-3 space-y-2">
+                        <Skeleton className="h-2 w-1/2 bg-white/10" />
+                        <Skeleton className="h-3 w-full bg-white/10" />
+                      </div>
+                    </div>
+                  ))
+                : featuredProducts!.slice(0, 6).map((product, idx) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+                    >
+                      <Link
+                        href={`/products/${product.slug}`}
+                        className="block rounded-xl overflow-hidden border border-sidebar-border/60
+                                   bg-white/5 hover:bg-white/10 hover:border-primary/50
+                                   transition-all duration-200 group"
+                      >
+                        {/* Image */}
+                        <div style={{ height: '120px', overflow: 'hidden', position: 'relative', flexShrink: 0 }}>
+                          {product.imageUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={product.imageUrl}
+                              alt={product.nameEn || product.nameFr || ''}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                              className="group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : (
+                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.04)' }}>
+                              <Package className="h-8 w-8 text-sidebar-foreground/20" />
+                            </div>
+                          )}
+                          {product.categoryName && (
+                            <span className="absolute bottom-2 left-2 bg-black/55 text-white text-[9px]
+                                             font-bold uppercase tracking-wider px-1.5 py-0.5 rounded
+                                             backdrop-blur-sm">
+                              {product.categoryName}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Name */}
+                        <div className="p-3">
+                          <p className="text-sidebar-foreground/80 text-xs font-semibold leading-snug
+                                         line-clamp-2 group-hover:text-sidebar-foreground transition-colors duration-150">
+                            {L({ en: product.nameEn, fr: product.nameFr })}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ══ 4. PRODUCT CATALOG — Browse by Category ══════════════════════════ */}
       <section className="bg-muted/40 py-3 sm:py-20 border-y border-border">
