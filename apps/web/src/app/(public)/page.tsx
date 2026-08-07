@@ -409,6 +409,11 @@ export default function HomePage() {
     queryFn: () => api.get('/api/partners'),
     staleTime: 5 * 60 * 1000,
   });
+  const { data: featuredProducts, isLoading: featuredLoading } = useQuery<any[]>({
+    queryKey: ['products', 'featured'],
+    queryFn: () => api.get('/api/products/featured'),
+    staleTime: 5 * 60 * 1000,
+  });
 
   const staticBrands: Partner[] = [
     { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=totalenergies.com&sz=128' },
@@ -1083,6 +1088,118 @@ export default function HomePage() {
                 </motion.div>
               );
             })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══ Featured Products ══════════════════════════════════════════════════ */}
+      <section className="bg-slate-50 py-16 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55 }}
+            className="mb-12 sm:mb-16"
+          >
+            <span className="amber-rule mb-4" />
+            <p className="text-primary font-bold text-xs uppercase tracking-[0.25em] mb-3 mt-4">
+              {L({ en: 'Our Products', fr: 'Nos Produits' })}
+            </p>
+            <div className="flex items-end justify-between gap-4 flex-wrap">
+              <h2 className="text-section font-extrabold text-foreground">
+                {L({ en: 'Featured Products', fr: 'Produits Vedettes' })}
+              </h2>
+              <Link href="/products"
+                className="flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline shrink-0">
+                {L({ en: 'View all products', fr: 'Voir tous les produits' })}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* Grid */}
+          {featuredLoading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="rounded-xl overflow-hidden bg-white shadow-sm">
+                  <Skeleton style={{ height: '200px', display: 'block', width: '100%' }} />
+                  <div className="p-4 space-y-2">
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : featuredProducts && featuredProducts.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {featuredProducts.slice(0, 8).map((product, idx) => (
+                <motion.div
+                  key={product.id ?? idx}
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="block rounded-xl overflow-hidden bg-white shadow-sm border border-border/50
+                               hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
+                  >
+                    {/* Image container — explicit inline height, never class-based */}
+                    <div style={{ height: '200px', overflow: 'hidden', backgroundColor: '#f1f5f9', position: 'relative', flexShrink: 0 }}>
+                      {product.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={product.imageUrl}
+                          alt={product.nameEn || product.nameFr || ''}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                          className="group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <Package className="h-12 w-12 text-slate-300" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Info */}
+                    <div className="p-4">
+                      {product.categoryName && (
+                        <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1.5">
+                          {product.categoryName}
+                        </p>
+                      )}
+                      <p className="font-semibold text-foreground text-sm leading-snug line-clamp-2">
+                        {L({ en: product.nameEn, fr: product.nameFr }) || product.nameEn || product.nameFr}
+                      </p>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-muted-foreground py-12">
+              {L({ en: 'No featured products available.', fr: 'Aucun produit vedette disponible.' })}
+            </p>
+          )}
+
+          {/* Bottom CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.45, delay: 0.2 }}
+            className="mt-12 text-center"
+          >
+            <Button asChild size="lg"
+              className="font-semibold h-12 px-8 text-base">
+              <Link href="/products">
+                {L({ en: 'Browse Full Catalog', fr: 'Parcourir le Catalogue Complet' })}
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </section>
