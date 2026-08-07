@@ -63,7 +63,7 @@ export default function AdminSettingsPage() {
 
   async function testEmail() {
     try {
-      const result: any = await api.post('/api/contacts/1/reply', { message: 'SMTP test from admin settings.' });
+      const result: any = await api.post('/api/settings/test-email', {});
       if (result.sent) toast.success(L({ en: 'Test email sent successfully!', fr: 'Email de test envoyé avec succès !' }));
       else toast.warning(result.error || L({ en: 'Email not configured', fr: 'Email non configuré' }));
     } catch {
