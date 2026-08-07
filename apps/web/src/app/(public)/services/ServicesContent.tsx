@@ -3,9 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/components/motion/variants';
 
 const services = [
@@ -76,6 +79,11 @@ const services = [
 
 export default function ServicesPage() {
   const { L } = useLanguage();
+  const { data: featuredProducts, isLoading: featuredLoading } = useQuery<any[]>({
+    queryKey: ['products', 'featured'],
+    queryFn: () => api.get('/api/products/featured'),
+    staleTime: 5 * 60 * 1000,
+  });
 
   return (
     <>
@@ -162,6 +170,78 @@ export default function ServicesPage() {
           </section>
         );
       })}
+
+      {/* ── Featured Products ────────────────────────────────────────────────── */}
+      {(featuredLoading || (featuredProducts && featuredProducts.length > 0)) && (
+        <section className="bg-slate-50 py-12 sm:py-16 border-y border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <p className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1">
+                  {L({ en: 'Our Products', fr: 'Nos Produits' })}
+                </p>
+                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
+                  {L({ en: 'Featured Products', fr: 'Produits Vedettes' })}
+                </h2>
+              </div>
+              <Link href="/products"
+                className="flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline shrink-0">
+                {L({ en: 'View all', fr: 'Voir tout' })}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {featuredLoading
+                ? Array(4).fill(0).map((_, i) => (
+                    <div key={i} className="rounded-xl overflow-hidden bg-white border border-border">
+                      <Skeleton style={{ height: '160px', display: 'block', width: '100%' }} />
+                      <div className="p-3 space-y-1.5">
+                        <Skeleton className="h-3 w-2/3" />
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                    </div>
+                  ))
+                : featuredProducts!.slice(0, 4).map((product, idx) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <Link href={`/products/${product.slug}`}
+                        className="block rounded-xl overflow-hidden bg-white border border-border
+                                   hover:border-primary/40 hover:shadow-md transition-all duration-200 group">
+                        <div style={{ height: '160px', overflow: 'hidden', backgroundColor: '#f8fafc', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          {product.imageUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={product.imageUrl}
+                              alt={product.nameEn || product.nameFr || ''}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                              className="group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : (
+                            <Package className="h-8 w-8 text-slate-300" />
+                          )}
+                        </div>
+                        <div className="p-3">
+                          {product.categoryName && (
+                            <p className="text-[10px] font-bold text-primary uppercase tracking-wider mb-1">
+                              {product.categoryName}
+                            </p>
+                          )}
+                          <p className="text-sm font-semibold text-foreground leading-snug line-clamp-2">
+                            {L({ en: product.nameEn, fr: product.nameFr })}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── CTA ─────────────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-3 sm:py-20 relative overflow-hidden">
