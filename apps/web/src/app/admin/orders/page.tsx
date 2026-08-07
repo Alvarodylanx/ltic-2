@@ -301,12 +301,15 @@ export default function AdminOrdersPage() {
               </div>
               <div>
                 <Label>{L({ en: 'Link to Customer', fr: 'Lier au compte' })}</Label>
-                <Select value={form.customerId} onValueChange={(v) => setForm({ ...form, customerId: v })}>
+                <Select
+                  value={form.customerId || '__none__'}
+                  onValueChange={(v) => setForm({ ...form, customerId: v === '__none__' ? '' : v })}
+                >
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder={L({ en: 'Select customer…', fr: 'Choisir un compte…' })} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">{L({ en: 'None', fr: 'Aucun' })}</SelectItem>
+                    <SelectItem value="__none__">{L({ en: 'None', fr: 'Aucun' })}</SelectItem>
                     {allCustomers?.map((c) => (
                       <SelectItem key={c.id} value={String(c.id)}>
                         {c.fullName} — {c.email}
