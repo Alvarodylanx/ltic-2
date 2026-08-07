@@ -725,9 +725,8 @@ export default function HomePage() {
 
       {/* ══ 3. FEATURED THIS WEEK ════════════════════════════════════════════ */}
       {(featuredLoading || (featuredProducts && featuredProducts.length > 0)) && (
-        <section className="bg-sidebar relative py-12 sm:py-16 overflow-hidden">
-          <div className="dot-grid absolute inset-0 opacity-25 pointer-events-none" />
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="bg-muted/40 py-12 sm:py-16 border-y border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             {/* Header */}
             <motion.div
@@ -744,27 +743,26 @@ export default function HomePage() {
                     {L({ en: 'Featured This Week', fr: 'En Vedette Cette Semaine' })}
                   </span>
                 </div>
-                <h2 className="font-extrabold text-2xl sm:text-3xl text-sidebar-foreground leading-tight">
+                <h2 className="font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
                   {L({ en: 'Products We Recommend', fr: 'Produits que Nous Recommandons' })}
                 </h2>
               </div>
               <Link href="/products"
-                className="flex items-center gap-1.5 text-sm font-semibold text-sidebar-foreground/60
-                           hover:text-sidebar-foreground transition-colors duration-150 shrink-0">
+                className="flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline shrink-0">
                 {L({ en: 'View All', fr: 'Voir Tout' })}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </motion.div>
 
-            {/* Grid — 6 compact cards */}
+            {/* Grid — uniform height cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
               {featuredLoading
                 ? Array(6).fill(0).map((_, i) => (
-                    <div key={i} className="rounded-xl overflow-hidden border border-sidebar-border">
-                      <Skeleton className="bg-white/10" style={{ height: '120px', display: 'block', width: '100%' }} />
+                    <div key={i} className="rounded-xl overflow-hidden bg-white border border-border">
+                      <Skeleton style={{ height: '200px', display: 'block', width: '100%' }} />
                       <div className="p-3 space-y-2">
-                        <Skeleton className="h-2 w-1/2 bg-white/10" />
-                        <Skeleton className="h-3 w-full bg-white/10" />
+                        <Skeleton className="h-2.5 w-1/2" />
+                        <Skeleton className="h-3.5 w-full" />
                       </div>
                     </div>
                   ))
@@ -775,15 +773,15 @@ export default function HomePage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
                       whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+                      style={{ display: 'flex', flexDirection: 'column' }}
                     >
                       <Link
                         href={`/products/${product.slug}`}
-                        className="block rounded-xl overflow-hidden border border-sidebar-border/60
-                                   bg-white/5 hover:bg-white/10 hover:border-primary/50
-                                   transition-all duration-200 group"
+                        style={{ display: 'flex', flexDirection: 'column', flex: 1, borderRadius: '12px', overflow: 'hidden', textDecoration: 'none', background: '#fff', border: '1px solid hsl(var(--border))', transition: 'box-shadow 0.2s, border-color 0.2s' }}
+                        className="group hover:border-primary/40 hover:shadow-md"
                       >
-                        {/* Image */}
-                        <div style={{ height: '120px', overflow: 'hidden', position: 'relative', flexShrink: 0 }}>
+                        {/* Image — fixed height, same across all cards */}
+                        <div style={{ height: '200px', flexShrink: 0, overflow: 'hidden', position: 'relative', backgroundColor: '#f8fafc' }}>
                           {product.imageUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
@@ -793,23 +791,22 @@ export default function HomePage() {
                               className="group-hover:scale-105 transition-transform duration-500"
                             />
                           ) : (
-                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.04)' }}>
-                              <Package className="h-8 w-8 text-sidebar-foreground/20" />
+                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <Package className="h-10 w-10 text-muted-foreground/30" />
                             </div>
                           )}
                           {product.categoryName && (
-                            <span className="absolute bottom-2 left-2 bg-black/55 text-white text-[9px]
-                                             font-bold uppercase tracking-wider px-1.5 py-0.5 rounded
-                                             backdrop-blur-sm">
+                            <span className="absolute bottom-2 left-2 bg-primary text-white text-[9px]
+                                             font-bold uppercase tracking-wider px-1.5 py-0.5 rounded">
                               {product.categoryName}
                             </span>
                           )}
                         </div>
 
                         {/* Name */}
-                        <div className="p-3">
-                          <p className="text-sidebar-foreground/80 text-xs font-semibold leading-snug
-                                         line-clamp-2 group-hover:text-sidebar-foreground transition-colors duration-150">
+                        <div className="p-3 flex-1">
+                          <p className="text-foreground text-xs font-semibold leading-snug line-clamp-2
+                                         group-hover:text-primary transition-colors duration-150">
                             {L({ en: product.nameEn, fr: product.nameFr })}
                           </p>
                         </div>
