@@ -80,6 +80,19 @@ export class OrdersService {
       .set({ timeline, updatedAt: new Date() })
       .where(eq(orders.id, id))
       .returning();
+
+    if (order.clientEmail) {
+      this.mail.send(
+        order.clientEmail,
+        `Shipment Update: ${order.trackingNumber} — LTIC SARL`,
+        this.mail.orderTimelineEmail({
+          clientName: order.clientName,
+          trackingNumber: order.trackingNumber,
+          event,
+        }),
+      ).catch(() => {});
+    }
+
     return updated;
   }
 

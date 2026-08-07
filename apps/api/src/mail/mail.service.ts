@@ -235,6 +235,35 @@ export class MailService implements OnModuleInit {
       </div>`;
   }
 
+  orderTimelineEmail(order: {
+    clientName: string;
+    trackingNumber: string;
+    event: { status: string; date: string; description: string; location?: string };
+  }): string {
+    const trackUrl = `${this.siteUrl()}/tracking?id=${order.trackingNumber}`;
+    return `
+      <div style="font-family:sans-serif;max-width:600px;margin:auto">
+        <h2 style="color:#1a56db">Shipment Update — LTIC SARL</h2>
+        <p>Dear ${order.clientName},</p>
+        <p>There is a new update on your shipment.</p>
+        <div style="background:#f3f4f6;border-radius:8px;padding:20px;margin:24px 0">
+          <p style="margin:0 0 4px;color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:0.05em">Tracking / Numéro de Suivi</p>
+          <p style="margin:0 0 16px;font-size:18px;font-weight:700;font-family:monospace;color:#111827">${order.trackingNumber}</p>
+          <table style="width:100%;border-collapse:collapse">
+            <tr><td style="padding:4px 0;color:#6b7280;width:100px">Status</td><td style="padding:4px 0;font-weight:600">${order.event.status}</td></tr>
+            <tr><td style="padding:4px 0;color:#6b7280">Date</td><td style="padding:4px 0">${order.event.date}</td></tr>
+            ${order.event.location ? `<tr><td style="padding:4px 0;color:#6b7280">Location</td><td style="padding:4px 0">${order.event.location}</td></tr>` : ''}
+            <tr><td style="padding:4px 0;color:#6b7280">Details</td><td style="padding:4px 0">${order.event.description}</td></tr>
+          </table>
+        </div>
+        <p style="margin-top:24px">
+          <a href="${trackUrl}" style="background:#1a56db;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600">Track My Shipment / Suivre mon expédition</a>
+        </p>
+        <p style="margin-top:24px;color:#6b7280;font-size:13px">If you have any questions, please contact us.<br><em>Pour toute question, veuillez nous contacter.</em></p>
+        <p style="color:#6b7280">LTIC SARL — International Logistics & Trade</p>
+      </div>`;
+  }
+
   adminReplyEmail(opts: { recipientName: string; originalSubject: string; replyMessage: string }): string {
     return `
       <div style="font-family:sans-serif;max-width:600px;margin:auto">
