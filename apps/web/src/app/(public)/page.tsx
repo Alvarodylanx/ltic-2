@@ -802,7 +802,7 @@ export default function HomePage() {
                             <img
                               src={product.imageUrl}
                               alt={product.nameEn || product.nameFr || ''}
-                              style={{ maxWidth: '85%', maxHeight: '85%', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }}
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '4px' }}
                             />
                           ) : (
                             <Package className="h-8 w-8 text-slate-300" />
