@@ -136,7 +136,7 @@ export function Footer() {
             <ul className="space-y-3.5">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                <span className="text-sidebar-foreground/60 text-sm leading-snug">
+                <span className="text-sidebar-foreground/60 text-sm leading-snug" suppressHydrationWarning>
                   {settings?.company_address || 'Douala, Cameroon / International Operations'}
                 </span>
               </li>
@@ -147,7 +147,7 @@ export function Footer() {
                     href={`tel:${settings.company_phone}`}
                     className="text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors"
                   >
-                    {settings.company_phone}
+                    <span suppressHydrationWarning>{settings.company_phone}</span>
                   </a>
                 </li>
               )}
@@ -157,7 +157,7 @@ export function Footer() {
                   const raw = settings?.company_email;
                   const email = raw && !raw.includes('@gmail.com') ? raw : 'contact@lticsarl.com';
                   return (
-                    <a href={`mailto:${email}`} className="text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors">
+                    <a href={`mailto:${email}`} className="text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors" suppressHydrationWarning>
                       {email}
                     </a>
                   );
@@ -165,7 +165,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Globe className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="text-sidebar-foreground/60 text-sm">
+                <span className="text-sidebar-foreground/60 text-sm" suppressHydrationWarning>
                   {settings?.company_website || 'www.lticsarl.com'}
                 </span>
               </li>

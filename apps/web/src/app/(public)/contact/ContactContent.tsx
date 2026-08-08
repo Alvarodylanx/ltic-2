@@ -227,7 +227,7 @@ export default function ContactPage() {
                       <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-[0.15em] mb-0.5">
                         {L(label)}
                       </p>
-                      <p className="text-sm font-medium leading-snug break-words">{value}</p>
+                      <p className="text-sm font-medium leading-snug break-words" suppressHydrationWarning>{value}</p>
                     </div>
                   </motion.div>
                 ))}
