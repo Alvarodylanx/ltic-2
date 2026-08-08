@@ -14,6 +14,9 @@ export class DbInitService implements OnModuleInit {
       ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_id INTEGER;
     `);
     await this.db.execute(sql`
+      ALTER TABLE products ADD COLUMN IF NOT EXISTS extra_category_ids integer[] DEFAULT ARRAY[]::integer[];
+    `);
+    await this.db.execute(sql`
       ALTER TABLE customers ADD COLUMN IF NOT EXISTS email_verified BOOLEAN DEFAULT FALSE;
       ALTER TABLE customers ADD COLUMN IF NOT EXISTS email_verification_token TEXT;
       ALTER TABLE customers ADD COLUMN IF NOT EXISTS email_verification_expires TIMESTAMP;

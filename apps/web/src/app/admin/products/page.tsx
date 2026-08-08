@@ -35,6 +35,7 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
   const [isGenerating, setIsGenerating] = useState(false);
   const [showGallery, setShowGallery] = useState(!!(product?.images?.length));
   const [galleryImages, setGalleryImages] = useState<string[]>(product?.images?.length ? product.images : ['']);
+  const [extraCategoryIds, setExtraCategoryIds] = useState<number[]>(product?.extraCategoryIds || []);
 
   const srcLang = language as 'en' | 'fr';
   const dstLang = language === 'en' ? 'fr' : 'en';
@@ -113,7 +114,7 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
     }
     try {
       const filledImages = showGallery ? galleryImages.filter(u => u.trim()) : [];
-      const payload = { ...data, images: filledImages };
+      const payload = { ...data, images: filledImages, extraCategoryIds };
       if (product) {
         await api.patch(`/api/products/${product.id}`, payload);
         toast.success(L({ en: 'Product updated', fr: 'Produit mis à jour' }));
@@ -178,6 +179,28 @@ function ProductForm({ product, categories, onSuccess }: { product?: any; catego
         </Select>
         {categoryError && <p className="text-xs text-destructive mt-1">{categoryError}</p>}
       </div>
+
+      <div>
+        <Label className="text-sm">{L({ en: 'Also appears in', fr: 'Apparaît aussi dans' })}</Label>
+        <p className="text-xs text-muted-foreground mb-2">{L({ en: 'Product shows up in these categories too (e.g. a filter used in marine applications)', fr: 'Le produit apparaît aussi dans ces catégories (ex. un filtre utilisé en marine)' })}</p>
+        <div className="grid grid-cols-2 gap-1.5">
+          {categories.filter(c => c.id !== watchedCategory).map(c => {
+            const checked = extraCategoryIds.includes(c.id);
+            return (
+              <label key={c.id} className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer text-sm transition-colors ${checked ? 'bg-primary/10 border-primary/40' : 'border-border hover:bg-muted/50'}`}>
+                <input
+                  type="checkbox"
+                  className="accent-primary"
+                  checked={checked}
+                  onChange={() => setExtraCategoryIds(prev => checked ? prev.filter(id => id !== c.id) : [...prev, c.id])}
+                />
+                <span className="truncate">{L({ en: c.nameEn, fr: c.nameFr })}</span>
+              </label>
+            );
+          })}
+        </div>
+      </div>
+
       <div>
         <Label>{L({ en: 'Image / Video', fr: 'Image / Vidéo' })}</Label>
         <div className="mt-1">
