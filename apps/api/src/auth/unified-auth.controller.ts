@@ -27,7 +27,7 @@ export class UnifiedAuthController {
     const result = await this.svc.login(body.email, body.password);
 
     if (result.role === "admin") {
-      res.cookie("admin_jwt", result.token, { ...COOKIE_OPTS, maxAge: 24 * 60 * 60 * 1000 });
+      res.cookie("admin_jwt", result.token, { ...COOKIE_OPTS });
     } else {
       res.cookie("customer_jwt", result.token, { ...COOKIE_OPTS, maxAge: 7 * 24 * 60 * 60 * 1000 });
     }

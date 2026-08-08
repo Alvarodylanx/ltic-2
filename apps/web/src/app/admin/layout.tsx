@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { AdminSidebar } from '@/components/layout/AdminSidebar';
 import { AdminProfileProvider } from '@/contexts/AdminProfileContext';
+import { useAdminIdleTimeout } from '@/lib/useAdminIdleTimeout';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useAdminIdleTimeout();
 
   return (
     <AdminProfileProvider>

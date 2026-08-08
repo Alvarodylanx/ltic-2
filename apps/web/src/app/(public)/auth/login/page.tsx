@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Loader2, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Mail, Lock, ShieldAlert } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,7 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect');
+  const reason = searchParams.get('reason');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -86,6 +87,13 @@ function LoginForm() {
             {L({ en: 'LTIC SARL administration panel', fr: "Panneau d'administration LTIC SARL" })}
           </p>
         </div>
+
+        {reason === 'idle' && (
+          <div className="flex items-center gap-2.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 rounded-xl px-4 py-3 mb-5 text-sm">
+            <ShieldAlert className="h-4 w-4 flex-shrink-0" />
+            {L({ en: 'You were signed out due to 30 minutes of inactivity.', fr: 'Vous avez été déconnecté après 30 minutes d\'inactivité.' })}
+          </div>
+        )}
 
         <div className="bg-card border rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
