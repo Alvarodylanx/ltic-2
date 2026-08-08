@@ -1,7 +1,7 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { eq, desc } from 'drizzle-orm';
 import { DB_TOKEN, Db } from '../db/db.module';
-import { quotes, NewQuote, Quote } from '@ltic/db';
+import { quotes, contacts, NewQuote, Quote } from '@ltic/db';
 import { NotificationsService } from '../notifications/notifications.service';
 import { MailService } from '../mail/mail.service';
 
@@ -28,6 +28,24 @@ export class QuotesService {
 
   async create(data: NewQuote) {
     const [q] = await this.db.insert(quotes).values(data).returning();
+
+    // Auto-save contact from quote (upsert by email, no duplicate)
+    if (data.email) {
+      const [existing] = await this.db.select({ id: contacts.id })
+        .from(contacts).where(eq(contacts.email, data.email));
+      if (!existing) {
+        this.db.insert(contacts).values({
+          name: data.contactName ?? 'Unknown',
+          email: data.email,
+          phone: data.phone ?? null,
+          company: data.companyName ?? null,
+          subject: `Quote Request — ${data.productInterest ?? 'General'}`,
+          message: data.message || `Quote request for: ${data.productInterest ?? 'General enquiry'}`,
+          read: false,
+        }).catch(() => {});
+      }
+    }
+
     // fire-and-forget: don't block the response
     this.notifications.create({
       type: 'quote',

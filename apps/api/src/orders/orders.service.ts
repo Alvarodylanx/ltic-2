@@ -77,7 +77,7 @@ export class OrdersService {
     timeline.push(event);
 
     const [updated] = await this.db.update(orders)
-      .set({ timeline, updatedAt: new Date() })
+      .set({ timeline, status: event.status, updatedAt: new Date() })
       .where(eq(orders.id, id))
       .returning();
 
