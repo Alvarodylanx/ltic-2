@@ -30,21 +30,21 @@ const mvvItems = [
     number: '01',
     title: { en: 'Mission', fr: 'Mission' },
     desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables qui permettent à nos clients de réussir sur les marchés mondiaux." },
-    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=900&auto=format&fit=crop&q=70',
+    image: '/images/banner-services.jpg',
   },
   {
     icon: Globe2,
     number: '02',
     title: { en: 'Vision', fr: 'Vision' },
     desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company — trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue à l'échelle mondiale — de confiance pour les entreprises en Afrique, Europe, Moyen-Orient et Canada." },
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&auto=format&fit=crop&q=70',
+    image: '/images/about-milestone-trade.jpg',
   },
   {
     icon: ShieldCheck,
     number: '03',
     title: { en: 'Values', fr: 'Valeurs' },
     desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration — the principles that guide every decision we make.', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle, Innovation, Collaboration Mondiale — les principes qui guident chacune de nos décisions.' },
-    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&auto=format&fit=crop&q=70',
+    image: '/images/about-milestone-handshake.jpg',
   },
 ];
 
@@ -76,7 +76,7 @@ export default function AboutPage() {
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
-        <Image src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1100&auto=format&fit=crop&q=45" alt="" fill className="object-cover object-center opacity-30" priority />
+        <Image src="/images/banner-about.jpg" alt="" fill className="object-cover object-center opacity-30" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
 

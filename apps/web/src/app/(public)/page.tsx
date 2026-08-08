@@ -39,7 +39,7 @@ const heroSlides = [
     sub:   { en: 'End-to-end freight forwarding across 30+ countries — air, sea and road, fully tracked.', fr: 'Freight forwarding complet dans 30+ pays — aérien, maritime et routier, entièrement suivi.' },
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
-    image: 'https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1800&auto=format&fit=crop&q=80',
+    image: '/images/hero-slide-1.jpg',
     theme: {
       tag:      'text-blue-400',
       tagBg:    'bg-blue-400',
@@ -54,7 +54,7 @@ const heroSlides = [
     sub:   { en: 'Generators, lubricants and OEM-grade parts — Total, Shell and certified industrial brands.', fr: 'Générateurs, lubrifiants et pièces OEM — Total, Shell et marques industrielles certifiées.' },
     cta1:  { label: { en: 'View Products',     fr: 'Voir les Produits' }, href: '/products' },
     cta2:  { label: { en: 'Request a Quote',   fr: 'Demander un Devis' }, href: '/quote' },
-    image: 'https://images.unsplash.com/photo-1670689334799-cdc6777db8cc?w=1800&auto=format&fit=crop&q=80',
+    image: '/images/hero-slide-2.jpg',
     theme: {
       tag:      'text-amber-400',
       tagBg:    'bg-amber-400',
@@ -69,7 +69,7 @@ const heroSlides = [
     sub:   { en: 'Import, export and brand representation across emerging markets — one partner for every transaction.', fr: 'Import, export et représentation de marque sur marchés émergents — un partenaire pour chaque transaction.' },
     cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
     cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
-    image: 'https://images.unsplash.com/photo-1768069794826-a31af289449f?w=1800&auto=format&fit=crop&q=80',
+    image: '/images/hero-slide-3.jpg',
     video: '/videos/hero-borders.mp4',
     theme: {
       tag:      'text-yellow-300',
@@ -124,9 +124,9 @@ const productCategories = [
   { en: 'Filters & Parts',    fr: 'Filtres & Pièces',        descEn: 'OEM-grade filters for all machinery', descFr: 'Filtres OEM pour toutes machines',           image: '/images/filters-parts.jpg', tag: { en: 'Industrial', fr: 'Industriel' }, slug: 'filters-parts' },
   { en: 'Heavy Equipment',    fr: 'Équipements Lourds',      descEn: 'Machinery, tools and structural materials', descFr: 'Machines, outils et matériaux',        image: '/images/heavy-equipment.jpg', tag: { en: 'Supply', fr: 'Fourniture' }, slug: 'general-industrial' },
   { en: 'General Merchandise',fr: 'Marchandises Générales',  descEn: 'Wide range of consumer and trade goods', descFr: 'Large gamme de biens de consommation',   image: '/images/general-merchandise.jpg', tag: { en: 'Commerce', fr: 'Commerce' }, slug: 'general-industrial' },
-  { en: 'Marine & Maintenance Chemicals', fr: 'Produits Chimiques Marins & Entretien', descEn: 'Tank cleaners, degreasers & MARPOL-compliant marine chemicals', descFr: 'Nettoyants de réservoirs, dégraissants et produits chimiques marins conformes MARPOL', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=75', tag: { en: 'Marine', fr: 'Marine' }, slug: 'marine-maintenance-chemicals' },
-  { en: 'Industrial Chemicals & Raw Materials', fr: 'Produits Chimiques Industriels & Matières Premières', descEn: 'Sulfur, acids, solvents and bulk industrial minerals', descFr: 'Soufre, acides, solvants et minéraux industriels en vrac', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&auto=format&fit=crop&q=75', tag: { en: 'Chemicals', fr: 'Chimique' }, slug: 'industrial-chemicals-raw-materials' },
-  { en: 'Food & Agricultural Products', fr: 'Produits Alimentaires & Agricoles', descEn: 'Cocoa, coffee, palm oil, spices & agri-food exports', descFr: 'Cacao, café, huile de palme, épices et exports agro-alimentaires', image: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=600&auto=format&fit=crop&q=75', tag: { en: 'Agri-Food', fr: 'Agro-Alimentaire' }, slug: 'food-agricultural-products' },
+  { en: 'Marine & Maintenance Chemicals', fr: 'Produits Chimiques Marins & Entretien', descEn: 'Tank cleaners, degreasers & MARPOL-compliant marine chemicals', descFr: 'Nettoyants de réservoirs, dégraissants et produits chimiques marins conformes MARPOL', image: '/images/cat-marine-chemicals.jpg', tag: { en: 'Marine', fr: 'Marine' }, slug: 'marine-maintenance-chemicals' },
+  { en: 'Industrial Chemicals & Raw Materials', fr: 'Produits Chimiques Industriels & Matières Premières', descEn: 'Sulfur, acids, solvents and bulk industrial minerals', descFr: 'Soufre, acides, solvants et minéraux industriels en vrac', image: '/images/cat-industrial-chemicals.jpg', tag: { en: 'Chemicals', fr: 'Chimique' }, slug: 'industrial-chemicals-raw-materials' },
+  { en: 'Food & Agricultural Products', fr: 'Produits Alimentaires & Agricoles', descEn: 'Cocoa, coffee, palm oil, spices & agri-food exports', descFr: 'Cacao, café, huile de palme, épices et exports agro-alimentaires', image: '/images/cat-agrifood.jpg', tag: { en: 'Agri-Food', fr: 'Agro-Alimentaire' }, slug: 'food-agricultural-products' },
 ];
 
 const orderSteps = [

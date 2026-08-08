@@ -167,8 +167,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" href="/fonts/jakarta-400.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/jakarta-500.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         {/* Warm up connections used at load time */}
-        <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://tile.openstreetmap.org" />
         <link rel="manifest" href="/manifest.json" />
