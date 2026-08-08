@@ -6,6 +6,7 @@ import { BackToTop } from '@/components/BackToTop';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { PageTransition } from '@/components/PageTransition';
 import { NavigationProgress } from '@/components/NavigationProgress';
+import { PageViewTracker } from '@/components/PageViewTracker';
 
 // Minimal placeholder that preserves navbar height so the page doesn't jump
 function NavbarFallback() {
@@ -15,6 +16,7 @@ function NavbarFallback() {
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <PageViewTracker />
       <NavigationProgress />
       <a
         href="#main-content"

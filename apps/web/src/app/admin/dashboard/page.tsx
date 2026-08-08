@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import { Package, FileText, Truck, MessageSquare, AlertCircle } from 'lucide-react';
+import { Package, FileText, Truck, MessageSquare, AlertCircle, Eye, Users, BarChart2, TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { api } from '@/lib/api';
@@ -22,6 +22,13 @@ export default function DashboardPage() {
     queryKey: ['stats', 'dashboard'],
     queryFn: () => api.get('/api/stats/dashboard'),
     retry: 2,
+  });
+
+  const { data: analytics, isLoading: analyticsLoading } = useQuery<any>({
+    queryKey: ['analytics', 'summary'],
+    queryFn: () => api.get('/api/analytics/summary'),
+    retry: 1,
+    staleTime: 60 * 1000,
   });
 
   const statCards = [
@@ -60,6 +67,74 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* ── VISITOR ANALYTICS ─────────────────────────────────────────── */}
+      <div className="mb-10">
+        <div className="flex items-center gap-2 mb-4">
+          <BarChart2 className="h-5 w-5 text-primary" />
+          <h2 className="text-lg font-semibold">{L({ en: 'Website Visitors', fr: 'Visiteurs du site' })}</h2>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {[
+            { label: L({ en: 'Today', fr: "Aujourd'hui" }), views: analytics?.today?.views, unique: analytics?.today?.unique, icon: Eye },
+            { label: L({ en: 'This Week', fr: 'Cette semaine' }), views: analytics?.week?.views, unique: analytics?.week?.unique, icon: TrendingUp },
+            { label: L({ en: 'This Month', fr: 'Ce mois' }), views: analytics?.month?.views, unique: analytics?.month?.unique, icon: Users },
+            { label: L({ en: 'All Time', fr: 'Total' }), views: analytics?.allTime?.views, unique: analytics?.allTime?.unique, icon: BarChart2 },
+          ].map(({ label, views, unique, icon: Icon }) => (
+            <Card key={label}>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{label}</CardTitle>
+                <Icon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent className="pt-0">
+                {analyticsLoading ? (
+                  <Skeleton className="h-7 w-12 mb-1" />
+                ) : (
+                  <>
+                    <p className="text-2xl font-bold">{(views ?? 0).toLocaleString()}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{(unique ?? 0).toLocaleString()} {L({ en: 'unique', fr: 'uniques' })}</p>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium">{L({ en: 'Top Pages This Month', fr: 'Pages populaires ce mois' })}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {analyticsLoading ? (
+              <div className="space-y-2">{Array(5).fill(0).map((_, i) => <Skeleton key={i} className="h-6 w-full" />)}</div>
+            ) : !analytics?.topPages?.length ? (
+              <p className="text-sm text-muted-foreground">{L({ en: 'No data yet — visitors will appear here once the site receives traffic.', fr: "Pas encore de données — les visiteurs apparaîtront ici dès que le site reçoit du trafic." })}</p>
+            ) : (
+              <div className="space-y-2">
+                {analytics.topPages.map((p: any, i: number) => {
+                  const max = analytics.topPages[0]?.views || 1;
+                  const pct = Math.round((p.views / max) * 100);
+                  return (
+                    <div key={p.page} className="flex items-center gap-3">
+                      <span className="text-xs text-muted-foreground w-4 text-right">{i + 1}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-0.5">
+                          <span className="text-sm font-mono truncate">{p.page || '/'}</span>
+                          <span className="text-xs text-muted-foreground ml-2 flex-shrink-0">{p.views.toLocaleString()}</span>
+                        </div>
+                        <div className="h-1 bg-muted rounded-full overflow-hidden">
+                          <div className="h-full bg-primary rounded-full" style={{ width: `${pct}%` }} />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -76,6 +76,16 @@ export class DbInitService implements OnModuleInit {
         website = EXCLUDED.website,
         display_order = EXCLUDED.display_order;
     `);
+    await this.db.execute(sql`
+      CREATE TABLE IF NOT EXISTS page_views (
+        id         SERIAL PRIMARY KEY,
+        page       TEXT NOT NULL,
+        session_id TEXT NOT NULL,
+        date       TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+      CREATE INDEX IF NOT EXISTS page_views_date_idx ON page_views (date);
+    `);
     this.logger.log('Database tables verified');
   }
 }

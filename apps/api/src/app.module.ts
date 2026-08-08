@@ -27,6 +27,7 @@ import { UnifiedAuthModule } from "./auth/unified-auth.module";
 import { PartnersModule } from "./partners/partners.module";
 import { AiModule } from "./ai/ai.module";
 import { SpotlightModule } from "./spotlight/spotlight.module";
+import { AnalyticsModule } from "./analytics/analytics.module";
 
 export const DB_PROVIDER = "DB_POOL";
 
@@ -63,6 +64,7 @@ export const DB_PROVIDER = "DB_POOL";
     PartnersModule,
     AiModule,
     SpotlightModule,
+    AnalyticsModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },
