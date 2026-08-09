@@ -38,7 +38,7 @@ const heroSlides = [
     tag:   { en: 'Maritime & Offshore',  fr: 'Maritime & Offshore' },
     lines: { en: 'YOUR PARTNER\nAT SEA.',        fr: 'VOTRE PARTENAIRE\nEN MER.' },
     sub:   { en: 'General ship chandling, offshore supply and vessel maintenance — LTIC SARL is your trusted maritime partner in the Gulf of Guinea.', fr: 'Avitaillement des navires, fournitures offshore et maintenance — LTIC SARL est votre partenaire maritime de confiance dans le Golfe de Guinée.' },
-    cta1:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
+    cta1:  { label: { en: 'Maritime Services',  fr: 'Services Maritimes' }, href: '/services' },
     cta2:  { label: { en: 'Get a Quote',       fr: 'Demander un Devis' }, href: '/quote' },
     image: '/images/hero-slide-1.jpg',
     theme: {
