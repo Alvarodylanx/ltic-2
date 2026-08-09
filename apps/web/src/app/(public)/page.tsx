@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, Droplets,
@@ -138,6 +138,41 @@ const orderSteps = [
   { icon: Truck,    num: '04', title: { en: 'Tracked Delivery', fr: 'Livraison Suivie' },       desc: { en: 'Customs, freight and logistics tracked in real time.',   fr: 'Douanes, fret et logistique suivis en temps réel.' },           action: { en: 'Track Shipment', fr: 'Suivre' },            href: '/tracking' },
 ];
 
+// ─── WordReveal ───────────────────────────────────────────────────────────────
+
+function WordReveal({ text, className }: { text: string; className?: string }) {
+  const lines = text.split('\n');
+  let wi = 0;
+  return (
+    <span className={className}>
+      {lines.map((line, li) => {
+        const words = line.split(' ');
+        return (
+          <span key={li} className="block">
+            {words.map((word) => {
+              const idx = wi++;
+              return (
+                <span key={idx} className="inline-block overflow-hidden mr-[0.22em]">
+                  <motion.span
+                    className="inline-block"
+                    variants={{
+                      hidden: { y: '115%', opacity: 0 },
+                      show: { y: 0, opacity: 1,
+                              transition: { type: 'spring', stiffness: 90, damping: 14, delay: idx * 0.065 } },
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              );
+            })}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 // ─── ServiceCard ──────────────────────────────────────────────────────────────
 
 interface ServiceCardProps {
@@ -149,24 +184,49 @@ interface ServiceCardProps {
 
 function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardProps) {
   const { L } = useLanguage();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-60, 60], [10, -10]), { stiffness: 160, damping: 22 });
+  const rotateY = useSpring(useTransform(mx, [-60, 60], [-10, 10]), { stiffness: 160, damping: 22 });
+
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    mx.set(e.clientX - r.left - r.width / 2);
+    my.set(e.clientY - r.top - r.height / 2);
+  }
+  function onLeave() { mx.set(0); my.set(0); }
+
   return (
     <motion.div
+      ref={cardRef}
       variants={{
-        hidden: { opacity: 0, y: 48 },
-        show:   { opacity: 1, y: 0,
-                  transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
+        hidden: { opacity: 0, y: 90, scale: 0.78 },
+        show:   { opacity: 1, y: 0,  scale: 1,
+                  transition: { type: 'spring', stiffness: 85, damping: 13, delay: index * 0.08 } },
       }}
-      whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 22 } }}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
       className="group bg-white border border-border rounded-2xl p-7
-                 shadow-sm hover:shadow-xl hover:border-primary/30
-                 transition-shadow transition-colors duration-300 flex flex-col"
+                 shadow-sm hover:shadow-2xl hover:border-primary/40
+                 transition-shadow transition-colors duration-300 flex flex-col cursor-default"
     >
+      {/* Glow on hover */}
+      <div className="absolute inset-0 rounded-2xl bg-primary/0 group-hover:bg-primary/[0.03] transition-colors duration-300 pointer-events-none" />
+
       {/* Icon */}
-      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5
-                      group-hover:bg-primary group-hover:scale-110
-                      transition-all duration-300 flex-shrink-0">
+      <motion.div
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.4 }}
+        className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5
+                   group-hover:bg-primary group-hover:scale-110
+                   transition-all duration-300 flex-shrink-0"
+      >
         <Icon className="h-5 w-5 text-primary group-hover:text-white transition-colors duration-300" />
-      </div>
+      </motion.div>
 
       {/* Number badge */}
       <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-primary/60 mb-2 block">
@@ -207,53 +267,69 @@ interface FeatureBlockProps {
 
 function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain }: FeatureBlockProps) {
   const { L } = useLanguage();
+  const blockRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: blockRef, offset: ['start end', 'end start'] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ['10%', '-10%']);
+
   return (
     <motion.div
-      variants={fadeInUp}
+      ref={blockRef}
       initial="hidden"
       whileInView="show"
       viewport={viewportOnce}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } } }}
       className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center py-16 lg:py-20
                   border-b border-border last:border-b-0
                   ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}
     >
       {/* Image */}
-      <div className={`relative rounded-2xl overflow-hidden aspect-[4/3] shadow-lg ${contain ? 'bg-white' : ''}`}>
-        <Image
-          src={image}
-          alt={L(label)}
-          fill
-          className={`${contain ? 'object-contain p-4' : 'object-cover'} transition-transform duration-700 hover:scale-105`}
-          sizes="(max-width: 1024px) 100vw, 50vw"
-        />
-        <span className="absolute top-4 left-4 bg-primary text-primary-foreground
-                         text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full">
+      <motion.div
+        variants={reverse ? fadeInRight : fadeInLeft}
+        className={`relative rounded-2xl overflow-hidden aspect-[4/3] shadow-xl ${contain ? 'bg-white' : ''}`}
+      >
+        <motion.div style={contain ? {} : { y: imgY }} className="absolute inset-0 scale-[1.15]">
+          <Image
+            src={image}
+            alt={L(label)}
+            fill
+            className={`${contain ? 'object-contain p-4 scale-100' : 'object-cover'} transition-transform duration-700`}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </motion.div>
+        <motion.span
+          variants={popIn}
+          className="absolute top-4 left-4 bg-primary text-primary-foreground
+                     text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full">
           {L(tag)}
-        </span>
-      </div>
+        </motion.span>
+      </motion.div>
 
       {/* Copy */}
-      <div>
-        <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
+      <motion.div variants={reverse ? fadeInLeft : fadeInRight}>
+        <motion.p variants={fadeInUp} className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
           {L(label)}
-        </p>
-        <h3 className="font-extrabold text-section text-foreground
-                       whitespace-pre-line leading-none mb-5">
-          {L(heading)}
-        </h3>
-        <p className="text-muted-foreground text-base leading-relaxed mb-7 max-w-md">
-          {L(body)}
-        </p>
-        <Link
-          href={href}
-          className="inline-flex items-center gap-2 text-primary font-semibold text-sm
-                     hover:gap-4 transition-all duration-200 w-fit group py-3"
+        </motion.p>
+        <motion.h3
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
+          className="font-extrabold text-section text-foreground whitespace-pre-line leading-none mb-5"
         >
-          {L({ en: 'View products', fr: 'Voir les produits' })}
-          <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5
-                                   transition-transform duration-200" />
-        </Link>
-      </div>
+          <WordReveal text={L(heading)} />
+        </motion.h3>
+        <motion.p variants={fadeInUp} className="text-muted-foreground text-base leading-relaxed mb-7 max-w-md">
+          {L(body)}
+        </motion.p>
+        <motion.div variants={fadeInUp}>
+          <Link
+            href={href}
+            className="inline-flex items-center gap-2 text-primary font-semibold text-sm
+                       hover:gap-4 transition-all duration-200 w-fit group py-3"
+          >
+            {L({ en: 'View products', fr: 'Voir les produits' })}
+            <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5
+                                     transition-transform duration-200" />
+          </Link>
+        </motion.div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -586,7 +662,8 @@ export default function HomePage() {
                 muted
                 loop
                 playsInline
-                className="absolute inset-0 w-full h-full object-contain object-center"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              style={{ filter: 'saturate(1.45) contrast(1.05)' }}
               >
                 <source src={heroSlides[activeSlide].video} type="video/mp4" />
               </video>
@@ -778,7 +855,18 @@ export default function HomePage() {
       </section>
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
-      <section className="bg-background py-3 sm:py-20">
+      <section className="bg-background py-3 sm:py-20 relative overflow-hidden">
+        {/* Floating orbs */}
+        <motion.div
+          className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/6 blur-3xl pointer-events-none"
+          animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute bottom-0 -left-32 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none"
+          animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
@@ -793,7 +881,7 @@ export default function HomePage() {
               </p>
               <h2 className="font-extrabold text-section text-foreground
                              [text-wrap:balance] max-w-xl whitespace-pre-line">
-                {L({ en: 'Seven Services,\nOne Reliable Partner.', fr: 'Sept Services,\nUn Partenaire Fiable.' })}
+                <WordReveal text={L({ en: 'Seven Services,\nOne Reliable Partner.', fr: 'Sept Services,\nUn Partenaire Fiable.' })} />
               </h2>
             </motion.div>
             <motion.div
@@ -840,10 +928,10 @@ export default function HomePage() {
 
             {/* Header */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5 }}
+              viewport={viewportOnce}
+              transition={{ type: 'spring', stiffness: 85, damping: 15 }}
               className="flex items-end justify-between gap-4 mb-10"
             >
               <div>
@@ -990,7 +1078,17 @@ export default function HomePage() {
       </section>
 
       {/* ══ 5. FEATURES — editorial image+copy blocks ══════════════════════════ */}
-      <section className="bg-white py-3 sm:py-20">
+      <section className="bg-white py-3 sm:py-20 relative overflow-hidden">
+        <motion.div
+          className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-primary/4 blur-3xl pointer-events-none"
+          animate={{ scale: [1, 1.2, 1], x: [0, 20, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 -left-40 w-[400px] h-[400px] rounded-full bg-amber-400/5 blur-3xl pointer-events-none"
+          animate={{ scale: [1.1, 1, 1.1], y: [0, -20, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="mb-4">
@@ -999,7 +1097,7 @@ export default function HomePage() {
             </p>
             <h2 className="font-extrabold text-section text-foreground
                            [text-wrap:balance] max-w-2xl whitespace-pre-line">
-              {L({ en: 'A Wide Range of Products,\nAcross Central Africa.', fr: 'Une Large Gamme de Produits,\nDans Toute l\'Afrique Centrale.' })}
+              <WordReveal text={L({ en: 'A Wide Range of Products,\nAcross Central Africa.', fr: 'Une Large Gamme de Produits,\nDans Toute l\'Afrique Centrale.' })} />
             </h2>
           </motion.div>
 
