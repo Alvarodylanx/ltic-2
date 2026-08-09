@@ -5,7 +5,7 @@ const SITE_URL = 'https://www.lticsarl.com';
 
 export const metadata: Metadata = {
   title: 'News & Industry Insights — Logistics & Trade in Africa | LTIC SARL',
-  description: 'Latest news, market insights and updates from LTIC SARL on African logistics, international trade, industrial supply and freight forwarding trends across 30+ countries.',
+  description: 'Latest news, market insights and updates from LTIC SARL on Central African logistics, maritime supply, chemical manufacturing (ECOKLIN), lubricant distribution and trade in the Gulf of Guinea region.',
   keywords: [
     'logistics news africa', 'trade news cameroon', 'freight forwarding news',
     'industrial supply news', 'international trade africa insights', 'ltic sarl news',

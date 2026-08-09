@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     default: 'LTIC SARL — Logistics, Transit & Industrial Supply | Cameroon',
     template: '%s | LTIC SARL',
   },
-  description: 'LTIC SARL delivers end-to-end freight forwarding, customs clearance, industrial equipment supply and international trade solutions across 30+ countries from Douala, Cameroon.',
+  description: 'LTIC SARL is a Cameroonian company based in Douala — general ship supplier, chemical manufacturer (ECOKLIN brand), lubricant distributor, and provider of land transport and maritime logistics services across Central Africa and beyond.',
   keywords: [
     'logistics cameroon', 'freight forwarding africa', 'industrial supply douala',
     'transit cameroon', 'import export africa', 'timber export cameroon',
@@ -62,18 +62,18 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'LTIC SARL — Logistics, Transit & Industrial Supply | Cameroon',
-    description: 'End-to-end freight forwarding, customs clearance, industrial supply and international trade across 30+ countries — based in Douala, Cameroon.',
+    description: 'General ship supplier, chemical manufacturer (ECOKLIN brand), lubricant distributor, and maritime logistics provider based in Douala, Cameroon — serving Central Africa and beyond.',
     type: 'website',
     url: SITE_URL,
     siteName: 'LTIC SARL',
     locale: 'en_US',
-    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: 'LTIC SARL — Global Logistics & Industrial Solutions' }],
+    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: 'LTIC SARL — Ship Supplier & Chemical Manufacturer, Douala' }],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@lticsarl',
     title: 'LTIC SARL — Logistics, Transit & Industrial Supply | Cameroon',
-    description: 'End-to-end freight forwarding, customs clearance, industrial supply and international trade across 30+ countries — based in Douala, Cameroon.',
+    description: 'General ship supplier, chemical manufacturer (ECOKLIN brand), lubricant distributor, and maritime logistics provider based in Douala, Cameroon.',
     images: [`${SITE_URL}/og-image.png`],
   },
   robots: {
@@ -104,7 +104,7 @@ const siteJsonLd = {
         caption: 'LTIC SARL',
       },
       image: { '@id': `${SITE_URL}/#logo` },
-      description: 'LTIC SARL (Logistics and Transit International) is a Cameroonian multinational providing freight forwarding, customs clearance, industrial supply, import/export, and international trade services across 30+ countries.',
+      description: 'LTIC SARL is a Cameroonian company based in Douala providing general ship supply, chemical manufacturing (ECOKLIN brand), lubricant distribution, land transport, offshore maritime services, and logistics training across Central Africa and beyond.',
       foundingDate: '2019',
       foundingLocation: 'Douala, Cameroon',
       address: {
@@ -124,9 +124,11 @@ const siteJsonLd = {
         { '@type': 'Country', 'name': 'Nigeria' },
         { '@type': 'Country', 'name': 'Ghana' },
         { '@type': 'Country', 'name': 'Côte d\'Ivoire' },
-        { '@type': 'Country', 'name': 'France' },
-        { '@type': 'Country', 'name': 'China' },
-        { '@type': 'Country', 'name': 'United States' },
+        { '@type': 'Country', 'name': 'Gabon' },
+        { '@type': 'Country', 'name': 'Congo' },
+        { '@type': 'Country', 'name': 'Equatorial Guinea' },
+        { '@type': 'Country', 'name': 'Chad' },
+        { '@type': 'Country', 'name': 'Central African Republic' },
       ],
       knowsAbout: [
         'Freight Forwarding', 'International Logistics', 'Customs Clearance',
@@ -144,7 +146,7 @@ const siteJsonLd = {
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
       name: 'LTIC SARL',
-      description: 'Global Logistics & Industrial Solutions from Cameroon',
+      description: 'Ship Supply, Chemical Manufacturing & Maritime Logistics from Cameroon',
       inLanguage: ['en', 'fr'],
       publisher: { '@id': `${SITE_URL}/#organization` },
       potentialAction: {

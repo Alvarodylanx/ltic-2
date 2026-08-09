@@ -901,7 +901,7 @@ export default function HomePage() {
             </p>
             <h2 className="font-extrabold text-section text-foreground
                            [text-wrap:balance] max-w-2xl whitespace-pre-line">
-              {L({ en: 'A Wide Range of Products,\nAcross the Region.', fr: 'Une Large Gamme de Produits,\nDans Toute la Région.' })}
+              {L({ en: 'A Wide Range of Products,\nAcross Central Africa.', fr: 'Une Large Gamme de Produits,\nDans Toute l\'Afrique Centrale.' })}
             </h2>
           </motion.div>
 

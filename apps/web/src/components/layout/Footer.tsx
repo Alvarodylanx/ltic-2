@@ -44,8 +44,8 @@ export function Footer() {
             </Link>
             <p className="text-sidebar-foreground/70 text-sm leading-relaxed mb-6 max-w-xs">
               {L({
-                en: 'Multinational business solutions — logistics, industrial supply, and international trade across 30+ countries.',
-                fr: "Solutions d'affaires multinationales — logistique, fournitures industrielles et commerce international dans plus de 30 pays.",
+                en: 'General ship supplier, chemical manufacturer (ECOKLIN), lubricant distributor and maritime logistics provider — based in Douala, serving Central Africa and beyond.',
+                fr: "Fournisseur général de navires, fabricant de produits chimiques (ECOKLIN), distributeur de lubrifiants et prestataire logistique maritime — basé à Douala, au service de l'Afrique Centrale et au-delà.",
               })}
             </p>
 
@@ -116,12 +116,13 @@ export function Footer() {
             </h3>
             <ul className="space-y-2.5">
               {[
-                { en: 'Logistics & Transit',          fr: 'Logistique & Transit' },
-                { en: 'Import & Export',              fr: 'Import & Export' },
-                { en: 'Industrial Supply',            fr: 'Fourniture Industrielle' },
-                { en: 'Supply Chain Consulting',      fr: "Conseil en Chaîne d'Approvisionnement" },
+                { en: 'Land Transport',                fr: 'Transport Terrestre' },
+                { en: 'Chemical Manufacturing',       fr: 'Production Chimique (ECOKLIN)' },
+                { en: 'Lubricant Distribution',       fr: 'Distribution de Lubrifiants' },
+                { en: 'Offshore Marine Services',     fr: 'Services Offshore & Maritimes' },
+                { en: 'Logistics Training',           fr: 'Formation Logistique' },
                 { en: 'Commercial Representation',    fr: 'Représentation Commerciale' },
-                { en: 'Order Tracking',               fr: 'Suivi de Commande' },
+                { en: 'Vessel Maintenance',           fr: 'Maintenance des Navires' },
               ].map((item, i) => (
                 <li key={i} className="text-sidebar-foreground/60 text-sm">{L(item)}</li>
               ))}
@@ -137,7 +138,7 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                 <span className="text-sidebar-foreground/60 text-sm leading-snug" suppressHydrationWarning>
-                  {settings?.company_address || 'Douala, Cameroon / International Operations'}
+                  {settings?.company_address || 'Boulevard Hamadou Ahidjo, Akwa, Douala, Cameroon'}
                 </span>
               </li>
               {settings?.company_phone && !settings.company_phone.includes('XX') && (

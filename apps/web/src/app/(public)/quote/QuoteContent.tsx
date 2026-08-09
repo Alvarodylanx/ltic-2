@@ -148,7 +148,7 @@ export default function QuotePage() {
   const highlights = [
     { icon: Clock,        en: 'Response within 24 hours',       fr: 'Réponse dans les 24 heures' },
     { icon: Shield,       en: 'Confidential & secure',           fr: 'Confidentiel & sécurisé' },
-    { icon: Globe2,       en: 'Global coverage — 30+ countries', fr: 'Couverture mondiale — 30+ pays' },
+    { icon: Globe2,       en: 'Central Africa & Gulf of Guinea',  fr: 'Afrique Centrale & Golfe de Guinée' },
     { icon: CheckCircle2, en: 'Tailored to your requirements',   fr: 'Adapté à vos besoins' },
   ];
 

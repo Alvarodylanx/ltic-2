@@ -28,15 +28,15 @@ type SpotlightData = {
 };
 
 const DEFAULTS: SpotlightData = {
-  label: 'Consumer & Industrial Goods',
-  headlineEn: 'Premium Oils &\nContainer Supply.',
-  headlineFr: 'Huiles Premium &\nFourniture de Contenants.',
-  bodyEn: 'From premium sunflower and edible oils to a full range of industrial containers — sourced directly from certified producers, available for bulk or unit supply.',
-  bodyFr: "Des huiles de tournesol et alimentaires premium à une gamme complète de contenants industriels — approvisionnés directement auprès de producteurs certifiés.",
-  subBodyEn: 'Available for export, import & commercial distribution across Africa and Europe.',
-  subBodyFr: "Disponible pour l'export, l'import et la distribution commerciale en Afrique et en Europe.",
-  bgImageUrl: '/images/lubricants-oils.jpg',
-  mediaUrl: '/videos/oils-collection.mp4',
+  label: 'ECOKLIN — Made in Douala',
+  headlineEn: 'ECOKLIN —\nCleaner by Nature.',
+  headlineFr: 'ECOKLIN —\nPropre par Nature.',
+  bodyEn: 'LTIC SARL manufactures ECOKLIN — a complete range of eco-friendly cleaning, hygiene and industrial sanitation products, produced at our factory in PK13, Douala.',
+  bodyFr: "LTIC SARL fabrique ECOKLIN — une gamme complète de produits de nettoyage, d'hygiène et de désinfection industrielle écologiques, produits dans notre usine à PK13, Douala.",
+  subBodyEn: 'Bleach, degreasers, descalers, liquid soaps and more — available for bulk and unit supply across Central Africa.',
+  subBodyFr: "Eau de Javel, dégraissants, détartrants, savons liquides et plus — disponibles en vrac et à l'unité en Afrique Centrale.",
+  bgImageUrl: '/images/industrial-supply-service.jpg',
+  mediaUrl: '/videos/ecoklin-factory.mp4',
   mediaType: 'video',
   cta1LabelEn: 'Request Supply Quote', cta1LabelFr: 'Demander un Devis', cta1Href: '/quote',
   cta2LabelEn: 'Contact Us', cta2LabelFr: 'Nous Contacter', cta2Href: '/contact',
@@ -177,7 +177,7 @@ export default function AdminSpotlightPage() {
             <Textarea
               {...register(lang === 'en' ? 'headlineEn' : 'headlineFr', { required: true })}
               rows={2} className="mt-1 font-display font-bold text-lg"
-              placeholder={L({ en: 'Premium Oils &\nContainer Supply.', fr: 'Huiles Premium &\nFourniture de Contenants.' })}
+              placeholder={L({ en: 'ECOKLIN —\nCleaner by Nature.', fr: 'ECOKLIN —\nPropre par Nature.' })}
             />
             <p className="text-xs text-muted-foreground mt-1">{L({ en: 'Use \\n for line breaks in the headline', fr: 'Utilisez \\n pour les sauts de ligne' })}</p>
           </div>

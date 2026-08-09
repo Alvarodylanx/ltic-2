@@ -5,7 +5,7 @@ const SITE_URL = 'https://www.lticsarl.com';
 
 export const metadata: Metadata = {
   title: 'About LTIC SARL — Logistics Company Based in Douala, Cameroon',
-  description: 'LTIC SARL is a Cameroonian multinational founded in 2019, specializing in freight forwarding, customs clearance, industrial supply and international trade across Africa, Europe and Asia from Douala.',
+  description: 'LTIC SARL is a Cameroonian company founded in Douala — general ship supplier, chemical manufacturer (ECOKLIN brand), lubricant distributor and maritime logistics provider serving Central Africa and beyond.',
   keywords: [
     'about ltic sarl', 'logistics company cameroon', 'freight forwarder douala',
     'industrial supply africa', 'multinational cameroon', 'offshore logistics douala',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/about` },
   openGraph: {
     title: 'About LTIC SARL — Logistics Company Based in Douala, Cameroon',
-    description: 'Cameroonian multinational specializing in freight forwarding, industrial supply and international trade across 30+ countries from Douala.',
+    description: 'Cameroonian company based in Douala — general ship supplier, ECOKLIN chemical manufacturer, lubricant distributor and maritime logistics provider serving Central Africa and beyond.',
     type: 'website',
     url: `${SITE_URL}/about`,
     siteName: 'LTIC SARL',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'About LTIC SARL — Logistics Company Based in Douala, Cameroon',
-    description: 'Cameroonian multinational specializing in freight forwarding, industrial supply and international trade across 30+ countries.',
+    description: 'Cameroonian company based in Douala — general ship supplier, ECOKLIN chemical manufacturer, lubricant distributor and maritime logistics provider.',
     images: [`${SITE_URL}/og-image.png`],
   },
 };
@@ -44,7 +44,7 @@ const aboutPageLd = {
   '@id': `${SITE_URL}/about`,
   url: `${SITE_URL}/about`,
   name: 'About LTIC SARL',
-  description: 'LTIC SARL is a Cameroonian multinational company providing freight forwarding, industrial supply and international trade services across 30+ countries.',
+  description: 'LTIC SARL is a Cameroonian company based in Douala providing general ship supply, chemical manufacturing (ECOKLIN brand), lubricant distribution, land transport and maritime logistics services across Central Africa and beyond.',
   inLanguage: ['en', 'fr'],
   isPartOf: { '@id': `${SITE_URL}/#website` },
   about: { '@id': `${SITE_URL}/#organization` },

@@ -12,16 +12,16 @@ import { api } from '@/lib/api';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const statsFields = [
-  { key: 'stat_countries',  label: 'Countries Served / Pays Desservis',           placeholder: '30+' },
+  { key: 'stat_countries',  label: 'Countries Served / Pays Desservis',           placeholder: '5+' },
   { key: 'stat_clients',    label: 'Clients Worldwide / Clients Mondiaux',         placeholder: '500+' },
   { key: 'stat_years',      label: 'Years of Experience / Années d\'Expérience',   placeholder: '5+' },
   { key: 'stat_shipments',  label: 'Shipments Completed / Expéditions Réalisées',  placeholder: '10K+' },
 ];
 
 const contactFields = [
-  { key: 'company_address',  label: 'Address / Adresse',           placeholder: 'Douala, Cameroon / International Operations' },
-  { key: 'company_phone',    label: 'Phone 1 / Téléphone 1',       placeholder: '+237 6XX XXX XXX' },
-  { key: 'company_phone_2',  label: 'Phone 2 / Téléphone 2',       placeholder: '+237 6XX XXX XXX' },
+  { key: 'company_address',  label: 'Address / Adresse',           placeholder: 'Boulevard Hamadou Ahidjo, Akwa, Douala, Cameroon' },
+  { key: 'company_phone',    label: 'Phone 1 / Téléphone 1',       placeholder: '+237 699 213 603' },
+  { key: 'company_phone_2',  label: 'Phone 2 / Téléphone 2',       placeholder: '+237 699 213 603' },
   { key: 'company_email',    label: 'Email',                        placeholder: 'contact@lticsarl.com' },
   { key: 'company_website',  label: 'Website / Site web',           placeholder: 'www.lticsarl.com' },
 ];

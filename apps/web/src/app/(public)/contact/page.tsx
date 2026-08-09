@@ -5,7 +5,7 @@ const SITE_URL = 'https://www.lticsarl.com';
 
 export const metadata: Metadata = {
   title: 'Contact LTIC SARL — Douala, Cameroon | Logistics & Trade Inquiries',
-  description: 'Contact LTIC SARL for freight forwarding, industrial supply and international trade inquiries. Our team in Douala, Cameroon responds within 24 hours in English and French.',
+  description: 'Contact LTIC SARL for ship supply, ECOKLIN chemical products, lubricant distribution, land transport and maritime logistics inquiries. Our team in Douala responds within 24 hours.',
   keywords: [
     'contact ltic sarl', 'logistics contact cameroon', 'freight forwarder contact douala',
     'industrial supply contact', 'trade inquiry cameroon', 'ltic sarl email',
@@ -44,7 +44,7 @@ const contactPageLd = {
   '@id': `${SITE_URL}/contact`,
   url: `${SITE_URL}/contact`,
   name: 'Contact LTIC SARL',
-  description: 'Contact page for LTIC SARL logistics and industrial supply company based in Douala, Cameroon.',
+  description: 'Contact page for LTIC SARL — ship supplier, ECOKLIN manufacturer and maritime logistics provider based in Douala, Cameroon.',
   inLanguage: ['en', 'fr'],
   isPartOf: { '@id': `${SITE_URL}/#website` },
   publisher: { '@id': `${SITE_URL}/#organization` },
@@ -56,7 +56,7 @@ const localBusinessLd = {
   '@id': `${SITE_URL}/#localbusiness`,
   name: 'LTIC SARL',
   alternateName: 'Logistics and Transit International SARL',
-  description: 'Freight forwarding, customs clearance, industrial supply and international trade services from Douala, Cameroon.',
+  description: 'General ship supply, ECOKLIN chemical manufacturing, lubricant distribution, land transport and maritime logistics services from Douala, Cameroon.',
   url: SITE_URL,
   telephone: '+237000000000',
   email: 'contact@lticsarl.com',
@@ -76,7 +76,7 @@ const localBusinessLd = {
   ],
   priceRange: '$$',
   currenciesAccepted: 'XAF, EUR, USD',
-  areaServed: 'Worldwide',
+  areaServed: 'Central Africa',
   hasMap: 'https://maps.google.com/?q=Douala,Cameroon',
   sameAs: [`${SITE_URL}/#organization`],
 };

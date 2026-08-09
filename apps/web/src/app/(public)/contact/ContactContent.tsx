@@ -61,11 +61,11 @@ export default function ContactPage() {
 
   const contactInfo = [
     { icon: MapPin,    label: { en: 'Address',     fr: 'Adresse'       }, value: siteSettings?.company_address || 'Douala, Cameroon' },
-    { icon: Phone,     label: { en: 'Phone',       fr: 'Téléphone'     }, value: siteSettings?.company_phone   || '+237 6XX XXX XXX' },
+    { icon: Phone,     label: { en: 'Phone',       fr: 'Téléphone'     }, value: siteSettings?.company_phone   || '+237 699 213 603' },
     ...(siteSettings?.company_phone_2 ? [{ icon: PhoneCall, label: { en: 'Direct Line', fr: 'Ligne Directe' }, value: siteSettings.company_phone_2 }] : []),
     { icon: Mail,      label: { en: 'Email',       fr: 'Email'         }, value: siteSettings?.company_email   || 'contact@lticsarl.com' },
     { icon: Clock,     label: { en: 'Hours',       fr: 'Horaires'      }, value: 'Monday – Friday, 8:00 AM – 6:00 PM (WAT)' },
-    { icon: Globe2,    label: { en: 'Coverage',    fr: 'Couverture'    }, value: L({ en: 'Global — 30+ countries served', fr: 'Mondial — 30+ pays desservis' }) },
+    { icon: Globe2,    label: { en: 'Coverage',    fr: 'Couverture'    }, value: L({ en: 'Central Africa & Gulf of Guinea', fr: 'Afrique Centrale & Golfe de Guinée' }) },
   ];
 
   return (

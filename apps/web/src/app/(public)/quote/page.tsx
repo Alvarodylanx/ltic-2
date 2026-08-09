@@ -5,7 +5,7 @@ const SITE_URL = 'https://www.lticsarl.com';
 
 export const metadata: Metadata = {
   title: 'Request a Free Logistics & Supply Quote | LTIC SARL',
-  description: 'Get a free customized quote from LTIC SARL for freight forwarding, customs clearance, industrial supply and international trade. Our team responds within 24 hours.',
+  description: 'Get a free customized quote from LTIC SARL for ship supply, ECOKLIN chemical products, lubricants, land transport and offshore maritime services. Our team in Douala responds within 24 hours.',
   keywords: [
     'logistics quote cameroon', 'freight quote africa', 'industrial supply quote',
     'customs clearance quote', 'shipping quote africa', 'free trade quote cameroon',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/quote` },
   openGraph: {
     title: 'Request a Free Logistics & Supply Quote | LTIC SARL',
-    description: 'Free quote for freight forwarding, customs clearance and industrial supply — response within 24 hours from our Douala team.',
+    description: 'Free quote for ship supply, ECOKLIN chemicals, lubricants, land transport and offshore maritime services — response within 24 hours from our Douala team.',
     type: 'website',
     url: `${SITE_URL}/quote`,
     siteName: 'LTIC SARL',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Request a Free Logistics & Supply Quote | LTIC SARL',
-    description: 'Free quote for freight forwarding, customs clearance and industrial supply — response within 24 hours.',
+    description: 'Free quote for ship supply, ECOKLIN chemicals, lubricants, land transport and offshore maritime services — response within 24 hours.',
     images: [`${SITE_URL}/og-image.png`],
   },
 };
@@ -41,11 +41,11 @@ const breadcrumbLd = {
 const quoteServiceLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'Free Logistics & Industrial Supply Quote',
-  description: 'Request a free customized quote for freight forwarding, customs clearance, industrial supply and international trade from LTIC SARL.',
+  name: 'Free Quote — LTIC SARL Services',
+  description: 'Request a free customized quote for ship supply, ECOKLIN chemical products, lubricant distribution, land transport and offshore maritime services from LTIC SARL.',
   url: `${SITE_URL}/quote`,
   provider: { '@id': `${SITE_URL}/#organization` },
-  areaServed: 'Worldwide',
+  areaServed: 'Central Africa',
   offers: {
     '@type': 'Offer',
     price: '0',
