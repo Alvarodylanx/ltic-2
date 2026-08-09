@@ -51,7 +51,7 @@ const heroSlides = [
   },
   {
     tag:   { en: 'ECOKLIN — Made in Douala', fr: 'ECOKLIN — Fabriqué à Douala' },
-    lines: { en: 'CLEAN.\nPRODUCED HERE.',        fr: 'PROPRE.\nFABRIQUÉ ICI.' },
+    lines: { en: 'ECOKLIN.\nMADE IN DOUALA.',       fr: 'ECOKLIN.\nFABRIQUÉ À DOUALA.' },
     sub:   { en: 'LTIC SARL manufactures home care and industrial hygiene products under the ECOKLIN brand at our PK13 factory in Douala.', fr: 'LTIC SARL fabrique des produits ménagers et d\'hygiène industrielle sous la marque ECOKLIN dans notre usine à PK13, Douala.' },
     cta1:  { label: { en: 'View Products',     fr: 'Voir les Produits' }, href: '/products' },
     cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
