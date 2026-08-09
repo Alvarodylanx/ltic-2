@@ -5,7 +5,8 @@
   "scripts": {
     "push": "drizzle-kit push",
     "generate": "drizzle-kit generate",
-    "seed": "ts-node --transpile-only src/seed.ts"
+    "seed": "ts-node --transpile-only src/seed.ts",
+    "migrate": "ts-node --transpile-only src/migrate-categories.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.30.0",
