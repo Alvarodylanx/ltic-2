@@ -11,7 +11,7 @@ import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/comp
 const services = [
   {
     en: 'Land Transport', fr: 'Transport Terrestre',
-    headlineEn: 'Reliable Land Freight Across the Region', headlineFr: 'Transport Terrestre Fiable dans la Région',
+    headlineEn: 'Reliable Land Freight Across Central Africa and Beyond', headlineFr: 'Transport Terrestre Fiable en Afrique Centrale et Au-delà',
     descEn: 'LTIC SARL provides reliable road freight transportation across Central Africa and neighboring countries. From port pickup to final delivery, our fleet coordination keeps your cargo moving on schedule.',
     descFr: 'LTIC SARL assure le transport routier de marchandises en Afrique Centrale et dans les pays voisins. De l\'enlèvement au port jusqu\'à la livraison finale, notre coordination de flotte garantit le respect des délais.',
     image: '/images/transportation.jpg',
