@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
-  ArrowRight, ArrowUpRight, Globe2, Ship, Factory, BarChart3,
-  Handshake, TreePine, Package, FileText, Clock, Truck, ChevronLeft, ChevronRight,
+  ArrowRight, ArrowUpRight, Globe2, Ship, Factory, Droplets,
+  Handshake, Package, FileText, Clock, Truck, GraduationCap, Wrench,
+  ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -34,11 +35,11 @@ const kenBurns = [
 
 const heroSlides = [
   {
-    tag:   { en: 'Logistics & Transit',  fr: 'Logistique & Transit' },
-    lines: { en: 'WE MOVE\nYOUR WORLD.',        fr: 'NOUS BOUGEONS\nVOTRE MONDE.' },
-    sub:   { en: 'End-to-end freight forwarding across 30+ countries — air, sea and road, fully tracked.', fr: 'Freight forwarding complet dans 30+ pays — aérien, maritime et routier, entièrement suivi.' },
-    cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
-    cta2:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
+    tag:   { en: 'Maritime & Offshore',  fr: 'Maritime & Offshore' },
+    lines: { en: 'YOUR PARTNER\nAT SEA.',        fr: 'VOTRE PARTENAIRE\nEN MER.' },
+    sub:   { en: 'General ship chandling, offshore supply and vessel maintenance — LTIC SARL is your trusted maritime partner in the Gulf of Guinea.', fr: 'Avitaillement des navires, fournitures offshore et maintenance — LTIC SARL est votre partenaire maritime de confiance dans le Golfe de Guinée.' },
+    cta1:  { label: { en: 'Our Services',      fr: 'Nos Services' },      href: '/services' },
+    cta2:  { label: { en: 'Get a Quote',       fr: 'Demander un Devis' }, href: '/quote' },
     image: '/images/hero-slide-1.jpg',
     theme: {
       tag:      'text-blue-400',
@@ -49,11 +50,11 @@ const heroSlides = [
     },
   },
   {
-    tag:   { en: 'Industrial Supply',    fr: 'Fourniture Industrielle' },
-    lines: { en: 'POWERED BY\nEXPERTISE.',      fr: 'ALIMENTÉ PAR\nL\'EXPERTISE.' },
-    sub:   { en: 'Generators, lubricants and OEM-grade parts — Total, Shell and certified industrial brands.', fr: 'Générateurs, lubrifiants et pièces OEM — Total, Shell et marques industrielles certifiées.' },
+    tag:   { en: 'ECOKLIN — Made in Douala', fr: 'ECOKLIN — Fabriqué à Douala' },
+    lines: { en: 'CLEAN.\nPRODUCED HERE.',        fr: 'PROPRE.\nFABRIQUÉ ICI.' },
+    sub:   { en: 'LTIC SARL manufactures home care and industrial hygiene products under the ECOKLIN brand at our PK13 factory in Douala.', fr: 'LTIC SARL fabrique des produits ménagers et d\'hygiène industrielle sous la marque ECOKLIN dans notre usine à PK13, Douala.' },
     cta1:  { label: { en: 'View Products',     fr: 'Voir les Produits' }, href: '/products' },
-    cta2:  { label: { en: 'Request a Quote',   fr: 'Demander un Devis' }, href: '/quote' },
+    cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
     image: '/images/hero-slide-2.jpg',
     theme: {
       tag:      'text-amber-400',
@@ -64,11 +65,11 @@ const heroSlides = [
     },
   },
   {
-    tag:   { en: 'Global Commerce',      fr: 'Commerce Mondial' },
-    lines: { en: 'TRADE ACROSS\nALL BORDERS.',   fr: 'COMMERCE SANS\nFRONTIÈRES.' },
-    sub:   { en: 'Import, export and brand representation across emerging markets — one partner for every transaction.', fr: 'Import, export et représentation de marque sur marchés émergents — un partenaire pour chaque transaction.' },
-    cta1:  { label: { en: 'Get a Free Quote',  fr: 'Obtenir un Devis' },  href: '/quote' },
-    cta2:  { label: { en: 'About LTIC',        fr: 'À Propos de LTIC' }, href: '/about' },
+    tag:   { en: 'Commerce & Trade',     fr: 'Commerce & Négoce' },
+    lines: { en: 'WE SUPPLY\nYOUR WORLD.',        fr: 'NOUS FOURNISSONS\nVOTRE MONDE.' },
+    sub:   { en: 'Lubricants, timber, food products, generators, engines and spare parts — commercial supply across Cameroon and the region.', fr: 'Lubrifiants, bois, produits alimentaires, groupes électrogènes, moteurs et pièces — fourniture commerciale au Cameroun et dans la région.' },
+    cta1:  { label: { en: 'Our Products',      fr: 'Nos Produits' },      href: '/products' },
+    cta2:  { label: { en: 'Contact Us',        fr: 'Nous Contacter' },    href: '/contact' },
     image: '/images/hero-slide-3.jpg',
     video: '/videos/hero-borders.mp4',
     theme: {
@@ -82,35 +83,36 @@ const heroSlides = [
 ];
 
 const services = [
-  { icon: Ship,      en: 'Logistics & Transit',        fr: 'Logistique & Transit',               descEn: 'End-to-end freight forwarding, customs clearance and international transit by air, sea and road.',        descFr: 'Freight forwarding complet, dédouanement et transit international.' },
-  { icon: Globe2,    en: 'Import & Export',            fr: 'Import & Export',                    descEn: 'Cross-border trade facilitation with expert compliance management and full documentation support.',        descFr: 'Facilitation du commerce transfrontalier avec gestion de la conformité.' },
-  { icon: Factory,   en: 'Industrial Supply',          fr: 'Fourniture Industrielle',            descEn: 'Generators, lubricants, filters and heavy materials — Total, Shell and certified OEM brands.',           descFr: 'Générateurs, lubrifiants, filtres — Total, Shell et marques OEM certifiées.' },
-  { icon: TreePine,  en: 'Timber & Trade',             fr: 'Bois & Commerce',                   descEn: 'Certified tropical timber and logs for international construction and general trade markets.',             descFr: 'Bois tropicaux certifiés pour la construction et le commerce international.' },
-  { icon: BarChart3, en: 'Supply Chain Consulting',    fr: "Conseil Chaîne d'Approvisionnement", descEn: 'Strategic logistics optimization, procurement consulting and risk management for global markets.',         descFr: 'Optimisation logistique, conseil en approvisionnement et gestion des risques.' },
-  { icon: Handshake, en: 'Commercial Representation', fr: 'Représentation Commerciale',         descEn: 'Brand representation, joint ventures and distribution partnerships across emerging markets.',              descFr: 'Représentation de marque et partenariats de distribution sur marchés émergents.' },
+  { icon: Truck,          en: 'Land Transport',                 fr: 'Transport Terrestre',              descEn: 'Road freight across Cameroon and the Central African region — from port pickup to final delivery.',      descFr: 'Fret routier au Cameroun et en Afrique Centrale — de l\'enlèvement au port à la livraison finale.' },
+  { icon: Factory,        en: 'Chemical Manufacturing',         fr: 'Production de Produits Chimiques', descEn: 'ECOKLIN — our own brand of cleaning and industrial hygiene products manufactured at our PK13 factory.',   descFr: 'ECOKLIN — notre marque de produits de nettoyage et d\'hygiène industrielle, fabriqués à PK13.' },
+  { icon: Droplets,       en: 'Lubricant Distribution',         fr: 'Commercialisation des Lubrifiants', descEn: 'Authorized distributor of Total and Shell lubricants for motors, vessels and industrial equipment.',      descFr: 'Distributeur agréé de lubrifiants Total et Shell pour moteurs, navires et équipements industriels.' },
+  { icon: Ship,           en: 'Offshore Marine Services',       fr: 'Services Offshore & Maritimes',    descEn: 'General ship chandling, spare parts, sludging and full maritime supply across African ports.',            descFr: 'Avitaillement des navires, pièces détachées, services de boues et fournitures maritimes dans les ports africains.' },
+  { icon: GraduationCap, en: 'Logistics Staff Training',       fr: 'Formation du Personnel Logistique', descEn: 'Professional logistics training for personnel in maritime, customs, transit and supply chain operations.', descFr: 'Formation professionnelle pour le personnel en logistique maritime, douanes, transit et supply chain.' },
+  { icon: Handshake,      en: 'Commercial Representation',      fr: 'Représentation Commerciale',        descEn: 'Representing international brands entering the Cameroonian and Central African markets.',                  descFr: 'Représentation de marques internationales sur les marchés camerounais et centrafricains.' },
+  { icon: Wrench,         en: 'Vessel Maintenance at Sea',      fr: 'Maintenance des Navires en Haute Mer', descEn: 'On-site maintenance and technical support for vessels operating in African waters.',                  descFr: 'Maintenance et support technique sur site pour navires opérant dans les eaux africaines.' },
 ];
 
 const features = [
   {
-    label:   { en: 'Industrial Supply',          fr: 'Fourniture Industrielle' },
-    heading: { en: 'Industrial Products\nDelivered On-Time.', fr: 'Produits Industriels\nLivrés à Temps.' },
-    body:    { en: 'From power generators to OEM-grade lubricants, we source and ship the industrial essentials your operations depend on — Total, Shell and certified OEM brands, shipped anywhere.', fr: 'Des groupes électrogènes aux lubrifiants OEM, nous approvisionnons les produits industriels essentiels — Total, Shell et marques OEM certifiées.' },
+    label:   { en: 'ECOKLIN — Made in Douala',   fr: 'ECOKLIN — Fabriqué à Douala' },
+    heading: { en: 'Our Own Brand.\nOur Own Factory.', fr: 'Notre Marque.\nNotre Usine.' },
+    body:    { en: 'LTIC SARL manufactures cleaning and hygiene products under the ECOKLIN brand at our PK13 factory in Douala — bleach, degreasers, liquid soaps, muriatic acid and more. Eco-friendly, biodegradable and produced in Cameroon.', fr: 'LTIC SARL fabrique des produits de nettoyage et d\'hygiène sous la marque ECOKLIN dans notre usine à PK13, Douala — javel, dégraissants, savons liquides, acide muriatique et plus. Écologiques, biodégradables et fabriqués au Cameroun.' },
     image:   '/images/industrial-supply.jpg',
-    tag:     { en: 'Supply', fr: 'Fourniture' },
+    tag:     { en: 'ECOKLIN', fr: 'ECOKLIN' },
     href:    '/products',
   },
   {
     label:   { en: 'Timber & Natural Resources', fr: 'Bois & Ressources Naturelles' },
-    heading: { en: 'Certified Timber\nfor Global Markets.', fr: 'Bois Certifié\npour Marchés Mondiaux.' },
-    body:    { en: 'We export certified tropical species for international construction and general trade — sustainably sourced from Central African forests with full documentation.', fr: 'Nous exportons des essences tropicales certifiées pour la construction internationale et le commerce général.' },
+    heading: { en: 'Certified Timber\nfrom Central Africa.', fr: 'Bois Certifié\nd\'Afrique Centrale.' },
+    body:    { en: 'We supply certified tropical timber species — Tali, Iroko, Pachi, Movingui, Azobe, Doussié, Padou, Teak and Bibinga — sourced from Central African forests with full documentation for export.', fr: 'Nous fournissons des essences tropicales certifiées — Tali, Iroko, Pachi, Movingui, Azobé, Doussié, Padou, Teck et Bibinga — issues des forêts d\'Afrique Centrale avec documentation complète pour l\'export.' },
     image:   '/images/timber-resources.jpg',
-    tag:     { en: 'Trade', fr: 'Commerce' },
+    tag:     { en: 'Timber', fr: 'Bois' },
     href:    '/products',
   },
   {
-    label:   { en: 'General Commerce',           fr: 'Commerce Général' },
-    heading: { en: 'Everything Your\nBusiness Needs.', fr: 'Tout Ce Dont\nVotre Entreprise a Besoin.' },
-    body:    { en: 'A diverse catalog of consumer and trade goods — sourced globally and delivered anywhere. From bulk commodity orders to specialized procurement, we handle it all.', fr: 'Un catalogue diversifié de biens de consommation et commerciaux, sourcés mondialement et livrés partout.' },
+    label:   { en: 'Commerce & Supply',          fr: 'Commerce & Fourniture' },
+    heading: { en: 'Products Your\nBusiness Needs.', fr: 'Les Produits Dont\nVotre Entreprise a Besoin.' },
+    body:    { en: 'Generators, engines and spare parts, food and agricultural products, lubricants, and maritime supplies — LTIC SARL sources and supplies across Cameroon and the Central African region.', fr: 'Groupes électrogènes, moteurs et pièces détachées, produits alimentaires et agricoles, lubrifiants et fournitures maritimes — LTIC SARL approvisionne le Cameroun et la région centrafricaine.' },
     image:   '/images/general-commerce.jpg',
     tag:     { en: 'Commerce', fr: 'Commerce' },
     href:    '/products',
@@ -118,15 +120,14 @@ const features = [
 ];
 
 const productCategories = [
-  { en: 'Power Generators',    fr: 'Groupes Électrogènes',  descEn: 'Diesel, gas & standby power units', descFr: 'Groupes diesel, gaz et secours',             image: '/images/power-generators.jpg', tag: { en: 'Industrial', fr: 'Industriel' }, slug: 'generators' },
-  { en: 'Lubricants & Oils',  fr: 'Lubrifiants & Huiles',   descEn: 'Total, Shell and OEM-grade lubricants', descFr: 'Lubrifiants Total, Shell et marques OEM', image: '/images/lubricants-oils.jpg', tag: { en: 'Supply', fr: 'Fourniture' }, slug: 'lubricants-oils' },
-  { en: 'Timber & Logs',      fr: 'Bois & Grumes',           descEn: 'Certified tropical species for export', descFr: 'Essences tropicales certifiées',           image: '/images/timber-logs.jpg', tag: { en: 'Trade', fr: 'Commerce' }, slug: 'timber-logs' },
-  { en: 'Filters & Parts',    fr: 'Filtres & Pièces',        descEn: 'OEM-grade filters for all machinery', descFr: 'Filtres OEM pour toutes machines',           image: '/images/filters-parts.jpg', tag: { en: 'Industrial', fr: 'Industriel' }, slug: 'filters-parts' },
-  { en: 'Heavy Equipment',    fr: 'Équipements Lourds',      descEn: 'Machinery, tools and structural materials', descFr: 'Machines, outils et matériaux',        image: '/images/heavy-equipment.jpg', tag: { en: 'Supply', fr: 'Fourniture' }, slug: 'general-industrial' },
-  { en: 'General Merchandise',fr: 'Marchandises Générales',  descEn: 'Wide range of consumer and trade goods', descFr: 'Large gamme de biens de consommation',   image: '/images/general-merchandise.jpg', tag: { en: 'Commerce', fr: 'Commerce' }, slug: 'general-industrial' },
-  { en: 'Marine & Maintenance Chemicals', fr: 'Produits Chimiques Marins & Entretien', descEn: 'Tank cleaners, degreasers & MARPOL-compliant marine chemicals', descFr: 'Nettoyants de réservoirs, dégraissants et produits chimiques marins conformes MARPOL', image: '/images/cat-marine-chemicals.jpg', tag: { en: 'Marine', fr: 'Marine' }, slug: 'marine-maintenance-chemicals' },
-  { en: 'Industrial Chemicals & Raw Materials', fr: 'Produits Chimiques Industriels & Matières Premières', descEn: 'Sulfur, acids, solvents and bulk industrial minerals', descFr: 'Soufre, acides, solvants et minéraux industriels en vrac', image: '/images/cat-industrial-chemicals.jpg', tag: { en: 'Chemicals', fr: 'Chimique' }, slug: 'industrial-chemicals-raw-materials' },
-  { en: 'Food & Agricultural Products', fr: 'Produits Alimentaires & Agricoles', descEn: 'Cocoa, coffee, palm oil, spices & agri-food exports', descFr: 'Cacao, café, huile de palme, épices et exports agro-alimentaires', image: '/images/cat-agrifood.jpg', tag: { en: 'Agri-Food', fr: 'Agro-Alimentaire' }, slug: 'food-agricultural-products' },
+  { en: 'Chemical Products',        fr: 'Produits Chimiques',           descEn: 'ECOKLIN brand — bleach, soaps, degreasers, muriatic acid', descFr: 'Marque ECOKLIN — javel, savons, dégraissants, acide muriatique', image: '/images/cat-industrial-chemicals.jpg', tag: { en: 'ECOKLIN', fr: 'ECOKLIN' }, slug: 'chemical-products' },
+  { en: 'Timber & Logs',            fr: 'Bois & Grumes',                descEn: 'Tali, Iroko, Pachi, Azobe and certified tropical species',  descFr: 'Tali, Iroko, Pachi, Azobé et essences tropicales certifiées',  image: '/images/timber-logs.jpg',             tag: { en: 'Timber', fr: 'Bois' },          slug: 'timber-logs' },
+  { en: 'Offshore & Maritime',      fr: 'Offshore & Maritime',          descEn: 'Maritime supplies, ship chandling and vessel maintenance',  descFr: 'Fournitures maritimes, avitaillement et maintenance navires',   image: '/images/cat-marine-chemicals.jpg',    tag: { en: 'Marine', fr: 'Marine' },        slug: 'offshore-maritime' },
+  { en: 'Lubricants Oil',           fr: 'Lubrifiants',                  descEn: 'Total, Shell motor and vessel lubricants only',             descFr: 'Lubrifiants moteur et marine Total, Shell uniquement',          image: '/images/lubricants-oils.jpg',         tag: { en: 'Supply', fr: 'Fourniture' },    slug: 'lubricants' },
+  { en: 'Food & Agricultural',      fr: 'Alimentaire & Agricole',       descEn: 'Cacao, coffee, peanut oil, beans, corn and sesame',        descFr: 'Cacao, café, huile d\'arachide, haricots, maïs et sésame',    image: '/images/cat-agrifood.jpg',            tag: { en: 'Agri-Food', fr: 'Agro-Ali.' }, slug: 'food-agricultural-products' },
+  { en: 'Filters',                  fr: 'Filtres',                      descEn: 'Oil, air and fuel filters for all equipment types',        descFr: 'Filtres huile, air et carburant pour tous équipements',        image: '/images/filters-parts.jpg',           tag: { en: 'Filters', fr: 'Filtres' },      slug: 'filters' },
+  { en: 'Generators',               fr: 'Groupes Électrogènes',         descEn: 'Diesel and gas generators for industrial use',             descFr: 'Groupes électrogènes diesel et gaz pour usage industriel',     image: '/images/power-generators.jpg',        tag: { en: 'Commerce', fr: 'Commerce' },    slug: 'generators' },
+  { en: 'Engines & Spare Parts',    fr: 'Moteurs & Pièces Détachées',   descEn: 'Marine and industrial engines, spare parts and components', descFr: 'Moteurs maritimes et industriels, pièces de rechange',         image: '/images/heavy-equipment.jpg',         tag: { en: 'Parts', fr: 'Pièces' },         slug: 'spare-parts' },
 ];
 
 const orderSteps = [
@@ -684,7 +685,7 @@ export default function HomePage() {
               </p>
               <h2 className="font-extrabold text-section text-foreground
                              [text-wrap:balance] max-w-xl whitespace-pre-line">
-                {L({ en: 'Six Services,\nOne Reliable Partner.', fr: 'Six Services,\nUn Partenaire Fiable.' })}
+                {L({ en: 'Seven Services,\nOne Reliable Partner.', fr: 'Sept Services,\nUn Partenaire Fiable.' })}
               </h2>
             </motion.div>
             <motion.div
@@ -900,7 +901,7 @@ export default function HomePage() {
             </p>
             <h2 className="font-extrabold text-section text-foreground
                            [text-wrap:balance] max-w-2xl whitespace-pre-line">
-              {L({ en: 'A Wide Range of Products,\nDelivered Anywhere.', fr: 'Une Large Gamme de Produits,\nLivrée Partout.' })}
+              {L({ en: 'A Wide Range of Products,\nAcross the Region.', fr: 'Une Large Gamme de Produits,\nDans Toute la Région.' })}
             </h2>
           </motion.div>
 
@@ -979,7 +980,7 @@ export default function HomePage() {
 
               {/* Category */}
               <p className="text-sidebar-foreground/55 text-[11px] uppercase tracking-[0.28em] font-semibold mb-3">
-                {spotlightData?.label || L({ en: 'Consumer & Industrial Goods', fr: 'Produits Consommateurs & Industriels' })}
+                {spotlightData?.label || L({ en: 'ECOKLIN — Chemical Products', fr: 'ECOKLIN — Produits Chimiques' })}
               </p>
 
               {/* Headline */}
@@ -987,7 +988,7 @@ export default function HomePage() {
                              text-sidebar-foreground leading-[0.95] tracking-tight mb-5">
                 {(spotlightData
                   ? (language === 'fr' ? spotlightData.headlineFr : spotlightData.headlineEn)
-                  : L({ en: 'Premium Oils &\nContainer Supply.', fr: 'Huiles Premium &\nFourniture de Contenants.' })
+                  : L({ en: 'ECOKLIN —\nMade in Douala.', fr: 'ECOKLIN —\nFabriqué à Douala.' })
                 ).split('\n').map((line: string, i: number) => <span key={i} className="block">{line}</span>)}
               </h2>
 
@@ -1000,8 +1001,8 @@ export default function HomePage() {
                 {spotlightData
                   ? (language === 'fr' ? spotlightData.bodyFr : spotlightData.bodyEn)
                   : L({
-                      en: 'From premium sunflower and edible oils to a full range of industrial containers — sourced directly from certified producers, available for bulk or unit supply.',
-                      fr: "Des huiles de tournesol et alimentaires premium à une gamme complète de contenants industriels — approvisionnés directement auprès de producteurs certifiés.",
+                      en: 'ECOKLIN is LTIC SARL\'s own brand of cleaning, hygiene and sanitation products manufactured at our factory in PK13, Douala — bleach, degreasers, liquid soaps, muriatic acid and more.',
+                      fr: 'ECOKLIN est la marque propre de LTIC SARL, fabricant des produits de nettoyage, hygiène et assainissement dans notre usine à PK13, Douala — javel, dégraissants, savons liquides, acide muriatique et plus.',
                     })
                 }
               </p>
@@ -1009,8 +1010,8 @@ export default function HomePage() {
                 {spotlightData
                   ? (language === 'fr' ? spotlightData.subBodyFr : spotlightData.subBodyEn)
                   : L({
-                      en: 'Available for export, import & commercial distribution across Africa and Europe.',
-                      fr: "Disponible pour l'export, l'import et la distribution commerciale en Afrique et en Europe.",
+                      en: 'Available in Douala and across Cameroon. Wholesale and retail supply for businesses and distributors.',
+                      fr: 'Disponible à Douala et dans tout le Cameroun. Fourniture en gros et en détail pour entreprises et distributeurs.',
                     })
                 }
               </p>
@@ -1018,9 +1019,9 @@ export default function HomePage() {
               {/* Tag chips */}
               <div className="flex flex-wrap gap-2 mb-8 justify-center lg:justify-start">
                 {([
-                  { en: 'Bulk & Unit Orders',  fr: 'Commandes Vrac & Unité' },
-                  { en: 'Export Ready',        fr: "Prêt à l'Export" },
-                  { en: 'Africa & Europe',     fr: 'Afrique & Europe' },
+                  { en: 'Made in Douala',      fr: 'Fabriqué à Douala' },
+                  { en: 'ECOKLIN Brand',       fr: 'Marque ECOKLIN' },
+                  { en: 'Wholesale Available', fr: 'Vente en Gros' },
                 ] as const).map(tag => (
                   <span key={tag.en}
                     className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20
@@ -1268,8 +1269,8 @@ export default function HomePage() {
             <motion.p variants={fadeInUp}
               className="text-white/90 text-lg max-w-lg mx-auto mb-10 leading-relaxed">
               {L({
-                en: 'One partner for freight, industrial supply and general commerce — across 30+ countries.',
-                fr: 'Un partenaire pour le fret, la fourniture industrielle et le commerce général — dans 30+ pays.',
+                en: 'One partner for maritime supply, chemical manufacturing, lubricants, timber, food products and commercial trade — across Cameroon and the region.',
+                fr: 'Un seul partenaire pour la fourniture maritime, la fabrication de produits chimiques, lubrifiants, bois, produits alimentaires et commerce — au Cameroun et dans la région.',
               })}
             </motion.p>
 

@@ -18,10 +18,10 @@ import {
 } from '@/components/motion/variants';
 
 const statDefs = [
-  { key: 'stat_countries', fallback: '30+',  en: 'Countries', fr: 'Pays' },
-  { key: 'stat_clients',   fallback: '500+', en: 'Clients',   fr: 'Clients' },
-  { key: 'stat_years',     fallback: '5+',   en: 'Years',     fr: 'Années' },
-  { key: 'stat_shipments', fallback: '10K+', en: 'Shipments', fr: 'Expéditions' },
+  { key: 'stat_ports',     fallback: '5+',   en: 'African Ports',   fr: 'Ports Africains' },
+  { key: 'stat_clients',   fallback: '100+', en: 'Active Clients',  fr: 'Clients Actifs' },
+  { key: 'stat_years',     fallback: '5+',   en: 'Years',           fr: 'Années' },
+  { key: 'stat_products',  fallback: '20+',  en: 'Product Lines',   fr: 'Gammes de Produits' },
 ];
 
 const mvvItems = [
@@ -29,21 +29,21 @@ const mvvItems = [
     icon: Target,
     number: '01',
     title: { en: 'Mission', fr: 'Mission' },
-    desc: { en: 'To deliver reliable, efficient, and comprehensive logistics, industrial supply, and trade solutions that empower our clients to compete successfully in global markets.', fr: "Fournir des solutions logistiques, de fournitures industrielles et commerciales fiables qui permettent à nos clients de réussir sur les marchés mondiaux." },
+    desc: { en: 'To deliver reliable maritime supply, chemical manufacturing, lubricant distribution, land transport and general commercial services that empower businesses across Cameroon and the Central African region.', fr: "Fournir des services fiables d'avitaillement maritime, de fabrication chimique, de distribution de lubrifiants, de transport terrestre et de commerce général pour les entreprises au Cameroun et en Afrique Centrale." },
     image: '/images/banner-services.jpg',
   },
   {
     icon: Globe2,
     number: '02',
     title: { en: 'Vision', fr: 'Vision' },
-    desc: { en: 'To become a globally recognized logistics, transit, and industrial solutions company — trusted by businesses across Africa, Europe, the Middle East, Canada, and beyond.', fr: "Devenir une entreprise de logistique, transit et solutions industrielles reconnue à l'échelle mondiale — de confiance pour les entreprises en Afrique, Europe, Moyen-Orient et Canada." },
+    desc: { en: 'To become the leading ship supplier, chemical manufacturer, and industrial commerce company in Cameroon — expanding our reach progressively across Central and West Africa.', fr: "Devenir le principal fournisseur de navires, fabricant de produits chimiques et société de commerce industriel au Cameroun — en étendant progressivement notre présence en Afrique Centrale et de l'Ouest." },
     image: '/images/about-milestone-trade.jpg',
   },
   {
     icon: ShieldCheck,
     number: '03',
     title: { en: 'Values', fr: 'Valeurs' },
-    desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence, Innovation, Global Collaboration — the principles that guide every decision we make.', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle, Innovation, Collaboration Mondiale — les principes qui guident chacune de nos décisions.' },
+    desc: { en: 'Professionalism, Reliability, Integrity, Customer Satisfaction, Operational Excellence and Innovation — the principles that guide every decision we make at LTIC SARL.', fr: 'Professionnalisme, Fiabilité, Intégrité, Satisfaction Client, Excellence Opérationnelle et Innovation — les principes qui guident chacune de nos décisions chez LTIC SARL.' },
     image: '/images/about-milestone-handshake.jpg',
   },
 ];
@@ -109,7 +109,7 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
             className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'A Cameroonian multinational delivering logistics, transit, industrial supply, and global trade solutions across 30+ countries.', fr: 'Un groupe camerounais assurant logistique, transit, fournitures industrielles et solutions commerciales dans plus de 30 pays.' })}
+            {L({ en: 'A Cameroonian company based in Douala — general ship supplier, chemical manufacturer, lubricant distributor, and commercial trader since 2019.', fr: 'Une entreprise camerounaise basée à Douala — fournisseur général de navires, fabricant de produits chimiques, distributeur de lubrifiants et négociant depuis 2019.' })}
           </motion.p>
         </div>
 
@@ -124,20 +124,20 @@ export default function AboutPage() {
                 {L({ en: 'Our Story', fr: 'Notre Histoire' })}
               </p>
               <h2 className="font-bold text-3xl sm:text-4xl tracking-tight mb-5">
-                {L({ en: 'Built for the Demands of Global Commerce', fr: 'Conçu pour les Exigences du Commerce Mondial' })}
+                {L({ en: 'Built on Maritime Expertise & Local Manufacturing', fr: 'Fondé sur l\'Expertise Maritime et la Fabrication Locale' })}
               </h2>
               <p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
-                {L({ en: "LTIC — Logistics and Transit International Company — was incorporated in Douala, Cameroon in 2019 as a SARL to serve a critical need: a reliable partner for logistics, transit, industrial supply, commercial representation, and international trade.", fr: "LTIC — Logistics and Transit International Company — a été constituée à Douala, Cameroun en 2019 en SARL pour répondre à un besoin essentiel : un partenaire fiable en logistique, transit, fourniture industrielle, représentation commerciale et commerce international." })}
+                {L({ en: "LTIC SARL — Logistics and Transit International Company — was founded in Douala, Cameroon in 2019 by John Smith and is led by General Director Vincent de Paul. The company operates as a general ship supplier, maritime logistics provider, and manufacturer of home care, personal care, and sanitation products under the ECOKLIN brand.", fr: "LTIC SARL — Logistics and Transit International Company — a été fondée à Douala, Cameroun en 2019 par John Smith et est dirigée par le Directeur Général Vincent de Paul. La société opère comme fournisseur général de navires, prestataire logistique maritime et fabricant de produits ménagers, soins personnels et assainissement sous la marque ECOKLIN." })}
               </p>
               <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
-                {L({ en: 'From Douala, we operate across Africa, Europe, the Middle East, and Canada — delivering precision logistics, industrial supply, and strategic trade solutions.', fr: "Depuis Douala, nous opérons en Afrique, Europe, Moyen-Orient et Canada — logistique de précision, fournitures industrielles et solutions commerciales stratégiques." })}
+                {L({ en: 'From our headquarters in Akwa, Douala and our PK13 manufacturing plant, we serve the maritime, industrial, and commercial sectors across Cameroon and the Central African region — with plans to expand further across the continent.', fr: "Depuis notre siège social à Akwa, Douala et notre usine de fabrication à PK13, nous servons les secteurs maritime, industriel et commercial au Cameroun et en Afrique Centrale — avec des projets d'expansion sur le continent." })}
               </p>
               <ul className="space-y-3">
                 {[
-                  { en: 'Active in 30+ countries across Africa, Europe, Middle East & Americas', fr: "Actif dans 30+ pays en Afrique, Europe, Moyen-Orient et Amériques" },
-                  { en: 'Specialized in industrial supply chains, timber trade & consulting', fr: "Spécialisé en chaînes d'approvisionnement, commerce du bois et conseil" },
-                  { en: 'Certified partnerships with Total, Shell and major OEM brands', fr: "Partenariats certifiés avec Total, Shell et grandes marques OEM" },
-                  { en: 'Full compliance: phytosanitary treatment & customs documentation', fr: "Conformité complète : traitement phytosanitaire et documentation douanière" },
+                  { en: 'General ship chandling and offshore supply in the Gulf of Guinea', fr: "Avitaillement général des navires et fournitures offshore dans le Golfe de Guinée" },
+                  { en: 'ECOKLIN chemical manufacturing plant at PK13, Douala', fr: "Usine de fabrication ECOKLIN à PK13, Douala" },
+                  { en: 'Authorized distributor of Total and Shell lubricants', fr: "Distributeur agréé de lubrifiants Total et Shell" },
+                  { en: 'Commercial trade: timber, food products, generators, engines & spare parts', fr: "Commerce : bois, produits alimentaires, groupes électrogènes, moteurs et pièces détachées" },
                 ].map((item, i) => (
                   <motion.li key={i} variants={fadeInLeft} initial="hidden" whileInView="show"
                     viewport={viewportOnce} transition={{ delay: i * 0.06 }}
@@ -158,6 +158,58 @@ export default function AboutPage() {
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary" />
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ── LEADERSHIP ──────────────────────────────────────────────────────── */}
+      <section className="bg-muted/20 border-y border-border py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="text-center mb-10">
+            <p className="text-primary font-bold text-[11px] uppercase tracking-[0.32em] mb-2 flex items-center justify-center gap-2.5">
+              <span className="w-5 h-px bg-primary" />
+              {L({ en: 'Our Leadership', fr: 'Notre Direction' })}
+              <span className="w-5 h-px bg-primary" />
+            </p>
+            <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-tight">
+              {L({ en: 'The People Behind LTIC SARL', fr: 'Les Personnes Derrière LTIC SARL' })}
+            </h2>
+          </motion.div>
+
+          <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            {[
+              {
+                name: 'John Smith',
+                role: { en: 'Founder & President', fr: 'Fondateur & Président' },
+                detail: { en: 'Founded LTIC SARL in Douala, Cameroon in 2019.', fr: 'A fondé LTIC SARL à Douala, Cameroun en 2019.' },
+                initials: 'JS',
+              },
+              {
+                name: 'Vincent de Paul',
+                role: { en: 'General Director (DG)', fr: 'Directeur Général (DG)' },
+                detail: { en: 'Leads the day-to-day operations of LTIC SARL Group.', fr: 'Dirige les opérations quotidiennes du Groupe LTIC SARL.' },
+                initials: 'VP',
+              },
+            ].map((person) => (
+              <motion.div key={person.name} variants={scaleIn}
+                className="flex flex-col items-center gap-4 bg-card border border-border rounded-2xl p-6 sm:p-8
+                           hover:border-primary/40 hover:shadow-md transition-all duration-200 text-center">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5
+                                border border-primary/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl font-black text-primary">{person.initials}</span>
+                </div>
+                <div>
+                  <p className="font-bold text-lg text-foreground leading-tight">{person.name}</p>
+                  <span className="inline-block bg-primary/10 text-primary text-[11px] font-semibold
+                                   rounded-full px-3 py-1 mt-1.5 mb-2">
+                    {L(person.role)}
+                  </span>
+                  <p className="text-muted-foreground text-sm">{L(person.detail)}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -546,7 +598,7 @@ export default function AboutPage() {
               {L({ en: 'Ready to Partner with LTIC SARL?', fr: 'Prêt à Collaborer avec LTIC SARL ?' })}
             </h2>
             <p className="text-sidebar-foreground/60 text-sm mt-2">
-              {L({ en: 'Let us show you how our global network transforms your operations.', fr: "Laissez-nous vous montrer comment notre réseau mondial transforme vos opérations." })}
+              {L({ en: 'From ship supply to chemical manufacturing and commercial trade — one partner for all your needs.', fr: "De l'avitaillement maritime à la fabrication chimique et au commerce — un seul partenaire pour tous vos besoins." })}
             </p>
           </motion.div>
           <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}

@@ -10,67 +10,67 @@ import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/comp
 
 const services = [
   {
-    en: 'Logistics & Transit', fr: 'Logistique & Transit',
-    headlineEn: 'End-to-End Global Freight Solutions', headlineFr: 'Solutions de Fret Mondial de Bout en Bout',
-    descEn: 'LTIC SARL manages the complete logistics lifecycle — from freight booking and customs clearance to final-mile delivery across air, sea, and road in 30+ countries.',
-    descFr: "LTIC SARL gère le cycle logistique complet — de la réservation de fret et du dédouanement jusqu'à la livraison finale sur les réseaux aériens, maritimes et routiers dans plus de 30 pays.",
-    image: '/images/logistics-transit.jpg',
-    bulletsEn: ['International freight coordination (air, sea, road)', 'Cargo handling and warehousing', 'Customs clearance and documentation', 'International transit management', 'Last-mile distribution solutions', 'Real-time shipment tracking'],
-    bulletsFr: ['Coordination du fret international (air, mer, route)', 'Manutention et entreposage de marchandises', 'Dédouanement et documentation', 'Gestion du transit international', 'Solutions de distribution dernier kilomètre', 'Suivi en temps réel des expéditions'],
-  },
-  {
-    en: 'Import & Export', fr: 'Import & Export',
-    headlineEn: 'Seamless International Trade Facilitation', headlineFr: 'Facilitation Fluide du Commerce International',
-    descEn: 'We facilitate seamless cross-border transactions with expert compliance management, strategic sourcing, and comprehensive documentation support.',
-    descFr: 'Nous facilitons des transactions transfrontalières fluides avec une gestion experte de la conformité, un sourcing stratégique et un support documentaire complet.',
-    image: '/images/import-export.webp',
-    bulletsEn: ['International trade facilitation', 'Customs coordination and compliance', 'Global sourcing and procurement', 'Trade documentation management', 'Regulatory compliance advisory', 'Strategic market sourcing'],
-    bulletsFr: ['Facilitation du commerce international', 'Coordination douanière et conformité', 'Sourcing mondial et approvisionnement', 'Gestion de la documentation commerciale', 'Conseil en conformité réglementaire', 'Sourcing stratégique de marché'],
-  },
-  {
-    en: 'Industrial Supply', fr: 'Fourniture Industrielle',
-    headlineEn: 'Premium Industrial Products & Materials', headlineFr: 'Produits & Matériaux Industriels Premium',
-    descEn: 'As an authorized distributor for Total, Shell and major OEM brands, we supply certified industrial products directly to your operations anywhere in the world.',
-    descFr: 'En tant que distributeur agréé de Total, Shell et grandes marques OEM, nous fournissons des produits industriels certifiés directement à vos opérations partout dans le monde.',
-    image: '/images/industrial-supply-service.jpg',
-    bulletsEn: ['Industrial generators (diesel, gas, standby power)', 'Lubricants — Total, Shell and leading brands', 'Oil filters and air filters (OEM-grade)', 'Timber and logs (certified tropical species)', 'Heavy industrial materials and equipment', 'Custom industrial procurement'],
-    bulletsFr: ['Générateurs industriels (diesel, gaz, secours)', 'Lubrifiants — Total, Shell et grandes marques', 'Filtres à huile et à air (qualité OEM)', 'Bois et grumes (essences tropicales certifiées)', 'Matériaux industriels lourds et équipements', 'Approvisionnement industriel sur mesure'],
-  },
-  {
-    en: 'Supply Chain Consulting', fr: "Conseil en Chaîne d'Approvisionnement",
-    headlineEn: 'Strategic Logistics Optimization', headlineFr: 'Optimisation Logistique Stratégique',
-    descEn: 'Our consultants bring deep expertise in logistics network design, procurement strategy, and supply chain risk management for complex market environments.',
-    descFr: "Nos consultants apportent une expertise approfondie en conception de réseaux logistiques, stratégie d'approvisionnement et gestion des risques de la chaîne logistique.",
-    image: '/images/service-freight.jpg',
-    bulletsEn: ['Supply chain strategy and design', 'Logistics network optimization', 'Procurement consulting', 'Cost reduction analysis', 'Risk management in trade', 'Operational efficiency consulting'],
-    bulletsFr: ["Stratégie et conception de la chaîne d'approvisionnement", 'Optimisation du réseau logistique', 'Conseil en approvisionnement', 'Analyse de réduction des coûts', 'Gestion des risques commerciaux', 'Conseil en efficacité opérationnelle'],
-  },
-  {
-    en: 'Commercial & Brand Representation', fr: 'Représentation Commerciale & de Marque',
-    headlineEn: 'Your Gateway to New Markets', headlineFr: "Votre Porte d'Entrée vers de Nouveaux Marchés",
-    descEn: 'We connect international brands with local market opportunities through strategic representation, joint ventures, and distribution partnerships.',
-    descFr: 'Nous connectons les marques internationales aux opportunités de marché locales grâce à la représentation stratégique, aux coentreprises et aux partenariats de distribution.',
-    image: '/images/about-milestone-handshake.jpg',
-    bulletsEn: ['Market entry strategy', 'Brand representation in target markets', 'Joint venture facilitation', 'Strategic business partnerships', 'Distribution channel development', 'Trade mission coordination'],
-    bulletsFr: ["Stratégie d'entrée sur le marché", 'Représentation de marque sur les marchés cibles', 'Facilitation de coentreprises', 'Partenariats commerciaux stratégiques', 'Développement de canaux de distribution', 'Coordination de missions commerciales'],
-  },
-  {
-    en: 'Phytosanitary Treatment', fr: 'Traitement Phytosanitaire',
-    headlineEn: 'Compliance-First Treatment Services', headlineFr: 'Services de Traitement Axés sur la Conformité',
-    descEn: 'Our certified phytosanitary and sanitation services ensure your timber, agricultural goods, and equipment meet all importing country requirements.',
-    descFr: "Nos services certifiés de traitement phytosanitaire garantissent que votre bois, vos produits agricoles et équipements répondent à toutes les exigences des pays importateurs.",
-    image: '/images/phytosanitary.jpg',
-    bulletsEn: ['Phytosanitary treatment for timber and agricultural goods', 'Industrial sanitation services', 'Regulatory compliance documentation', 'Inspection coordination', 'Treatment certification'],
-    bulletsFr: ['Traitement phytosanitaire pour bois et produits agricoles', "Services d'assainissement industriel", 'Documentation de conformité réglementaire', 'Coordination des inspections', 'Certification de traitement'],
-  },
-  {
-    en: 'Transportation', fr: 'Transport',
-    headlineEn: 'Reliable Multimodal Transportation', headlineFr: 'Transport Multimodal Fiable',
-    descEn: 'From local road freight to international sea and air cargo, LTIC SARL coordinates reliable, cost-effective transportation solutions tailored to your timeline.',
-    descFr: 'Du fret routier local au cargo maritime et aérien international, LTIC SARL coordonne des solutions de transport fiables et économiques adaptées à votre calendrier.',
+    en: 'Land Transport', fr: 'Transport Terrestre',
+    headlineEn: 'Reliable Land Freight Across the Region', headlineFr: 'Transport Terrestre Fiable dans la Région',
+    descEn: 'LTIC SARL provides reliable road freight transportation across Cameroon and the Central African region. From port pickup to final delivery, our fleet coordination keeps your cargo moving on schedule.',
+    descFr: 'LTIC SARL assure le transport routier de marchandises au Cameroun et en Afrique Centrale. De l\'enlèvement au port jusqu\'à la livraison finale, notre coordination de flotte garantit le respect des délais.',
     image: '/images/transportation.jpg',
-    bulletsEn: ['Road freight (local and regional)', 'Air freight coordination', 'Sea freight booking and management', 'Port handling and documentation', 'Fleet coordination for bulk cargo'],
-    bulletsFr: ['Fret routier (local et régional)', 'Coordination du fret aérien', 'Réservation et gestion du fret maritime', 'Manutention portuaire et documentation', 'Coordination de flotte pour fret en vrac'],
+    bulletsEn: ['Road freight within Cameroon and the region', 'Port-to-warehouse delivery', 'Fleet coordination for bulk cargo', 'Cargo handling and documentation', 'Express and scheduled delivery options', 'Refrigerated and specialized transport'],
+    bulletsFr: ['Fret routier au Cameroun et dans la région', 'Livraison port-entrepôt', 'Coordination de flotte pour fret en vrac', 'Manutention et documentation de cargaison', 'Options de livraison express et planifiée', 'Transport réfrigéré et spécialisé'],
+  },
+  {
+    en: 'Chemical Product Manufacturing', fr: 'Production de Produits Chimiques',
+    headlineEn: 'ECOKLIN — Our Own Cleaning & Hygiene Brand', headlineFr: 'ECOKLIN — Notre Marque de Produits de Nettoyage',
+    descEn: 'LTIC SARL manufactures a complete range of home care, personal care, and industrial sanitation products under the ECOKLIN brand at our factory in PK13, Douala. All products are eco-friendly and biodegradable.',
+    descFr: 'LTIC SARL fabrique une gamme complète de produits ménagers, soins personnels et désinfectants industriels sous la marque ECOKLIN, dans notre usine à PK13, Douala. Tous les produits sont écologiques et biodégradables.',
+    image: '/images/industrial-supply-service.jpg',
+    bulletsEn: ['Bleach (Eau de Javel)', 'Industrial Degreaser (Dégraissant Industriel)', 'Descaler (Détartrant)', 'Tile Liquid Soap (Savon Liquide Carreaux)', 'Laundry Liquid Soap (Savon Liquide Lessive)', 'Dish Washing Liquid (Savon Liquide Vaisselle)', 'Muriatic Acid and other industrial chemicals'],
+    bulletsFr: ['Eau de Javel', 'Dégraissant Industriel', 'Détartrant', 'Savon Liquide pour Carreaux', 'Savon Liquide pour Lessive', 'Savon Liquide pour Vaisselle', 'Acide Muriatique et autres produits chimiques industriels'],
+  },
+  {
+    en: 'Lubricant Sales & Distribution', fr: 'Commercialisation des Lubrifiants',
+    headlineEn: 'Authorized Distributor — Total, Shell & Leading Brands', headlineFr: 'Distributeur Agréé — Total, Shell et Grandes Marques',
+    descEn: 'LTIC SARL distributes premium lubricants for motors, vessels, and industrial equipment. We supply Total, Shell, and other certified brands across Cameroon and the region — exclusively motor and vessel lubricants, not food-grade oils.',
+    descFr: 'LTIC SARL distribue des lubrifiants premium pour moteurs, navires et équipements industriels. Nous fournissons Total, Shell et autres marques certifiées au Cameroun et dans la région — exclusivement des lubrifiants moteur et marine.',
+    image: '/images/lubricants-oils.jpg',
+    bulletsEn: ['Engine oils and motor lubricants (Total, Shell)', 'Marine and vessel lubricants', 'Hydraulic oils for industrial machinery', 'Gear oils and transmission fluids', 'Greases and specialty lubricants', 'Bulk and packaged supply available'],
+    bulletsFr: ['Huiles moteur et lubrifiants (Total, Shell)', 'Lubrifiants marins et navires', 'Huiles hydrauliques pour machines industrielles', 'Huiles de boîte de vitesses et fluides de transmission', 'Graisses et lubrifiants spéciaux', 'Fourniture en vrac et conditionnée disponible'],
+  },
+  {
+    en: 'Offshore Marine Services', fr: 'Services Offshore & Maritimes',
+    headlineEn: 'General Ship Chandling & Maritime Supply', headlineFr: 'Avitaillement & Fournitures Maritimes',
+    descEn: 'LTIC SARL operates as a general ship supplier and maritime logistics provider, supporting vessels across African ports. We handle ship chandling, spare parts procurement, chemical supply, and sludging services in the Gulf of Guinea.',
+    descFr: 'LTIC SARL opère comme fournisseur général de navires et prestataire logistique maritime, soutenant les navires dans les ports africains. Avitaillement, fourniture de pièces détachées, produits chimiques et services de boues dans le Golfe de Guinée.',
+    image: '/images/logistics-transit.jpg',
+    bulletsEn: ['General ship chandling and provisions', 'Spare parts procurement for vessels', 'Sludging and waste management services', 'Chemical and lubricant supply for ships', 'Bunkering support and coordination', 'Gulf of Guinea port operations'],
+    bulletsFr: ['Avitaillement général et provisions des navires', 'Approvisionnement en pièces détachées', 'Services de boues et gestion des déchets', 'Fourniture de produits chimiques et lubrifiants', 'Support et coordination de bunkering', 'Opérations portuaires dans le Golfe de Guinée'],
+  },
+  {
+    en: 'Logistics Staff Training', fr: 'Formation du Personnel Logistique',
+    headlineEn: 'Build Your Team\'s Logistics Expertise', headlineFr: 'Développez l\'Expertise Logistique de Votre Équipe',
+    descEn: 'LTIC SARL provides professional logistics training programs for personnel in the maritime, customs, transit, and supply chain sectors. Practical, hands-on training delivered by experienced industry professionals.',
+    descFr: 'LTIC SARL propose des programmes de formation professionnelle en logistique pour le personnel des secteurs maritime, douanier, transit et chaîne d\'approvisionnement. Formation pratique dispensée par des professionnels expérimentés.',
+    image: '/images/service-freight.jpg',
+    bulletsEn: ['Freight forwarding fundamentals', 'Customs procedures and documentation', 'Maritime logistics operations', 'Supply chain management', 'Port and terminal operations', 'Safety and compliance training'],
+    bulletsFr: ['Fondamentaux du commissionnement de fret', 'Procédures douanières et documentation', 'Opérations logistiques maritimes', 'Gestion de la chaîne d\'approvisionnement', 'Opérations portuaires et terminales', 'Formation sécurité et conformité'],
+  },
+  {
+    en: 'Commercial Representation', fr: 'Représentation Commerciale',
+    headlineEn: 'Your Gateway to the Cameroonian Market', headlineFr: 'Votre Porte d\'Entrée sur le Marché Camerounais',
+    descEn: 'LTIC SARL represents international brands and companies seeking to enter the Cameroonian and Central African markets. We provide local market intelligence, distribution networks, and on-the-ground business development support.',
+    descFr: 'LTIC SARL représente des marques et entreprises internationales souhaitant s\'implanter sur les marchés camerounais et centrafricains. Nous offrons une connaissance locale du marché, des réseaux de distribution et un appui commercial.',
+    image: '/images/about-milestone-handshake.jpg',
+    bulletsEn: ['Brand representation in Cameroon & Central Africa', 'Distribution channel development', 'Market entry strategy and advisory', 'Joint venture and partnership facilitation', 'Local regulatory and compliance support', 'Trade mission coordination'],
+    bulletsFr: ['Représentation de marque au Cameroun et en Afrique Centrale', 'Développement des canaux de distribution', 'Stratégie et conseil pour l\'entrée sur le marché', 'Facilitation de coentreprises et partenariats', 'Support réglementaire et conformité locale', 'Coordination de missions commerciales'],
+  },
+  {
+    en: 'Vessel Maintenance at Sea', fr: 'Maintenance des Navires en Haute Mer',
+    headlineEn: 'On-Site Technical Support Wherever Your Vessel Is', headlineFr: 'Support Technique sur Site où que soit Votre Navire',
+    descEn: 'LTIC SARL provides professional vessel maintenance and technical support for ships operating in African waters. Our teams deploy on-site to perform inspections, maintenance operations, and emergency interventions at sea.',
+    descFr: 'LTIC SARL assure la maintenance professionnelle des navires et le support technique pour les bateaux opérant dans les eaux africaines. Nos équipes se déploient sur site pour les inspections, opérations de maintenance et interventions d\'urgence en mer.',
+    image: '/images/about-team-maritime.jpg',
+    bulletsEn: ['On-site maintenance and inspection at sea', 'Hull and machinery technical support', 'Spare parts supply and logistics', 'Crew coordination and support', 'Emergency repair intervention', 'Compliance and certification support'],
+    bulletsFr: ['Maintenance et inspection sur site en mer', 'Support technique coque et machines', 'Fourniture de pièces détachées et logistique', 'Coordination et soutien de l\'équipage', 'Intervention d\'urgence pour réparations', 'Support conformité et certification'],
   },
 ];
 
@@ -97,7 +97,7 @@ export default function ServicesPage() {
             </span>
           </motion.div>
           <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
-            {L({ en: 'Full-Spectrum Business Solutions', fr: "Solutions d'Affaires Complètes" }).split(' ').map((word, wi) => (
+            {L({ en: 'Seven Services, One Company.', fr: 'Sept Services, Une Seule Entreprise.' }).split(' ').map((word, wi) => (
               <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
                 <motion.span
                   className="inline-block"
@@ -114,7 +114,7 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
             className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'From freight coordination to industrial supply and strategic consulting — excellence across every dimension of global commerce.', fr: "De la coordination du fret aux fournitures industrielles et au conseil stratégique — l'excellence dans toutes les dimensions du commerce mondial." })}
+            {L({ en: 'From land transport and chemical manufacturing to offshore marine, lubricant distribution, logistics training, commercial representation, and vessel maintenance.', fr: 'Du transport terrestre et la fabrication de produits chimiques aux services offshore, lubrifiants, formation logistique, représentation commerciale et maintenance des navires.' })}
           </motion.p>
         </div>
 
