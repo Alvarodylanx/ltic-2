@@ -41,7 +41,7 @@ const services = [
     headlineEn: 'General Ship Chandling & Maritime Supply', headlineFr: 'Avitaillement & Fournitures Maritimes',
     descEn: 'LTIC SARL operates as a general ship supplier and maritime logistics provider, supporting vessels across African ports. We handle ship chandling, spare parts procurement, chemical supply, and sludging services in the Gulf of Guinea.',
     descFr: 'LTIC SARL opère comme fournisseur général de navires et prestataire logistique maritime, soutenant les navires dans les ports africains. Avitaillement, fourniture de pièces détachées, produits chimiques et services de boues dans le Golfe de Guinée.',
-    image: '/images/logistics-transit.jpg',
+    image: '/images/offshore-port-supply.jpg',
     bulletsEn: ['General ship chandling and provisions', 'Spare parts procurement for vessels', 'Sludging and waste management services', 'Chemical and lubricant supply for ships', 'Bunkering support and coordination', 'Gulf of Guinea port operations'],
     bulletsFr: ['Avitaillement général et provisions des navires', 'Approvisionnement en pièces détachées', 'Services de boues et gestion des déchets', 'Fourniture de produits chimiques et lubrifiants', 'Support et coordination de bunkering', 'Opérations portuaires dans le Golfe de Guinée'],
   },
