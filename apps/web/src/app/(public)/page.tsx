@@ -271,53 +271,172 @@ interface ProductCategoryCardProps {
 
 const catalogEase = [0.16, 1, 0.3, 1] as const;
 
-const rowVariant = {
-  hidden: { opacity: 0, y: 48 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.65, ease: catalogEase } },
-};
-
-const catalogStagger = {
-  hidden: {},
-  show:   { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
-};
-
 function ProductCategoryCard({ en, fr, image, slug }: ProductCategoryCardProps) {
   const { L } = useLanguage();
   const prefersReduced = useReducedMotion() ?? false;
 
   return (
-    <motion.div
-      variants={rowVariant}
-      className="flex-shrink-0 flex flex-col items-center"
-      whileHover={prefersReduced ? {} : { y: -5 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
+    <Link
+      href={`/products?category=${slug}`}
+      className="flex flex-col items-center gap-3 group outline-none select-none"
+      draggable={false}
     >
-      <Link
-        href={`/products?category=${slug}`}
-        className="flex flex-col items-center gap-3 group outline-none"
-      >
-        {/* Circle image */}
-        <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden relative
-                        ring-2 ring-border group-hover:ring-primary shadow-md
-                        transition-all duration-250 ease-out">
-          <Image
-            src={image}
-            alt={L({ en, fr })}
-            fill
-            className={`object-cover object-center ${prefersReduced ? '' : 'transition-transform duration-350 ease-out group-hover:scale-108'}`}
-            suppressHydrationWarning
-          />
-          {/* gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
-          {/* name on circle */}
-          <div className="absolute bottom-0 left-0 right-0 px-2 pb-3 text-center">
-            <span className="text-white font-semibold text-[11px] sm:text-xs leading-tight drop-shadow-sm">
-              {L({ en, fr })}
-            </span>
-          </div>
+      {/* Circle */}
+      <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden relative
+                      ring-2 ring-border/50 group-hover:ring-primary
+                      shadow-md group-hover:shadow-xl group-hover:shadow-primary/15
+                      transition-all duration-300 ease-out">
+        <Image
+          src={image}
+          alt={L({ en, fr })}
+          fill
+          className={`object-cover object-center ${prefersReduced ? '' : 'transition-transform duration-500 ease-out group-hover:scale-110'}`}
+          draggable={false}
+        />
+        {/* gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent
+                        group-hover:from-black/75 transition-all duration-300" />
+        {/* name */}
+        <div className="absolute bottom-0 left-0 right-0 px-3 pb-4 text-center">
+          <span className="text-white font-semibold text-[11px] sm:text-xs leading-snug drop-shadow-md">
+            {L({ en, fr })}
+          </span>
         </div>
-      </Link>
-    </motion.div>
+      </div>
+    </Link>
+  );
+}
+
+// ─── CategoryCarousel ─────────────────────────────────────────────────────────
+
+function CategoryCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [arrows, setArrows] = useState({ left: false, right: true });
+
+  function sync() {
+    const el = trackRef.current;
+    if (!el) return;
+    setArrows({
+      left:  el.scrollLeft > 8,
+      right: el.scrollLeft < el.scrollWidth - el.clientWidth - 8,
+    });
+  }
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    sync();
+    el.addEventListener('scroll', sync, { passive: true });
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    return () => { el.removeEventListener('scroll', sync); ro.disconnect(); };
+  }, []);
+
+  const scroll = (dir: 'left' | 'right') =>
+    trackRef.current?.scrollBy({ left: dir === 'left' ? -320 : 320, behavior: 'smooth' });
+
+  return (
+    <div className="relative">
+      {/* ── Scroll track ───────────────────────────────────────────────────── */}
+      <div
+        ref={trackRef}
+        className="flex flex-row gap-5 sm:gap-7 lg:gap-9 overflow-x-auto scrollbar-hide
+                   px-4 sm:px-6 lg:px-8 py-5"
+        style={{ scrollSnapType: 'x mandatory', cursor: 'grab' }}
+        onMouseDown={e => { (e.currentTarget as HTMLDivElement).style.cursor = 'grabbing'; }}
+        onMouseUp={e =>   { (e.currentTarget as HTMLDivElement).style.cursor = 'grab'; }}
+        onMouseLeave={e =>{ (e.currentTarget as HTMLDivElement).style.cursor = 'grab'; }}
+      >
+        {productCategories.map((cat, i) => (
+          <motion.div
+            key={cat.en}
+            className="flex-shrink-0"
+            style={{ scrollSnapAlign: 'start' }}
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: catalogEase, delay: i * 0.06 }}
+          >
+            <ProductCategoryCard {...cat} index={i} />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ── Left fade + arrow ──────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {arrows.left && (
+          <motion.div
+            key="arrow-left"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="absolute left-0 top-0 bottom-0 flex items-center pointer-events-none"
+          >
+            <div className="absolute inset-y-0 left-0 w-24
+                            bg-gradient-to-r from-muted/95 via-muted/60 to-transparent" />
+            <button
+              onClick={() => scroll('left')}
+              className="relative z-10 ml-2 w-10 h-10 rounded-full
+                         bg-white/90 backdrop-blur-sm shadow-lg
+                         border border-border/70 hover:border-primary/50
+                         flex items-center justify-center
+                         text-foreground/70 hover:text-primary
+                         transition-all duration-200 ease-out
+                         hover:scale-105 active:scale-95
+                         pointer-events-auto"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Right fade + arrow ─────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {arrows.right && (
+          <motion.div
+            key="arrow-right"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="absolute right-0 top-0 bottom-0 flex items-center justify-end pointer-events-none"
+          >
+            <div className="absolute inset-y-0 right-0 w-24
+                            bg-gradient-to-l from-muted/95 via-muted/60 to-transparent" />
+            <button
+              onClick={() => scroll('right')}
+              className="relative z-10 mr-2 w-10 h-10 rounded-full
+                         bg-white/90 backdrop-blur-sm shadow-lg
+                         border border-border/70 hover:border-primary/50
+                         flex items-center justify-center
+                         text-foreground/70 hover:text-primary
+                         transition-all duration-200 ease-out
+                         hover:scale-105 active:scale-95
+                         pointer-events-auto"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Dot indicators ─────────────────────────────────────────────────── */}
+      <div className="flex justify-center gap-1.5 mt-1 pb-1">
+        {productCategories.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              const el = trackRef.current;
+              if (!el) return;
+              const items = el.children;
+              (items[i] as HTMLElement)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }}
+            className="w-1.5 h-1.5 rounded-full bg-border hover:bg-primary transition-colors duration-200"
+            aria-label={`Go to category ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -865,18 +984,7 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          <motion.div
-            variants={catalogStagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={viewportOnce}
-            className="flex flex-row gap-5 sm:gap-6 lg:gap-8 overflow-x-auto pb-3
-                       scrollbar-hide justify-start lg:justify-center"
-          >
-            {productCategories.map((cat, i) => (
-              <ProductCategoryCard key={cat.en} {...cat} index={i} />
-            ))}
-          </motion.div>
+          <CategoryCarousel />
         </div>
       </section>
 
