@@ -23,7 +23,7 @@ const services = [
     headlineEn: 'ECOKLIN — Our Own Cleaning & Hygiene Brand', headlineFr: 'ECOKLIN — Notre Marque de Produits de Nettoyage',
     descEn: 'LTIC SARL manufactures a complete range of home care, personal care, and industrial sanitation products under the ECOKLIN brand at our factory in PK13, Douala. All products are eco-friendly and biodegradable.',
     descFr: 'LTIC SARL fabrique une gamme complète de produits ménagers, soins personnels et désinfectants industriels sous la marque ECOKLIN, dans notre usine à PK13, Douala. Tous les produits sont écologiques et biodégradables.',
-    image: '/images/industrial-supply-service.jpg',
+    image: '/images/ecoklin-factory.jpg',
     bulletsEn: ['Bleach (Eau de Javel)', 'Industrial Degreaser (Dégraissant Industriel)', 'Descaler (Détartrant)', 'Tile Liquid Soap (Savon Liquide Carreaux)', 'Laundry Liquid Soap (Savon Liquide Lessive)', 'Dish Washing Liquid (Savon Liquide Vaisselle)', 'Muriatic Acid and other industrial chemicals'],
     bulletsFr: ['Eau de Javel', 'Dégraissant Industriel', 'Détartrant', 'Savon Liquide pour Carreaux', 'Savon Liquide pour Lessive', 'Savon Liquide pour Vaisselle', 'Acide Muriatique et autres produits chimiques industriels'],
   },
