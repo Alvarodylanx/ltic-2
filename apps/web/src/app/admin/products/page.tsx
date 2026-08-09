@@ -319,8 +319,18 @@ export default function AdminProductsPage() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => api.delete(`/api/products/${id}`),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-products'] }); toast.success('Product deleted'); setDeleteId(null); },
-    onError: () => toast.error('Failed to delete'),
+    onMutate: async (id) => {
+      await qc.cancelQueries({ queryKey: ['admin-products'] });
+      const prev = qc.getQueryData<any[]>(['admin-products']);
+      qc.setQueryData<any[]>(['admin-products'], (old) => old?.filter((p) => p.id !== id) ?? []);
+      return { prev };
+    },
+    onSuccess: () => { toast.success('Product deleted'); setDeleteId(null); },
+    onError: (_err, _id, ctx) => {
+      if (ctx?.prev) qc.setQueryData(['admin-products'], ctx.prev);
+      toast.error('Failed to delete');
+    },
+    onSettled: () => { qc.invalidateQueries({ queryKey: ['admin-products'] }); },
   });
 
   const filtered = (products || []).filter((p) => {
