@@ -100,6 +100,7 @@ const features = [
     image:   '/images/ecoklin-products.jpg',
     tag:     { en: 'ECOKLIN', fr: 'ECOKLIN' },
     href:    '/products',
+    contain: true,
   },
   {
     label:   { en: 'Timber & Natural Resources', fr: 'Bois & Ressources Naturelles' },
@@ -201,9 +202,10 @@ interface FeatureBlockProps {
   tag:     { en: string; fr: string };
   href:    string;
   reverse?: boolean;
+  contain?: boolean;
 }
 
-function FeatureBlock({ label, heading, body, image, tag, href, reverse }: FeatureBlockProps) {
+function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain }: FeatureBlockProps) {
   const { L } = useLanguage();
   return (
     <motion.div
@@ -216,12 +218,12 @@ function FeatureBlock({ label, heading, body, image, tag, href, reverse }: Featu
                   ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}
     >
       {/* Image */}
-      <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-lg">
+      <div className={`relative rounded-2xl overflow-hidden aspect-[4/3] shadow-lg ${contain ? 'bg-white' : ''}`}>
         <Image
           src={image}
           alt={L(label)}
           fill
-          className="object-cover transition-transform duration-700 hover:scale-105"
+          className={`${contain ? 'object-contain p-4' : 'object-cover'} transition-transform duration-700 hover:scale-105`}
           sizes="(max-width: 1024px) 100vw, 50vw"
         />
         <span className="absolute top-4 left-4 bg-primary text-primary-foreground
