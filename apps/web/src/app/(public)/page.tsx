@@ -97,7 +97,7 @@ const features = [
     label:   { en: 'ECOKLIN — Made in Douala',   fr: 'ECOKLIN — Fabriqué à Douala' },
     heading: { en: 'Our Own Brand.\nOur Own Factory.', fr: 'Notre Marque.\nNotre Usine.' },
     body:    { en: 'LTIC SARL manufactures cleaning and hygiene products under the ECOKLIN brand at our PK13 factory in Douala — bleach, degreasers, liquid soaps, muriatic acid and more. Eco-friendly, biodegradable, and distributed across African countries.', fr: 'LTIC SARL fabrique des produits de nettoyage et d\'hygiène sous la marque ECOKLIN dans notre usine à PK13, Douala — javel, dégraissants, savons liquides, acide muriatique et plus. Écologiques, biodégradables et distribués dans les pays africains.' },
-    image:   '/images/industrial-supply.jpg',
+    image:   '/images/ecoklin-products.jpg',
     tag:     { en: 'ECOKLIN', fr: 'ECOKLIN' },
     href:    '/products',
   },
