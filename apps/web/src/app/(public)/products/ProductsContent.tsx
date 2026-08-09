@@ -39,7 +39,11 @@ const lineExpand = {
 export default function ProductsPage() {
   const { L } = useLanguage();
   const searchParams = useSearchParams();
+  const categorySlugParam = searchParams.get('category');
+
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
+  // true once we've resolved the URL category param (or there is none)
+  const [categoryResolved, setCategoryResolved] = useState(!categorySlugParam);
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
@@ -68,27 +72,28 @@ export default function ProductsPage() {
     queryFn: () => api.get('/api/categories'),
   });
 
-  // Initialize category filter from URL param (?category=<slug> or ?category=<id>)
+  // Resolve URL ?category= param once categories are available
   useEffect(() => {
     if (!categories) return;
     const param = searchParams.get('category');
-    if (!param) return;
-    const byId = categories.find(c => String(c.id) === param);
-    const bySlug = categories.find(c => c.slug === param);
-    const match = byId ?? bySlug;
+    if (!param) { setCategoryResolved(true); return; }
+    const match = categories.find(c => String(c.id) === param) ?? categories.find(c => c.slug === param);
     if (match) setSelectedCategory(match.id);
+    setCategoryResolved(true);
   }, [categories, searchParams]);
 
-  // Fetch all products; filter client-side so grouped view works without extra requests
+  // Fetch products — server-side filtered by category when one is selected
   const { data: allProducts, isLoading, isError, refetch } = useQuery<any[]>({
-    queryKey: ['products', 'all', debouncedSearch],
+    queryKey: ['products', selectedCategory ?? 'all', debouncedSearch],
     queryFn: () => {
       const params = new URLSearchParams();
       if (debouncedSearch) params.set('search', debouncedSearch);
+      if (selectedCategory) params.set('categoryId', String(selectedCategory));
       const q = params.toString();
       return api.get(`/api/products${q ? `?${q}` : ''}`);
     },
-    enabled: mounted,
+    // Block until URL category param is resolved so we never flash all products
+    enabled: mounted && categoryResolved,
     retry: 2,
   });
 
@@ -97,13 +102,10 @@ export default function ProductsPage() {
     [categories]
   );
 
-  const products = useMemo(() => {
-    if (!allProducts) return [];
-    if (selectedCategory) return allProducts.filter(p => p.categoryId === selectedCategory);
-    return allProducts;
-  }, [allProducts, selectedCategory]);
+  // Products are already server-filtered; just use them directly
+  const products = useMemo(() => allProducts ?? [], [allProducts]);
 
-  // Group by category when "All Products" is selected and no search
+  // Group by category only when showing everything (no filter, no search)
   const groupedByCategory = useMemo(() => {
     if (selectedCategory || debouncedSearch || !allProducts) return null;
     const map = new Map<number, { name: string; products: any[] }>();
