@@ -29,14 +29,14 @@ const mvvItems = [
     icon: Target,
     number: '01',
     title: { en: 'Mission', fr: 'Mission' },
-    desc: { en: 'To deliver reliable maritime supply, chemical manufacturing, lubricant distribution, land transport and general commercial services that empower businesses across Cameroon and the Central African region.', fr: "Fournir des services fiables d'avitaillement maritime, de fabrication chimique, de distribution de lubrifiants, de transport terrestre et de commerce général pour les entreprises au Cameroun et en Afrique Centrale." },
+    desc: { en: 'To deliver reliable maritime supply, chemical manufacturing, lubricant distribution, land transport and general commercial services that empower businesses across Central Africa and beyond.', fr: "Fournir des services fiables d'avitaillement maritime, de fabrication chimique, de distribution de lubrifiants, de transport terrestre et de commerce général pour les entreprises en Afrique Centrale et au-delà." },
     image: '/images/banner-services.jpg',
   },
   {
     icon: Globe2,
     number: '02',
     title: { en: 'Vision', fr: 'Vision' },
-    desc: { en: 'To become the leading ship supplier, chemical manufacturer, and industrial commerce company in Cameroon — expanding our reach progressively across Central and West Africa.', fr: "Devenir le principal fournisseur de navires, fabricant de produits chimiques et société de commerce industriel au Cameroun — en étendant progressivement notre présence en Afrique Centrale et de l'Ouest." },
+    desc: { en: 'To become a leading ship supplier, chemical manufacturer, and industrial commerce company across Central and West Africa — growing our reach country by country.', fr: "Devenir un acteur majeur de l'avitaillement maritime, de la fabrication chimique et du commerce industriel en Afrique Centrale et de l'Ouest — en développant notre présence pays par pays." },
     image: '/images/about-milestone-trade.jpg',
   },
   {
@@ -130,7 +130,7 @@ export default function AboutPage() {
                 {L({ en: "LTIC SARL — Logistics and Transit International Company — was founded in Douala, Cameroon in 2019 by John Smith and is led by General Director Vincent de Paul. The company operates as a general ship supplier, maritime logistics provider, and manufacturer of home care, personal care, and sanitation products under the ECOKLIN brand.", fr: "LTIC SARL — Logistics and Transit International Company — a été fondée à Douala, Cameroun en 2019 par John Smith et est dirigée par le Directeur Général Vincent de Paul. La société opère comme fournisseur général de navires, prestataire logistique maritime et fabricant de produits ménagers, soins personnels et assainissement sous la marque ECOKLIN." })}
               </p>
               <p className="text-muted-foreground mb-8 leading-relaxed text-sm sm:text-base">
-                {L({ en: 'From our headquarters in Akwa, Douala and our PK13 manufacturing plant, we serve the maritime, industrial, and commercial sectors across Cameroon and the Central African region — with plans to expand further across the continent.', fr: "Depuis notre siège social à Akwa, Douala et notre usine de fabrication à PK13, nous servons les secteurs maritime, industriel et commercial au Cameroun et en Afrique Centrale — avec des projets d'expansion sur le continent." })}
+                {L({ en: 'From our headquarters in Akwa, Douala and our PK13 manufacturing plant, we serve the maritime, industrial, and commercial sectors across Central Africa and neighboring countries — with plans to expand further across the continent.', fr: "Depuis notre siège social à Akwa, Douala et notre usine de fabrication à PK13, nous servons les secteurs maritime, industriel et commercial en Afrique Centrale et dans les pays voisins — avec des projets d'expansion sur le continent." })}
               </p>
               <ul className="space-y-3">
                 {[

@@ -12,11 +12,11 @@ const services = [
   {
     en: 'Land Transport', fr: 'Transport Terrestre',
     headlineEn: 'Reliable Land Freight Across the Region', headlineFr: 'Transport Terrestre Fiable dans la Région',
-    descEn: 'LTIC SARL provides reliable road freight transportation across Cameroon and the Central African region. From port pickup to final delivery, our fleet coordination keeps your cargo moving on schedule.',
-    descFr: 'LTIC SARL assure le transport routier de marchandises au Cameroun et en Afrique Centrale. De l\'enlèvement au port jusqu\'à la livraison finale, notre coordination de flotte garantit le respect des délais.',
+    descEn: 'LTIC SARL provides reliable road freight transportation across Central Africa and neighboring countries. From port pickup to final delivery, our fleet coordination keeps your cargo moving on schedule.',
+    descFr: 'LTIC SARL assure le transport routier de marchandises en Afrique Centrale et dans les pays voisins. De l\'enlèvement au port jusqu\'à la livraison finale, notre coordination de flotte garantit le respect des délais.',
     image: '/images/transportation.jpg',
-    bulletsEn: ['Road freight within Cameroon and the region', 'Port-to-warehouse delivery', 'Fleet coordination for bulk cargo', 'Cargo handling and documentation', 'Express and scheduled delivery options', 'Refrigerated and specialized transport'],
-    bulletsFr: ['Fret routier au Cameroun et dans la région', 'Livraison port-entrepôt', 'Coordination de flotte pour fret en vrac', 'Manutention et documentation de cargaison', 'Options de livraison express et planifiée', 'Transport réfrigéré et spécialisé'],
+    bulletsEn: ['Road freight across Central Africa and neighboring countries', 'Port-to-warehouse delivery', 'Fleet coordination for bulk cargo', 'Cargo handling and documentation', 'Express and scheduled delivery options', 'Refrigerated and specialized transport'],
+    bulletsFr: ['Fret routier en Afrique Centrale et pays voisins', 'Livraison port-entrepôt', 'Coordination de flotte pour fret en vrac', 'Manutention et documentation de cargaison', 'Options de livraison express et planifiée', 'Transport réfrigéré et spécialisé'],
   },
   {
     en: 'Chemical Product Manufacturing', fr: 'Production de Produits Chimiques',
@@ -30,8 +30,8 @@ const services = [
   {
     en: 'Lubricant Sales & Distribution', fr: 'Commercialisation des Lubrifiants',
     headlineEn: 'Authorized Distributor — Total, Shell & Leading Brands', headlineFr: 'Distributeur Agréé — Total, Shell et Grandes Marques',
-    descEn: 'LTIC SARL distributes premium lubricants for motors, vessels, and industrial equipment. We supply Total, Shell, and other certified brands across Cameroon and the region — exclusively motor and vessel lubricants, not food-grade oils.',
-    descFr: 'LTIC SARL distribue des lubrifiants premium pour moteurs, navires et équipements industriels. Nous fournissons Total, Shell et autres marques certifiées au Cameroun et dans la région — exclusivement des lubrifiants moteur et marine.',
+    descEn: 'LTIC SARL distributes premium lubricants for motors, vessels, and industrial equipment. We supply Total, Shell, and other certified brands across Central Africa and beyond — exclusively motor and vessel lubricants, not food-grade oils.',
+    descFr: 'LTIC SARL distribue des lubrifiants premium pour moteurs, navires et équipements industriels. Nous fournissons Total, Shell et autres marques certifiées en Afrique Centrale et au-delà — exclusivement des lubrifiants moteur et marine.',
     image: '/images/lubricants-oils.jpg',
     bulletsEn: ['Engine oils and motor lubricants (Total, Shell)', 'Marine and vessel lubricants', 'Hydraulic oils for industrial machinery', 'Gear oils and transmission fluids', 'Greases and specialty lubricants', 'Bulk and packaged supply available'],
     bulletsFr: ['Huiles moteur et lubrifiants (Total, Shell)', 'Lubrifiants marins et navires', 'Huiles hydrauliques pour machines industrielles', 'Huiles de boîte de vitesses et fluides de transmission', 'Graisses et lubrifiants spéciaux', 'Fourniture en vrac et conditionnée disponible'],
@@ -60,8 +60,8 @@ const services = [
     descEn: 'LTIC SARL represents international brands and companies seeking to enter the Cameroonian and Central African markets. We provide local market intelligence, distribution networks, and on-the-ground business development support.',
     descFr: 'LTIC SARL représente des marques et entreprises internationales souhaitant s\'implanter sur les marchés camerounais et centrafricains. Nous offrons une connaissance locale du marché, des réseaux de distribution et un appui commercial.',
     image: '/images/about-milestone-handshake.jpg',
-    bulletsEn: ['Brand representation in Cameroon & Central Africa', 'Distribution channel development', 'Market entry strategy and advisory', 'Joint venture and partnership facilitation', 'Local regulatory and compliance support', 'Trade mission coordination'],
-    bulletsFr: ['Représentation de marque au Cameroun et en Afrique Centrale', 'Développement des canaux de distribution', 'Stratégie et conseil pour l\'entrée sur le marché', 'Facilitation de coentreprises et partenariats', 'Support réglementaire et conformité locale', 'Coordination de missions commerciales'],
+    bulletsEn: ['Brand representation across Central Africa and beyond', 'Distribution channel development', 'Market entry strategy and advisory', 'Joint venture and partnership facilitation', 'Local regulatory and compliance support', 'Trade mission coordination'],
+    bulletsFr: ['Représentation de marque en Afrique Centrale et au-delà', 'Développement des canaux de distribution', 'Stratégie et conseil pour l\'entrée sur le marché', 'Facilitation de coentreprises et partenariats', 'Support réglementaire et conformité locale', 'Coordination de missions commerciales'],
   },
   {
     en: 'Vessel Maintenance at Sea', fr: 'Maintenance des Navires en Haute Mer',

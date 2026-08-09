@@ -67,7 +67,7 @@ const heroSlides = [
   {
     tag:   { en: 'Commerce & Trade',     fr: 'Commerce & Négoce' },
     lines: { en: 'WE SUPPLY\nYOUR WORLD.',        fr: 'NOUS FOURNISSONS\nVOTRE MONDE.' },
-    sub:   { en: 'Lubricants, timber, food products, generators, engines and spare parts — commercial supply across Cameroon and the region.', fr: 'Lubrifiants, bois, produits alimentaires, groupes électrogènes, moteurs et pièces — fourniture commerciale au Cameroun et dans la région.' },
+    sub:   { en: 'Lubricants, timber, food products, generators, engines and spare parts — commercial supply across Central Africa and beyond.', fr: 'Lubrifiants, bois, produits alimentaires, groupes électrogènes, moteurs et pièces — fourniture commerciale en Afrique Centrale et au-delà.' },
     cta1:  { label: { en: 'Our Products',      fr: 'Nos Produits' },      href: '/products' },
     cta2:  { label: { en: 'Contact Us',        fr: 'Nous Contacter' },    href: '/contact' },
     image: '/images/hero-slide-3.jpg',
@@ -83,7 +83,7 @@ const heroSlides = [
 ];
 
 const services = [
-  { icon: Truck,          en: 'Land Transport',                 fr: 'Transport Terrestre',              descEn: 'Road freight across Cameroon and the Central African region — from port pickup to final delivery.',      descFr: 'Fret routier au Cameroun et en Afrique Centrale — de l\'enlèvement au port à la livraison finale.' },
+  { icon: Truck,          en: 'Land Transport',                 fr: 'Transport Terrestre',              descEn: 'Road freight across Central Africa and neighboring countries — from port pickup to final delivery.',      descFr: 'Fret routier en Afrique Centrale et pays voisins — de l\'enlèvement au port à la livraison finale.' },
   { icon: Factory,        en: 'Chemical Manufacturing',         fr: 'Production de Produits Chimiques', descEn: 'ECOKLIN — our own brand of cleaning and industrial hygiene products manufactured at our PK13 factory.',   descFr: 'ECOKLIN — notre marque de produits de nettoyage et d\'hygiène industrielle, fabriqués à PK13.' },
   { icon: Droplets,       en: 'Lubricant Distribution',         fr: 'Commercialisation des Lubrifiants', descEn: 'Authorized distributor of Total and Shell lubricants for motors, vessels and industrial equipment.',      descFr: 'Distributeur agréé de lubrifiants Total et Shell pour moteurs, navires et équipements industriels.' },
   { icon: Ship,           en: 'Offshore Marine Services',       fr: 'Services Offshore & Maritimes',    descEn: 'General ship chandling, spare parts, sludging and full maritime supply across African ports.',            descFr: 'Avitaillement des navires, pièces détachées, services de boues et fournitures maritimes dans les ports africains.' },
@@ -96,7 +96,7 @@ const features = [
   {
     label:   { en: 'ECOKLIN — Made in Douala',   fr: 'ECOKLIN — Fabriqué à Douala' },
     heading: { en: 'Our Own Brand.\nOur Own Factory.', fr: 'Notre Marque.\nNotre Usine.' },
-    body:    { en: 'LTIC SARL manufactures cleaning and hygiene products under the ECOKLIN brand at our PK13 factory in Douala — bleach, degreasers, liquid soaps, muriatic acid and more. Eco-friendly, biodegradable and produced in Cameroon.', fr: 'LTIC SARL fabrique des produits de nettoyage et d\'hygiène sous la marque ECOKLIN dans notre usine à PK13, Douala — javel, dégraissants, savons liquides, acide muriatique et plus. Écologiques, biodégradables et fabriqués au Cameroun.' },
+    body:    { en: 'LTIC SARL manufactures cleaning and hygiene products under the ECOKLIN brand at our PK13 factory in Douala — bleach, degreasers, liquid soaps, muriatic acid and more. Eco-friendly, biodegradable, and distributed across African countries.', fr: 'LTIC SARL fabrique des produits de nettoyage et d\'hygiène sous la marque ECOKLIN dans notre usine à PK13, Douala — javel, dégraissants, savons liquides, acide muriatique et plus. Écologiques, biodégradables et distribués dans les pays africains.' },
     image:   '/images/industrial-supply.jpg',
     tag:     { en: 'ECOKLIN', fr: 'ECOKLIN' },
     href:    '/products',
@@ -112,7 +112,7 @@ const features = [
   {
     label:   { en: 'Commerce & Supply',          fr: 'Commerce & Fourniture' },
     heading: { en: 'Products Your\nBusiness Needs.', fr: 'Les Produits Dont\nVotre Entreprise a Besoin.' },
-    body:    { en: 'Generators, engines and spare parts, food and agricultural products, lubricants, and maritime supplies — LTIC SARL sources and supplies across Cameroon and the Central African region.', fr: 'Groupes électrogènes, moteurs et pièces détachées, produits alimentaires et agricoles, lubrifiants et fournitures maritimes — LTIC SARL approvisionne le Cameroun et la région centrafricaine.' },
+    body:    { en: 'Generators, engines and spare parts, food and agricultural products, lubricants, and maritime supplies — LTIC SARL sources and supplies across Central Africa and neighboring countries.', fr: 'Groupes électrogènes, moteurs et pièces détachées, produits alimentaires et agricoles, lubrifiants et fournitures maritimes — LTIC SARL approvisionne l\'Afrique Centrale et les pays voisins.' },
     image:   '/images/general-commerce.jpg',
     tag:     { en: 'Commerce', fr: 'Commerce' },
     href:    '/products',
@@ -1010,8 +1010,8 @@ export default function HomePage() {
                 {spotlightData
                   ? (language === 'fr' ? spotlightData.subBodyFr : spotlightData.subBodyEn)
                   : L({
-                      en: 'Available in Douala and across Cameroon. Wholesale and retail supply for businesses and distributors.',
-                      fr: 'Disponible à Douala et dans tout le Cameroun. Fourniture en gros et en détail pour entreprises et distributeurs.',
+                      en: 'Available across Central Africa and neighboring countries. Wholesale and retail supply for businesses and distributors.',
+                      fr: 'Disponible en Afrique Centrale et dans les pays voisins. Fourniture en gros et en détail pour entreprises et distributeurs.',
                     })
                 }
               </p>
@@ -1269,8 +1269,8 @@ export default function HomePage() {
             <motion.p variants={fadeInUp}
               className="text-white/90 text-lg max-w-lg mx-auto mb-10 leading-relaxed">
               {L({
-                en: 'One partner for maritime supply, chemical manufacturing, lubricants, timber, food products and commercial trade — across Cameroon and the region.',
-                fr: 'Un seul partenaire pour la fourniture maritime, la fabrication de produits chimiques, lubrifiants, bois, produits alimentaires et commerce — au Cameroun et dans la région.',
+                en: 'One partner for maritime supply, chemical manufacturing, lubricants, timber, food products and commercial trade — across Central Africa and beyond.',
+                fr: 'Un seul partenaire pour la fourniture maritime, la fabrication de produits chimiques, lubrifiants, bois, produits alimentaires et commerce — en Afrique Centrale et au-delà.',
               })}
             </motion.p>
 
