@@ -281,55 +281,41 @@ const catalogStagger = {
   show:   { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
-function ProductCategoryCard({ en, fr, image, tag, slug, index }: ProductCategoryCardProps) {
+function ProductCategoryCard({ en, fr, image, slug }: ProductCategoryCardProps) {
   const { L } = useLanguage();
   const prefersReduced = useReducedMotion() ?? false;
 
   return (
     <motion.div
       variants={rowVariant}
-      whileHover={prefersReduced ? {} : { y: -1 }}
-      transition={{ duration: 0.18, ease: 'easeOut' }}
+      className="flex-shrink-0 flex flex-col items-center"
+      whileHover={prefersReduced ? {} : { y: -5 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
     >
       <Link
         href={`/products?category=${slug}`}
-        className="group flex items-center gap-3 px-3 py-2.5 rounded-xl
-                   border-l-2 border-l-transparent border border-border
-                   hover:border-l-primary hover:border-primary/30 hover:bg-primary/[0.04]
-                   transition-all duration-200 ease-out
-                   focus-visible:ring-2 focus-visible:ring-primary outline-none"
+        className="flex flex-col items-center gap-3 group outline-none"
       >
-        {/* Thumbnail */}
-        <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-muted shadow-sm">
+        {/* Circle image */}
+        <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden relative
+                        ring-2 ring-border group-hover:ring-primary shadow-md
+                        transition-all duration-250 ease-out">
           <Image
             src={image}
-            alt={en}
-            width={40}
-            height={40}
-            className={`w-full h-full object-cover ${prefersReduced ? '' : 'transition-transform duration-300 ease-out group-hover:scale-110'}`}
+            alt={L({ en, fr })}
+            fill
+            className={`object-cover object-center ${prefersReduced ? '' : 'transition-transform duration-350 ease-out group-hover:scale-108'}`}
             suppressHydrationWarning
           />
+          {/* gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+          {/* name on circle */}
+          <div className="absolute bottom-0 left-0 right-0 px-2 pb-3 text-center">
+            <span className="text-white font-semibold text-[11px] sm:text-xs leading-tight drop-shadow-sm">
+              {L({ en, fr })}
+            </span>
+          </div>
         </div>
-
-        {/* Index */}
-        <span className="font-display text-[10px] font-bold text-muted-foreground/30 w-4 flex-shrink-0 tabular-nums select-none group-hover:text-primary/40 transition-colors duration-200">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-
-        {/* Name */}
-        <span className="font-sans font-medium text-sm text-foreground/65 group-hover:text-primary transition-colors duration-200 flex-1 leading-tight">
-          {L({ en, fr })}
-        </span>
-
-        {/* Tag */}
-        <span className="hidden sm:inline-flex text-[10px] font-semibold uppercase tracking-wide
-                         px-2 py-0.5 rounded-full bg-primary/10 text-primary flex-shrink-0
-                         group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-200">
-          {L(tag)}
-        </span>
-
-        {/* Arrow */}
-        <ArrowUpRight suppressHydrationWarning className={`h-3.5 w-3.5 text-muted-foreground/35 group-hover:text-primary flex-shrink-0 transition-all duration-200 ${prefersReduced ? '' : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`} />
       </Link>
     </motion.div>
   );
@@ -884,7 +870,8 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="grid grid-cols-1 md:grid-cols-2 gap-1.5"
+            className="flex flex-row gap-5 sm:gap-6 lg:gap-8 overflow-x-auto pb-3
+                       scrollbar-hide justify-start lg:justify-center"
           >
             {productCategories.map((cat, i) => (
               <ProductCategoryCard key={cat.en} {...cat} index={i} />
