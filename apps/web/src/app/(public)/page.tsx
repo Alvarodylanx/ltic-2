@@ -586,7 +586,7 @@ export default function HomePage() {
                 muted
                 loop
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover object-center"
+                className="absolute inset-0 w-full h-full object-contain object-center"
               >
                 <source src={heroSlides[activeSlide].video} type="video/mp4" />
               </video>
