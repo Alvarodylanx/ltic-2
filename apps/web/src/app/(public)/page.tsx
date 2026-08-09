@@ -15,7 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
 import {
-  fadeInUp, fadeInLeft, fadeInRight, scaleIn,
+  fadeInUp, fadeInLeft, fadeInRight, scaleIn, popIn,
   stagger, staggerFast, viewportOnce,
 } from '@/components/motion/variants';
 
