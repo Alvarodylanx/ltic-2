@@ -24,7 +24,7 @@ export function WhatsAppButton() {
     staleTime: 5 * 60 * 1000,
   });
 
-  const url = settings?.social_whatsapp || 'https://wa.me/2376XXXXXXXX';
+  const url = settings?.social_whatsapp || 'https://wa.me/27640370007';
 
   if (/^\/products\/.+/.test(pathname)) return null;
 

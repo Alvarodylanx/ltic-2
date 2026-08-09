@@ -425,7 +425,7 @@ export default function ProductDetailPage({ initialProduct }: { initialProduct?:
                 <Button asChild size="default"
                   className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white shadow-sm shadow-green-500/20 gap-2 h-11">
                   <a
-                    href={`${settings?.social_whatsapp || 'https://wa.me/2376XXXXXXXX'}?text=${encodeURIComponent(L({ en: `Hi, I'm interested in: ${product.nameEn}`, fr: `Bonjour, je suis intéressé par : ${product.nameFr}` }))}`}
+                    href={`${settings?.social_whatsapp || 'https://wa.me/27640370007'}?text=${encodeURIComponent(L({ en: `Hi, I'm interested in: ${product.nameEn}`, fr: `Bonjour, je suis intéressé par : ${product.nameFr}` }))}`}
                     target="_blank"
                     rel="noopener noreferrer">
                     <WhatsAppIcon />

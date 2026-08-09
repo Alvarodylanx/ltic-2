@@ -21,7 +21,7 @@ const statsFields = [
 const contactFields = [
   { key: 'company_address',  label: 'Address / Adresse',           placeholder: 'Boulevard Hamadou Ahidjo, Akwa, Douala, Cameroon' },
   { key: 'company_phone',    label: 'Phone 1 / Téléphone 1',       placeholder: '+237 699 213 603' },
-  { key: 'company_phone_2',  label: 'Phone 2 / Téléphone 2',       placeholder: '+237 699 213 603' },
+  { key: 'company_phone_2',  label: 'Direct Line / Ligne Directe', placeholder: '+27 736 500 033' },
   { key: 'company_email',    label: 'Email',                        placeholder: 'contact@lticsarl.com' },
   { key: 'company_website',  label: 'Website / Site web',           placeholder: 'www.lticsarl.com' },
 ];
@@ -30,7 +30,7 @@ const socialFields = [
   { key: 'social_facebook',  label: 'Facebook',          placeholder: 'https://facebook.com/lticsarl',         color: 'text-blue-600' },
   { key: 'social_linkedin',  label: 'LinkedIn',          placeholder: 'https://linkedin.com/company/lticsarl', color: 'text-blue-700' },
   { key: 'social_instagram', label: 'Instagram',         placeholder: 'https://instagram.com/lticsarl',        color: 'text-pink-500' },
-  { key: 'social_whatsapp',  label: 'WhatsApp Business', placeholder: 'https://wa.me/2376XXXXXXXX',            color: 'text-green-500' },
+  { key: 'social_whatsapp',  label: 'WhatsApp Business', placeholder: 'https://wa.me/27640370007',            color: 'text-green-500' },
   { key: 'social_tiktok',    label: 'TikTok',            placeholder: 'https://tiktok.com/@lticsarl',          color: 'text-foreground' },
 ];
 

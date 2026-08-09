@@ -58,7 +58,7 @@ const localBusinessLd = {
   alternateName: 'Logistics and Transit International SARL',
   description: 'General ship supply, ECOKLIN chemical manufacturing, lubricant distribution, land transport and maritime logistics services from Douala, Cameroon.',
   url: SITE_URL,
-  telephone: '+237000000000',
+  telephone: '+237699213603',
   email: 'contact@lticsarl.com',
   address: {
     '@type': 'PostalAddress',
