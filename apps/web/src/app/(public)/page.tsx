@@ -71,7 +71,7 @@ const heroSlides = [
     cta1:  { label: { en: 'Our Products',      fr: 'Nos Produits' },      href: '/products' },
     cta2:  { label: { en: 'Contact Us',        fr: 'Nous Contacter' },    href: '/contact' },
     image: '/images/hero-slide-3.jpg',
-    video: '/videos/hero-commerce.mp4',
+    video: '/videos/hero-commerce-v2.mp4',
     theme: {
       tag:      'text-yellow-300',
       tagBg:    'bg-yellow-300',
