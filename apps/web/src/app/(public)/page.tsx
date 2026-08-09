@@ -293,16 +293,17 @@ function ProductCategoryCard({ en, fr, image, slug }: ProductCategoryCardProps) 
           className={`object-cover object-center ${prefersReduced ? '' : 'transition-transform duration-500 ease-out group-hover:scale-110'}`}
           draggable={false}
         />
-        {/* gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent
-                        group-hover:from-black/75 transition-all duration-300" />
-        {/* name */}
-        <div className="absolute bottom-0 left-0 right-0 px-3 pb-4 text-center">
-          <span className="text-white font-semibold text-[11px] sm:text-xs leading-snug drop-shadow-md">
-            {L({ en, fr })}
-          </span>
-        </div>
+        {/* subtle gradient for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent
+                        group-hover:from-black/40 transition-all duration-300" />
       </div>
+
+      {/* Label below the circle — never clipped */}
+      <span className="text-center font-semibold text-xs sm:text-sm text-foreground/80
+                       group-hover:text-primary transition-colors duration-200
+                       leading-snug max-w-[9rem] px-1">
+        {L({ en, fr })}
+      </span>
     </Link>
   );
 }
