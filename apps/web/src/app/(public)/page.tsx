@@ -67,7 +67,7 @@ const heroSlides = [
   {
     tag:   { en: 'Commerce & Trade',     fr: 'Commerce & Négoce' },
     lines: { en: 'WE SUPPLY\nYOUR WORLD.',        fr: 'NOUS FOURNISSONS\nVOTRE MONDE.' },
-    sub:   { en: 'Lubricants, timber, food products, generators, engines and spare parts — commercial supply across Central Africa and beyond.', fr: 'Lubrifiants, bois, produits alimentaires, groupes électrogènes, moteurs et pièces — fourniture commerciale en Afrique Centrale et au-delà.' },
+    sub:   { en: 'Lubricants, timber, food products, generators, engines and spare parts — supplying Chad, RCA, Congo-Brazzaville, Gabon and all regions of Cameroon.', fr: 'Lubrifiants, bois, produits alimentaires, groupes électrogènes, moteurs et pièces — fournitures vers le Tchad, RCA, Congo-Brazzaville, Gabon et toutes les régions du Cameroun.' },
     cta1:  { label: { en: 'Our Products',      fr: 'Nos Produits' },      href: '/products' },
     cta2:  { label: { en: 'Contact Us',        fr: 'Nous Contacter' },    href: '/contact' },
     image: '/images/hero-slide-3.jpg',
@@ -83,7 +83,7 @@ const heroSlides = [
 ];
 
 const services = [
-  { icon: Truck,          en: 'Land Transport',                 fr: 'Transport Terrestre',              descEn: 'Road freight across Central Africa and neighboring countries — from port pickup to final delivery.',      descFr: 'Fret routier en Afrique Centrale et pays voisins — de l\'enlèvement au port à la livraison finale.' },
+  { icon: Truck,          en: 'Land Transport',                 fr: 'Transport Terrestre',              descEn: 'Douala to Chad, RCA, Congo-Brazzaville, Gabon — and full coverage across all 10 regions of Cameroon.',  descFr: 'Douala vers le Tchad, RCA, Congo-Brazzaville, Gabon — et couverture complète des 10 régions du Cameroun.' },
   { icon: Factory,        en: 'Chemical Manufacturing',         fr: 'Production de Produits Chimiques', descEn: 'ECOKLIN — our own brand of cleaning and industrial hygiene products manufactured at our PK13 factory.',   descFr: 'ECOKLIN — notre marque de produits de nettoyage et d\'hygiène industrielle, fabriqués à PK13.' },
   { icon: Droplets,       en: 'Lubricant Distribution',         fr: 'Commercialisation des Lubrifiants', descEn: 'Authorized distributor of Total and Shell lubricants for motors, vessels and industrial equipment.',      descFr: 'Distributeur agréé de lubrifiants Total et Shell pour moteurs, navires et équipements industriels.' },
   { icon: Ship,           en: 'Offshore Marine Services',       fr: 'Services Offshore & Maritimes',    descEn: 'General ship chandling, spare parts, sludging and full maritime supply across African ports.',            descFr: 'Avitaillement des navires, pièces détachées, services de boues et fournitures maritimes dans les ports africains.' },

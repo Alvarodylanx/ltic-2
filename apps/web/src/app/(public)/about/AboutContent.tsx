@@ -137,6 +137,7 @@ export default function AboutPage() {
                   { en: 'General ship chandling and offshore supply in the Gulf of Guinea', fr: "Avitaillement général des navires et fournitures offshore dans le Golfe de Guinée" },
                   { en: 'ECOKLIN chemical manufacturing plant at PK13, Douala', fr: "Usine de fabrication ECOKLIN à PK13, Douala" },
                   { en: 'Authorized distributor of Total and Shell lubricants', fr: "Distributeur agréé de lubrifiants Total et Shell" },
+                  { en: 'Land transport: Douala to Chad, RCA, Congo-Brazzaville, Gabon & all 10 regions of Cameroon', fr: "Transport terrestre : Douala vers le Tchad, RCA, Congo-Brazzaville, Gabon et les 10 régions du Cameroun" },
                   { en: 'Commercial trade: timber, food products, generators, engines & spare parts', fr: "Commerce : bois, produits alimentaires, groupes électrogènes, moteurs et pièces détachées" },
                 ].map((item, i) => (
                   <motion.li key={i} variants={fadeInLeft} initial="hidden" whileInView="show"
@@ -184,20 +185,32 @@ export default function AboutPage() {
                 role: { en: 'Founder & President', fr: 'Fondateur & Président' },
                 detail: { en: 'Founded LTIC SARL in Douala, Cameroon in 2019.', fr: 'A fondé LTIC SARL à Douala, Cameroun en 2019.' },
                 initials: 'JS',
+                photo: '/images/team-john-smith.jpg',
               },
               {
                 name: 'Vincent de Paul',
                 role: { en: 'General Director (DG)', fr: 'Directeur Général (DG)' },
                 detail: { en: 'Leads the day-to-day operations of LTIC SARL Group.', fr: 'Dirige les opérations quotidiennes du Groupe LTIC SARL.' },
                 initials: 'VP',
+                photo: '/images/team-vincent-de-paul.jpg',
               },
             ].map((person) => (
               <motion.div key={person.name} variants={scaleIn}
                 className="flex flex-col items-center gap-4 bg-card border border-border rounded-2xl p-6 sm:p-8
                            hover:border-primary/40 hover:shadow-md transition-all duration-200 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5
+                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5
                                 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xl font-black text-primary">{person.initials}</span>
+                  {person.photo ? (
+                    <Image
+                      src={person.photo}
+                      alt={person.name}
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <span className="text-xl font-black text-primary">{person.initials}</span>
+                  )}
                 </div>
                 <div>
                   <p className="font-bold text-lg text-foreground leading-tight">{person.name}</p>

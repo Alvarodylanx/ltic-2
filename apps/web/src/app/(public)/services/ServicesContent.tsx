@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/components/motion/variants';
@@ -11,12 +11,12 @@ import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/comp
 const services = [
   {
     en: 'Land Transport', fr: 'Transport Terrestre',
-    headlineEn: 'Reliable Land Freight Across Central Africa and Beyond', headlineFr: 'Transport Terrestre Fiable en Afrique Centrale et Au-delà',
-    descEn: 'LTIC SARL provides reliable road freight transportation across Central Africa and neighboring countries. From port pickup to final delivery, our fleet coordination keeps your cargo moving on schedule.',
-    descFr: 'LTIC SARL assure le transport routier de marchandises en Afrique Centrale et dans les pays voisins. De l\'enlèvement au port jusqu\'à la livraison finale, notre coordination de flotte garantit le respect des délais.',
+    headlineEn: 'Douala to Chad, RCA, Congo-Brazzaville, Gabon & All 10 Regions of Cameroon', headlineFr: 'Douala vers le Tchad, RCA, Congo-Brazzaville, Gabon et les 10 Régions du Cameroun',
+    descEn: 'LTIC SARL operates dedicated road freight corridors linking Douala to major Central African capitals — N\'Djamena (Chad), Bangui (Central African Republic), Brazzaville (Congo), and Libreville (Gabon) — while covering all 10 administrative regions of Cameroon for domestic delivery. From port pickup to final destination, our fleet ensures every shipment arrives on time, fully documented and customs-cleared.',
+    descFr: 'LTIC SARL opère des corridors de fret routier dédiés reliant Douala aux grandes capitales d\'Afrique Centrale — N\'Djamena (Tchad), Bangui (République Centrafricaine), Brazzaville (Congo) et Libreville (Gabon) — tout en couvrant les 10 régions administratives du Cameroun pour la livraison intérieure. De l\'enlèvement au port jusqu\'à la destination finale, notre flotte garantit chaque livraison dans les délais avec documentation complète.',
     image: '/images/transportation.jpg',
-    bulletsEn: ['Road freight across Central Africa and neighboring countries', 'Port-to-warehouse delivery', 'Fleet coordination for bulk cargo', 'Cargo handling and documentation', 'Express and scheduled delivery options', 'Refrigerated and specialized transport'],
-    bulletsFr: ['Fret routier en Afrique Centrale et pays voisins', 'Livraison port-entrepôt', 'Coordination de flotte pour fret en vrac', 'Manutention et documentation de cargaison', 'Options de livraison express et planifiée', 'Transport réfrigéré et spécialisé'],
+    bulletsEn: ['Douala – N\'Djamena (Chad): trans-border road freight corridor', 'Douala – Bangui (Central African Republic): commercial & humanitarian supply', 'Douala – Brazzaville (Congo-Brazzaville): cross-border cargo logistics', 'Douala – Libreville (Gabon): international road freight', 'All 10 regions of Cameroon: full domestic delivery coverage', 'Port pickup and door-to-door delivery from Port of Douala', 'Cargo handling, customs clearance and complete documentation'],
+    bulletsFr: ['Douala – N\'Djamena (Tchad) : corridor de fret routier transfrontalier', 'Douala – Bangui (République Centrafricaine) : approvisionnement commercial et humanitaire', 'Douala – Brazzaville (Congo-Brazzaville) : logistique cargo transfrontalière', 'Douala – Libreville (Gabon) : fret routier international', 'Les 10 régions du Cameroun : couverture nationale complète', 'Enlèvement au port et livraison porte-à-porte depuis le Port de Douala', 'Manutention, dédouanement et documentation complète'],
   },
   {
     en: 'Chemical Product Manufacturing', fr: 'Production de Produits Chimiques',
@@ -162,6 +162,69 @@ export default function ServicesPage() {
           </section>
         );
       })}
+
+      {/* ── TRANSPORT COVERAGE MAP ──────────────────────────────────────────── */}
+      <section className="bg-sidebar py-16 sm:py-20 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="text-center mb-10">
+            <p className="text-primary font-bold text-[11px] uppercase tracking-[0.32em] mb-2 flex items-center justify-center gap-2.5">
+              <span className="w-5 h-px bg-primary" />
+              {L({ en: 'Road Freight Coverage', fr: 'Couverture Fret Routier' })}
+              <span className="w-5 h-px bg-primary" />
+            </p>
+            <h2 className="font-bold text-2xl sm:text-3xl tracking-tight text-sidebar-foreground">
+              {L({ en: 'Where We Deliver', fr: 'Là Où Nous Livrons' })}
+            </h2>
+            <p className="text-sidebar-foreground/55 text-sm mt-2 max-w-lg mx-auto leading-relaxed">
+              {L({ en: 'International corridors from the Port of Douala to four Central African countries, plus full domestic coverage across Cameroon.', fr: 'Corridors internationaux depuis le Port de Douala vers quatre pays d\'Afrique Centrale, plus une couverture nationale complète au Cameroun.' })}
+            </p>
+          </motion.div>
+
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {[
+              { flag: '🇹🇩', country: { en: 'Chad',                      fr: 'Tchad' },                       route: 'Douala – N\'Djamena', km: '~1 900 km', type: { en: 'International', fr: 'International' } },
+              { flag: '🇨🇫', country: { en: 'Central African Republic',   fr: 'Rép. Centrafricaine' },          route: 'Douala – Bangui',     km: '~1 500 km', type: { en: 'International', fr: 'International' } },
+              { flag: '🇨🇬', country: { en: 'Congo-Brazzaville',          fr: 'Congo-Brazzaville' },            route: 'Douala – Brazzaville', km: '~900 km',   type: { en: 'International', fr: 'International' } },
+              { flag: '🇬🇦', country: { en: 'Gabon',                      fr: 'Gabon' },                        route: 'Douala – Libreville',  km: '~620 km',   type: { en: 'International', fr: 'International' } },
+              { flag: '🇨🇲', country: { en: 'Cameroon',                   fr: 'Cameroun' },                     route: { en: 'All 10 Regions', fr: '10 Régions' }, km: null, type: { en: 'Domestic',      fr: 'National' } },
+            ].map((dest, i) => (
+              <motion.div
+                key={i}
+                variants={{ hidden: { opacity: 0, y: 40, scale: 0.92 }, show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 90, damping: 14, delay: i * 0.07 } } }}
+                className="group relative bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/50 rounded-2xl p-5 transition-all duration-300 cursor-default">
+                {/* Accent top bar */}
+                <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+
+                <div className="text-3xl mb-3 leading-none">{dest.flag}</div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-1">
+                  {L(dest.type)}
+                </p>
+                <h3 className="font-bold text-sidebar-foreground text-sm sm:text-base leading-tight mb-2">
+                  {L(dest.country)}
+                </h3>
+                <div className="flex items-center gap-1.5 text-sidebar-foreground/50 text-[11px] mb-1">
+                  <MapPin className="h-3 w-3 flex-shrink-0" />
+                  <span>{typeof dest.route === 'string' ? dest.route : L(dest.route)}</span>
+                </div>
+                {dest.km && (
+                  <span className="inline-block text-[10px] font-semibold bg-primary/15 text-primary rounded-full px-2.5 py-0.5 mt-1">
+                    {dest.km}
+                  </span>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="mt-8 text-center">
+            <p className="text-sidebar-foreground/40 text-xs">
+              {L({ en: 'All routes include customs clearance, cargo tracking and full documentation.', fr: 'Tous les corridors incluent le dédouanement, le suivi de la cargaison et la documentation complète.' })}
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
       {/* ── CTA ─────────────────────────────────────────────────────────────── */}
       <section className="bg-foreground py-3 sm:py-20 relative overflow-hidden">
