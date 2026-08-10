@@ -350,41 +350,23 @@ export default function AboutPage() {
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {[
-              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  domain: '',            logo: '/images/bourbon-logo.png' },
-              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            domain: '',            logo: '/images/inyanga-logo.png' },
-              { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            domain: 'alphamarinegroup.net', logo: '' },
-              { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          domain: 'bollore.com', logo: '' },
-              { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'maersk.com',  logo: '' },
-              { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  domain: 'msc.com',     logo: '' },
-              { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           domain: '',            logo: '/images/pasta-logo.png' },
-              { name: 'NEO INDUSTRY S.A',         sector: { en: 'Industry',          fr: 'Industrie' },           domain: '',            logo: '/images/neo-industry-logo.png' },
-              { name: 'MOVIS S.A',                sector: { en: 'Logistics',         fr: 'Logistique' },          domain: '',            logo: '/images/movis-logo.svg' },
-              { name: 'SOLENA SARL',              sector: { en: 'Industry',          fr: 'Industrie' },           domain: 'solena-cm.net', logo: '' },
+              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  logo: '/images/bourbon-logo.png' },
+              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            logo: '/images/inyanga-logo.png' },
+              { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            logo: '/images/alpha-marine-logo.svg' },
+              { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          logo: '/images/bollore-logo.svg' },
+              { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/maersk-logo.svg' },
+              { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/msc-logo.svg' },
+              { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/pasta-logo.png' },
+              { name: 'NEO INDUSTRY S.A',         sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/neo-industry-logo.png' },
+              { name: 'MOVIS S.A',                sector: { en: 'Logistics',         fr: 'Logistique' },          logo: '/images/movis-logo.svg' },
+              { name: 'SOLENA SARL',              sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/solena-logo.svg' },
             ].map((client) => (
               <motion.div key={client.name} variants={scaleIn}
                 className="flex flex-col items-center gap-3 bg-card border border-border rounded-2xl p-4 sm:p-5
                            hover:border-primary/40 hover:shadow-md transition-all duration-200 group text-center">
                 <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0">
-                  {client.logo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={client.logo} alt={client.name} width={40} height={40} className="w-10 h-10 object-contain p-0.5" />
-                  ) : client.domain ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={`https://www.google.com/s2/favicons?domain=${client.domain}&sz=128`}
-                      alt={client.name}
-                      width={28} height={28}
-                      className="w-7 h-7 object-contain"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        const fb = e.currentTarget.nextElementSibling as HTMLElement | null;
-                        if (fb) fb.classList.remove('hidden');
-                      }}
-                    />
-                  ) : null}
-                  <span className={`text-[12px] font-black text-primary leading-none tracking-wide ${client.logo || client.domain ? 'hidden' : ''}`}>
-                    {client.name.slice(0, 2).toUpperCase()}
-                  </span>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={client.logo} alt={client.name} width={40} height={40} className="w-10 h-10 object-contain p-0.5" />
                 </div>
                 <div>
                   <p className="font-bold text-xs sm:text-sm leading-snug text-foreground/75 group-hover:text-primary transition-colors">

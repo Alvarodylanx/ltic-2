@@ -59,7 +59,7 @@ const services = [
     headlineEn: 'Your Gateway to the Cameroonian Market', headlineFr: 'Votre Porte d\'Entrée sur le Marché Camerounais',
     descEn: 'LTIC SARL represents international brands and companies seeking to enter the Cameroonian and Central African markets. We provide local market intelligence, distribution networks, and on-the-ground business development support.',
     descFr: 'LTIC SARL représente des marques et entreprises internationales souhaitant s\'implanter sur les marchés camerounais et centrafricains. Nous offrons une connaissance locale du marché, des réseaux de distribution et un appui commercial.',
-    image: '/images/logistics-training.jpg',
+    image: '/images/commercial-representation.jpeg',
     bulletsEn: ['Brand representation across Central Africa and beyond', 'Distribution channel development', 'Market entry strategy and advisory', 'Joint venture and partnership facilitation', 'Local regulatory and compliance support', 'Trade mission coordination'],
     bulletsFr: ['Représentation de marque en Afrique Centrale et au-delà', 'Développement des canaux de distribution', 'Stratégie et conseil pour l\'entrée sur le marché', 'Facilitation de coentreprises et partenariats', 'Support réglementaire et conformité locale', 'Coordination de missions commerciales'],
   },
