@@ -8,8 +8,9 @@ import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, Droplets,
   Handshake, Package, FileText, Clock, Truck, GraduationCap, Wrench,
-  ChevronLeft, ChevronRight,
+  ChevronLeft, ChevronRight, Calendar, Newspaper,
 } from 'lucide-react';
+import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -599,6 +600,13 @@ export default function HomePage() {
     queryKey: ['products', 'featured'],
     queryFn: () => api.get('/api/products/featured'),
     staleTime: 5 * 60 * 1000,
+  });
+
+  const { data: latestNews, isLoading: newsLoading } = useQuery<any[]>({
+    queryKey: ['news', 'preview'],
+    queryFn: () => api.get('/api/news'),
+    staleTime: 5 * 60 * 1000,
+    select: (data) => Array.isArray(data) ? data.slice(0, 3) : [],
   });
 
 
@@ -1396,7 +1404,211 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ 8. CTA — world map ══════════════════════════════════════════════════ */}
+      {/* ══ 8. LATEST NEWS ══════════════════════════════════════════════════════ */}
+      {(newsLoading || (latestNews && latestNews.length > 0)) && (
+        <section className="bg-background py-12 sm:py-16 border-b border-border overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            {/* Section header */}
+            <motion.div
+              variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="flex items-end justify-between mb-6 sm:mb-8"
+            >
+              <div>
+                <div className="flex items-center gap-2.5 mb-2">
+                  <span className="w-5 h-px bg-primary flex-shrink-0" />
+                  <span className="text-primary font-bold text-[10px] uppercase tracking-[0.32em]">
+                    {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
+                  </span>
+                </div>
+                <h2 className="font-extrabold text-2xl sm:text-3xl text-foreground leading-tight">
+                  {L({ en: 'Latest Updates', fr: 'Dernières Actualités' })}
+                </h2>
+              </div>
+              <Link
+                href="/news"
+                className="flex items-center gap-1.5 text-sm font-semibold text-primary
+                           hover:gap-3 transition-all duration-200 shrink-0"
+              >
+                {L({ en: 'All News', fr: 'Toutes les Actualités' })}
+                <ArrowRight className="h-4 w-4 flex-shrink-0" />
+              </Link>
+            </motion.div>
+
+            {/* Unified container */}
+            <motion.div
+              variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+              className="bg-sidebar rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
+            >
+              {newsLoading ? (
+                /* Skeleton — mirrors the real layout */
+                <div className="grid grid-cols-1 lg:grid-cols-5 h-auto lg:h-[520px]">
+                  <div className="lg:col-span-3 h-56 lg:h-full bg-white/[0.04]
+                                  border-b lg:border-b-0 lg:border-r border-white/[0.08]" />
+                  <div className="lg:col-span-2 flex flex-col">
+                    <div className="flex-1 h-36 lg:h-auto bg-white/[0.06]
+                                    border-b border-white/[0.08]" />
+                    <div className="flex-1 h-36 lg:h-auto bg-white/[0.04]" />
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-5 h-auto lg:h-[520px]">
+
+                  {/* ── Large featured card (left, 60%) ───────────────── */}
+                  {latestNews![0] && (
+                    <Link
+                      href={`/news/${latestNews![0].id}`}
+                      className="lg:col-span-3 relative group overflow-hidden block
+                                 h-72 sm:h-80 lg:h-full
+                                 border-b lg:border-b-0 lg:border-r border-white/[0.08]
+                                 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset outline-none"
+                    >
+                      {/* Background image */}
+                      <Image
+                        src={latestNews![0].imageUrl || '/images/banner-news.jpg'}
+                        alt={L({ en: latestNews![0].titleEn, fr: latestNews![0].titleFr })}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-out
+                                   group-hover:scale-[1.04]"
+                        sizes="(max-width: 1024px) 100vw, 60vw"
+                        priority
+                      />
+                      {/* Cinematic gradient — stronger at bottom */}
+                      <div className="absolute inset-0 bg-gradient-to-t
+                                      from-black/90 via-black/35 to-black/5
+                                      pointer-events-none" />
+                      {/* Subtle left-side ambient glow on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-transparent
+                                      opacity-0 group-hover:opacity-20 transition-opacity duration-500
+                                      pointer-events-none" />
+
+                      {/* Top-left: Featured badge */}
+                      <div className="absolute top-5 left-5 flex items-center gap-2">
+                        <span className="bg-primary text-primary-foreground text-[9px] font-black
+                                         uppercase tracking-[0.25em] px-3 py-1.5 rounded-full
+                                         shadow-lg shadow-primary/30">
+                          {L({ en: 'Featured', fr: 'À la Une' })}
+                        </span>
+                        {latestNews![0].category && (
+                          <span className="bg-white/15 backdrop-blur-sm text-white/90 text-[9px]
+                                           font-semibold uppercase tracking-[0.18em] px-2.5 py-1.5
+                                           rounded-full border border-white/20">
+                            {latestNews![0].category}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Bottom content */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                        {/* Accent rule */}
+                        <div className="w-8 h-0.5 bg-primary rounded-full mb-4
+                                        scale-x-50 origin-left group-hover:scale-x-100
+                                        transition-transform duration-500" />
+                        <h3 className="font-extrabold text-white text-xl sm:text-2xl lg:text-[1.65rem]
+                                       leading-[1.2] mb-3 [text-wrap:balance] max-w-[42ch]">
+                          {L({ en: latestNews![0].titleEn, fr: latestNews![0].titleFr })}
+                        </h3>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5 text-white/50 text-xs">
+                            <Calendar className="h-3 w-3 flex-shrink-0" />
+                            <time dateTime={latestNews![0].publishedAt}>
+                              {format(new Date(latestNews![0].publishedAt), 'dd MMM yyyy')}
+                            </time>
+                          </div>
+                          <span className="flex items-center gap-1.5 text-primary text-xs font-bold
+                                           uppercase tracking-[0.15em]
+                                           group-hover:gap-2.5 transition-all duration-300">
+                            {L({ en: 'Read more', fr: 'Lire plus' })}
+                            <ArrowRight className="h-3.5 w-3.5 flex-shrink-0" />
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  )}
+
+                  {/* ── Two small stacked cards (right, 40%) ──────────── */}
+                  <div className="lg:col-span-2 flex flex-col">
+                    {[latestNews![1], latestNews![2]].filter(Boolean).map((article: any, i: number) => (
+                      <Link
+                        key={article.id}
+                        href={`/news/${article.id}`}
+                        className={`relative group overflow-hidden flex-1 block
+                                   h-48 sm:h-52 lg:h-auto
+                                   ${i === 0 ? 'border-b border-white/[0.08]' : ''}
+                                   focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset outline-none`}
+                      >
+                        {/* Background image */}
+                        <Image
+                          src={article.imageUrl || '/images/banner-news.jpg'}
+                          alt={L({ en: article.titleEn, fr: article.titleFr })}
+                          fill
+                          className="object-cover transition-transform duration-700 ease-out
+                                     group-hover:scale-[1.06]"
+                          sizes="(max-width: 1024px) 100vw, 40vw"
+                        />
+                        {/* Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t
+                                        from-black/85 via-black/40 to-black/10
+                                        pointer-events-none" />
+                        {/* Hover shimmer */}
+                        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/8
+                                        transition-colors duration-500 pointer-events-none" />
+
+                        {/* Category pill — top right */}
+                        {article.category && (
+                          <div className="absolute top-4 right-4">
+                            <span className="bg-primary/90 text-primary-foreground text-[9px] font-bold
+                                             uppercase tracking-[0.18em] px-2.5 py-1 rounded-full
+                                             shadow-md shadow-primary/20">
+                              {article.category}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Bottom content */}
+                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+                          <h3 className="font-bold text-white text-sm sm:text-[0.92rem]
+                                         leading-snug mb-2 line-clamp-2">
+                            {L({ en: article.titleEn, fr: article.titleFr })}
+                          </h3>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5 text-white/45 text-[10px]">
+                              <Calendar className="h-2.5 w-2.5 flex-shrink-0" />
+                              <time dateTime={article.publishedAt}>
+                                {format(new Date(article.publishedAt), 'dd MMM yyyy')}
+                              </time>
+                            </div>
+                            <ArrowRight className="h-3.5 w-3.5 text-primary
+                                                    opacity-0 group-hover:opacity-100
+                                                    translate-x-1 group-hover:translate-x-0
+                                                    transition-all duration-300 flex-shrink-0" />
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+
+                    {/* If only 1 article total, fill the right side with a CTA panel */}
+                    {latestNews!.length === 1 && (
+                      <div className="flex-1 h-48 sm:h-52 lg:h-auto bg-white/[0.04]
+                                      flex flex-col items-center justify-center gap-4 p-6 text-center">
+                        <Newspaper className="h-8 w-8 text-white/20" />
+                        <Link href="/news"
+                          className="text-primary text-sm font-semibold hover:underline">
+                          {L({ en: 'View all articles', fr: 'Voir tous les articles' })}
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+              )}
+            </motion.div>
+
+          </div>
+        </section>
+      )}
+
+      {/* ══ 9. CTA — world map ══════════════════════════════════════════════════ */}
       <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
 
         {/* ── World map image (Natural Earth 110m land, generated from TopoJSON) ── */}
