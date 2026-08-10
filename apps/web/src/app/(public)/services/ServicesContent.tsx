@@ -50,7 +50,7 @@ const services = [
     headlineEn: 'Build Your Team\'s Logistics Expertise', headlineFr: 'Développez l\'Expertise Logistique de Votre Équipe',
     descEn: 'LTIC SARL provides professional logistics training programs for personnel in the maritime, customs, transit, and supply chain sectors. Practical, hands-on training delivered by experienced industry professionals.',
     descFr: 'LTIC SARL propose des programmes de formation professionnelle en logistique pour le personnel des secteurs maritime, douanier, transit et chaîne d\'approvisionnement. Formation pratique dispensée par des professionnels expérimentés.',
-    image: '/images/service-freight.jpg',
+    image: '/images/logistics-training.jpg',
     bulletsEn: ['Freight forwarding fundamentals', 'Customs procedures and documentation', 'Maritime logistics operations', 'Supply chain management', 'Port and terminal operations', 'Safety and compliance training'],
     bulletsFr: ['Fondamentaux du commissionnement de fret', 'Procédures douanières et documentation', 'Opérations logistiques maritimes', 'Gestion de la chaîne d\'approvisionnement', 'Opérations portuaires et terminales', 'Formation sécurité et conformité'],
   },
