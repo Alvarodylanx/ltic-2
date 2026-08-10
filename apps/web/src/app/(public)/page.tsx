@@ -603,18 +603,13 @@ export default function HomePage() {
 
 
   const staticBrands: Partner[] = [
-    { id: 101, name: 'Total Energies',    sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=totalenergies.com&sz=128' },
-    { id: 102, name: 'Shell',             sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: 'https://www.google.com/s2/favicons?domain=shell.com&sz=128' },
-    { id: 103, name: 'CMA CGM',           sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=cma-cgm.com&sz=128' },
-    { id: 104, name: 'DHL',               sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=dhl.com&sz=128' },
-    { id: 105, name: 'Bolloré Logistics', sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: 'https://www.google.com/s2/favicons?domain=bollore.com&sz=128' },
-    { id: 106, name: 'Maersk',            sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=maersk.com&sz=128' },
-    { id: 107, name: 'MSC',               sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: 'https://www.google.com/s2/favicons?domain=msc.com&sz=128' },
-    { id: 108, name: 'Camair-Co',         sectorEn: 'Aviation',  sectorFr: 'Aviation',           logoUrl: '' },
-    { id: 109, name: 'Port de Douala',    sectorEn: 'Port',      sectorFr: 'Port',               logoUrl: '' },
-    { id: 110, name: 'CFAO',              sectorEn: 'Trade',     sectorFr: 'Commerce',           logoUrl: 'https://www.google.com/s2/favicons?domain=cfao.com&sz=128' },
-    { id: 111, name: 'Ciments Cameroun',  sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: '' },
-    { id: 112, name: 'Orange Cameroun',   sectorEn: 'Telecom',   sectorFr: 'Télécoms',           logoUrl: 'https://www.google.com/s2/favicons?domain=orange.cm&sz=128' },
+    { id: 101, name: 'Alpha Marine Group', sectorEn: 'Maritime',  sectorFr: 'Maritime',           logoUrl: '/images/brands/alpha-marine.png' },
+    { id: 102, name: 'Maersk',             sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: '/images/brands/maersk.png' },
+    { id: 103, name: 'MSC',                sectorEn: 'Shipping',  sectorFr: 'Transport Maritime', logoUrl: '/images/brands/msc.png' },
+    { id: 104, name: 'Bolloré',            sectorEn: 'Logistics', sectorFr: 'Logistique',         logoUrl: '/images/brands/bollore.svg' },
+    { id: 105, name: 'Solena',             sectorEn: 'Industry',  sectorFr: 'Industrie',          logoUrl: '/images/brands/solena.jpg' },
+    { id: 106, name: 'Total Energies',     sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: '/images/brands/total.png' },
+    { id: 107, name: 'Shell',              sectorEn: 'Energy',    sectorFr: 'Énergie',            logoUrl: '/images/brands/shell.png' },
   ];
 
   const partners = apiPartners.length > 0 ? apiPartners : staticBrands;
