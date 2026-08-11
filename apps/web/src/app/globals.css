@@ -116,8 +116,8 @@ p, li, a, label, button, input, textarea, select, td, th {
 /* Marquee */
 @keyframes marquee-left  { from { transform: translateX(0) }    to { transform: translateX(-50%) } }
 @keyframes marquee-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
-.marquee-left  { animation: marquee-left  90s linear infinite; will-change: transform; }
-.marquee-right { animation: marquee-right 100s linear infinite; will-change: transform; }
+.marquee-left  { animation: marquee-left  45s linear infinite; will-change: transform; }
+.marquee-right { animation: marquee-right 52s linear infinite; will-change: transform; }
 .marquee-wrap:hover .marquee-left,
 .marquee-wrap:hover .marquee-right { animation-play-state: paused; }
 
@@ -135,9 +135,8 @@ p, li, a, label, button, input, textarea, select, td, th {
 /* Hide ping rings on mobile — 4 simultaneous scale loops are heavy on weak GPUs */
 @media (max-width: 639px) {
   .pin-ring-outer, .pin-ring-mid, .pin-ring-inner, .pin-ring-fill { display: none; }
-  /* Slow the marquee to halve GPU repaint frequency with no visible UX change */
-  .marquee-left  { animation-duration: 180s; }
-  .marquee-right { animation-duration: 200s; }
+  .marquee-left  { animation-duration: 90s; }
+  .marquee-right { animation-duration: 104s; }
 }
 
 @media (prefers-reduced-motion: reduce) {

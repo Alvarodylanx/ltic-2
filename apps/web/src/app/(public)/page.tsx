@@ -1368,10 +1368,10 @@ export default function HomePage() {
         {/* Each row is partners×2 — the CSS -50% translateX loops seamlessly */}
         <div className="marquee-wrap space-y-3 select-none">
           <div className="flex w-max marquee-left">
-            {[...partners, ...partners].map((b, i) => <PartnerCard key={i} b={b} />)}
+            {[...partners, ...partners, ...partners, ...partners].map((b, i) => <PartnerCard key={i} b={b} />)}
           </div>
           <div className="flex w-max marquee-right">
-            {[...partners, ...partners].map((b, i) => <PartnerCard key={i} b={b} />)}
+            {[...partners, ...partners, ...partners, ...partners].map((b, i) => <PartnerCard key={i} b={b} />)}
           </div>
         </div>
         <div className="pointer-events-none absolute left-0 top-0 h-full w-20
