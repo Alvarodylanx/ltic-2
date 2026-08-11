@@ -638,7 +638,7 @@ export default function HomePage() {
     <>
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
-        className="relative h-[52dvh] sm:h-[72dvh] lg:h-[82dvh] min-h-[420px] sm:min-h-[500px] lg:min-h-[560px] overflow-hidden bg-black"
+        className="relative -mt-[62px] h-[calc(52dvh+62px)] sm:h-[calc(72dvh+62px)] lg:h-[calc(82dvh+62px)] min-h-[482px] sm:min-h-[562px] lg:min-h-[622px] overflow-hidden bg-black"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -703,7 +703,7 @@ export default function HomePage() {
         <div className="sm:hidden absolute inset-0 bg-gradient-to-l from-black/65 via-black/20 to-transparent pointer-events-none" />
 
         {/* ── Main content ── */}
-        <div className="relative z-10 h-full flex items-center pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-24">
+        <div className="relative z-10 h-full flex items-center pt-[90px] sm:pt-[100px] lg:pt-[110px] pb-12 sm:pb-16 lg:pb-24">
           <div className="max-w-7xl mx-auto w-full pl-4 pr-2 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               <motion.div
