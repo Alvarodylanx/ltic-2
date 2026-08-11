@@ -23,44 +23,45 @@ export default function NewsPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
-        <Image src="/images/banner-news.jpg" alt="" fill className="object-cover object-center opacity-30" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
+      <section className="relative -mt-[72px] lg:-mt-[80px] h-[calc(42vh+72px)] sm:h-[calc(50vh+72px)] lg:h-[calc(52vh+80px)] min-h-[340px] sm:min-h-[400px] lg:min-h-[460px] overflow-hidden bg-black">
+        <Image src="/images/banner-news.jpg" alt="" fill className="object-cover object-center" priority />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, x: -22 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center justify-center gap-2.5 mb-3">
-            <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
-              {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
-            </span>
-          </motion.div>
-          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
-            {L({ en: 'Industry News & Updates', fr: 'Actualités & Mises à Jour' }).split(' ').map((word, wi) => (
-              <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
-                <motion.span
-                  className="inline-block"
-                  initial={{ y: '112%' }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
-                  {word}
-                </motion.span>
+        <div className="relative z-10 h-full flex items-center pt-[100px] sm:pt-[110px] lg:pt-[128px] pb-10 sm:pb-14">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
+              className="flex items-center justify-center gap-2.5 mb-4">
+              <span className="w-6 h-px bg-primary flex-shrink-0" />
+              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+                {L({ en: 'News & Insights', fr: 'Actualités & Analyses' })}
               </span>
-            ))}
-          </h1>
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informé des dernières évolutions en logistique mondiale, commerce et fournitures industrielles.' })}
-          </motion.p>
+            </motion.div>
+            <h1 className="font-display font-extrabold text-section text-white leading-[0.88] tracking-[-0.02em] mb-4">
+              {L({ en: 'Industry News & Updates', fr: 'Actualités & Mises à Jour' }).split(' ').map((word, wi) => (
+                <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
+                  <motion.span
+                    className="inline-block"
+                    initial={{ y: '112%' }}
+                    animate={{ y: 0 }}
+                    transition={{ duration: 0.58, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: 'easeOut', delay: 0.45 }}
+              className="font-sans text-white/75 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
+              {L({ en: 'Stay informed with the latest developments in global logistics, trade, and industrial supply.', fr: 'Restez informé des dernières évolutions en logistique mondiale, commerce et fournitures industrielles.' })}
+            </motion.p>
+          </div>
         </div>
-
       </section>
 
       {/* ── ARTICLES ────────────────────────────────────────────────────────── */}

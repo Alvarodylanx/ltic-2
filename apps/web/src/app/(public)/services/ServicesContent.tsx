@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight, MapPin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { CheckCircle2, ArrowRight, MapPin, ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { fadeInUp, fadeInLeft, fadeInRight, stagger, viewportOnce } from '@/components/motion/variants';
@@ -76,48 +77,56 @@ const services = [
 
 export default function ServicesPage() {
   const { L } = useLanguage();
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-sidebar flex items-center">
-        <Image src="/images/banner-services.jpg" alt="" fill className="object-cover object-center opacity-30" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar/95 via-sidebar/65 to-sidebar/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar/90 via-sidebar/25 to-transparent" />
+      <section className="relative -mt-[72px] lg:-mt-[80px] h-[calc(42vh+72px)] sm:h-[calc(50vh+72px)] lg:h-[calc(52vh+80px)] min-h-[340px] sm:min-h-[400px] lg:min-h-[460px] overflow-hidden bg-black">
+        <Image src="/images/banner-services.jpg" alt="" fill className="object-cover object-center" priority />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, x: -22 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center justify-center gap-2.5 mb-3">
-            <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
-              {L({ en: 'Our Services', fr: 'Nos Services' })}
-            </span>
-          </motion.div>
-          <h1 className="font-display font-extrabold text-section text-sidebar-foreground leading-[0.88] tracking-[-0.02em] mb-3">
-            {L({ en: 'Seven Services, One Company.', fr: 'Sept Services, Une Seule Entreprise.' }).split(' ').map((word, wi) => (
-              <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
-                <motion.span
-                  className="inline-block"
-                  initial={{ y: '112%' }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
-                  {word}
-                </motion.span>
+        <div className="relative z-10 h-full flex items-center pt-[100px] sm:pt-[110px] lg:pt-[128px] pb-10 sm:pb-14">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
+              className="flex items-center justify-center gap-2.5 mb-4">
+              <span className="w-6 h-px bg-primary flex-shrink-0" />
+              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+                {L({ en: 'Our Services', fr: 'Nos Services' })}
               </span>
-            ))}
-          </h1>
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.48 }}
-            className="font-sans text-sidebar-foreground/90 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
-            {L({ en: 'From land transport and chemical manufacturing to offshore marine, lubricant distribution, logistics training, commercial representation, and vessel maintenance.', fr: 'Du transport terrestre et la fabrication de produits chimiques aux services offshore, lubrifiants, formation logistique, représentation commerciale et maintenance des navires.' })}
-          </motion.p>
+            </motion.div>
+            <h1 className="font-display font-extrabold text-section text-white leading-[0.88] tracking-[-0.02em] mb-4">
+              {L({ en: 'Seven Services, One Company.', fr: 'Sept Services, Une Seule Entreprise.' }).split(' ').map((word, wi) => (
+                <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
+                  <motion.span
+                    className="inline-block"
+                    initial={{ y: '112%' }}
+                    animate={{ y: 0 }}
+                    transition={{ duration: 0.58, ease: [0.16, 1, 0.3, 1], delay: 0.1 + wi * 0.08 }}>
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: 'easeOut', delay: 0.45 }}
+              className="font-sans text-white/75 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
+              {L({ en: 'From land transport and chemical manufacturing to offshore marine, lubricant distribution, logistics training, commercial representation, and vessel maintenance.', fr: 'Du transport terrestre et la fabrication de produits chimiques aux services offshore, lubrifiants, formation logistique, représentation commerciale et maintenance des navires.' })}
+            </motion.p>
+          </div>
         </div>
-
       </section>
 
       {/* ── DETAILED SERVICE SECTIONS ────────────────────────────────────────── */}
@@ -254,6 +263,27 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* ── SCROLL TO TOP ── */}
+      <AnimatePresence>
+        {showTop && (
+          <motion.button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            initial={{ opacity: 0, y: 16, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.8 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+            aria-label="Scroll to top"
+            className="fixed bottom-6 right-6 z-50 flex flex-col items-center justify-center w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-primary/40 hover:bg-primary/90 transition-colors overflow-hidden">
+            {/* Bouncing arrow */}
+            <motion.div
+              animate={{ y: [0, -4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.1, ease: 'easeInOut' }}>
+              <ArrowUp className="h-5 w-5" strokeWidth={2.5} />
+            </motion.div>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </>
   );
 }
