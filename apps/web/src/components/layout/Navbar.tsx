@@ -65,11 +65,6 @@ export function Navbar() {
               ),
         )}
       >
-        {/* Primary accent strip — solid pill only */}
-        {!transparent && (
-          <span className="absolute left-0 top-3.5 bottom-3.5 w-[3px] bg-primary rounded-full" />
-        )}
-
         {/* ── Logo ─────────────────────────────────────────────────── */}
         <Link
           href="/"
