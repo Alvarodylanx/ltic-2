@@ -139,6 +139,28 @@ const orderSteps = [
   { icon: Truck,    num: '04', title: { en: 'Tracked Delivery', fr: 'Livraison Suivie' },       desc: { en: 'Customs, freight and logistics tracked in real time.',   fr: 'Douanes, fret et logistique suivis en temps réel.' },           action: { en: 'Track Shipment', fr: 'Suivre' },            href: '/tracking' },
 ];
 
+// ─── HeroVideo — imperative .play() so mobile browsers don't block autoplay ──
+
+function HeroVideo({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    ref.current?.play().catch(() => {});
+  }, []);
+  return (
+    <video
+      ref={ref}
+      autoPlay
+      muted
+      loop
+      playsInline
+      className="absolute inset-0 w-full h-full object-cover object-center"
+      style={{ filter: 'saturate(1.45) contrast(1.05)' }}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+  );
+}
+
 // ─── WordReveal ───────────────────────────────────────────────────────────────
 
 function WordReveal({ text, className }: { text: string; className?: string }) {
@@ -181,17 +203,20 @@ interface ServiceCardProps {
   en: string; fr: string;
   descEn: string; descFr: string;
   index: number;
+  isMobile?: boolean;
 }
 
-function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardProps) {
+function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index, isMobile }: ServiceCardProps) {
   const { L } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
+  // 3D tilt only on desktop — skip spring instances entirely on mobile
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const rotateX = useSpring(useTransform(my, [-60, 60], [10, -10]), { stiffness: 160, damping: 22 });
   const rotateY = useSpring(useTransform(mx, [-60, 60], [-10, 10]), { stiffness: 160, damping: 22 });
 
   function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (isMobile) return;
     const el = cardRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
@@ -208,7 +233,7 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
         show:   { opacity: 1, y: 0,  scale: 1,
                   transition: { type: 'spring', stiffness: 90, damping: 20, delay: index * 0.07 } },
       }}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      style={isMobile ? {} : { rotateX, rotateY, transformStyle: 'preserve-3d' }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       className="group bg-white border border-border rounded-2xl p-7
@@ -218,10 +243,10 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
       {/* Glow on hover */}
       <div className="absolute inset-0 rounded-2xl bg-primary/0 group-hover:bg-primary/[0.03] transition-colors duration-300 pointer-events-none" />
 
-      {/* Icon */}
+      {/* Icon — floating animation only on desktop (no infinite loops on mobile) */}
       <motion.div
-        animate={{ y: [0, -3, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: index * 0.65 }}
+        animate={isMobile ? {} : { y: [0, -3, 0] }}
+        transition={isMobile ? {} : { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: index * 0.65 }}
         className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5
                    group-hover:bg-primary group-hover:scale-110
                    transition-all duration-300 flex-shrink-0"
@@ -264,13 +289,15 @@ interface FeatureBlockProps {
   href:    string;
   reverse?: boolean;
   contain?: boolean;
+  isMobile?: boolean;
 }
 
-function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain }: FeatureBlockProps) {
+function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain, isMobile }: FeatureBlockProps) {
   const { L } = useLanguage();
   const blockRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: blockRef, offset: ['start end', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['10%', '-10%']);
+  // Disable scroll-driven parallax on mobile — JS scroll handlers cause jank
+  const imgY = useTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['10%', '-10%']);
 
   return (
     <motion.div
@@ -636,6 +663,13 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Preload all hero slide images so they're ready before the carousel reaches them */}
+      <div aria-hidden className="sr-only pointer-events-none">
+        {heroSlides.filter(s => !s.video).map(s => (
+          <Image key={s.image} src={s.image} alt="" fill priority sizes="1px" />
+        ))}
+      </div>
+
       {/* ══ 1. HERO — Carousel ═══════════════════════════════════════════════════ */}
       <section
         className="relative -mt-[72px] lg:-mt-[80px] h-[calc(52dvh+72px)] sm:h-[calc(72dvh+72px)] lg:h-[calc(82dvh+80px)] min-h-[492px] sm:min-h-[572px] lg:min-h-[640px] overflow-hidden bg-black"
@@ -659,24 +693,14 @@ export default function HomePage() {
             }}
           >
             {heroSlides[activeSlide].video ? (
-              <video
-                key={heroSlides[activeSlide].video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover object-center"
-              style={{ filter: 'saturate(1.45) contrast(1.05)' }}
-              >
-                <source src={heroSlides[activeSlide].video} type="video/mp4" />
-              </video>
+              <HeroVideo key={heroSlides[activeSlide].video} src={heroSlides[activeSlide].video!} />
             ) : (
               <Image
                 src={heroSlides[activeSlide].image}
                 alt=""
                 fill
                 className="object-cover object-center"
-                priority={activeSlide === 0}
+                priority
                 sizes="100vw"
               />
             )}
@@ -713,9 +737,9 @@ export default function HomePage() {
               >
                 {/* Tag label */}
                 <motion.div
-                  initial={{ opacity: 0, x: -24 }}
+                  initial={{ opacity: 0, x: isMobile ? 0 : -24 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+                  transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
                   className="flex items-center gap-3 mb-4 sm:mb-8"
                 >
                   <span className={`h-px w-8 flex-shrink-0 ${heroSlides[activeSlide].theme.tagBg}`} />
@@ -762,9 +786,9 @@ export default function HomePage() {
 
                 {/* Subtext */}
                 <motion.p
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: isMobile ? 0 : 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 }}
+                  transition={{ duration: 0.4, ease: 'easeOut', delay: isMobile ? 0.2 : 0.5 }}
                   className={`text-[0.82rem] sm:text-[1.05rem] leading-[1.6] sm:leading-[1.7] mb-5 sm:mb-10 max-w-[36ch] sm:max-w-[42ch] line-clamp-2 sm:line-clamp-none ${heroSlides[activeSlide].theme.sub}`}
                 >
                   {L(heroSlides[activeSlide].sub)}
@@ -772,9 +796,9 @@ export default function HomePage() {
 
                 {/* CTAs */}
                 <motion.div
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: isMobile ? 0 : 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, ease: 'easeOut', delay: 0.66 }}
+                  transition={{ duration: 0.35, ease: 'easeOut', delay: isMobile ? 0.3 : 0.66 }}
                   className="flex flex-row gap-2 sm:gap-3"
                 >
                   <Button asChild size="lg"
@@ -917,6 +941,7 @@ export default function HomePage() {
                 descEn={svc.descEn}
                 descFr={svc.descFr}
                 index={i}
+                isMobile={isMobile}
               />
             ))}
           </motion.div>
@@ -1105,7 +1130,7 @@ export default function HomePage() {
           </motion.div>
 
           {features.map((feat, i) => (
-            <FeatureBlock key={feat.label.en} {...feat} reverse={i % 2 === 1} />
+            <FeatureBlock key={feat.label.en} {...feat} reverse={i % 2 === 1} isMobile={isMobile} />
           ))}
         </div>
       </section>
