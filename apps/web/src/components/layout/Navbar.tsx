@@ -4,18 +4,18 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, Menu, X } from 'lucide-react';
+import { Globe, Menu, X, Info, Briefcase, Package, Navigation, Newspaper, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const navLinks = [
-  { href: '/about',    en: 'About',    fr: 'À Propos' },
-  { href: '/services', en: 'Services', fr: 'Services' },
-  { href: '/products', en: 'Products', fr: 'Produits' },
-  { href: '/tracking', en: 'Tracking', fr: 'Suivi' },
-  { href: '/news',     en: 'News',     fr: 'Actualités' },
-  { href: '/contact',  en: 'Contact',  fr: 'Contact' },
+  { href: '/about',    en: 'About',    fr: 'À Propos',    icon: Info },
+  { href: '/services', en: 'Services', fr: 'Services',    icon: Briefcase },
+  { href: '/products', en: 'Products', fr: 'Produits',    icon: Package },
+  { href: '/tracking', en: 'Tracking', fr: 'Suivi',       icon: Navigation },
+  { href: '/news',     en: 'News',     fr: 'Actualités',  icon: Newspaper },
+  { href: '/contact',  en: 'Contact',  fr: 'Contact',     icon: Phone },
 ];
 
 export function Navbar() {
@@ -171,45 +171,61 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* ── Mobile dropdown — same width as pill ─────────────────────── */}
+      {/* ── Mobile dropdown — compact 2-col grid ────────────────────── */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            initial={{ opacity: 0, y: -8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-5xl mx-auto mt-2 bg-white/80 backdrop-blur-xl rounded-[28px] border border-white/60 shadow-2xl overflow-hidden"
+            exit={{ opacity: 0, y: -8, scale: 0.97 }}
+            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-5xl mx-auto mt-2 bg-white/85 backdrop-blur-xl rounded-[24px] border border-white/60 shadow-2xl shadow-black/10 overflow-hidden"
           >
-            <div className="px-4 py-4 flex flex-col gap-0.5">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    'px-4 py-3 rounded-full text-sm font-medium transition-colors',
-                    isActive(link.href)
-                      ? 'text-foreground bg-muted border-l-2 border-primary'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted',
-                  )}
-                >
-                  {L(link)}
-                </Link>
-              ))}
-              <div className="flex items-center gap-2.5 pt-3 mt-2 border-t border-border">
+            <div className="px-3 pt-3 pb-3">
+              {/* 2-column grid of nav items */}
+              <div className="grid grid-cols-2 gap-1.5">
+                {navLinks.map((link, i) => {
+                  const Icon = link.icon;
+                  const active = isActive(link.href);
+                  return (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.04, duration: 0.18 }}
+                    >
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          'flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all duration-150',
+                          active
+                            ? 'bg-primary text-white shadow-sm shadow-primary/30'
+                            : 'text-foreground/70 hover:text-foreground hover:bg-muted/70',
+                        )}
+                      >
+                        <Icon className={cn('h-3.5 w-3.5 flex-shrink-0', active ? 'text-white' : 'text-primary')} />
+                        {L(link)}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Bottom row: lang + CTA */}
+              <div className="flex items-center gap-2 pt-2.5 mt-2 border-t border-black/[0.06]">
                 <button
                   onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
                   aria-label={language === 'en' ? 'Switch to French' : 'Passer en anglais'}
-                  className="flex items-center gap-1.5 px-4 h-9 border border-border rounded-full text-xs font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+                  className="flex items-center gap-1.5 px-3.5 h-8 border border-border rounded-full text-[11px] font-semibold text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
                 >
-                  <Globe className="h-3.5 w-3.5" />
+                  <Globe className="h-3 w-3" />
                   {language.toUpperCase()}
                 </button>
                 <Button
                   asChild
                   size="sm"
-                  className="font-semibold text-xs px-5 h-9 shadow-sm shadow-primary/20"
+                  className="flex-1 font-semibold text-[11px] h-8 shadow-sm shadow-primary/20 rounded-full"
                 >
                   <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
                 </Button>
