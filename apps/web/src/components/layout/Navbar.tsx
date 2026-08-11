@@ -39,12 +39,12 @@ export function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-50 w-full pt-3 transition-all duration-500"
+      className="sticky top-0 z-50 w-full pt-1.5 lg:pt-3 transition-all duration-500"
     >
       {/* ── Floating glass pill ──────────────────────────────────────── */}
       <div
         className={cn(
-          'relative flex items-center h-[60px] px-4 sm:px-5',
+          'relative flex items-center h-[46px] lg:h-[60px] px-3 sm:px-4 lg:px-5',
           'max-w-5xl mx-auto rounded-full transition-all duration-500',
           'bg-white/70 backdrop-blur-xl border border-white/60',
           scrolled
@@ -62,7 +62,7 @@ export function Navbar() {
           <img
             src="/ltic-logo.png"
             alt="LTIC SARL"
-            className="h-7 w-auto object-contain"
+            className="h-5 lg:h-7 w-auto object-contain"
           />
           <span className="font-bold text-sm leading-none">
             LTIC <span className="text-primary">SARL</span>
@@ -118,7 +118,7 @@ export function Navbar() {
 
         {/* ── Mobile hamburger ─────────────────────────────────────── */}
         <button
-          className="lg:hidden ml-auto p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+          className="lg:hidden ml-auto p-1.5 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
@@ -132,7 +132,7 @@ export function Navbar() {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </motion.div>
           </AnimatePresence>
         </button>
