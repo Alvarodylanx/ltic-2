@@ -58,10 +58,10 @@ export function Navbar() {
           transparent
             ? 'bg-transparent border-transparent shadow-none rounded-none'
             : cn(
-                'bg-white border border-border/70 rounded-full',
+                'bg-white/70 backdrop-blur-xl border border-white/60 rounded-full',
                 scrolled
-                  ? 'shadow-2xl shadow-black/[0.10]'
-                  : 'shadow-lg shadow-black/[0.06]',
+                  ? 'shadow-2xl shadow-black/[0.12]'
+                  : 'shadow-lg shadow-black/[0.07]',
               ),
         )}
       >
@@ -180,7 +180,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-5xl mx-auto mt-2 bg-white rounded-[28px] border border-border shadow-2xl overflow-hidden"
+            className="max-w-5xl mx-auto mt-2 bg-white/80 backdrop-blur-xl rounded-[28px] border border-white/60 shadow-2xl overflow-hidden"
           >
             <div className="px-4 py-4 flex flex-col gap-0.5">
               {navLinks.map((link) => (
