@@ -65,14 +65,14 @@ function QuoteForm() {
           <Label htmlFor="companyName" className="text-xs font-semibold uppercase tracking-wide">
             {L({ en: 'Company Name', fr: "Nom de l'Entreprise" })} *
           </Label>
-          <Input id="companyName" {...register('companyName')} className="mt-1.5 rounded-sm" />
+          <Input id="companyName" {...register('companyName')} className="mt-1.5 rounded-xl" />
           {errors.companyName && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
         </div>
         <div>
           <Label htmlFor="contactName" className="text-xs font-semibold uppercase tracking-wide">
             {L({ en: 'Contact Name', fr: 'Nom du Contact' })} *
           </Label>
-          <Input id="contactName" {...register('contactName')} className="mt-1.5 rounded-sm" />
+          <Input id="contactName" {...register('contactName')} className="mt-1.5 rounded-xl" />
           {errors.contactName && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
         </div>
       </div>
@@ -83,7 +83,7 @@ function QuoteForm() {
         </Label>
         <Controller name="email" control={control}
           render={({ field }) => (
-            <EmailInput id="email" placeholder="you@company.com" className="mt-1.5 rounded-sm" {...field} />
+            <EmailInput id="email" placeholder="you@company.com" className="mt-1.5 rounded-xl" {...field} />
           )} />
         {errors.email && <p className="text-destructive text-xs mt-1">{L({ en: 'Valid email required', fr: 'Email valide requis' })}</p>}
       </div>
@@ -115,7 +115,7 @@ function QuoteForm() {
         <Label htmlFor="productInterest" className="text-xs font-semibold uppercase tracking-wide">
           {L({ en: 'Product / Service of Interest', fr: "Produit / Service d'Intérêt" })} *
         </Label>
-        <Input id="productInterest" {...register('productInterest')} className="mt-1.5 rounded-sm" />
+        <Input id="productInterest" {...register('productInterest')} className="mt-1.5 rounded-xl" />
         {errors.productInterest && <p className="text-destructive text-xs mt-1">{L({ en: 'Required', fr: 'Requis' })}</p>}
       </div>
 
@@ -123,18 +123,18 @@ function QuoteForm() {
         <Label htmlFor="quantity" className="text-xs font-semibold uppercase tracking-wide">
           {L({ en: 'Quantity / Volume', fr: 'Quantité / Volume' })}
         </Label>
-        <Input id="quantity" {...register('quantity')} className="mt-1.5 rounded-sm" />
+        <Input id="quantity" {...register('quantity')} className="mt-1.5 rounded-xl" />
       </div>
 
       <div>
         <Label htmlFor="message" className="text-xs font-semibold uppercase tracking-wide">
           {L({ en: 'Additional Information', fr: 'Informations Supplémentaires' })}
         </Label>
-        <Textarea id="message" {...register('message')} rows={4} className="mt-1.5 rounded-sm" />
+        <Textarea id="message" {...register('message')} rows={4} className="mt-1.5 rounded-xl" />
       </div>
 
       <Button type="submit" size="lg" disabled={isSubmitting}
-        className="w-full font-semibold text-sm rounded-sm">
+        className="w-full font-semibold text-sm rounded-full">
         {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
         {L({ en: 'Submit Quote Request', fr: 'Envoyer la Demande de Devis' })}
       </Button>
@@ -155,7 +155,7 @@ export default function QuotePage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(36vh+46px)] lg:h-[calc(36vh+80px)] min-h-[300px] lg:min-h-[330px] overflow-hidden bg-black">
+      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(24vh+46px)] lg:h-[calc(24vh+80px)] min-h-[220px] lg:min-h-[250px] overflow-hidden bg-black">
         <Image src="/images/banner-quote.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
@@ -191,8 +191,8 @@ export default function QuotePage() {
               {highlights.map(({ icon: Icon, en, fr }, i) => (
                 <motion.div key={en} variants={fadeInLeft} initial="hidden" whileInView="show"
                   viewport={viewportOnce} transition={{ delay: i * 0.06 }}
-                  className="group bg-card border border-border rounded-sm p-4 flex items-start gap-4 hover:border-primary/50 transition-colors duration-200">
-                  <div className="w-9 h-9 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0">
+                  className="group bg-card border border-border rounded-2xl p-4 flex items-start gap-4 hover:border-primary/50 transition-colors duration-200">
+                  <div className="w-9 h-9 rounded-xl bg-foreground flex items-center justify-center flex-shrink-0">
                     <Icon className="h-4 w-4 text-primary" />
                   </div>
                   <p className="font-semibold text-sm leading-relaxed pt-1.5">{L({ en, fr })}</p>
@@ -200,7 +200,7 @@ export default function QuotePage() {
               ))}
 
               <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-                className="bg-card border border-border rounded-sm p-6">
+                className="bg-card border border-border rounded-2xl p-6">
                 <p className="font-semibold text-xs uppercase tracking-[0.2em] text-primary mb-5">
                   {L({ en: 'What happens next?', fr: 'Que se passe-t-il ensuite ?' })}
                 </p>
@@ -212,7 +212,7 @@ export default function QuotePage() {
                     { icon: Truck,        en: 'Confirm the offer — we handle customs, freight, and logistics.', fr: "Confirmez l'offre — nous gérons les douanes, le fret et la logistique." },
                   ].map(({ icon: Icon, en, fr }, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <div className="w-7 h-7 rounded-sm bg-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-7 h-7 rounded-xl bg-foreground flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Icon className="h-3 w-3 text-primary" />
                       </div>
                       <p className="text-xs text-muted-foreground leading-relaxed">{L({ en, fr })}</p>
@@ -224,7 +224,7 @@ export default function QuotePage() {
 
             {/* Form */}
             <motion.div variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
-              className="lg:col-span-2 bg-card border border-border rounded-sm p-6 sm:p-8">
+              className="lg:col-span-2 bg-card border border-border rounded-2xl p-6 sm:p-8">
               <p className="text-primary font-semibold text-xs uppercase tracking-[0.2em] mb-2">
                 {L({ en: 'Quote Details', fr: 'Détails du Devis' })}
               </p>
