@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -56,6 +56,17 @@ const values = [
   { icon: TrendingUp,   en: 'Operational Excellence', fr: 'Excellence Opérationnelle', descEn: 'Relentless pursuit of efficiency, quality, and continuous improvement across all our operations.',                        descFr: "Recherche constante d'efficacité, de qualité et d'amélioration continue dans toutes nos opérations." },
   { icon: Globe2,       en: 'Global Collaboration',   fr: 'Collaboration Mondiale',    descEn: 'Building strong international partnerships to connect businesses with global markets and opportunities.',                   descFr: 'Construire des partenariats internationaux solides pour connecter les entreprises aux marchés mondiaux.' },
 ];
+
+function PartnerLogo({ logo, name }: { logo: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  const onError = useCallback(() => setFailed(true), []);
+  const initials = name.split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+  if (failed) {
+    return <span className="text-[11px] font-extrabold text-primary leading-none">{initials}</span>;
+  }
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={logo} alt={name} width={40} height={40} className="w-10 h-10 object-contain p-0.5" onError={onError} />;
+}
 
 export default function AboutPage() {
   const { L } = useLanguage();
@@ -365,8 +376,7 @@ export default function AboutPage() {
                 className="flex flex-col items-center gap-3 bg-card border border-border rounded-2xl p-4 sm:p-5
                            hover:border-primary/40 hover:shadow-md transition-all duration-200 group text-center">
                 <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={client.logo} alt={client.name} width={40} height={40} className="w-10 h-10 object-contain p-0.5" />
+                  <PartnerLogo logo={client.logo} name={client.name} />
                 </div>
                 <div>
                   <p className="font-bold text-xs sm:text-sm leading-snug text-foreground/75 group-hover:text-primary transition-colors">
