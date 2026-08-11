@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <rect width="80" height="80" rx="8" fill="#6b6b6b"/>
+  <!-- Laurel branches -->
+  <path d="M18 28 Q14 24 16 20 Q20 22 18 28Z" fill="#d4a017"/>
+  <path d="M16 34 Q11 30 13 26 Q17 28 16 34Z" fill="#d4a017"/>
+  <path d="M62 28 Q66 24 64 20 Q60 22 62 28Z" fill="#d4a017"/>
+  <path d="M64 34 Q69 30 67 26 Q63 28 64 34Z" fill="#d4a017"/>
+  <!-- Gold oval badge -->
+  <ellipse cx="40" cy="32" rx="18" ry="16" fill="#e8a020"/>
+  <ellipse cx="40" cy="32" rx="15" ry="13" fill="#f0b830"/>
+  <!-- Figure silhouette -->
+  <circle cx="40" cy="22" r="4" fill="#c07818"/>
+  <path d="M32 38 Q36 28 40 26 Q44 28 48 38 Q44 35 40 36 Q36 35 32 38Z" fill="#c07818"/>
+  <!-- Energy & Quality text -->
+  <text x="40" y="36" font-family="Arial,sans-serif" font-weight="800" font-size="4.5" fill="#8b0000" text-anchor="middle">Energy &amp; Quality</text>
+  <!-- Company name -->
+  <text x="40" y="56" font-family="Arial,sans-serif" font-weight="800" font-size="8" fill="white" text-anchor="middle" letter-spacing="0.5">LA PASTA S.A.</text>
+  <text x="40" y="65" font-family="Arial,sans-serif" font-size="5" fill="#cccccc" text-anchor="middle">Certifiée ISO 9001</text>
+</svg>

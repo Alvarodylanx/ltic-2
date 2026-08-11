@@ -368,7 +368,7 @@ export default function AboutPage() {
               { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          logo: '/images/bollore-logo.svg' },
               { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/maersk-logo.svg' },
               { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/msc-logo.svg' },
-              { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/pasta-logo.png' },
+              { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/pasta-logo.svg' },
               { name: 'NEO INDUSTRY S.A',         sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/neo-industry-logo.png' },
               { name: 'MOVIS S.A',                sector: { en: 'Logistics',         fr: 'Logistique' },          logo: '/images/movis-logo.svg' },
               { name: 'SOLENA SARL',              sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/solena-logo.svg' },

@@ -293,29 +293,35 @@ interface FeatureBlockProps {
   reverse?: boolean;
   contain?: boolean;
   isMobile?: boolean;
+  skip?: boolean;
 }
 
-function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain, isMobile }: FeatureBlockProps) {
+function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain, isMobile, skip }: FeatureBlockProps) {
   const { L } = useLanguage();
   const blockRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: blockRef, offset: ['start end', 'end start'] });
   // Disable scroll-driven parallax on mobile — JS scroll handlers cause jank
   const imgY = useTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['10%', '-10%']);
 
+  // On mobile: start in "show" state so children appear immediately without spring animations
+  const initState = skip ? 'show' : 'hidden';
+
   return (
     <motion.div
       ref={blockRef}
-      initial="hidden"
+      initial={initState}
       whileInView="show"
       viewport={viewportOnce}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } } }}
+      variants={skip
+        ? { hidden: {}, show: {} }
+        : { hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } } }}
       className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center py-16 lg:py-20
                   border-b border-border last:border-b-0
                   ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}
     >
       {/* Image */}
       <motion.div
-        variants={reverse ? fadeInRight : fadeInLeft}
+        variants={skip ? fadeM : (reverse ? fadeInRight : fadeInLeft)}
         className={`relative rounded-2xl overflow-hidden aspect-[4/3] shadow-xl ${contain ? 'bg-white' : ''}`}
       >
         <motion.div style={contain ? {} : { y: imgY }} className="absolute inset-0 scale-[1.15]">
@@ -328,7 +334,7 @@ function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain
           />
         </motion.div>
         <motion.span
-          variants={popIn}
+          variants={skip ? fadeM : popIn}
           className="absolute top-4 left-4 bg-primary text-primary-foreground
                      text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full">
           {L(tag)}
@@ -336,20 +342,22 @@ function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain
       </motion.div>
 
       {/* Copy */}
-      <motion.div variants={reverse ? fadeInLeft : fadeInRight}>
-        <motion.p variants={fadeInUp} className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
+      <motion.div variants={skip ? fadeM : (reverse ? fadeInLeft : fadeInRight)}>
+        <motion.p variants={skip ? fadeM : fadeInUp} className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
           {L(label)}
         </motion.p>
         <motion.h3
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
+          variants={skip ? fadeM : { hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
           className="font-extrabold text-section text-foreground whitespace-pre-line leading-none mb-5"
         >
-          <WordReveal text={L(heading)} />
+          {skip
+            ? <span>{L(heading).split('\n').map((line, i) => <span key={i} className="block">{line}</span>)}</span>
+            : <WordReveal text={L(heading)} />}
         </motion.h3>
-        <motion.p variants={fadeInUp} className="text-muted-foreground text-base leading-relaxed mb-7 max-w-md">
+        <motion.p variants={skip ? fadeM : fadeInUp} className="text-muted-foreground text-base leading-relaxed mb-7 max-w-md">
           {L(body)}
         </motion.p>
-        <motion.div variants={fadeInUp}>
+        <motion.div variants={skip ? fadeM : fadeInUp}>
           <Link
             href={href}
             className="inline-flex items-center gap-2 text-primary font-semibold text-sm
@@ -417,7 +425,7 @@ function ProductCategoryCard({ en, fr, image, slug }: ProductCategoryCardProps) 
 
 // ─── CategoryCarousel ─────────────────────────────────────────────────────────
 
-function CategoryCarousel() {
+function CategoryCarousel({ skip }: { skip?: boolean }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [arrows, setArrows] = useState({ left: false, right: true });
 
@@ -460,10 +468,10 @@ function CategoryCarousel() {
             key={cat.en}
             className="flex-shrink-0"
             style={{ scrollSnapAlign: 'start' }}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: skip ? 0 : 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: catalogEase, delay: i * 0.06 }}
+            transition={{ duration: skip ? 0.2 : 0.5, ease: catalogEase, delay: skip ? 0 : i * 0.06 }}
           >
             <ProductCategoryCard {...cat} index={i} />
           </motion.div>
@@ -903,21 +911,25 @@ export default function HomePage() {
 
           {/* Header */}
           <motion.div
-            initial="hidden" whileInView="show" viewport={viewportOnce}
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
+            initial={skip ? 'show' : 'hidden'} whileInView="show" viewport={viewportOnce}
+            variants={skip
+              ? { hidden: {}, show: {} }
+              : { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
             className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
             <motion.div
-              variants={{ hidden: { opacity: 0, x: -22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } } }}>
+              variants={skip ? fadeM : { hidden: { opacity: 0, x: -22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 160, damping: 26 } } }}>
               <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
                 {L({ en: 'What We Do', fr: 'Ce Que Nous Faisons' })}
               </p>
               <h2 className="font-extrabold text-section text-foreground
                              [text-wrap:balance] max-w-xl whitespace-pre-line">
-                <WordReveal text={L({ en: 'Seven Services,\nOne Reliable Partner.', fr: 'Sept Services,\nUn Partenaire Fiable.' })} />
+                {skip
+                  ? L({ en: 'Seven Services,\nOne Reliable Partner.', fr: 'Sept Services,\nUn Partenaire Fiable.' }).split('\n').map((l, i) => <span key={i} className="block">{l}</span>)
+                  : <WordReveal text={L({ en: 'Seven Services,\nOne Reliable Partner.', fr: 'Sept Services,\nUn Partenaire Fiable.' })} />}
               </h2>
             </motion.div>
             <motion.div
-              variants={{ hidden: { opacity: 0, x: 22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } } }}
+              variants={skip ? fadeM : { hidden: { opacity: 0, x: 22 }, show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 160, damping: 26 } } }}
               className="flex-shrink-0">
               <Button asChild variant="outline"
                 className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary h-11">
@@ -1000,11 +1012,11 @@ export default function HomePage() {
                 : featuredProducts!.slice(0, 7).map((product, idx) => (
                     <motion.div
                       key={product.id}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: skip ? 0 : 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.15 }}
-                      transition={{ duration: 0.42, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                      whileHover={{ y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
+                      transition={{ duration: skip ? 0.22 : 0.42, delay: skip ? 0 : idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={skip ? {} : { y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
                       style={{ height: '100%' }}
                     >
                       <Link
@@ -1068,26 +1080,32 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
             <motion.div
-              initial="hidden" whileInView="show" viewport={viewportOnce}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
+              initial={skip ? 'show' : 'hidden'} whileInView="show" viewport={viewportOnce}
+              variants={skip
+                ? { hidden: {}, show: {} }
+                : { hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
             >
               <motion.p
-                variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: catalogEase } } }}
+                variants={skip
+                  ? fadeM
+                  : { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: catalogEase } } }}
                 className="text-primary font-bold text-[11px] uppercase tracking-[0.28em] mb-1"
               >
                 {L({ en: 'Our Catalog', fr: 'Notre Catalogue' })}
               </motion.p>
               <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-foreground leading-tight overflow-hidden">
-                {L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' }).split(' ').map((word, wi) => (
-                  <span key={wi} className="inline-block overflow-hidden mr-[0.2em] last:mr-0">
-                    <motion.span
-                      className="inline-block"
-                      variants={{ hidden: { y: '110%' }, show: { y: 0, transition: { duration: 0.44, ease: catalogEase } } }}
-                    >
-                      {word}
-                    </motion.span>
-                  </span>
-                ))}
+                {skip
+                  ? L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' })
+                  : L({ en: 'Browse by Category', fr: 'Parcourir par Catégorie' }).split(' ').map((word, wi) => (
+                    <span key={wi} className="inline-block overflow-hidden mr-[0.2em] last:mr-0">
+                      <motion.span
+                        className="inline-block"
+                        variants={{ hidden: { y: '110%' }, show: { y: 0, transition: { duration: 0.44, ease: catalogEase } } }}
+                      >
+                        {word}
+                      </motion.span>
+                    </span>
+                  ))}
               </h2>
             </motion.div>
             <motion.div
@@ -1106,7 +1124,7 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          <CategoryCarousel />
+          <CategoryCarousel skip={skip} />
         </div>
       </section>
 
@@ -1123,19 +1141,21 @@ export default function HomePage() {
           transition={skip ? {} : { duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+          <motion.div variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'} whileInView="show" viewport={viewportOnce}
             className="mb-4">
             <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
               {L({ en: 'Products & Commerce', fr: 'Produits & Commerce' })}
             </p>
             <h2 className="font-extrabold text-section text-foreground
                            [text-wrap:balance] max-w-2xl whitespace-pre-line">
-              <WordReveal text={L({ en: 'A Wide Range of Products,\nAcross Central Africa.', fr: 'Une Large Gamme de Produits,\nDans Toute l\'Afrique Centrale.' })} />
+              {skip
+                ? L({ en: 'A Wide Range of Products,\nAcross Central Africa.', fr: 'Une Large Gamme de Produits,\nDans Toute l\'Afrique Centrale.' }).split('\n').map((l, i) => <span key={i} className="block">{l}</span>)
+                : <WordReveal text={L({ en: 'A Wide Range of Products,\nAcross Central Africa.', fr: 'Une Large Gamme de Produits,\nDans Toute l\'Afrique Centrale.' })} />}
             </h2>
           </motion.div>
 
           {features.map((feat, i) => (
-            <FeatureBlock key={feat.label.en} {...feat} reverse={i % 2 === 1} isMobile={isMobile} />
+            <FeatureBlock key={feat.label.en} {...feat} reverse={i % 2 === 1} isMobile={isMobile} skip={skip} />
           ))}
         </div>
       </section>
@@ -1144,7 +1164,7 @@ export default function HomePage() {
       {(spotlightData?.isActive !== false) && (
       <motion.section
         ref={spotlightRef}
-        style={shouldReduce ? {} : {
+        style={shouldReduce || isMobile ? {} : {
           opacity: smoothExitOpacity,
           y: smoothExitY,
           willChange: 'transform, opacity',
@@ -1186,7 +1206,7 @@ export default function HomePage() {
 
               {/* Glass card */}
               <div className="relative overflow-hidden text-center lg:text-left
-                              bg-white/[0.07] backdrop-blur-md
+                              bg-white/[0.07] sm:backdrop-blur-md
                               border border-white/[0.14]
                               rounded-2xl p-8 lg:p-10
                               shadow-[0_8px_60px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.08)]">

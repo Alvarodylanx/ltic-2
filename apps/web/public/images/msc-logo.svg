@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60">
+  <rect width="120" height="60" fill="white"/>
+  <rect y="44" width="120" height="4" fill="#e30613"/>
+  <text x="60" y="38" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="36" fill="#002868" text-anchor="middle" letter-spacing="2">MSC</text>
+</svg>
