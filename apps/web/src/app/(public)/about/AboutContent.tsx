@@ -86,12 +86,12 @@ export default function AboutPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(36vh+46px)] lg:h-[calc(36vh+80px)] min-h-[300px] lg:min-h-[330px] overflow-hidden bg-black">
+      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(22vh+46px)] lg:h-[calc(26vh+80px)] min-h-[200px] lg:min-h-[250px] overflow-hidden bg-black">
         <Image src="/images/banner-about.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
 
-        <div className="relative z-10 h-full flex items-center pt-[60px] sm:pt-[70px] lg:pt-[100px]">
+        <div className="relative z-10 h-full flex items-center pt-[46px] sm:pt-[52px] lg:pt-[92px]">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0 }}
