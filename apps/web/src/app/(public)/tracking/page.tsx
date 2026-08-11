@@ -75,7 +75,7 @@ function TrackingContent() {
   return (
     <>
       {/* ── HERO with integrated search ─────────────────────────────────────── */}
-      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(22vh+46px)] lg:h-[calc(26vh+80px)] min-h-[200px] lg:min-h-[250px] overflow-hidden bg-black">
+      <section className="relative -mt-[54px] lg:-mt-[80px] h-[calc(22vh+54px)] lg:h-[calc(26vh+80px)] min-h-[200px] lg:min-h-[250px] overflow-hidden bg-black">
         <Image src="/images/hero-slide-1.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />

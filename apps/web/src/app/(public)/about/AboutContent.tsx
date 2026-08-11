@@ -86,7 +86,7 @@ export default function AboutPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(22vh+46px)] lg:h-[calc(26vh+80px)] min-h-[200px] lg:min-h-[250px] overflow-hidden bg-black">
+      <section className="relative -mt-[54px] lg:-mt-[80px] h-[calc(22vh+54px)] lg:h-[calc(26vh+80px)] min-h-[200px] lg:min-h-[250px] overflow-hidden bg-black">
         <Image src="/images/banner-about.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />

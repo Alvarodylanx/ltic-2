@@ -51,7 +51,7 @@ export function Navbar() {
       {/* ── Floating glass pill ──────────────────────────────────────── */}
       <div
         className={cn(
-          'relative flex items-center h-10 lg:h-[60px] px-2.5 sm:px-4 lg:px-5',
+          'relative flex items-center h-12 lg:h-[60px] px-2.5 sm:px-4 lg:px-5',
           'max-w-5xl mx-auto rounded-full transition-all duration-500',
           'bg-white border border-black/[0.06]',
           scrolled
