@@ -43,7 +43,12 @@ export function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-50 px-3 sm:px-5 lg:px-8 pt-3"
+      className={cn(
+        'sticky top-0 z-50 transition-all duration-500',
+        transparent
+          ? 'px-0 pt-0'               /* flush — no gap, no page-bg showing through */
+          : 'px-3 sm:px-5 lg:px-8 pt-3', /* floating pill with side + top margin */
+      )}
     >
       {/* ── Floating pill ─────────────────────────────────────────────── */}
       <div
@@ -51,8 +56,8 @@ export function Navbar() {
           'relative flex items-center h-[62px] px-4 sm:px-5',
           'transition-all duration-500',
           transparent
-            /* homepage at top: fully invisible — hero shows through */
-            ? 'bg-transparent border-transparent shadow-none rounded-[28px]'
+            /* homepage at top: fully invisible, edge-to-edge — hero shows through completely */
+            ? 'bg-transparent border-transparent shadow-none rounded-none px-4 sm:px-6 lg:px-8'
             /* scrolled / other pages: white rounded pill */
             : cn(
                 'bg-white border border-border/70 rounded-[28px]',
