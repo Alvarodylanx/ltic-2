@@ -362,12 +362,12 @@ export default function AboutPage() {
           <motion.div variants={staggerFast} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {[
-              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  logo: '/images/bourbon-logo.png' },
-              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            logo: '/images/inyanga-logo.png' },
-              { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            logo: '/images/alpha-marine-logo.svg' },
-              { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          logo: '/images/bollore-logo.svg' },
-              { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/maersk-logo.svg' },
-              { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/msc-logo.svg' },
+              { name: 'Bourbon Offshore Marine', sector: { en: 'Marine Services',  fr: 'Services Maritimes' },  logo: '/images/brands/bourbon-offshore.png' },
+              { name: 'Inyanga Maritime',         sector: { en: 'Maritime',          fr: 'Maritime' },            logo: '/images/brands/inyanga-maritime.png' },
+              { name: 'Alpha Marine',             sector: { en: 'Maritime',          fr: 'Maritime' },            logo: '/images/brands/alpha-marine.png' },
+              { name: 'Bolloré Africa',           sector: { en: 'Logistics',         fr: 'Logistique' },          logo: '/images/brands/bollore.svg' },
+              { name: 'Maersk',                   sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/brands/maersk.png' },
+              { name: 'MSC',                      sector: { en: 'Shipping',          fr: 'Transport Maritime' },  logo: '/images/brands/msc.png' },
               { name: 'PASTA S.A',                sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/pasta-logo.svg' },
               { name: 'NEO INDUSTRY S.A',         sector: { en: 'Industry',          fr: 'Industrie' },           logo: '/images/neo-industry-logo.png' },
               { name: 'MOVIS S.A',                sector: { en: 'Logistics',         fr: 'Logistique' },          logo: '/images/movis-logo.svg' },
