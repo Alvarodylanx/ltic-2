@@ -53,9 +53,10 @@ export function Navbar() {
         className={cn(
           'relative flex items-center h-[46px] lg:h-[60px] px-3 sm:px-4 lg:px-5',
           'max-w-5xl mx-auto rounded-full transition-all duration-500',
+          'bg-white border border-black/[0.06]',
           scrolled
-            ? 'bg-white/92 backdrop-blur-xl border border-white/60 shadow-2xl shadow-black/[0.12]'
-            : 'bg-white border border-black/[0.06] shadow-lg shadow-black/[0.10]',
+            ? 'shadow-2xl shadow-black/[0.14]'
+            : 'shadow-lg shadow-black/[0.08]',
         )}
       >
         {/* ── Logo ─────────────────────────────────────────────────── */}
