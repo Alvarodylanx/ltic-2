@@ -328,7 +328,9 @@ export default function ProductsPage() {
                 {groupedByCategory ? (
                   /* Grouped sections */
                   <div className="space-y-14">
-                    {Array.from(groupedByCategory.entries()).map(([catId, { name: catName, products: catProducts }]) => (
+                    {Array.from(groupedByCategory.entries())
+                    .sort(([aId], [bId]) => (aId === 2 ? -1 : bId === 2 ? 1 : 0))
+                    .map(([catId, { name: catName, products: catProducts }]) => (
                       <div key={catId}>
                         {/* Animated category header */}
                         <motion.div
