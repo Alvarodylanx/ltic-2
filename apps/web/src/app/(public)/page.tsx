@@ -204,9 +204,9 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
     <motion.div
       ref={cardRef}
       variants={{
-        hidden: { opacity: 0, y: 90, scale: 0.78 },
+        hidden: { opacity: 0, y: 48, scale: 0.92 },
         show:   { opacity: 1, y: 0,  scale: 1,
-                  transition: { type: 'spring', stiffness: 85, damping: 13, delay: index * 0.08 } },
+                  transition: { type: 'spring', stiffness: 90, damping: 20, delay: index * 0.07 } },
       }}
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
       onMouseMove={onMove}
@@ -220,8 +220,8 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index }: ServiceCardP
 
       {/* Icon */}
       <motion.div
-        animate={{ y: [0, -4, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.4 }}
+        animate={{ y: [0, -3, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: index * 0.65 }}
         className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5
                    group-hover:bg-primary group-hover:scale-110
                    transition-all duration-300 flex-shrink-0"
@@ -862,13 +862,13 @@ export default function HomePage() {
         {/* Floating orbs */}
         <motion.div
           className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/6 blur-3xl pointer-events-none"
-          animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.8, 0.5] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          animate={{ scale: [1, 1.07, 1], opacity: [0.5, 0.72, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute bottom-0 -left-32 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none"
-          animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          animate={{ scale: [1.04, 1, 1.04], opacity: [0.4, 0.62, 0.4] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
