@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Loader2, Package, AlertCircle, MapPin, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -74,24 +75,26 @@ function TrackingContent() {
   return (
     <>
       {/* ── HERO with integrated search ─────────────────────────────────────── */}
-      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
-        <motion.div
-          animate={{ scale: [1, 1.12, 1], opacity: [0.2, 0.35, 0.2] }}
-          transition={{ repeat: Infinity, duration: 8 }}
-          className="absolute left-1/4 top-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative h-[36vh] min-h-[280px] sm:min-h-[320px] overflow-hidden bg-black flex items-center">
+        <Image src="/images/hero-slide-1.jpg" alt="" fill className="object-cover object-center" priority />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
 
         <motion.div variants={stagger} initial="hidden" animate="show"
-          className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.p variants={fadeInUp}
-            className="text-primary font-display font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-            {L({ en: 'Real-Time Tracking', fr: 'Suivi en Temps Réel' })}
-          </motion.p>
+          className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div variants={fadeInUp}
+            className="flex items-center justify-center gap-2.5 mb-4">
+            <span className="w-6 h-px bg-primary flex-shrink-0" />
+            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+              {L({ en: 'Real-Time Tracking', fr: 'Suivi en Temps Réel' })}
+            </span>
+          </motion.div>
           <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-4">
+            className="font-display font-bold text-section text-white leading-none mb-3">
             {L({ en: 'Track Your Shipment', fr: 'Suivre Votre Expédition' })}
           </motion.h1>
           <motion.p variants={fadeInUp}
-            className="text-sidebar-foreground/70 text-base sm:text-lg mb-10 max-w-md mx-auto leading-relaxed">
+            className="text-white/70 text-sm sm:text-base mb-6 max-w-md mx-auto leading-relaxed">
             {L({ en: 'Enter your tracking number to get real-time updates on your cargo.', fr: 'Entrez votre numéro de suivi pour obtenir des mises à jour en temps réel.' })}
           </motion.p>
 

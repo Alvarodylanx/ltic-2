@@ -86,13 +86,12 @@ export default function AboutPage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative -mt-[72px] lg:-mt-[80px] h-[calc(42vh+72px)] sm:h-[calc(50vh+72px)] lg:h-[calc(52vh+80px)] min-h-[340px] sm:min-h-[400px] lg:min-h-[460px] overflow-hidden bg-black">
+      <section className="relative h-[36vh] min-h-[260px] overflow-hidden bg-black flex items-center">
         <Image src="/images/banner-about.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
 
-        <div className="relative z-10 h-full flex items-center pt-[100px] sm:pt-[110px] lg:pt-[128px] pb-10 sm:pb-14">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -123,7 +122,6 @@ export default function AboutPage() {
               className="font-sans text-white/75 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
               {L({ en: 'A Cameroonian company based in Douala — general ship supplier, chemical manufacturer, lubricant distributor, and commercial trader since 2019.', fr: 'Une entreprise camerounaise basée à Douala — fournisseur général de navires, fabricant de produits chimiques, distributeur de lubrifiants et négociant depuis 2019.' })}
             </motion.p>
-          </div>
         </div>
       </section>
 
