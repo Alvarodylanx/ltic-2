@@ -125,12 +125,13 @@ export default function ProductsPage() {
   return (
     <>
       {/* ── HERO ── */}
-      <section className="relative h-[22vh] min-h-[160px] sm:h-[30vh] sm:min-h-[210px] overflow-hidden bg-black flex items-center">
+      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(22vh+46px)] sm:h-[calc(30vh+46px)] lg:h-[calc(30vh+80px)] min-h-[200px] sm:min-h-[250px] lg:min-h-[280px] overflow-hidden bg-black">
         <Image src="/images/banner-products.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 h-full flex items-center pt-[60px] sm:pt-[70px] lg:pt-[100px]">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
@@ -156,6 +157,7 @@ export default function ProductsPage() {
               className="font-sans text-white/75 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
               {L({ en: 'Certified industrial equipment, supplies & materials — sourced globally, delivered reliably.', fr: 'Équipements industriels certifiés, fournitures & matériaux — approvisionnés mondialement, livrés de façon fiable.' })}
             </motion.p>
+        </div>
         </div>
       </section>
 

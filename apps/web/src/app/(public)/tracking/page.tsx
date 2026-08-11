@@ -75,13 +75,14 @@ function TrackingContent() {
   return (
     <>
       {/* ── HERO with integrated search ─────────────────────────────────────── */}
-      <section className="relative h-[36vh] min-h-[280px] sm:min-h-[320px] overflow-hidden bg-black flex items-center">
+      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(36vh+46px)] lg:h-[calc(36vh+80px)] min-h-[300px] lg:min-h-[330px] overflow-hidden bg-black">
         <Image src="/images/hero-slide-1.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
 
+        <div className="relative z-10 h-full flex items-center pt-[60px] sm:pt-[70px] lg:pt-[100px]">
         <motion.div variants={stagger} initial="hidden" animate="show"
-          className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div variants={fadeInUp}
             className="flex items-center justify-center gap-2.5 mb-4">
             <span className="w-6 h-px bg-primary flex-shrink-0" />
@@ -118,6 +119,7 @@ function TrackingContent() {
             </motion.div>
           </motion.form>
         </motion.div>
+        </div>
       </section>
 
       {/* ── RESULTS ──────────────────────────────────────────────────────────── */}

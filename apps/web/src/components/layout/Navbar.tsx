@@ -46,7 +46,7 @@ export function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-50 w-full pt-1.5 lg:pt-5 transition-all duration-500 bg-background/90 backdrop-blur-xl"
+      className="sticky top-0 z-50 w-full pt-1.5 lg:pt-5 transition-all duration-500"
     >
       {/* ── Floating glass pill ──────────────────────────────────────── */}
       <div
