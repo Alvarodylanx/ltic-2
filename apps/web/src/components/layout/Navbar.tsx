@@ -46,9 +46,9 @@ export function Navbar() {
       className={cn(
         'sticky top-0 z-50 h-16 flex items-center transition-all duration-500',
         glass
-          ? 'bg-black/20 backdrop-blur-md border-b border-white/10'
+          ? 'bg-white/[0.06] backdrop-blur-2xl border-b border-white/[0.12] shadow-[0_1px_0_rgba(255,255,255,0.06)]'
           : scrolled
-            ? 'bg-white/90 backdrop-blur-xl border-b border-border/60 shadow-[0_4px_24px_rgba(0,0,0,0.06)]'
+            ? 'bg-white/92 backdrop-blur-xl border-b border-border/60 shadow-[0_4px_24px_rgba(0,0,0,0.07)]'
             : 'bg-white border-b border-border',
       )}
     >
@@ -72,7 +72,7 @@ export function Navbar() {
           />
           <span className={cn('font-bold text-lg transition-colors duration-300', glass ? 'text-white' : '')}>
             LTIC{' '}
-            <span className={cn(glass ? 'text-amber-400' : 'text-primary')}>SARL</span>
+            <span className="text-primary">SARL</span>
           </span>
         </Link>
 
@@ -97,10 +97,7 @@ export function Navbar() {
               {isActive(link.href) && (
                 <motion.span
                   layoutId="nav-underline"
-                  className={cn(
-                    'absolute bottom-1 left-3.5 right-3.5 h-0.5 rounded-full',
-                    glass ? 'bg-amber-400' : 'bg-primary',
-                  )}
+                  className="absolute bottom-1 left-3.5 right-3.5 h-0.5 rounded-full bg-primary"
                 />
               )}
             </Link>
@@ -123,21 +120,9 @@ export function Navbar() {
             {language.toUpperCase()}
           </button>
 
-          {glass ? (
-            <Link
-              href="/quote"
-              className="flex items-center px-5 h-9 rounded-md bg-white/15 border border-white/25
-                         text-white text-xs font-semibold backdrop-blur-sm
-                         hover:bg-white/25 hover:border-white/40
-                         transition-all duration-200 shadow-sm"
-            >
-              {L({ en: 'Request Quote', fr: 'Demander un Devis' })}
-            </Link>
-          ) : (
-            <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 shadow-sm shadow-primary/20">
-              <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
-            </Button>
-          )}
+          <Button asChild size="sm" className="font-semibold text-xs px-5 h-9 shadow-md shadow-primary/25">
+            <Link href="/quote">{L({ en: 'Request Quote', fr: 'Demander un Devis' })}</Link>
+          </Button>
         </div>
 
         {/* Mobile hamburger */}
@@ -190,7 +175,7 @@ export function Navbar() {
                     'px-4 py-3 rounded-sm text-sm font-medium transition-colors',
                     glass
                       ? isActive(link.href)
-                        ? 'text-white bg-white/10 border-l-2 border-amber-400'
+                        ? 'text-white bg-white/10 border-l-2 border-primary'
                         : 'text-white/75 hover:text-white hover:bg-white/10'
                       : isActive(link.href)
                         ? 'text-foreground bg-muted border-l-2 border-primary'
