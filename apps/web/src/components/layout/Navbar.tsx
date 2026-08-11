@@ -25,12 +25,19 @@ export function Navbar() {
   const { language, setLanguage, L } = useLanguage();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const hero = document.querySelector('#main-content section') as HTMLElement | null;
+      setScrolled(
+        hero
+          ? hero.getBoundingClientRect().bottom <= 80
+          : window.scrollY > window.innerHeight * 0.6,
+      );
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  useEffect(() => { setMobileOpen(false); setScrolled(false); }, [pathname]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
@@ -46,10 +53,9 @@ export function Navbar() {
         className={cn(
           'relative flex items-center h-[46px] lg:h-[60px] px-3 sm:px-4 lg:px-5',
           'max-w-5xl mx-auto rounded-full transition-all duration-500',
-          'bg-white/70 backdrop-blur-xl border border-white/60',
           scrolled
-            ? 'shadow-2xl shadow-black/[0.12]'
-            : 'shadow-lg shadow-black/[0.07]',
+            ? 'bg-white/92 backdrop-blur-xl border border-white/60 shadow-2xl shadow-black/[0.12]'
+            : 'bg-white border border-black/[0.06] shadow-lg shadow-black/[0.10]',
         )}
       >
         {/* ── Logo ─────────────────────────────────────────────────── */}
