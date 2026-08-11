@@ -46,12 +46,12 @@ export function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-50 w-full pt-3 lg:pt-5 transition-all duration-500"
+      className="sticky top-0 z-50 w-full pt-1.5 lg:pt-5 transition-all duration-500 bg-background/90 backdrop-blur-xl"
     >
       {/* ── Floating glass pill ──────────────────────────────────────── */}
       <div
         className={cn(
-          'relative flex items-center h-[46px] lg:h-[60px] px-3 sm:px-4 lg:px-5',
+          'relative flex items-center h-10 lg:h-[60px] px-2.5 sm:px-4 lg:px-5',
           'max-w-5xl mx-auto rounded-full transition-all duration-500',
           'bg-white border border-black/[0.06]',
           scrolled
@@ -62,16 +62,16 @@ export function Navbar() {
         {/* ── Logo ─────────────────────────────────────────────────── */}
         <Link
           href="/"
-          className="flex items-center gap-2 flex-shrink-0 pl-2"
+          className="flex items-center gap-1.5 lg:gap-2 flex-shrink-0 pl-1 lg:pl-2"
           aria-label="LTIC SARL — Home"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/ltic-logo.png"
             alt="LTIC SARL"
-            className="h-5 lg:h-7 w-auto object-contain"
+            className="h-4 lg:h-7 w-auto object-contain"
           />
-          <span className="font-bold text-sm leading-none">
+          <span className="font-bold text-xs lg:text-sm leading-none">
             LTIC <span className="text-primary">SARL</span>
           </span>
         </Link>
@@ -125,7 +125,7 @@ export function Navbar() {
 
         {/* ── Mobile hamburger ─────────────────────────────────────── */}
         <button
-          className="lg:hidden ml-auto p-1.5 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+          className="lg:hidden ml-auto p-1 min-h-[32px] min-w-[32px] flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
