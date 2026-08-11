@@ -132,6 +132,14 @@ p, li, a, label, button, input, textarea, select, td, th {
 .pin-ring-inner { animation: map-ping-inner 2s ease-out infinite; }
 .pin-ring-fill  { animation: map-ping-fill  2s ease-out infinite; }
 
+/* Hide ping rings on mobile — 4 simultaneous scale loops are heavy on weak GPUs */
+@media (max-width: 639px) {
+  .pin-ring-outer, .pin-ring-mid, .pin-ring-inner, .pin-ring-fill { display: none; }
+  /* Slow the marquee to halve GPU repaint frequency with no visible UX change */
+  .marquee-left  { animation-duration: 180s; }
+  .marquee-right { animation-duration: 200s; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pin-ring-outer, .pin-ring-mid, .pin-ring-inner, .pin-ring-fill { display: none; }
 }

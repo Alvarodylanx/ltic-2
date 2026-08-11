@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
+import { motion, AnimatePresence, useAnimationControls, useReducedMotion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 
 export function BackToTop() {
   const [visible, setVisible] = useState(false);
   const controls = useAnimationControls();
+  const shouldReduce = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 400);
@@ -41,14 +42,15 @@ export function BackToTop() {
                      hover:bg-primary/90 active:scale-95 overflow-hidden
                      transition-colors duration-200"
         >
-          {/* Arrow bounces upward on repeat */}
+          {/* Arrow bounces upward on repeat — disabled when reduced-motion is on */}
           <motion.span
             animate={controls}
             className="flex items-center justify-center"
           >
             <motion.span
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+              animate={shouldReduce ? {} : { y: [0, -5, 0] }}
+              transition={shouldReduce ? {} : { duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ willChange: 'transform' }}
               className="flex"
             >
               <ArrowUp className="h-[18px] w-[18px] flex-shrink-0" />

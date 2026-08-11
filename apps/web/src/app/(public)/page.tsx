@@ -17,7 +17,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
 import {
   fadeInUp, fadeInLeft, fadeInRight, scaleIn, popIn,
-  stagger, staggerFast, viewportOnce,
+  stagger, staggerFast, viewportOnce, fadeM, staggerM,
 } from '@/components/motion/variants';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -228,10 +228,13 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index, isMobile }: Se
   return (
     <motion.div
       ref={cardRef}
-      variants={{
+      variants={isMobile ? {
+        hidden: { opacity: 0 },
+        show:   { opacity: 1, transition: { duration: 0.22 } },
+      } : {
         hidden: { opacity: 0, y: 48, scale: 0.92 },
         show:   { opacity: 1, y: 0,  scale: 1,
-                  transition: { type: 'spring', stiffness: 90, damping: 20, delay: index * 0.07 } },
+                  transition: { type: 'spring', stiffness: 160, damping: 26, delay: index * 0.07 } },
       }}
       style={isMobile ? {} : { rotateX, rotateY, transformStyle: 'preserve-3d' }}
       onMouseMove={onMove}
@@ -592,6 +595,8 @@ export default function HomePage() {
   const [paused, setPaused] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  // skip = disable heavy spring / stagger animations (mobile GPU can't keep up)
+  const skip = isMobile || shouldReduce;
 
   useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
@@ -609,9 +614,9 @@ export default function HomePage() {
     if (paused || shouldReduce) return;
     const id = setInterval(() => {
       setActiveSlide(i => (i + 1) % heroSlides.length);
-    }, HERO_INTERVAL);
+    }, isMobile ? 9000 : HERO_INTERVAL);
     return () => clearInterval(id);
-  }, [activeSlide, paused, shouldReduce]);
+  }, [activeSlide, paused, shouldReduce, isMobile]);
 
   const { data: spotlightData } = useQuery<any>({
     queryKey: ['spotlight'],
@@ -883,16 +888,16 @@ export default function HomePage() {
 
       {/* ══ 2. SERVICES — clean light cards ════════════════════════════════════ */}
       <section className="bg-background py-3 sm:py-20 relative overflow-hidden">
-        {/* Floating orbs */}
+        {/* Floating orbs — desktop only; infinite loops are too heavy on mobile GPUs */}
         <motion.div
           className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/6 blur-3xl pointer-events-none"
-          animate={{ scale: [1, 1.07, 1], opacity: [0.5, 0.72, 0.5] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          animate={skip ? {} : { scale: [1, 1.07, 1], opacity: [0.5, 0.72, 0.5] }}
+          transition={skip ? {} : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute bottom-0 -left-32 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none"
-          animate={{ scale: [1.04, 1, 1.04], opacity: [0.4, 0.62, 0.4] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+          animate={skip ? {} : { scale: [1.04, 1, 1.04], opacity: [0.4, 0.62, 0.4] }}
+          transition={skip ? {} : { duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -929,7 +934,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
+            variants={skip ? staggerM : { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
             {services.map((svc, i) => (
@@ -1109,13 +1114,13 @@ export default function HomePage() {
       <section className="bg-white py-3 sm:py-20 relative overflow-hidden">
         <motion.div
           className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-primary/4 blur-3xl pointer-events-none"
-          animate={{ scale: [1, 1.2, 1], x: [0, 20, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+          animate={skip ? {} : { scale: [1, 1.2, 1], x: [0, 20, 0] }}
+          transition={skip ? {} : { duration: 9, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute bottom-1/4 -left-40 w-[400px] h-[400px] rounded-full bg-amber-400/5 blur-3xl pointer-events-none"
-          animate={{ scale: [1.1, 1, 1.1], y: [0, -20, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+          animate={skip ? {} : { scale: [1.1, 1, 1.1], y: [0, -20, 0] }}
+          transition={skip ? {} : { duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
@@ -1384,7 +1389,7 @@ export default function HomePage() {
 
           {/* Steps — 2×2 on mobile, single row on desktop */}
           <motion.div
-            variants={stagger}
+            variants={skip ? staggerM : stagger}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
@@ -1395,7 +1400,7 @@ export default function HomePage() {
               return (
                 <motion.div
                   key={i}
-                  variants={fadeInUp}
+                  variants={skip ? fadeM : fadeInUp}
                   className="group flex items-start gap-3 p-3.5 sm:p-4 rounded-xl
                              border border-border bg-muted/30
                              hover:bg-primary/5 hover:border-primary/25
