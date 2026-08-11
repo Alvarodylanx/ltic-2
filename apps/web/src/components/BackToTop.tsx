@@ -41,12 +41,18 @@ export function BackToTop() {
                      hover:bg-primary/90 active:scale-95 overflow-hidden
                      transition-colors duration-200"
         >
-          {/* Repeating upward arrows — top one exits, bottom one enters */}
+          {/* Arrow bounces upward on repeat */}
           <motion.span
             animate={controls}
-            className="flex flex-col items-center gap-[2px]"
+            className="flex items-center justify-center"
           >
-            <ArrowUp className="h-[18px] w-[18px] flex-shrink-0" />
+            <motion.span
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+              className="flex"
+            >
+              <ArrowUp className="h-[18px] w-[18px] flex-shrink-0" />
+            </motion.span>
           </motion.span>
 
           {/* Subtle upward-sweep shimmer on hover */}
