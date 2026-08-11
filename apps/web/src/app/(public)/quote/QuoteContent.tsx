@@ -155,25 +155,29 @@ export default function QuotePage() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
-        <Image
-          src="/images/banner-quote.jpg"
-          alt="" fill className="object-cover opacity-15" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-sidebar via-sidebar/95 to-sidebar/60" />
-        <motion.div variants={stagger} initial="hidden" animate="show"
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.p variants={fadeInUp}
-            className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-            {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
-          </motion.p>
-          <motion.h1 variants={fadeInUp}
-            className="font-display font-bold text-section text-sidebar-foreground leading-none mb-5 max-w-2xl">
-            {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-sidebar-foreground/70 text-base sm:text-lg max-w-md leading-relaxed">
-            {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
-          </motion.p>
-        </motion.div>
+      <section className="relative -mt-[46px] lg:-mt-[80px] h-[calc(36vh+46px)] lg:h-[calc(36vh+80px)] min-h-[300px] lg:min-h-[330px] overflow-hidden bg-black">
+        <Image src="/images/banner-quote.jpg" alt="" fill className="object-cover object-center" priority />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
+
+        <div className="relative z-10 h-full flex items-center pt-[60px] sm:pt-[70px] lg:pt-[100px]">
+          <motion.div variants={stagger} initial="hidden" animate="show"
+            className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div variants={fadeInUp} className="flex items-center justify-center gap-2.5 mb-4">
+              <span className="w-6 h-px bg-primary flex-shrink-0" />
+              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+                {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
+              </span>
+            </motion.div>
+            <motion.h1 variants={fadeInUp}
+              className="font-display font-bold text-section text-white leading-none mb-4">
+              {L({ en: 'Request a Quote', fr: 'Demander un Devis' })}
+            </motion.h1>
+            <motion.p variants={fadeInUp} className="text-white/75 text-[15px] sm:text-[16px] leading-relaxed max-w-xl mx-auto">
+              {L({ en: 'Get a tailored quote for any logistics, industrial supply, or trade requirement.', fr: 'Obtenez un devis personnalisé pour tout besoin logistique, fourniture industrielle ou commercial.' })}
+            </motion.p>
+          </motion.div>
+        </div>
       </section>
 
       {/* ── QUOTE BODY ──────────────────────────────────────────────────────── */}
