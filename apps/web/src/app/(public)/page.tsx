@@ -1502,7 +1502,7 @@ export default function HomePage() {
             <motion.div
               variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'}
               {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
-              className="bg-background rounded-2xl sm:rounded-3xl shadow-2xl p-2 sm:p-3"
+              className=""
             >
               {newsLoading ? (
                 /* Skeleton — mirrors the real layout */
