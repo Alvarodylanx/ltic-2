@@ -2,6 +2,10 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import ProductsContent from './ProductsContent';
 
+// Force dynamic rendering — page filters by URL search params so static
+// generation doesn't apply, and avoids the useSearchParams() SSR edge case.
+export const dynamic = 'force-dynamic';
+
 const SITE_URL = 'https://www.lticsarl.com';
 
 export const metadata: Metadata = {
@@ -57,7 +61,7 @@ export default function ProductsPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageLd) }} />
-      <Suspense>
+      <Suspense fallback={null}>
         <ProductsContent />
       </Suspense>
     </>

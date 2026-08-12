@@ -70,6 +70,7 @@ export default function ProductsPage() {
   const { data: categories } = useQuery<any[]>({
     queryKey: ['categories'],
     queryFn: () => api.get('/api/categories'),
+    enabled: mounted,
   });
 
   // Resolve URL ?category= param once categories are available

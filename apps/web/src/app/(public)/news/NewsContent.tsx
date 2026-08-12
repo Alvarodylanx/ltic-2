@@ -149,6 +149,7 @@ export default function NewsPage() {
                           </p>
                         )}
                         <Link href={`/news/${featured.id}`}
+                          aria-label={L({ en: `Read article: ${featured.titleEn}`, fr: `Lire l'article: ${featured.titleFr}` })}
                           className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold hover:gap-2.5 transition-all duration-200">
                           {L({ en: 'Read Article', fr: 'Lire l\'Article' })}
                           <ArrowRight className="h-3.5 w-3.5" />
@@ -178,6 +179,7 @@ export default function NewsPage() {
                               {L({ en: article.titleEn, fr: article.titleFr })}
                             </h2>
                             <Link href={`/news/${article.id}`}
+                              aria-label={L({ en: `Read: ${article.titleEn}`, fr: `Lire: ${article.titleFr}` })}
                               className="inline-flex items-center gap-1 text-primary text-xs font-semibold hover:gap-1.5 transition-all duration-200">
                               {L({ en: 'Read', fr: 'Lire' })}
                               <ArrowRight className="h-3 w-3" />
@@ -218,6 +220,7 @@ export default function NewsPage() {
                             {L({ en: article.titleEn, fr: article.titleFr })}
                           </h2>
                           <Link href={`/news/${article.id}`}
+                            aria-label={L({ en: `Read more: ${article.titleEn}`, fr: `Lire la suite: ${article.titleFr}` })}
                             className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold hover:gap-2.5 transition-all duration-200 mt-auto">
                             {L({ en: 'Read More', fr: 'Lire la Suite' })}
                             <ArrowRight className="h-3.5 w-3.5" />

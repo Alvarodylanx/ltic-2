@@ -268,6 +268,7 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index, isMobile }: Se
 
       <Link
         href="/services"
+        aria-label={L({ en: `Learn more about ${L({ en, fr })}`, fr: `En savoir plus sur ${L({ en, fr })}` })}
         className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold
                    group-hover:gap-3 transition-all duration-200 w-fit py-3"
       >
@@ -1521,6 +1522,7 @@ export default function HomePage() {
                   {latestNews![0] && (
                     <Link
                       href={`/news/${latestNews![0].id}`}
+                      aria-label={L({ en: latestNews![0].titleEn, fr: latestNews![0].titleFr })}
                       className="lg:col-span-3 relative group overflow-hidden block
                                  h-72 sm:h-80 lg:h-full
                                  rounded-xl lg:rounded-2xl

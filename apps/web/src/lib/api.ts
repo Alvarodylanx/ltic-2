@@ -6,7 +6,7 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
     ...(options.headers as Record<string, string> || {}),
   };
 
-  const res = await fetch(`${API_URL}${path}`, { ...options, headers, credentials: 'include', cache: 'no-store' });
+  const res = await fetch(`${API_URL}${path}`, { ...options, headers, credentials: 'include' });
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({ message: 'Request failed' }));
