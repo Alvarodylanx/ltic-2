@@ -394,7 +394,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
-      <section className="relative bg-blue-100 py-3 sm:py-12 overflow-hidden">
+      <section className="relative bg-blue-200 py-3 sm:py-12 overflow-hidden">
         {/* Dot texture — adds visual depth to the mid-blue background */}
         <div className="absolute inset-0 dot-grid opacity-[0.18] pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
