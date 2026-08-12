@@ -394,7 +394,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
-      <section className="bg-sidebar py-3 sm:py-12">
+      <section className="bg-blue-50 py-3 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
@@ -404,17 +404,17 @@ export default function AboutPage() {
               <p className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-2">
                 {L({ en: 'Our Foundation', fr: 'Notre Fondation' })}
               </p>
-              <h2 className="font-bold text-3xl sm:text-4xl tracking-tight text-sidebar-foreground">
+              <h2 className="font-bold text-3xl sm:text-4xl tracking-tight text-foreground">
                 {L({ en: 'Mission, Vision & Values', fr: 'Mission, Vision & Valeurs' })}
               </h2>
             </div>
-            <div className="hidden md:block h-px flex-1 bg-white/10" />
+            <div className="hidden md:block h-px flex-1 bg-primary/15" />
           </motion.div>
 
           {/* ── DESKTOP: Oblique expanding panels ── */}
           <motion.div
             variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="hidden md:flex h-[460px] overflow-hidden rounded-2xl border border-white/10">
+            className="hidden md:flex h-[460px] overflow-hidden rounded-2xl border border-primary/15">
             {mvvItems.map((item, i) => {
               const isActive = activeMVV === i;
               const isFirst = i === 0;
