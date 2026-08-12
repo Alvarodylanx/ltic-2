@@ -85,7 +85,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
+            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-blue-300">
               {L({ en: 'Quick Links', fr: 'Liens Rapides' })}
             </h3>
             <ul className="space-y-2.5">
@@ -111,7 +111,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
+            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-blue-300">
               {L({ en: 'Services', fr: 'Services' })}
             </h3>
             <ul className="space-y-2.5">
@@ -131,7 +131,7 @@ export function Footer() {
 
           {/* Contact */}
           <div className="col-span-2 lg:col-span-1">
-            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
+            <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-blue-300">
               {L({ en: 'Contact', fr: 'Contact' })}
             </h3>
             <ul className="space-y-3.5">
@@ -178,17 +178,17 @@ export function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-sidebar-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sidebar-foreground/40 text-xs">
+          <p className="text-sidebar-foreground/60 text-xs">
             {L({ en: `© ${year} LTIC SARL. All rights reserved.`, fr: `© ${year} LTIC SARL. Tous droits réservés.` })}
           </p>
           <div className="flex flex-wrap items-center gap-4 text-xs">
-            <Link href="/privacy" className="text-sidebar-foreground/40 hover:text-sidebar-foreground/70 transition-colors">
+            <Link href="/privacy" className="text-sidebar-foreground/60 hover:text-sidebar-foreground/80 transition-colors">
               {L({ en: 'Privacy Policy', fr: 'Confidentialité' })}
             </Link>
-            <Link href="/terms" className="text-sidebar-foreground/40 hover:text-sidebar-foreground/70 transition-colors">
+            <Link href="/terms" className="text-sidebar-foreground/60 hover:text-sidebar-foreground/80 transition-colors">
               {L({ en: 'Terms', fr: 'Conditions' })}
             </Link>
-            <Link href="/cookies" className="text-sidebar-foreground/40 hover:text-sidebar-foreground/70 transition-colors">
+            <Link href="/cookies" className="text-sidebar-foreground/60 hover:text-sidebar-foreground/80 transition-colors">
               {L({ en: 'Cookies', fr: 'Cookies' })}
             </Link>
           </div>

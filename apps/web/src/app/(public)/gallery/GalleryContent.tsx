@@ -94,11 +94,11 @@ export default function GalleryContent() {
               transition={{ duration: 0.4, delay: 0.05 }}
               className="flex items-center justify-center gap-2.5 mb-5"
             >
-              <span className="w-6 h-px bg-primary flex-shrink-0" />
-              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+              <span className="w-6 h-px bg-blue-300 flex-shrink-0" />
+              <span className="text-blue-300 font-semibold text-[11px] uppercase tracking-[0.3em]">
                 {L({ en: 'Media Gallery', fr: 'Galerie Média' })}
               </span>
-              <span className="w-6 h-px bg-primary flex-shrink-0" />
+              <span className="w-6 h-px bg-blue-300 flex-shrink-0" />
             </motion.div>
             <h1 className="font-display font-extrabold text-section text-white leading-[0.88] tracking-[-0.02em] mb-6">
               {L({ en: 'Our Work in Pictures', fr: 'Nos Activités en Images' }).split(' ').map((word, wi) => (

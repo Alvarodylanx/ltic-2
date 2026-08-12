@@ -100,8 +100,8 @@ export default function ServicesPage() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
               className="flex items-center justify-center gap-2.5 mb-4">
-              <span className="w-6 h-px bg-primary flex-shrink-0" />
-              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+              <span className="w-6 h-px bg-blue-300 flex-shrink-0" />
+              <span className="text-blue-300 font-semibold text-[11px] uppercase tracking-[0.3em]">
                 {L({ en: 'Our Services', fr: 'Nos Services' })}
               </span>
             </motion.div>
@@ -177,10 +177,10 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="text-center mb-10">
-            <p className="text-primary font-bold text-[11px] uppercase tracking-[0.32em] mb-2 flex items-center justify-center gap-2.5">
-              <span className="w-5 h-px bg-primary" />
+            <p className="text-blue-300 font-bold text-[11px] uppercase tracking-[0.32em] mb-2 flex items-center justify-center gap-2.5">
+              <span className="w-5 h-px bg-blue-300" />
               {L({ en: 'Road Freight Coverage', fr: 'Couverture Fret Routier' })}
-              <span className="w-5 h-px bg-primary" />
+              <span className="w-5 h-px bg-blue-300" />
             </p>
             <h2 className="font-bold text-2xl sm:text-3xl tracking-tight text-sidebar-foreground">
               {L({ en: 'Where We Deliver', fr: 'Là Où Nous Livrons' })}
@@ -193,11 +193,11 @@ export default function ServicesPage() {
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             {[
-              { flag: '🇹🇩', country: { en: 'Chad',                      fr: 'Tchad' },                       route: 'Douala – N\'Djamena', km: '~1 900 km', type: { en: 'International', fr: 'International' } },
-              { flag: '🇨🇫', country: { en: 'Central African Republic',   fr: 'Rép. Centrafricaine' },          route: 'Douala – Bangui',     km: '~1 500 km', type: { en: 'International', fr: 'International' } },
-              { flag: '🇨🇬', country: { en: 'Congo-Brazzaville',          fr: 'Congo-Brazzaville' },            route: 'Douala – Brazzaville', km: '~900 km',   type: { en: 'International', fr: 'International' } },
-              { flag: '🇬🇦', country: { en: 'Gabon',                      fr: 'Gabon' },                        route: 'Douala – Libreville',  km: '~620 km',   type: { en: 'International', fr: 'International' } },
-              { flag: '🇨🇲', country: { en: 'Cameroon',                   fr: 'Cameroun' },                     route: { en: 'All 10 Regions', fr: '10 Régions' }, km: null, type: { en: 'Domestic',      fr: 'National' } },
+              { code: 'td', country: { en: 'Chad',                      fr: 'Tchad' },           route: 'Douala – N\'Djamena',  km: '~1 900 km', type: { en: 'International', fr: 'International' } },
+              { code: 'cf', country: { en: 'Central African Republic',   fr: 'Rép. Centrafricaine' }, route: 'Douala – Bangui', km: '~1 500 km', type: { en: 'International', fr: 'International' } },
+              { code: 'cg', country: { en: 'Congo-Brazzaville',          fr: 'Congo-Brazzaville' }, route: 'Douala – Brazzaville', km: '~900 km', type: { en: 'International', fr: 'International' } },
+              { code: 'ga', country: { en: 'Gabon',                      fr: 'Gabon' },           route: 'Douala – Libreville',  km: '~620 km',   type: { en: 'International', fr: 'International' } },
+              { code: 'cm', country: { en: 'Cameroon',                   fr: 'Cameroun' },        route: { en: 'All 10 Regions', fr: '10 Régions' }, km: null, type: { en: 'Domestic', fr: 'National' } },
             ].map((dest, i) => (
               <motion.div
                 key={i}
@@ -205,8 +205,18 @@ export default function ServicesPage() {
                 className="group relative bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/50 rounded-2xl p-5 transition-all duration-300 cursor-default">
                 <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
-                <div className="text-3xl mb-3 leading-none">{dest.flag}</div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-1">
+                <div className="mb-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`https://flagcdn.com/w80/${dest.code}.png`}
+                    alt={dest.code.toUpperCase()}
+                    width={44}
+                    height={30}
+                    className="rounded-sm object-cover shadow-sm"
+                    style={{ width: 44, height: 30 }}
+                  />
+                </div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300 mb-1">
                   {L(dest.type)}
                 </p>
                 <h3 className="font-bold text-sidebar-foreground text-sm sm:text-base leading-tight mb-2">
@@ -217,7 +227,7 @@ export default function ServicesPage() {
                   <span>{typeof dest.route === 'string' ? dest.route : L(dest.route)}</span>
                 </div>
                 {dest.km && (
-                  <span className="inline-block text-[10px] font-semibold bg-primary/15 text-primary rounded-full px-2.5 py-0.5 mt-1">
+                  <span className="inline-block text-[10px] font-semibold bg-blue-300/15 text-blue-300 rounded-full px-2.5 py-0.5 mt-1">
                     {dest.km}
                   </span>
                 )}

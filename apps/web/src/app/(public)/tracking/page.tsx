@@ -85,8 +85,8 @@ function TrackingContent() {
           className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div variants={fadeInUp}
             className="flex items-center justify-center gap-2.5 mb-4">
-            <span className="w-6 h-px bg-primary flex-shrink-0" />
-            <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+            <span className="w-6 h-px bg-blue-300 flex-shrink-0" />
+            <span className="text-blue-300 font-semibold text-[11px] uppercase tracking-[0.3em]">
               {L({ en: 'Real-Time Tracking', fr: 'Suivi en Temps Réel' })}
             </span>
           </motion.div>

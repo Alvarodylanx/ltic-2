@@ -180,8 +180,8 @@ export default function QuotePage() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
               className="flex items-center justify-center gap-2.5 mb-4">
-              <span className="w-6 h-px bg-primary flex-shrink-0" />
-              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+              <span className="w-6 h-px bg-blue-300 flex-shrink-0" />
+              <span className="text-blue-300 font-semibold text-[11px] uppercase tracking-[0.3em]">
                 {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
               </span>
             </motion.div>

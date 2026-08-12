@@ -98,8 +98,8 @@ export default function AboutPage() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
               className="flex items-center justify-center gap-2.5 mb-4">
-              <span className="w-6 h-px bg-primary flex-shrink-0" />
-              <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
+              <span className="w-6 h-px bg-blue-300 flex-shrink-0" />
+              <span className="text-blue-300 font-semibold text-[11px] uppercase tracking-[0.3em]">
                 {L({ en: 'About LTIC SARL', fr: 'À Propos de LTIC SARL' })}
               </span>
             </motion.div>
@@ -401,7 +401,7 @@ export default function AboutPage() {
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex items-center gap-6 mb-10">
             <div>
-              <p className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-2">
+              <p className="text-blue-300 font-semibold text-xs uppercase tracking-[0.25em] mb-2">
                 {L({ en: 'Our Foundation', fr: 'Notre Fondation' })}
               </p>
               <h2 className="font-bold text-3xl sm:text-4xl tracking-tight text-sidebar-foreground">
