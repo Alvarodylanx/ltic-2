@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
@@ -27,6 +27,28 @@ function isYouTube(url: string) {
 function getYouTubeId(url: string) {
   const m = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/shorts\/))([^?&/\s]+)/);
   return m ? m[1] : '';
+}
+
+function VideoThumb({ src, className }: { src: string; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const handleLoaded = () => { if (ref.current) ref.current.currentTime = 0.5; };
+  const handleEnter = () => ref.current?.play();
+  const handleLeave = () => {
+    if (ref.current) { ref.current.pause(); ref.current.currentTime = 0.5; }
+  };
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      playsInline
+      preload="metadata"
+      onLoadedMetadata={handleLoaded}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      className={className}
+    />
+  );
 }
 
 export default function GalleryContent() {
@@ -195,19 +217,27 @@ export default function GalleryContent() {
                         className="group relative w-full overflow-hidden rounded-2xl block text-left
                                    focus-visible:ring-2 focus-visible:ring-primary outline-none"
                       >
-                        <Image
-                          src={thumbSrc || '/images/hero-slide-2.jpg'}
-                          alt={title || item.category || ''}
-                          width={800}
-                          height={600}
-                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                        />
+                        {isVideo && !isYT ? (
+                          <VideoThumb
+                            src={item.mediaUrl}
+                            className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                          />
+                        ) : (
+                          <Image
+                            src={thumbSrc || '/images/hero-slide-2.jpg'}
+                            alt={title || item.category || ''}
+                            width={800}
+                            height={600}
+                            className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                          />
+                        )}
+
                         {/* Hover overlay */}
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300" />
 
                         {/* Play button for videos */}
                         {isVideo && (
-                          <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center
                                             shadow-lg group-hover:scale-110 transition-transform duration-300">
                               <Play className="h-5 w-5 text-primary fill-primary ml-0.5" />
