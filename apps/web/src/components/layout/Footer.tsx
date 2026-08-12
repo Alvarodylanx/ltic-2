@@ -30,11 +30,11 @@ export function Footer() {
       {/* Amber top accent rule */}
       <div className="h-0.5 bg-primary" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-8 sm:gap-y-10 lg:gap-12">
 
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2 min-h-[44px] mb-6" aria-label="LTIC SARL — Home">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/ltic-logo.png" alt="LTIC SARL" className="h-9 w-auto object-contain" />
@@ -124,13 +124,13 @@ export function Footer() {
                 { en: 'Commercial Representation',    fr: 'Représentation Commerciale' },
                 { en: 'Vessel Maintenance',           fr: 'Maintenance des Navires' },
               ].map((item, i) => (
-                <li key={i} className="text-sidebar-foreground/60 text-sm">{L(item)}</li>
+                <li key={i} className="text-sidebar-foreground/60 text-xs sm:text-sm leading-snug">{L(item)}</li>
               ))}
             </ul>
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h3 className="font-semibold text-xs uppercase tracking-widest mb-5 text-primary">
               {L({ en: 'Contact', fr: 'Contact' })}
             </h3>
