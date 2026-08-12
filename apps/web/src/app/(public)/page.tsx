@@ -601,8 +601,9 @@ export default function HomePage() {
   const [paused, setPaused] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  // skip = disable heavy spring / stagger animations (mobile GPU can't keep up)
-  const skip = isMobile || shouldReduce;
+  // skip = disable heavy spring / stagger animations only when user prefers reduced motion
+  // 3D tilt, parallax, and floating are already individually guarded by isMobile
+  const skip = shouldReduce;
 
   useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
