@@ -644,8 +644,16 @@ export default function HomePage() {
     queryKey: ['news', 'preview'],
     queryFn: () => api.get('/api/news'),
     staleTime: 5 * 60 * 1000,
-    select: (data) => Array.isArray(data) ? data.slice(0, 3) : [],
+    select: (data) => Array.isArray(data) ? data : [],
   });
+
+  const sideCount = latestNews ? Math.max(0, latestNews.length - 1) : 0;
+  const [sideIndex, setSideIndex] = useState(0);
+  useEffect(() => {
+    if (sideCount <= 0) return;
+    const timer = setInterval(() => setSideIndex(prev => (prev + 1) % sideCount), 3000);
+    return () => clearInterval(timer);
+  }, [sideCount]);
 
 
   const staticBrands: Partner[] = [
@@ -1494,21 +1502,19 @@ export default function HomePage() {
             <motion.div
               variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'}
               {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
-              className="bg-sidebar rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
+              className="bg-sidebar rounded-2xl sm:rounded-3xl shadow-2xl p-2 sm:p-3"
             >
               {newsLoading ? (
                 /* Skeleton — mirrors the real layout */
-                <div className="grid grid-cols-1 lg:grid-cols-5 h-auto lg:h-[520px]">
-                  <div className="lg:col-span-3 h-56 lg:h-full bg-white/[0.04]
-                                  border-b lg:border-b-0 lg:border-r border-white/[0.08]" />
-                  <div className="lg:col-span-2 flex flex-col">
-                    <div className="flex-1 h-36 lg:h-auto bg-white/[0.06]
-                                    border-b border-white/[0.08]" />
-                    <div className="flex-1 h-36 lg:h-auto bg-white/[0.04]" />
+                <div className="grid grid-cols-1 lg:grid-cols-5 h-auto lg:h-[520px] gap-2 sm:gap-3">
+                  <div className="lg:col-span-3 h-56 lg:h-full bg-white/[0.04] rounded-xl lg:rounded-2xl" />
+                  <div className="lg:col-span-2 flex flex-col gap-2 sm:gap-3">
+                    <div className="flex-1 h-36 lg:h-auto bg-white/[0.06] rounded-xl lg:rounded-2xl" />
+                    <div className="flex-1 h-36 lg:h-auto bg-white/[0.04] rounded-xl lg:rounded-2xl" />
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-5 h-auto lg:h-[520px]">
+                <div className="grid grid-cols-1 lg:grid-cols-5 h-auto lg:h-[520px] gap-2 sm:gap-3">
 
                   {/* ── Large featured card (left, 60%) ───────────────── */}
                   {latestNews![0] && (
@@ -1516,7 +1522,7 @@ export default function HomePage() {
                       href={`/news/${latestNews![0].id}`}
                       className="lg:col-span-3 relative group overflow-hidden block
                                  h-72 sm:h-80 lg:h-full
-                                 border-b lg:border-b-0 lg:border-r border-white/[0.08]
+                                 rounded-xl lg:rounded-2xl
                                  focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset outline-none"
                     >
                       {/* Background image */}
@@ -1582,78 +1588,81 @@ export default function HomePage() {
                     </Link>
                   )}
 
-                  {/* ── Two small stacked cards (right, 40%) ──────────── */}
-                  <div className="lg:col-span-2 flex flex-col">
-                    {[latestNews![1], latestNews![2]].filter(Boolean).map((article: any, i: number) => (
-                      <Link
-                        key={article.id}
-                        href={`/news/${article.id}`}
-                        className={`relative group overflow-hidden flex-1 block
-                                   h-48 sm:h-52 lg:h-auto
-                                   ${i === 0 ? 'border-b border-white/[0.08]' : ''}
-                                   focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset outline-none`}
-                      >
-                        {/* Background image */}
-                        <Image
-                          src={article.imageUrl || '/images/banner-news.jpg'}
-                          alt={L({ en: article.titleEn, fr: article.titleFr })}
-                          fill
-                          className="object-cover transition-transform duration-700 ease-out
-                                     group-hover:scale-[1.06]"
-                          sizes="(max-width: 1024px) 100vw, 40vw"
-                        />
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t
-                                        from-black/85 via-black/40 to-black/10
-                                        pointer-events-none" />
-                        {/* Hover shimmer */}
-                        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/8
-                                        transition-colors duration-500 pointer-events-none" />
-
-                        {/* Category pill — top right */}
-                        {article.category && (
-                          <div className="absolute top-4 right-4">
-                            <span className="bg-primary/90 text-primary-foreground text-[9px] font-bold
-                                             uppercase tracking-[0.18em] px-2.5 py-1 rounded-full
-                                             shadow-md shadow-primary/20">
-                              {article.category}
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Bottom content */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
-                          <h3 className="font-bold text-white text-sm sm:text-[0.92rem]
-                                         leading-snug mb-2 line-clamp-2">
-                            {L({ en: article.titleEn, fr: article.titleFr })}
-                          </h3>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 text-white/45 text-[10px]">
-                              <Calendar className="h-2.5 w-2.5 flex-shrink-0" />
-                              <time dateTime={article.publishedAt}>
-                                {format(new Date(article.publishedAt), 'dd MMM yyyy')}
-                              </time>
+                  {/* ── Two small stacked cards (right, 40%) — auto-rotating ─ */}
+                  <div className="lg:col-span-2 flex flex-col gap-2 sm:gap-3">
+                    {(() => {
+                      const sideArticles = latestNews!.slice(1);
+                      if (sideArticles.length === 0) {
+                        return (
+                          <>
+                            <div className="flex-1 h-48 sm:h-52 lg:h-auto rounded-xl lg:rounded-2xl bg-white/[0.04]
+                                            flex flex-col items-center justify-center gap-4 p-6 text-center">
+                              <Newspaper className="h-8 w-8 text-white/20" />
+                              <Link href="/news" className="text-primary text-sm font-semibold hover:underline">
+                                {L({ en: 'View all articles', fr: 'Voir tous les articles' })}
+                              </Link>
                             </div>
-                            <ArrowRight className="h-3.5 w-3.5 text-primary
-                                                    opacity-0 group-hover:opacity-100
-                                                    translate-x-1 group-hover:translate-x-0
-                                                    transition-all duration-300 flex-shrink-0" />
+                            <div className="flex-1 h-48 sm:h-52 lg:h-auto rounded-xl lg:rounded-2xl bg-white/[0.04]" />
+                          </>
+                        );
+                      }
+                      return [0, 1].map((slot) => {
+                        const article = sideArticles[(sideIndex + slot) % sideArticles.length];
+                        return (
+                          <div key={slot} className="relative flex-1 h-48 sm:h-52 lg:h-auto overflow-hidden rounded-xl lg:rounded-2xl">
+                            <AnimatePresence mode="wait">
+                              <motion.div
+                                key={`${slot}-${article.id}`}
+                                initial={{ opacity: 0, y: 6 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -6 }}
+                                transition={{ duration: 0.45, ease: 'easeInOut' }}
+                                className="absolute inset-0"
+                              >
+                                <Link
+                                  href={`/news/${article.id}`}
+                                  className="relative group block h-full w-full
+                                             focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset outline-none"
+                                >
+                                  <Image
+                                    src={article.imageUrl || '/images/banner-news.jpg'}
+                                    alt={L({ en: article.titleEn, fr: article.titleFr })}
+                                    fill
+                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10 pointer-events-none" />
+                                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/8 transition-colors duration-500 pointer-events-none" />
+                                  {article.category && (
+                                    <div className="absolute top-4 right-4">
+                                      <span className="bg-primary/90 text-primary-foreground text-[9px] font-bold
+                                                       uppercase tracking-[0.18em] px-2.5 py-1 rounded-full shadow-md shadow-primary/20">
+                                        {article.category}
+                                      </span>
+                                    </div>
+                                  )}
+                                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+                                    <h3 className="font-bold text-white text-sm sm:text-[0.92rem] leading-snug mb-2 line-clamp-2">
+                                      {L({ en: article.titleEn, fr: article.titleFr })}
+                                    </h3>
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center gap-1.5 text-white/45 text-[10px]">
+                                        <Calendar className="h-2.5 w-2.5 flex-shrink-0" />
+                                        <time dateTime={article.publishedAt}>
+                                          {format(new Date(article.publishedAt), 'dd MMM yyyy')}
+                                        </time>
+                                      </div>
+                                      <ArrowRight className="h-3.5 w-3.5 text-primary opacity-0 group-hover:opacity-100
+                                                              translate-x-1 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" />
+                                    </div>
+                                  </div>
+                                </Link>
+                              </motion.div>
+                            </AnimatePresence>
                           </div>
-                        </div>
-                      </Link>
-                    ))}
-
-                    {/* If only 1 article total, fill the right side with a CTA panel */}
-                    {latestNews!.length === 1 && (
-                      <div className="flex-1 h-48 sm:h-52 lg:h-auto bg-white/[0.04]
-                                      flex flex-col items-center justify-center gap-4 p-6 text-center">
-                        <Newspaper className="h-8 w-8 text-white/20" />
-                        <Link href="/news"
-                          className="text-primary text-sm font-semibold hover:underline">
-                          {L({ en: 'View all articles', fr: 'Voir tous les articles' })}
-                        </Link>
-                      </div>
-                    )}
+                        );
+                      });
+                    })()}
                   </div>
 
                 </div>
