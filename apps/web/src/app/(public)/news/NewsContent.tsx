@@ -24,11 +24,11 @@ export default function NewsPage() {
     <>
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="relative -mt-[54px] lg:-mt-[80px] h-[calc(22vh+54px)] lg:h-[calc(26vh+80px)] min-h-[200px] lg:min-h-[250px] overflow-hidden bg-black">
-        <Image src="/images/banner-news.jpg" alt="" fill className="object-cover object-center" priority />
+        <Image src="/images/banner-news.jpg" alt="" fill sizes="100vw" className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/20" />
 
-        <div className="relative z-10 h-full flex items-center pt-[46px] sm:pt-[52px] lg:pt-[92px]">
+        <div className="relative z-10 h-full flex items-center pt-[60px] sm:pt-[70px] lg:pt-[100px]">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0 }}
