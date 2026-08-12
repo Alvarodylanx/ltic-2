@@ -59,25 +59,26 @@ export default function GalleryContent() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section className="relative -mt-[54px] lg:-mt-[80px] h-[calc(22vh+54px)] lg:h-[calc(26vh+80px)] min-h-[200px] lg:min-h-[250px] overflow-hidden bg-black">
+      <section className="relative -mt-[54px] lg:-mt-[80px] h-[calc(38vh+54px)] lg:h-[calc(42vh+80px)] min-h-[320px] lg:min-h-[420px] overflow-hidden bg-black">
         <Image src="/images/hero-slide-2.jpg" alt="" fill sizes="100vw" className="object-cover object-center" priority />
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/20" />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
 
         <div className="relative z-10 h-full flex items-center pt-[60px] sm:pt-[70px] lg:pt-[100px]">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.05 }}
-              className="flex items-center justify-center gap-2.5 mb-4"
+              className="flex items-center justify-center gap-2.5 mb-5"
             >
               <span className="w-6 h-px bg-primary flex-shrink-0" />
               <span className="text-primary font-semibold text-[11px] uppercase tracking-[0.3em]">
                 {L({ en: 'Media Gallery', fr: 'Galerie Média' })}
               </span>
+              <span className="w-6 h-px bg-primary flex-shrink-0" />
             </motion.div>
-            <h1 className="font-display font-extrabold text-section text-white leading-[0.88] tracking-[-0.02em]">
+            <h1 className="font-display font-extrabold text-section text-white leading-[0.88] tracking-[-0.02em] mb-6">
               {L({ en: 'Our Work in Pictures', fr: 'Nos Activités en Images' }).split(' ').map((word, wi) => (
                 <span key={wi} className="inline-block overflow-hidden mr-[0.18em] last:mr-0">
                   <motion.span
@@ -91,7 +92,61 @@ export default function GalleryContent() {
                 </span>
               ))}
             </h1>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.55 }}
+              className="text-white/75 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto"
+            >
+              {L({
+                en: 'A visual journey through our timber operations, international trade partnerships, and the people who drive LTIC SARL forward every day.',
+                fr: 'Un voyage visuel à travers nos opérations bois, nos partenariats commerciaux internationaux et les personnes qui font avancer LTIC SARL chaque jour.',
+              })}
+            </motion.p>
           </div>
+        </div>
+      </section>
+
+      {/* ── INTRO BAND ───────────────────────────────────────────────── */}
+      <section className="bg-sidebar border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border"
+          >
+            {[
+              {
+                value: '48+',
+                en: 'Photos',
+                fr: 'Photos',
+                desc: { en: 'Capturing every milestone on the ground', fr: 'Chaque étape capturée sur le terrain' },
+              },
+              {
+                value: '8',
+                en: 'Videos',
+                fr: 'Vidéos',
+                desc: { en: 'Real operations, real moments in motion', fr: 'Opérations réelles, moments en mouvement' },
+              },
+              {
+                value: '100%',
+                en: 'Authentic',
+                fr: 'Authentique',
+                desc: { en: 'Unfiltered views of who we are and what we do', fr: 'Une vision sincère de qui nous sommes' },
+              },
+            ].map((stat) => (
+              <div key={stat.value} className="flex flex-col items-center text-center py-8 px-6 gap-1">
+                <span className="font-display font-extrabold text-4xl sm:text-5xl text-primary leading-none">
+                  {stat.value}
+                </span>
+                <span className="font-bold text-foreground text-sm uppercase tracking-[0.18em] mt-1">
+                  {L({ en: stat.en, fr: stat.fr })}
+                </span>
+                <span className="text-muted-foreground text-sm leading-snug max-w-[18ch]">
+                  {L(stat.desc)}
+                </span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
