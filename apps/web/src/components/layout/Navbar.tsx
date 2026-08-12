@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, Menu, X, Info, Briefcase, Package, Navigation, Newspaper, Phone } from 'lucide-react';
+import { Globe, Menu, X, Info, Briefcase, Package, Navigation, Newspaper, Phone, Images } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -15,6 +15,7 @@ const navLinks = [
   { href: '/products', en: 'Products', fr: 'Produits',   icon: Package },
   { href: '/tracking', en: 'Tracking', fr: 'Suivi',      icon: Navigation },
   { href: '/news',     en: 'News',     fr: 'Actualités', icon: Newspaper },
+  { href: '/gallery',  en: 'Gallery',  fr: 'Galerie',    icon: Images },
   { href: '/contact',  en: 'Contact',  fr: 'Contact',    icon: Phone },
 ];
 

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard, Package, Tag, FileText, Truck, Newspaper,
   MessageSquare, Settings, LogOut, ShieldAlert, UserCircle,
-  Globe, Bell, X, Handshake, Tv2,
+  Globe, Bell, X, Handshake, Tv2, Images,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { checkAuth, logout } from '@/lib/auth';
@@ -21,6 +21,7 @@ const NAV = [
   { href: '/admin/quotes',        icon: FileText,        label: { en: 'Quotes',     fr: 'Devis' } },
   { href: '/admin/orders',        icon: Truck,           label: { en: 'Orders',     fr: 'Commandes' } },
   { href: '/admin/news',          icon: Newspaper,       label: { en: 'News',       fr: 'Actualités' } },
+  { href: '/admin/gallery',       icon: Images,          label: { en: 'Gallery',    fr: 'Galerie' } },
   { href: '/admin/spotlight',     icon: Tv2,             label: { en: 'Spotlight',  fr: 'Vitrine' } },
   { href: '/admin/contacts',      icon: MessageSquare,   label: { en: 'Contacts',   fr: 'Contacts' } },
   { href: '/admin/partners',      icon: Handshake,       label: { en: 'Partners',   fr: 'Partenaires' } },

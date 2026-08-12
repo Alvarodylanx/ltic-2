@@ -28,6 +28,7 @@ import { PartnersModule } from "./partners/partners.module";
 import { AiModule } from "./ai/ai.module";
 import { SpotlightModule } from "./spotlight/spotlight.module";
 import { AnalyticsModule } from "./analytics/analytics.module";
+import { GalleryModule } from "./gallery/gallery.module";
 
 export const DB_PROVIDER = "DB_POOL";
 
@@ -65,6 +66,7 @@ export const DB_PROVIDER = "DB_POOL";
     AiModule,
     SpotlightModule,
     AnalyticsModule,
+    GalleryModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },
