@@ -394,20 +394,13 @@ export default function AboutPage() {
       </section>
 
       {/* ── MISSION · VISION · VALUES — Style 01: Oblique Panels ───────────── */}
-      <section className="relative bg-sidebar py-3 sm:py-12 overflow-hidden">
-        {/* Glass layers */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-primary/[0.12] pointer-events-none" />
-        <div className="absolute inset-0 dot-grid opacity-[0.07] pointer-events-none" />
-        {/* Top & bottom glass-edge highlights */}
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-sidebar py-3 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
             className="flex items-center gap-6 mb-10">
-            <div className="bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl px-5 py-4">
+            <div>
               <p className="text-primary font-semibold text-xs uppercase tracking-[0.25em] mb-2">
                 {L({ en: 'Our Foundation', fr: 'Notre Fondation' })}
               </p>
