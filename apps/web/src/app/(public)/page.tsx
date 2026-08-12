@@ -1666,7 +1666,7 @@ export default function HomePage() {
       )}
 
       {/* ══ 9. CTA — world map ══════════════════════════════════════════════════ */}
-      <section className="relative bg-sidebar py-3 sm:py-20 overflow-hidden">
+      <section className="relative bg-sidebar py-12 sm:py-20 overflow-hidden">
 
         {/* ── World map image (Natural Earth 110m land, generated from TopoJSON) ── */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -1715,38 +1715,38 @@ export default function HomePage() {
           <motion.div variants={skip ? staggerM : stagger} initial={skip ? 'show' : 'hidden'}
             {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}>
             <motion.p variants={fadeInUp}
-              className="text-white font-bold text-xs uppercase tracking-[0.3em] mb-6
+              className="text-white font-bold text-xs uppercase tracking-[0.3em] mb-2 sm:mb-6
                          drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]">
               {L({ en: 'Ready to Start?', fr: 'Prêt à Commencer ?' })}
             </motion.p>
 
             <motion.h2 variants={fadeInUp}
               className="font-extrabold text-white
-                         text-hero mb-6 [text-wrap:balance] whitespace-pre-line
+                         text-hero mb-3 sm:mb-6 [text-wrap:balance] whitespace-pre-line
                          drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
               {L({ en: "Let's Move Your\nBusiness Forward.", fr: 'Faisons Avancer\nVotre Business.' })}
             </motion.h2>
 
             <motion.p variants={fadeInUp}
-              className="text-white/90 text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+              className="text-white/85 text-sm sm:text-base max-w-sm sm:max-w-lg mx-auto mb-5 sm:mb-10 leading-relaxed">
               {L({
-                en: 'One partner for maritime supply, chemical manufacturing, lubricants, timber, food products and commercial trade — across Central Africa and beyond.',
-                fr: 'Un seul partenaire pour la fourniture maritime, la fabrication de produits chimiques, lubrifiants, bois, produits alimentaires et commerce — en Afrique Centrale et au-delà.',
+                en: 'Maritime supply, chemicals, timber, food products and commercial trade — one partner across Central Africa.',
+                fr: 'Fourniture maritime, chimie, bois, produits alimentaires et commerce — un seul partenaire en Afrique Centrale.',
               })}
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg"
-                className="font-semibold h-14 px-10 text-base shadow-lg shadow-primary/30">
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+              <Button asChild
+                className="font-semibold h-11 sm:h-14 px-6 sm:px-10 text-sm sm:text-base shadow-lg shadow-primary/30 w-full sm:w-auto">
                 <Link href="/contact">
                   {L({ en: 'Contact Our Team', fr: 'Contacter Notre Équipe' })}
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline"
-                className="font-semibold h-14 px-10 text-base bg-white/10
+              <Button asChild variant="outline"
+                className="font-semibold h-11 sm:h-14 px-6 sm:px-10 text-sm sm:text-base bg-white/10
                            border-white/30 text-white hover:bg-white/20 hover:border-white/60
-                           backdrop-blur-sm">
+                           backdrop-blur-sm w-full sm:w-auto">
                 <Link href="/quote">
                   {L({ en: 'Get a Quote', fr: 'Obtenir un Devis' })}
                 </Link>
