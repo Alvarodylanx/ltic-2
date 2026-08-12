@@ -107,49 +107,6 @@ export default function GalleryContent() {
         </div>
       </section>
 
-      {/* ── INTRO BAND ───────────────────────────────────────────────── */}
-      <section className="bg-sidebar border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
-            className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border"
-          >
-            {[
-              {
-                value: '48+',
-                en: 'Photos',
-                fr: 'Photos',
-                desc: { en: 'Capturing every milestone on the ground', fr: 'Chaque étape capturée sur le terrain' },
-              },
-              {
-                value: '8',
-                en: 'Videos',
-                fr: 'Vidéos',
-                desc: { en: 'Real operations, real moments in motion', fr: 'Opérations réelles, moments en mouvement' },
-              },
-              {
-                value: '100%',
-                en: 'Authentic',
-                fr: 'Authentique',
-                desc: { en: 'Unfiltered views of who we are and what we do', fr: 'Une vision sincère de qui nous sommes' },
-              },
-            ].map((stat) => (
-              <div key={stat.value} className="flex flex-col items-center text-center py-8 px-6 gap-1">
-                <span className="font-display font-extrabold text-4xl sm:text-5xl text-primary leading-none">
-                  {stat.value}
-                </span>
-                <span className="font-bold text-foreground text-sm uppercase tracking-[0.18em] mt-1">
-                  {L({ en: stat.en, fr: stat.fr })}
-                </span>
-                <span className="text-muted-foreground text-sm leading-snug max-w-[18ch]">
-                  {L(stat.desc)}
-                </span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* ── GALLERY ──────────────────────────────────────────────────── */}
       <section className="bg-background py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
