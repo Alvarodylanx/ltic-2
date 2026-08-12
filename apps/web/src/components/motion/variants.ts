@@ -53,11 +53,12 @@ export const staggerFast = {
   show:   { transition: { staggerChildren: 0.05, delayChildren: 0.02 } },
 };
 
-// Mobile-safe variants — opacity-only tween, no spring physics, no stagger delay.
-// Use these on mobile to avoid long-running spring computations on weak GPUs.
+// Mobile-safe variants — resets ALL transform properties so there's no leftover
+// translation/scale from a desktop hidden variant after the SSR/hydration flip.
+// MotionConfig reducedMotion='always' (set on mobile in page.tsx) makes transitions instant.
 export const fadeM = {
-  hidden: { opacity: 0 },
-  show:   { opacity: 1, transition: { duration: 0.22 } },
+  hidden: { opacity: 0, x: 0, y: 0, scale: 1 },
+  show:   { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0.22 } },
 };
 
 export const staggerM = {

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { motion, AnimatePresence, MotionConfig, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, Droplets,
@@ -228,13 +228,10 @@ function ServiceCard({ icon: Icon, en, fr, descEn, descFr, index, isMobile }: Se
   return (
     <motion.div
       ref={cardRef}
-      variants={isMobile ? {
-        hidden: { opacity: 0 },
-        show:   { opacity: 1, transition: { duration: 0.22 } },
-      } : {
+      variants={{
         hidden: { opacity: 0, y: 48, scale: 0.92 },
-        show:   { opacity: 1, y: 0,  scale: 1,
-                  transition: { type: 'spring', stiffness: 160, damping: 26, delay: index * 0.07 } },
+        show:   { opacity: 1, y: 0, scale: 1,
+                  transition: isMobile ? {} : { type: 'spring', stiffness: 160, damping: 26, delay: index * 0.07 } },
       }}
       style={isMobile ? {} : { rotateX, rotateY, transformStyle: 'preserve-3d' }}
       onMouseMove={onMove}
@@ -310,8 +307,9 @@ function FeatureBlock({ label, heading, body, image, tag, href, reverse, contain
     <motion.div
       ref={blockRef}
       initial={initState}
-      whileInView="show"
-      viewport={viewportOnce}
+      {...(skip
+        ? { animate: 'show' }
+        : { whileInView: 'show', viewport: viewportOnce })}
       variants={skip
         ? { hidden: {}, show: {} }
         : { hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } } }}
@@ -468,10 +466,10 @@ function CategoryCarousel({ skip }: { skip?: boolean }) {
             key={cat.en}
             className="flex-shrink-0"
             style={{ scrollSnapAlign: 'start' }}
-            initial={{ opacity: 0, y: skip ? 0 : 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: skip ? 0.2 : 0.5, ease: catalogEase, delay: skip ? 0 : i * 0.06 }}
+            initial={skip ? false : { opacity: 0, y: 32 }}
+            {...(skip
+              ? { animate: { opacity: 1, y: 0 } }
+              : { whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5, ease: catalogEase, delay: i * 0.06 } })}
           >
             <ProductCategoryCard {...cat} index={i} />
           </motion.div>
@@ -619,12 +617,12 @@ export default function HomePage() {
   const next = () => setActiveSlide(i => (i + 1) % heroSlides.length);
 
   useEffect(() => {
-    if (paused || shouldReduce) return;
+    if (paused) return;
     const id = setInterval(() => {
       setActiveSlide(i => (i + 1) % heroSlides.length);
     }, isMobile ? 9000 : HERO_INTERVAL);
     return () => clearInterval(id);
-  }, [activeSlide, paused, shouldReduce, isMobile]);
+  }, [activeSlide, paused, isMobile]);
 
   const { data: spotlightData } = useQuery<any>({
     queryKey: ['spotlight'],
@@ -675,6 +673,7 @@ export default function HomePage() {
   const smoothExitY       = useSpring(rawExitY,       isMobile ? { stiffness: 1000, damping: 100 } : { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
 
   return (
+    <MotionConfig reducedMotion={skip ? 'always' : 'never'}>
     <>
       {/* Preload all hero slide images so they're ready before the carousel reaches them */}
       <div aria-hidden className="sr-only pointer-events-none">
@@ -911,7 +910,8 @@ export default function HomePage() {
 
           {/* Header */}
           <motion.div
-            initial={skip ? 'show' : 'hidden'} whileInView="show" viewport={viewportOnce}
+            initial={skip ? 'show' : 'hidden'}
+            {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
             variants={skip
               ? { hidden: {}, show: {} }
               : { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
@@ -943,9 +943,8 @@ export default function HomePage() {
 
           {/* Card grid — spring stagger */}
           <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={viewportOnce}
+            initial={skip ? 'show' : 'hidden'}
+            {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
             variants={skip ? staggerM : { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
@@ -973,10 +972,10 @@ export default function HomePage() {
 
             {/* Header */}
             <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={viewportOnce}
-              transition={{ type: 'spring', stiffness: 85, damping: 15 }}
+              initial={skip ? false : { opacity: 0, y: 60 }}
+              {...(skip
+                ? { animate: { opacity: 1, y: 0 } }
+                : { whileInView: { opacity: 1, y: 0 }, viewport: viewportOnce, transition: { type: 'spring', stiffness: 85, damping: 15 } })}
               className="flex items-end justify-between gap-4 mb-10"
             >
               <div>
@@ -1012,10 +1011,10 @@ export default function HomePage() {
                 : featuredProducts!.slice(0, 7).map((product, idx) => (
                     <motion.div
                       key={product.id}
-                      initial={{ opacity: 0, y: skip ? 0 : 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.15 }}
-                      transition={{ duration: skip ? 0.22 : 0.42, delay: skip ? 0 : idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                      initial={skip ? false : { opacity: 0, y: 20 }}
+                      {...(skip
+                        ? { animate: { opacity: 1, y: 0 } }
+                        : { whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.15 }, transition: { duration: 0.42, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] } })}
                       whileHover={skip ? {} : { y: -3, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
                       style={{ height: '100%' }}
                     >
@@ -1080,7 +1079,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
             <motion.div
-              initial={skip ? 'show' : 'hidden'} whileInView="show" viewport={viewportOnce}
+              initial={skip ? 'show' : 'hidden'}
+              {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
               variants={skip
                 ? { hidden: {}, show: {} }
                 : { hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
@@ -1109,10 +1109,10 @@ export default function HomePage() {
               </h2>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, x: 16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.38, ease: catalogEase, delay: 0.2 }}
+              initial={skip ? false : { opacity: 0, x: 16 }}
+              {...(skip
+                ? { animate: { opacity: 1, x: 0 } }
+                : { whileInView: { opacity: 1, x: 0 }, viewport: viewportOnce, transition: { duration: 0.38, ease: catalogEase, delay: 0.2 } })}
             >
               <Button asChild variant="outline"
                 className="border-border font-semibold text-sm hover:border-primary/50 hover:text-primary rounded-full h-11 px-4">
@@ -1141,7 +1141,8 @@ export default function HomePage() {
           transition={skip ? {} : { duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'} whileInView="show" viewport={viewportOnce}
+          <motion.div variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'}
+            {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
             className="mb-4">
             <p className="text-primary font-bold text-xs uppercase tracking-[0.28em] mb-4">
               {L({ en: 'Products & Commerce', fr: 'Produits & Commerce' })}
@@ -1201,7 +1202,9 @@ export default function HomePage() {
 
             {/* ── Left: text inside glass card ── */}
             <motion.div
-              variants={fadeInLeft} initial="hidden" whileInView="show" viewport={viewportOnce}
+              variants={skip ? undefined : fadeInLeft}
+              initial={skip ? false : 'hidden'}
+              {...(skip ? { animate: { opacity: 1, x: 0 } } : { whileInView: 'show', viewport: viewportOnce })}
               className="flex-1">
 
               {/* Glass card */}
@@ -1311,7 +1314,9 @@ export default function HomePage() {
 
             {/* ── Right: video ── */}
             <motion.div
-              variants={fadeInRight} initial="hidden" whileInView="show" viewport={viewportOnce}
+              variants={skip ? undefined : fadeInRight}
+              initial={skip ? false : 'hidden'}
+              {...(skip ? { animate: { opacity: 1, x: 0 } } : { whileInView: 'show', viewport: viewportOnce })}
               className="relative flex-shrink-0 pb-7">
               {/* Outer ambient glow */}
               <div className="absolute -inset-6 rounded-[32px] bg-primary/20 blur-3xl pointer-events-none" />
@@ -1386,7 +1391,8 @@ export default function HomePage() {
 
           {/* Header — inline, saves vertical space vs centred block */}
           <motion.div
-            variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+            variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'}
+            {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
             className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8"
           >
             <div>
@@ -1410,9 +1416,8 @@ export default function HomePage() {
           {/* Steps — 2×2 on mobile, single row on desktop */}
           <motion.div
             variants={skip ? staggerM : stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={viewportOnce}
+            initial={skip ? 'show' : 'hidden'}
+            {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
             className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3"
           >
             {orderSteps.map((step, i) => {
@@ -1461,7 +1466,8 @@ export default function HomePage() {
 
             {/* Section header */}
             <motion.div
-              variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+              variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'}
+              {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
               className="flex items-end justify-between mb-6 sm:mb-8"
             >
               <div>
@@ -1487,7 +1493,8 @@ export default function HomePage() {
 
             {/* Unified container */}
             <motion.div
-              variants={fadeInUp} initial="hidden" whileInView="show" viewport={viewportOnce}
+              variants={skip ? fadeM : fadeInUp} initial={skip ? 'show' : 'hidden'}
+              {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}
               className="bg-sidebar rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
             >
               {newsLoading ? (
@@ -1705,7 +1712,8 @@ export default function HomePage() {
         ))}
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={viewportOnce}>
+          <motion.div variants={skip ? staggerM : stagger} initial={skip ? 'show' : 'hidden'}
+            {...(skip ? { animate: 'show' } : { whileInView: 'show', viewport: viewportOnce })}>
             <motion.p variants={fadeInUp}
               className="text-white font-bold text-xs uppercase tracking-[0.3em] mb-6
                          drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]">
@@ -1748,5 +1756,6 @@ export default function HomePage() {
         </div>
       </section>
     </>
+    </MotionConfig>
   );
 }
