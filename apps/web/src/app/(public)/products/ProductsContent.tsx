@@ -126,7 +126,7 @@ export default function ProductsPage() {
     <>
       {/* ── HERO ── */}
       <section className="relative -mt-[54px] lg:-mt-[80px] h-[calc(22vh+54px)] sm:h-[calc(30vh+54px)] lg:h-[calc(30vh+80px)] min-h-[200px] sm:min-h-[250px] lg:min-h-[280px] overflow-hidden bg-black">
-        <Image src="/images/banner-products.jpg" alt="" fill className="object-cover object-center" priority />
+        <Image src="/images/timber-resources.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/30" />
 
