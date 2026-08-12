@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence, MotionConfig, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, ArrowUpRight, Globe2, Ship, Factory, Droplets,
@@ -673,7 +673,6 @@ export default function HomePage() {
   const smoothExitY       = useSpring(rawExitY,       isMobile ? { stiffness: 1000, damping: 100 } : { stiffness: 120, damping: 30, mass: 0.65, restDelta: 0.001 });
 
   return (
-    <MotionConfig reducedMotion={skip ? 'always' : 'never'}>
     <>
       {/* Preload all hero slide images so they're ready before the carousel reaches them */}
       <div aria-hidden className="sr-only pointer-events-none">
@@ -1756,6 +1755,5 @@ export default function HomePage() {
         </div>
       </section>
     </>
-    </MotionConfig>
   );
 }
