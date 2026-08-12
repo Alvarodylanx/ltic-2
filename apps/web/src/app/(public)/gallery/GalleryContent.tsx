@@ -82,7 +82,7 @@ export default function GalleryContent() {
     <>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative -mt-[54px] lg:-mt-[80px] h-[calc(22vh+54px)] sm:h-[calc(30vh+54px)] lg:h-[calc(30vh+80px)] min-h-[200px] sm:min-h-[250px] lg:min-h-[280px] overflow-hidden bg-black">
-        <Image src="/images/hero-slide-2.jpg" alt="" fill sizes="100vw" className="object-cover object-center" priority />
+        <Image src="/uploads/media/gallery-photo-030.jpg" alt="" fill sizes="100vw" className="object-cover object-top" priority />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
 
